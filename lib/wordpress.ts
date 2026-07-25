@@ -7,7 +7,7 @@ type Post = {
   date: string;
 };
 
-const WP_URL = process.env.WORDPRESS_URL || "https://lmn516.com";
+const WP_URL = process.env.WORDPRESS_URL || "https://cms.lmn516.com";
 
 const fallbackPosts: Post[] = [
   {
