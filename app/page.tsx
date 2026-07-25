@@ -4,26 +4,30 @@ import { getPosts } from "@/lib/wordpress";
 export const revalidate = 300;
 
 export default async function HomePage() {
-  const posts = await getPosts(6);
+  const posts = await getPosts(4);
 
   return (
     <main>
 
+      {/* Header */}
       <header className="site-header shell">
+
         <Link href="/" className="brand">
           LMN516
         </Link>
 
         <nav>
-          <Link href="/archive">归档</Link>
+          <Link href="/archive">周记</Link>
+          <Link href="/archive">生活档案</Link>
+          <Link href="/archive">长期计划</Link>
           <Link href="/about">关于</Link>
-          <a href="https://lmn516.com/feed/" target="_blank">
-            RSS
-          </a>
+          <span>◐</span>
         </nav>
+
       </header>
 
 
+      {/* Hero */}
       <section className="hero shell">
 
         <div className="hero-copy">
@@ -38,114 +42,176 @@ export default async function HomePage() {
             认真存档。
           </h1>
 
+
           <p className="hero-text">
             这里是 Mo 的个人生活档案。
             记录周记、旅行、影像、音乐，
-            以及那些多年以后依然值得回看的事情。
+            以及一些看起来没什么用，
+            但多年后一定会很珍贵的事情。
           </p>
+
+
+          <div className="hero-buttons">
+
+            <Link href="/archive">
+              开始阅读
+            </Link>
+
+            <Link href="/archive">
+              浏览档案
+            </Link>
+
+          </div>
 
         </div>
 
 
+        {/* 今日档案 */}
+
         <aside className="today-card">
 
-          <p className="eyebrow">
+          <p className="card-label">
             今日档案
           </p>
 
-          <div className="date-big">
+
+          <strong className="date-big">
             07.25
-          </div>
+          </strong>
 
           <p>
             星期六 · 盛夏
           </p>
 
-          <div className="info-row">
-            <span>年度进度</span>
-            <strong>56.4%</strong>
-          </div>
 
           <div className="info-row">
-            <span>最近更新</span>
-            <strong>不如做熊猫</strong>
+            <span>
+              年度进度
+            </span>
+            <b>
+              56.4%
+            </b>
           </div>
 
+
           <div className="info-row">
-            <span>俯卧撑</span>
-            <strong>1833 / 10000</strong>
+            <span>
+              最近更新
+            </span>
+            <b>
+              不如做熊猫
+            </b>
           </div>
+
+
+          <div className="info-row">
+            <span>
+              俯卧撑
+            </span>
+            <b>
+              1,833 / 10,000
+            </b>
+          </div>
+
 
         </aside>
+
 
       </section>
 
 
+
+      {/* Project */}
+
       <section className="project shell">
 
+
         <div>
+
           <p className="eyebrow">
-            LONG TERM PROJECT
+            LONG-TERM PROJECT
           </p>
+
 
           <h2>
             一万个俯卧撑
           </h2>
 
+
           <p>
             开始于 2026 年 2 月 16 日。
             没有宏大的宣言，
-            只有每天一点点坚持。
+            只有一天一天如实记录。
           </p>
 
+
+          <Link href="/">
+            查看完整记录 →
+          </Link>
+
+
         </div>
+
 
 
         <div className="progress-panel">
 
-          <strong>
-            1833
-          </strong>
+          <div>
+            <strong>
+              1,833
+            </strong>
 
-          <span>
-            / 10000
-          </span>
+            <span>
+              / 10,000
+            </span>
+          </div>
 
 
           <div className="progress">
-            <span style={{width:"18.33%"}} />
+            <span
+              style={{
+                width:"18.33%"
+              }}
+            />
           </div>
 
 
           <small>
-            已完成 18.33%
+            已完成 18.33% · 剩余 8,167
           </small>
 
+
         </div>
+
 
       </section>
 
 
 
+      {/* Notes */}
+
       <section className="section shell">
 
-        <div className="section-head">
+
+        <div className="section-heading">
 
           <div>
+
             <p className="eyebrow">
               LATEST NOTES
             </p>
 
             <h2>
-              最近留下的痕迹
+              最近更新
             </h2>
 
           </div>
 
 
           <Link href="/archive">
-            查看全部 →
+            全部文章 →
           </Link>
+
 
         </div>
 
@@ -153,9 +219,16 @@ export default async function HomePage() {
 
         <div className="post-grid">
 
-          {posts.map((post)=>(
+
+          {posts.map((post,index)=>(
+
+
             <article
-              className="post-card"
+              className={
+                index === 0
+                ? "post-card featured"
+                : "post-card"
+              }
               key={post.id}
             >
 
@@ -163,19 +236,31 @@ export default async function HomePage() {
                 {post.date}
               </p>
 
+
               <h3>
+
                 <Link href={`/posts/${post.slug}`}>
                   {post.title}
                 </Link>
+
               </h3>
+
 
               <p>
                 {post.excerpt}
               </p>
 
 
+              <Link href={`/posts/${post.slug}`}>
+                继续阅读 →
+              </Link>
+
+
             </article>
+
+
           ))}
+
 
         </div>
 
@@ -184,11 +269,16 @@ export default async function HomePage() {
 
 
 
+
+      {/* Archive */}
+
       <section className="section shell">
+
 
         <p className="eyebrow">
           LIFE ARCHIVE
         </p>
+
 
         <h2>
           生活档案
@@ -197,33 +287,85 @@ export default async function HomePage() {
 
         <div className="archive-grid">
 
-          {[
-            ["周记","每一周的生活碎片"],
-            ["旅行","城市与途中风景"],
-            ["音乐","反复听过的声音"],
-            ["观影","电影与留下的感受"],
-            ["房间","生活空间里的物品"],
-            ["计划","长期坚持的事情"]
 
-          ].map(([title,desc])=>(
+          {[
+            ["♫","音乐清单","100 首常听歌曲"],
+            ["⌁","城市散步","公园、街道与照片"],
+            ["◫","房间物品","居住空间的细节"],
+            ["◎","观影档案","电影、剧集与感受"]
+          ].map(item=>(
+
 
             <div
               className="archive-card"
-              key={title}
+              key={item[1]}
             >
 
+              <span>
+                {item[0]}
+              </span>
+
               <h3>
-                {title}
+                {item[1]}
               </h3>
 
               <p>
-                {desc}
+                {item[2]}
               </p>
+
 
             </div>
 
+
           ))}
 
+
+        </div>
+
+
+      </section>
+
+
+
+      {/* About */}
+
+      <section className="about shell">
+
+
+        <p className="eyebrow">
+          ABOUT THIS PLACE
+        </p>
+
+
+        <h2>
+          一个人的网站，
+          <br />
+          应该像他的房间。
+        </h2>
+
+
+        <p>
+          不必每件东西都有用，
+          也不必每篇文章都得出结论。
+          这里保存一些生活留下的痕迹，
+          让时间不至于全部悄无声息地消失。
+        </p>
+
+
+        <p>
+          网站建立于 2025 年，
+          持续更新于深圳。
+        </p>
+
+
+        <div>
+          <a href="mailto:hello@lmn516.com">
+            写信
+          </a>
+
+          <a href="https://lmn516.com/feed/">
+            RSS
+          </a>
         </div>
 
 
@@ -233,13 +375,14 @@ export default async function HomePage() {
 
       <footer className="footer shell">
 
-        <strong>
-          LMN516
-        </strong>
+        <span>
+          © 2025–2026 LMN516
+        </span>
 
-        <p>
-          一个持续生长的个人网站。
-        </p>
+        <span>
+          记录比遗忘慢一点。
+        </span>
+
 
       </footer>
 
