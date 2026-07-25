@@ -21,10 +21,7 @@ body {
   margin:0;
   background:var(--bg);
   color:var(--text);
-  font-family:
-    "Noto Serif SC",
-    "Songti SC",
-    serif;
+  font-family:"Noto Serif SC","Songti SC",serif;
   line-height:1.8;
   transition:.25s ease;
 }
@@ -50,31 +47,27 @@ button {
 
 
 .shell {
-  width:min(1160px, calc(100% - 40px));
+  width:min(1160px,calc(100% - 40px));
   margin:0 auto;
 }
 
 
 .site-header {
-
   min-height:96px;
   display:flex;
   align-items:center;
   justify-content:space-between;
   border-bottom:1px solid var(--line);
-
 }
 
 
 .brand {
-
   display:flex;
   align-items:baseline;
   gap:4px;
   font-family:Inter,sans-serif;
   font-weight:600;
   letter-spacing:-.05em;
-
 }
 
 
@@ -84,40 +77,32 @@ button {
 
 
 .brand-number {
-
   font-size:12px;
   color:var(--muted);
   letter-spacing:.08em;
-
 }
 
 
 .nav {
-
   display:flex;
   gap:30px;
   font-size:14px;
   color:var(--muted);
-
 }
 
 
 .nav a:hover {
-
   color:var(--text);
-
 }
 
 
 .theme-toggle {
-
   width:40px;
   height:40px;
   border:1px solid var(--line);
   background:transparent;
   border-radius:50%;
   cursor:pointer;
-
 }
 
 
@@ -147,9 +132,7 @@ button {
 
 
 h1,h2,h3,p {
-
   margin-top:0;
-
 }
 
 
@@ -265,17 +248,13 @@ dl div {
 
 
 dt {
-
   color:var(--muted);
-
 }
 
 
 dd {
-
   margin:0;
   text-align:right;
-
 }
 .project {
 
@@ -329,6 +308,8 @@ h2 {
 
 }
 
+
+/* 一万个俯卧撑 */
 
 .progress-panel {
 
@@ -396,7 +377,8 @@ h2 {
 }
 
 
-/* 文章区域 */
+
+/* 文章 */
 
 .section-heading {
 
@@ -449,6 +431,7 @@ h2 {
   display:flex;
   align-items:flex-end;
   padding:28px;
+
   font-family:Inter,sans-serif;
   font-size:44px;
   line-height:.95;
@@ -461,6 +444,27 @@ h2 {
 
   background:linear-gradient(140deg,#d8aa55,#765c39);
   color:#fff8e8;
+
+}
+
+
+.visual-yellow {
+
+  background:#e1c36b;
+
+}
+
+
+.visual-blue {
+
+  background:#9fb9c1;
+
+}
+
+
+.visual-green {
+
+  background:#9caf91;
 
 }
 
@@ -525,6 +529,7 @@ h2 {
 }
 
 
+
 /* 生活档案 */
 
 .archive {
@@ -549,9 +554,11 @@ h2 {
   border:1px solid var(--line);
   border-radius:22px;
   padding:25px;
+
   display:flex;
   flex-direction:column;
   justify-content:flex-end;
+
   background:rgba(255,255,255,.28);
 
 }
@@ -585,10 +592,6 @@ h2 {
   color:var(--muted);
 
 }
-
-
-/* 关于 */
-
 .about {
 
   border-top:1px solid var(--line);
@@ -637,19 +640,23 @@ h2 {
 }
 
 
-/* 页脚 */
+
+/* Footer */
 
 .site-footer {
 
   min-height:130px;
   border-top:1px solid var(--line);
+
   display:flex;
   align-items:center;
   justify-content:space-between;
+
   color:var(--muted);
   font-size:13px;
 
 }
+
 
 
 /* 深色模式 */
@@ -668,32 +675,34 @@ body.dark {
 }
 
 
+
 /* 手机端 */
 
 @media (max-width:800px){
 
-  .shell{
+
+  .shell {
 
     width:min(100% - 28px,1160px);
 
   }
 
 
-  .site-header{
+  .site-header {
 
     min-height:76px;
 
   }
 
 
-  .nav{
+  .nav {
 
     display:none;
 
   }
 
 
-  .hero{
+  .hero {
 
     grid-template-columns:1fr;
     gap:36px;
@@ -703,7 +712,7 @@ body.dark {
   }
 
 
-  .today-card{
+  .today-card {
 
     transform:none;
 
@@ -712,7 +721,7 @@ body.dark {
 
   .project,
   .featured-post,
-  .about-grid{
+  .about-grid {
 
     grid-template-columns:1fr;
     gap:34px;
@@ -720,42 +729,42 @@ body.dark {
   }
 
 
-  .post-grid{
+  .post-grid {
 
     grid-template-columns:1fr;
 
   }
 
 
-  .archive-grid{
+  .archive-grid {
 
     grid-template-columns:1fr 1fr;
 
   }
 
 
-  .section-space{
+  .section-space {
 
     padding-block:72px;
 
   }
 
 
-  h1{
+  h1 {
 
     font-size:56px;
 
   }
 
 
-  .featured-post .post-content{
+  .featured-post .post-content {
 
     padding:32px;
 
   }
 
 
-  .site-footer{
+  .site-footer {
 
     align-items:flex-start;
     justify-content:center;
@@ -768,16 +777,18 @@ body.dark {
 
 
 
+
 @media (max-width:520px){
 
-  .archive-grid{
+
+  .archive-grid {
 
     grid-template-columns:1fr;
 
   }
 
 
-  .hero-actions{
+  .hero-actions {
 
     flex-direction:column;
     align-items:flex-start;
@@ -785,21 +796,21 @@ body.dark {
   }
 
 
-  .today-card{
+  .today-card {
 
     padding:24px;
 
   }
 
 
-  .date-block strong{
+  .date-block strong {
 
     font-size:52px;
 
   }
 
 
-  .section-heading{
+  .section-heading {
 
     align-items:flex-start;
     gap:16px;
@@ -808,10 +819,11 @@ body.dark {
   }
 
 
-  .progress-number strong{
+  .progress-number strong {
 
     font-size:46px;
 
   }
+
 
 }

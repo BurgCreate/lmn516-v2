@@ -4,41 +4,111 @@ import { getPosts } from "@/lib/wordpress";
 export const revalidate = 300;
 
 export default async function HomePage() {
+
   const posts = await getPosts(4);
 
-  return (
-    <main>
+  const featured = posts[0];
 
-      <div className="paper-noise" />
+  const cards = [
+    {
+      title: "寻找夏天的感觉 🍺",
+      date: "2026.06.29 · 周记",
+      visual: "06<br>29",
+      text: "生日、时间、世界杯与夏天。27 岁的日子，继续向前。",
+      color: "visual-yellow"
+    },
+    {
+      title: "AI 时代浪潮 🌊",
+      date: "2026.05.14 · 周记",
+      visual: "AI<br>ERA",
+      text: "网站续费、散步、旅行视频，以及这个快速变化的时代。",
+      color: "visual-blue"
+    },
+    {
+      title: "昆明游记 🌸",
+      date: "2026.04.10 · 旅行",
+      visual: "昆明<br>春",
+      text: "第一次去云南，滇池、翠湖和一座春天很长的城市。",
+      color: "visual-green"
+    }
+  ];
+
+
+  return (
+
+    <main id="top">
+
+
+      <div
+        className="paper-noise"
+        aria-hidden="true"
+      />
+
 
       <header className="site-header shell">
 
-        <Link href="/" className="brand">
-          <span className="brand-mark">LMN</span>
-          <span className="brand-number">516</span>
+
+        <Link
+          href="/"
+          className="brand"
+          aria-label="LMN516 首页"
+        >
+
+          <span className="brand-mark">
+            LMN
+          </span>
+
+          <span className="brand-number">
+            516
+          </span>
+
         </Link>
 
+
         <nav className="nav">
-          <Link href="/archive">周记</Link>
-          <Link href="/archive">生活档案</Link>
-          <Link href="/archive">长期计划</Link>
-          <Link href="/about">关于</Link>
+
+          <a href="#notes">
+            周记
+          </a>
+
+          <a href="#archive">
+            生活档案
+          </a>
+
+          <a href="#project">
+            长期计划
+          </a>
+
+          <a href="#about">
+            关于
+          </a>
+
         </nav>
 
-        <button className="theme-toggle">
+
+        <button
+          className="theme-toggle"
+          type="button"
+        >
           ◐
         </button>
+
 
       </header>
 
 
+
+
       <section className="hero shell">
 
+
         <div className="hero-copy">
+
 
           <p className="eyebrow">
             2026 · Shenzhen
           </p>
+
 
           <h1>
             把普通日子，
@@ -50,34 +120,41 @@ export default async function HomePage() {
           <p className="intro">
             这里是 Mo 的个人生活档案。
             记录周记、旅行、影像、音乐，
-            以及一些看起来没什么用，
+            以及一些看起来没什么用、
             但多年后一定会很珍贵的事情。
           </p>
 
 
           <div className="hero-actions">
 
-            <Link
-              href="/archive"
+
+            <a
               className="button primary"
+              href="#notes"
             >
               开始阅读
-            </Link>
+            </a>
 
-            <Link
-              href="/archive"
+
+            <a
               className="button ghost"
+              href="#archive"
             >
               浏览档案
-            </Link>
+            </a>
+
 
           </div>
+
 
         </div>
 
 
 
+
+
         <aside className="today-card">
+
 
           <p className="card-label">
             今日档案
@@ -97,9 +174,12 @@ export default async function HomePage() {
           </div>
 
 
+
           <dl>
 
+
             <div>
+
               <dt>
                 年度进度
               </dt>
@@ -107,10 +187,12 @@ export default async function HomePage() {
               <dd>
                 56.4%
               </dd>
+
             </div>
 
 
             <div>
+
               <dt>
                 最近更新
               </dt>
@@ -118,10 +200,12 @@ export default async function HomePage() {
               <dd>
                 不如做熊猫
               </dd>
+
             </div>
 
 
             <div>
+
               <dt>
                 俯卧撑
               </dt>
@@ -129,6 +213,7 @@ export default async function HomePage() {
               <dd>
                 1,833 / 10,000
               </dd>
+
             </div>
 
 
@@ -142,10 +227,16 @@ export default async function HomePage() {
 
 
 
-      <section className="project shell section-space">
+
+
+      <section
+        id="project"
+        className="project shell section-space"
+      >
 
 
         <div className="project-copy">
+
 
           <p className="eyebrow">
             LONG-TERM PROJECT
@@ -164,19 +255,21 @@ export default async function HomePage() {
           </p>
 
 
-          <Link
-            href="/posts/yi-wan-ge-fu-wo-cheng"
+          <a
             className="text-link"
+            href="https://lmn516.com/?p=347"
           >
             查看完整记录 →
-          </Link>
+          </a>
 
 
         </div>
 
 
 
+
         <div className="progress-panel">
+
 
           <div className="progress-number">
 
@@ -188,7 +281,9 @@ export default async function HomePage() {
               / 10,000
             </span>
 
+
           </div>
+
 
 
           <div className="progress-track">
@@ -200,6 +295,7 @@ export default async function HomePage() {
             />
 
           </div>
+
 
 
           <div className="progress-meta">
@@ -219,12 +315,10 @@ export default async function HomePage() {
 
 
       </section>
-
-
-
-
-      <section className="notes shell section-space">
-
+      <section
+        id="notes"
+        className="notes shell section-space"
+      >
 
         <div className="section-heading">
 
@@ -234,7 +328,6 @@ export default async function HomePage() {
               LATEST NOTES
             </p>
 
-
             <h2>
               最近更新
             </h2>
@@ -242,56 +335,64 @@ export default async function HomePage() {
           </div>
 
 
-          <Link
-            href="/archive"
+          <a
             className="text-link"
+            href="https://lmn516.com/"
           >
             全部文章 →
-          </Link>
-
+          </a>
 
         </div>
 
 
 
-        {posts.length > 0 && (
+
+        {featured && (
 
           <article className="featured-post post-card">
 
+
             <div className="post-visual visual-summer">
+
               <span>
                 盛夏
                 <br />
                 2026
               </span>
+
             </div>
+
 
 
             <div className="post-content">
 
+
               <p className="post-meta">
-                {posts[0].date}
+                {featured.date} · 周记
               </p>
 
 
               <h3>
-                <Link href={`/posts/${posts[0].slug}`}>
-                  {posts[0].title}
+
+                <Link href={`/posts/${featured.slug}`}>
+                  {featured.title}
                 </Link>
+
               </h3>
 
 
               <p>
-                {posts[0].excerpt}
+                {featured.excerpt}
               </p>
 
 
               <Link
-                href={`/posts/${posts[0].slug}`}
                 className="text-link"
+                href={`/posts/${featured.slug}`}
               >
                 继续阅读 →
               </Link>
+
 
             </div>
 
@@ -302,42 +403,57 @@ export default async function HomePage() {
 
 
 
+
+
         <div className="post-grid">
 
-          {posts.slice(1).map((post)=>(
+
+          {cards.map((card)=>(
             
             <article
               className="post-card small"
-              key={post.id}
+              key={card.title}
             >
+
+
+              <div
+                className={`post-visual ${card.color}`}
+                dangerouslySetInnerHTML={{
+                  __html: card.visual
+                }}
+              />
+
 
               <div className="post-content">
 
+
                 <p className="post-meta">
-                  {post.date}
+                  {card.date}
                 </p>
 
 
                 <h3>
-                  <Link href={`/posts/${post.slug}`}>
-                    {post.title}
-                  </Link>
+                  {card.title}
                 </h3>
 
 
                 <p>
-                  {post.excerpt}
+                  {card.text}
                 </p>
+
 
               </div>
 
 
             </article>
 
+
           ))}
 
 
+
         </div>
+
 
 
       </section>
@@ -345,9 +461,15 @@ export default async function HomePage() {
 
 
 
-      <section className="archive shell section-space">
+
+      <section
+        id="archive"
+        className="archive shell section-space"
+      >
+
 
         <div className="section-heading">
+
 
           <div>
 
@@ -355,45 +477,106 @@ export default async function HomePage() {
               LIFE ARCHIVE
             </p>
 
+
             <h2>
               生活档案
             </h2>
 
+
           </div>
 
+
         </div>
+
+
 
 
         <div className="archive-grid">
 
 
-          {[
-            ["♫","音乐清单","100 首常听歌曲"],
-            ["⌁","城市散步","公园、街道与照片"],
-            ["◫","房间物品","居住空间的细节"],
-            ["◎","观影档案","电影、剧集与感受"]
-          ].map(([icon,title,desc])=>(
+          <a
+            href="#"
+            className="archive-card"
+          >
 
-            <div
-              className="archive-card"
-              key={title}
-            >
+            <span className="archive-icon">
+              ♫
+            </span>
 
-              <span className="archive-icon">
-                {icon}
-              </span>
+            <strong>
+              音乐清单
+            </strong>
 
-              <strong>
-                {title}
-              </strong>
+            <small>
+              100 首常听歌曲
+            </small>
 
-              <small>
-                {desc}
-              </small>
+          </a>
 
-            </div>
 
-          ))}
+
+          <a
+            href="#"
+            className="archive-card"
+          >
+
+            <span className="archive-icon">
+              ⌁
+            </span>
+
+            <strong>
+              城市散步
+            </strong>
+
+            <small>
+              公园、街道与照片
+            </small>
+
+          </a>
+
+
+
+
+          <a
+            href="#"
+            className="archive-card"
+          >
+
+            <span className="archive-icon">
+              ◫
+            </span>
+
+            <strong>
+              房间物品
+            </strong>
+
+            <small>
+              居住空间的细节
+            </small>
+
+          </a>
+
+
+
+
+          <a
+            href="#"
+            className="archive-card"
+          >
+
+            <span className="archive-icon">
+              ◎
+            </span>
+
+            <strong>
+              观影档案
+            </strong>
+
+            <small>
+              电影、剧集与感受
+            </small>
+
+          </a>
 
 
         </div>
@@ -405,14 +588,21 @@ export default async function HomePage() {
 
 
 
-      <section className="about shell section-space">
+
+      <section
+        id="about"
+        className="about shell section-space"
+      >
+
 
         <p className="eyebrow">
           ABOUT THIS PLACE
         </p>
 
 
+
         <div className="about-grid">
+
 
           <h2>
             一个人的网站，
@@ -421,7 +611,10 @@ export default async function HomePage() {
           </h2>
 
 
+
+
           <div>
+
 
             <p>
               不必每件东西都有用，
@@ -431,10 +624,12 @@ export default async function HomePage() {
             </p>
 
 
+
             <p>
               网站建立于 2025 年，
               持续更新于深圳。
             </p>
+
 
 
             <div className="about-links">
@@ -443,11 +638,14 @@ export default async function HomePage() {
                 写信
               </a>
 
+
               <a href="https://lmn516.com/feed/">
                 RSS
               </a>
 
+
             </div>
+
 
           </div>
 
@@ -460,11 +658,14 @@ export default async function HomePage() {
 
 
 
+
       <footer className="site-footer shell">
+
 
         <span>
           © 2025–2026 LMN516
         </span>
+
 
         <span>
           记录比遗忘慢一点。
@@ -475,5 +676,7 @@ export default async function HomePage() {
 
 
     </main>
+
   );
+
 }
