@@ -1973,69 +1973,306 @@ html[data-theme="dark"]::-webkit-scrollbar-thumb {
     line-height: 1.2;
   }
 }
-.moment-bubble {
-  display: inline-block;
+/* ===========================
+   首页全局漂浮气泡
+=========================== */
+
+.hero {
   position: relative;
-  max-width: min(620px, 100%);
-  margin: 18px 0;
-  padding: 18px 28px;
+  isolation: isolate;
+}
 
-  border: 1px solid rgba(32, 36, 31, 0.08);
-  border-radius: 999px;
+.moment-bubble {
+  --bubble-x: 0px;
+  --bubble-y: 0px;
 
-  background: rgba(255, 255, 255, 0.62);
+  position: absolute;
+  left: 32%;
+  top: 27%;
+  z-index: 5;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: clamp(210px, 22vw, 330px);
+  min-height: clamp(150px, 16vw, 230px);
+  padding: 34px 38px;
+
+  appearance: none;
+  border: 1px solid rgba(255, 255, 255, 0.72);
+
+  border-radius:
+    48% 52% 55% 45% /
+    48% 44% 56% 52%;
+
+  background:
+    radial-gradient(
+      circle at 28% 22%,
+      rgba(255, 255, 255, 0.94),
+      rgba(255, 255, 255, 0.42) 38%,
+      rgba(223, 233, 229, 0.24) 72%
+    );
+
   color: var(--text);
-
   font: inherit;
-  text-align: left;
+  text-align: center;
   cursor: pointer;
 
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
 
   box-shadow:
-    0 12px 30px rgba(32, 36, 31, 0.07);
+    inset 8px 8px 20px rgba(255, 255, 255, 0.65),
+    inset -8px -10px 24px rgba(47, 94, 89, 0.06),
+    0 24px 55px rgba(32, 36, 31, 0.1);
 
-  animation: moment-float 7s ease-in-out infinite;
+  transform:
+    translate(
+      var(--bubble-x),
+      var(--bubble-y)
+    );
+
+  transition:
+    transform 0.35s ease,
+    border-radius 0.6s ease,
+    box-shadow 0.35s ease,
+    background 0.35s ease;
+
+  animation:
+    bubble-float 7s ease-in-out infinite,
+    bubble-shape 9s ease-in-out infinite;
+
+  will-change: transform;
+}
+
+.moment-bubble-content {
+  position: relative;
+  z-index: 2;
+  display: block;
+  max-width: 240px;
 }
 
 .moment-bubble-content,
 .moment-bubble-content p {
   margin: 0;
-  font-size: clamp(24px, 3.6vw, 34px);
+  font-size: clamp(22px, 2.4vw, 32px);
   font-weight: 500;
   line-height: 1.5;
 }
 
-.moment-bubble-active {
-  animation: moment-pop 0.7s ease;
+.moment-bubble-shine {
+  position: absolute;
+  top: 18%;
+  left: 22%;
+
+  width: 30%;
+  height: 18%;
+
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.65);
+
+  filter: blur(5px);
+  transform: rotate(-20deg);
+
+  pointer-events: none;
 }
 
-@keyframes moment-float {
+.moment-bubble:hover {
+  background:
+    radial-gradient(
+      circle at 28% 22%,
+      rgba(255, 255, 255, 1),
+      rgba(255, 255, 255, 0.5) 38%,
+      rgba(223, 233, 229, 0.3) 72%
+    );
+
+  box-shadow:
+    inset 8px 8px 22px rgba(255, 255, 255, 0.75),
+    inset -8px -10px 24px rgba(47, 94, 89, 0.08),
+    0 34px 72px rgba(32, 36, 31, 0.12);
+
+  transform:
+    translate(
+      var(--bubble-x),
+      var(--bubble-y)
+    )
+    scale(1.03);
+}
+
+.moment-bubble:active {
+  transform:
+    translate(
+      var(--bubble-x),
+      var(--bubble-y)
+    )
+    scale(0.97);
+}
+
+.moment-bubble:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 6px;
+}
+
+.moment-bubble-active {
+  animation:
+    bubble-click 0.7s ease,
+    bubble-shape 9s ease-in-out infinite;
+}
+
+@keyframes bubble-float {
   0%,
   100% {
-    transform: translate(0, 0);
+    margin-top: 0;
+    margin-left: 0;
+  }
+
+  25% {
+    margin-top: -8px;
+    margin-left: 6px;
   }
 
   50% {
-    transform: translate(4px, -9px);
+    margin-top: -16px;
+    margin-left: 1px;
+  }
+
+  75% {
+    margin-top: -7px;
+    margin-left: -7px;
   }
 }
 
-@keyframes moment-pop {
+@keyframes bubble-shape {
+  0%,
+  100% {
+    border-radius:
+      48% 52% 55% 45% /
+      48% 44% 56% 52%;
+  }
+
+  33% {
+    border-radius:
+      55% 45% 47% 53% /
+      43% 54% 46% 57%;
+  }
+
+  66% {
+    border-radius:
+      45% 55% 52% 48% /
+      56% 46% 54% 44%;
+  }
+}
+
+@keyframes bubble-click {
   0% {
-    transform: scale(1);
+    transform:
+      translate(
+        var(--bubble-x),
+        var(--bubble-y)
+      )
+      scale(1);
   }
 
   30% {
-    transform: translateY(-14px) scale(0.95) rotate(1deg);
+    transform:
+      translate(
+        calc(var(--bubble-x) + 8px),
+        calc(var(--bubble-y) - 10px)
+      )
+      scale(0.95)
+      rotate(1deg);
   }
 
-  60% {
-    transform: translateY(-4px) scale(1.05) rotate(-1deg);
+  65% {
+    transform:
+      translate(
+        calc(var(--bubble-x) - 4px),
+        calc(var(--bubble-y) - 4px)
+      )
+      scale(1.04)
+      rotate(-1deg);
   }
 
   100% {
-    transform: translateY(0) scale(1);
+    transform:
+      translate(
+        var(--bubble-x),
+        var(--bubble-y)
+      )
+      scale(1);
+  }
+}
+
+@media (max-width: 900px) {
+  .moment-bubble {
+    left: auto;
+    right: 6%;
+    top: 22%;
+
+    width: 230px;
+    min-height: 165px;
+    padding: 28px 30px;
+
+    opacity: 0.94;
+  }
+
+  .moment-bubble-content,
+  .moment-bubble-content p {
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 720px) {
+  .hero {
+    padding-top: 230px;
+  }
+
+  .moment-bubble {
+    left: 50%;
+    right: auto;
+    top: 38px;
+
+    width: min(76vw, 280px);
+    min-height: 150px;
+
+    transform:
+      translateX(-50%)
+      translate(
+        var(--bubble-x),
+        var(--bubble-y)
+      );
+  }
+
+  .moment-bubble:hover {
+    transform:
+      translateX(-50%)
+      translate(
+        var(--bubble-x),
+        var(--bubble-y)
+      )
+      scale(1.03);
+  }
+
+  .moment-bubble:active {
+    transform:
+      translateX(-50%)
+      translate(
+        var(--bubble-x),
+        var(--bubble-y)
+      )
+      scale(0.97);
+  }
+
+  .moment-bubble-content,
+  .moment-bubble-content p {
+    font-size: clamp(21px, 6vw, 27px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .moment-bubble,
+  .moment-bubble-active {
+    animation: none;
   }
 }
