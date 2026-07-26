@@ -49,8 +49,14 @@ export default async function PostsPage() {
               </h2>
 
               <p>
-                {post.excerpt}
-              </p>
+
+  {(post.excerpt ?? "")
+
+    .replace(/\[&hellip;\]/g, "")
+
+    .replace(/&hellip;/g, "…")}
+
+</p>
 
             </div>
 
