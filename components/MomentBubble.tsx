@@ -13,22 +13,27 @@ export default function MomentBubble({
   date,
 }: MomentBubbleProps) {
   const router = useRouter();
+
   const [isMoving, setIsMoving] = useState(false);
-  const [isNavigating, setIsNavigating] = useState(false);
+  const [isLeaving, setIsLeaving] = useState(false);
 
   function handleClick() {
-    if (isNavigating) return;
+    if (isLeaving) return;
 
     setIsMoving(false);
-    setIsNavigating(true);
+    setIsLeaving(true);
 
     requestAnimationFrame(() => {
       setIsMoving(true);
     });
 
+    document.documentElement.classList.add(
+      "page-leaving"
+    );
+
     window.setTimeout(() => {
       router.push("/moments");
-    }, 300);
+    }, 420);
   }
 
   return (
@@ -36,9 +41,14 @@ export default function MomentBubble({
       type="button"
       className={`moment-bubble ${
         isMoving ? "moment-bubble-active" : ""
+      } ${
+        isLeaving
+          ? "moment-bubble-leaving"
+          : ""
       }`}
       onClick={handleClick}
       aria-label="进入碎碎念页面"
+      disabled={isLeaving}
     >
       <span
         className="moment-bubble-content"
