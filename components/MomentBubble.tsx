@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 type MomentBubbleProps = {
@@ -11,18 +12,23 @@ export default function MomentBubble({
   content,
   date,
 }: MomentBubbleProps) {
+  const router = useRouter();
   const [isMoving, setIsMoving] = useState(false);
+  const [isNavigating, setIsNavigating] = useState(false);
 
   function handleClick() {
+    if (isNavigating) return;
+
     setIsMoving(false);
+    setIsNavigating(true);
 
     requestAnimationFrame(() => {
       setIsMoving(true);
     });
 
     window.setTimeout(() => {
-      setIsMoving(false);
-    }, 700);
+      router.push("/moments");
+    }, 300);
   }
 
   return (
@@ -32,7 +38,7 @@ export default function MomentBubble({
         isMoving ? "moment-bubble-active" : ""
       }`}
       onClick={handleClick}
-      aria-label="点击气泡，让它动一下"
+      aria-label="进入碎碎念页面"
     >
       <span
         className="moment-bubble-content"
