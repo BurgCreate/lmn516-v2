@@ -295,12 +295,14 @@ export default async function HomePage() {
           </p>
 
 
-          <a
-            className="text-link"
-            href="https://lmn516.com/?p=347"
-          >
-            查看完整记录 →
-          </a>
+         {pushupPost && (
+           <Link
+             className="text-link"
+             href={`/posts/${pushupPost.slug}`}
+           >
+             查看完整记录 →
+           </Link>
+         )}
 
 
         </div>
