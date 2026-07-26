@@ -534,58 +534,58 @@ export default async function HomePage() {
 </Link>
 
 
-          <a
-            href="#"
-            className="archive-card"
-          >
-            <span className="archive-icon">
-              ⌁
-            </span>
+          <Link
+  href="/walks"
+  className="archive-card"
+>
+  <span className="archive-icon">
+    ⌁
+  </span>
 
-            <strong>
-              城市散步
-            </strong>
+  <strong>
+    城市散步
+  </strong>
 
-            <small>
-              公园、街道与照片
-            </small>
-          </a>
-
-
-          <a
-            href="#"
-            className="archive-card"
-          >
-            <span className="archive-icon">
-              ◫
-            </span>
-
-            <strong>
-              房间物品
-            </strong>
-
-            <small>
-              居住空间的细节
-            </small>
-          </a>
+  <small>
+    公园、街道与照片
+  </small>
+</Link>
 
 
-          <a
-            href="#"
-            className="archive-card"
-          >
-            <span className="archive-icon">
-              ◎
-            </span>
+          <Link
+  href="/room"
+  className="archive-card"
+>
+  <span className="archive-icon">
+    ◫
+  </span>
 
-            <strong>
-              观影档案
-            </strong>
+  <strong>
+    房间物品
+  </strong>
 
-            <small>
-              电影、剧集与感受
-            </small>
-          </a>
+  <small>
+    居住空间的细节
+  </small>
+</Link>
+
+
+          <Link
+  href="/movies"
+  className="archive-card"
+>
+  <span className="archive-icon">
+    ◎
+  </span>
+
+  <strong>
+    观影档案
+  </strong>
+
+  <small>
+    电影、剧集与感受
+  </small>
+</Link>
         </div>
       </section>
 
