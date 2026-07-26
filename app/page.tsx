@@ -3,11 +3,43 @@ import { getPosts } from "@/lib/wordpress";
 
 export const revalidate = 300;
 
+
+function getTodayInfo() {
+  const now = new Date();
+
+  return {
+    date: `${String(now.getMonth() + 1).padStart(2, "0")}.${String(now.getDate()).padStart(2, "0")}`,
+    weekday: now.toLocaleDateString("zh-CN", {
+      weekday: "long"
+    })
+  };
+}
+
+
+function getYearProgress() {
+  const now = new Date();
+
+  const start = new Date(now.getFullYear(), 0, 1);
+  const end = new Date(now.getFullYear() + 1, 0, 1);
+
+  const progress =
+    ((now.getTime() - start.getTime()) /
+      (end.getTime() - start.getTime())) * 100;
+
+  return progress.toFixed(1);
+}
+
+
 export default async function HomePage() {
 
   const posts = await getPosts(4);
 
   const featured = posts[0];
+
+  const today = getTodayInfo();
+
+  const yearProgress = getYearProgress();
+
 
   const cards = [
     {
@@ -38,7 +70,6 @@ export default async function HomePage() {
 
     <main id="top">
 
-
       <div
         className="paper-noise"
         aria-hidden="true"
@@ -46,7 +77,6 @@ export default async function HomePage() {
 
 
       <header className="site-header shell">
-
 
         <Link
           href="/"
@@ -98,7 +128,6 @@ export default async function HomePage() {
 
 
 
-
       <section className="hero shell">
 
 
@@ -127,7 +156,6 @@ export default async function HomePage() {
 
           <div className="hero-actions">
 
-
             <a
               className="button primary"
               href="#notes"
@@ -143,13 +171,10 @@ export default async function HomePage() {
               浏览档案
             </a>
 
-
           </div>
 
 
         </div>
-
-
 
 
 
@@ -164,19 +189,17 @@ export default async function HomePage() {
           <div className="date-block">
 
             <strong>
-              07.25
+              {today.date}
             </strong>
 
             <span>
-              星期六 · 盛夏
+              {today.weekday} · 盛夏
             </span>
 
           </div>
 
 
-
           <dl>
-
 
             <div>
 
@@ -185,7 +208,7 @@ export default async function HomePage() {
               </dt>
 
               <dd>
-                56.4%
+                {yearProgress}%
               </dd>
 
             </div>
@@ -224,19 +247,12 @@ export default async function HomePage() {
 
 
       </section>
-
-
-
-
-
       <section
         id="project"
         className="project shell section-space"
       >
 
-
         <div className="project-copy">
-
 
           <p className="eyebrow">
             LONG-TERM PROJECT
@@ -315,12 +331,18 @@ export default async function HomePage() {
 
 
       </section>
+
+
+
+
       <section
         id="notes"
         className="notes shell section-space"
       >
 
+
         <div className="section-heading">
+
 
           <div>
 
@@ -342,7 +364,9 @@ export default async function HomePage() {
             全部文章 →
           </a>
 
+
         </div>
+
 
 
 
@@ -409,7 +433,7 @@ export default async function HomePage() {
 
 
           {cards.map((card)=>(
-            
+
             <article
               className="post-card small"
               key={card.title}
@@ -451,7 +475,6 @@ export default async function HomePage() {
           ))}
 
 
-
         </div>
 
 
@@ -491,6 +514,7 @@ export default async function HomePage() {
 
 
 
+
         <div className="archive-grid">
 
 
@@ -503,15 +527,20 @@ export default async function HomePage() {
               ♫
             </span>
 
+
             <strong>
               音乐清单
             </strong>
+
 
             <small>
               100 首常听歌曲
             </small>
 
+
           </a>
+
+
 
 
 
@@ -524,15 +553,19 @@ export default async function HomePage() {
               ⌁
             </span>
 
+
             <strong>
               城市散步
             </strong>
+
 
             <small>
               公园、街道与照片
             </small>
 
+
           </a>
+
 
 
 
@@ -546,15 +579,19 @@ export default async function HomePage() {
               ◫
             </span>
 
+
             <strong>
               房间物品
             </strong>
+
 
             <small>
               居住空间的细节
             </small>
 
+
           </a>
+
 
 
 
@@ -568,13 +605,16 @@ export default async function HomePage() {
               ◎
             </span>
 
+
             <strong>
               观影档案
             </strong>
 
+
             <small>
               电影、剧集与感受
             </small>
+
 
           </a>
 
@@ -583,12 +623,6 @@ export default async function HomePage() {
 
 
       </section>
-
-
-
-
-
-
       <section
         id="about"
         className="about shell section-space"
@@ -633,6 +667,7 @@ export default async function HomePage() {
 
 
             <div className="about-links">
+
 
               <a href="mailto:hello@lmn516.com">
                 写信
