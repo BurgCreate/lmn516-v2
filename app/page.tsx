@@ -361,12 +361,12 @@ export default async function HomePage() {
           </div>
 
 
-          <a
+          <Link
             className="text-link"
-            href="https://lmn516.com/"
+            href="/posts"
           >
             全部文章 →
-          </a>
+          </Link>
 
 
         </div>
