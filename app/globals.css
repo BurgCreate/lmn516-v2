@@ -1970,6 +1970,6 @@ html[data-theme="dark"]::-webkit-scrollbar-thumb {
 @media (max-width: 720px) {
   .hero-moment {
     font-size: clamp(36px, 12vw, 54px);
-    line-height: 1.2;
+    line-height: 1.1;
   }
 }
