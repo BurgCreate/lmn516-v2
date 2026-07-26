@@ -8,9 +8,18 @@ export type Post = {
   image: string | null;
 };
 
+export type Moment = {
+  id: number;
+  content: string;
+  date: string;
+  image: string | null;
+};
+
 const WP_URL =
   process.env.WORDPRESS_URL ||
   "https://cms.lmn516.com";
+
+const MOMENTS_CATEGORY_SLUG = "moments";
 
 
 const fallbackPosts: Post[] = [
@@ -50,18 +59,31 @@ const fallbackPosts: Post[] = [
 ];
 
 
+const fallbackMoments: Moment[] = [];
+
+
+/**
+ * 清理 HTML 标签和常见字符实体。
+ */
 function cleanHtml(input: string) {
   return input
     .replace(/<[^>]+>/g, "")
     .replace(/\[&hellip;\]/g, "…")
     .replace(/&hellip;/g, "…")
     .replace(/&nbsp;/g, " ")
+    .replace(/&amp;/g, "&")
     .replace(/&#8217;/g, "’")
     .replace(/&#8220;|&#8221;/g, "“")
     .trim();
 }
 
 
+/**
+ * 格式化正式文章日期。
+ *
+ * 输出示例：
+ * 2026.07.26
+ */
 function formatDate(input: string) {
   const date = new Date(input);
 
@@ -80,15 +102,54 @@ function formatDate(input: string) {
 
 
 /**
+ * 格式化碎碎念时间。
+ *
+ * 输出示例：
+ * 2026.07.26 18:42
+ */
+function formatMomentDate(input: string) {
+  const date = new Date(input);
+
+  if (Number.isNaN(date.getTime())) {
+    return input;
+  }
+
+  const datePart = new Intl.DateTimeFormat(
+    "zh-CN",
+    {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    }
+  )
+    .format(date)
+    .replaceAll("/", ".");
+
+  const timePart = new Intl.DateTimeFormat(
+    "zh-CN",
+    {
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: false,
+    }
+  ).format(date);
+
+  return `${datePart} ${timePart}`;
+}
+
+
+/**
  * 从文章正文中获取第一张图片。
  *
- * 如果文章没有设置“特色图片”，
- * 就自动使用正文中的第一张图片作为封面。
+ * 如果文章没有设置特色图片，
+ * 就自动使用正文中的第一张图片。
  */
 function getFirstContentImage(
   content: string
 ): string | null {
-  if (!content) return null;
+  if (!content) {
+    return null;
+  }
 
   const match = content.match(
     /<img[^>]+src=["']([^"']+)["']/i
@@ -120,6 +181,9 @@ function getPostImage(item: any): string | null {
 }
 
 
+/**
+ * 将 WordPress 返回的数据格式化为正式文章。
+ */
 function formatPost(item: any): Post {
   return {
     id: item.id,
@@ -144,16 +208,90 @@ function formatPost(item: any): Post {
 }
 
 
-// 获取文章列表
+/**
+ * 将 WordPress 返回的数据格式化为碎碎念。
+ *
+ * 前台不显示标题，只使用正文、时间和图片。
+ */
+function formatMoment(item: any): Moment {
+  return {
+    id: item.id,
+
+    content:
+      item.content?.rendered || "",
+
+    date: formatMomentDate(item.date),
+
+    image: getPostImage(item),
+  };
+}
+
+
+/**
+ * 根据分类别名获取 WordPress 分类 ID。
+ *
+ * 例如：
+ * moments → 对应的数字分类 ID
+ */
+async function getCategoryId(
+  slug: string
+): Promise<number | null> {
+  try {
+    const response = await fetch(
+      `${WP_URL}/index.php?rest_route=/wp/v2/categories&slug=${encodeURIComponent(
+        slug
+      )}`,
+      {
+        next: {
+          revalidate: 300,
+        },
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error(
+        "WordPress category API unavailable"
+      );
+    }
+
+    const data = await response.json();
+
+    return data[0]?.id || null;
+  } catch (error) {
+    console.error(
+      `WordPress 分类获取失败：${slug}`,
+      error
+    );
+
+    return null;
+  }
+}
+
+
+/**
+ * 获取正式文章列表。
+ *
+ * 自动排除“碎碎念”分类中的内容。
+ */
 export async function getPosts(
   limit = 8
 ): Promise<Post[]> {
   try {
+    const momentsCategoryId =
+      await getCategoryId(
+        MOMENTS_CATEGORY_SLUG
+      );
+
+    const excludeMoments =
+      momentsCategoryId
+        ? `&categories_exclude=${momentsCategoryId}`
+        : "";
+
     const response = await fetch(
       `${WP_URL}/index.php?rest_route=/wp/v2/posts&per_page=${Math.min(
         limit,
         100
-      )}&_embed=1`,
+      )}&_embed=1${excludeMoments}`,
       {
         next: {
           revalidate: 300,
@@ -181,7 +319,63 @@ export async function getPosts(
 }
 
 
-// 根据 slug 获取单篇文章
+/**
+ * 获取碎碎念列表。
+ *
+ * 只读取 moments 分类中的内容。
+ */
+export async function getMoments(
+  limit = 20
+): Promise<Moment[]> {
+  try {
+    const momentsCategoryId =
+      await getCategoryId(
+        MOMENTS_CATEGORY_SLUG
+      );
+
+    if (!momentsCategoryId) {
+      console.error(
+        "没有找到 moments 分类"
+      );
+
+      return fallbackMoments;
+    }
+
+    const response = await fetch(
+      `${WP_URL}/index.php?rest_route=/wp/v2/posts&categories=${momentsCategoryId}&per_page=${Math.min(
+        limit,
+        100
+      )}&_embed=1`,
+      {
+        next: {
+          revalidate: 300,
+        },
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error(
+        "WordPress moments API unavailable"
+      );
+    }
+
+    const data = await response.json();
+
+    return data.map(formatMoment);
+  } catch (error) {
+    console.error(
+      "WordPress 碎碎念获取失败:",
+      error
+    );
+
+    return fallbackMoments;
+  }
+}
+
+
+/**
+ * 根据 slug 获取单篇正式文章。
+ */
 export async function getPostBySlug(
   slug: string
 ): Promise<Post | null> {
@@ -231,7 +425,9 @@ export async function getPostBySlug(
 }
 
 
-// 根据文章 ID 获取单篇文章
+/**
+ * 根据文章 ID 获取单篇正式文章。
+ */
 export async function getPostById(
   id: number
 ): Promise<Post | null> {
