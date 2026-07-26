@@ -105,7 +105,7 @@ function formatDate(input: string) {
  * 格式化碎碎念时间。
  *
  * 输出示例：
- * 2026.07.26 18:42
+ * 7月26日 18:42
  */
 function formatMomentDate(input: string) {
   const date = new Date(input);
@@ -114,27 +114,16 @@ function formatMomentDate(input: string) {
     return input;
   }
 
-  const datePart = new Intl.DateTimeFormat(
-    "zh-CN",
-    {
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-    }
-  )
-    .format(date)
-    .replaceAll("/", ".");
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
 
-  const timePart = new Intl.DateTimeFormat(
-    "zh-CN",
-    {
-      hour: "2-digit",
-      minute: "2-digit",
-      hour12: false,
-    }
-  ).format(date);
+  const timePart = new Intl.DateTimeFormat("zh-CN", {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  }).format(date);
 
-  return `${datePart} ${timePart}`;
+  return `${month}月${day}日 ${timePart}`;
 }
 
 

@@ -1,10 +1,12 @@
 import Link from "next/link";
 import ThemeToggle from "@/components/ThemeToggle";
 import RandomPhotoWall from "@/components/RandomPhotoWall";
+import MomentBubble from "@/components/MomentBubble";
 import {
   getPosts,
   getPostById,
   getMediaImages,
+  getMoments,
 } from "@/lib/wordpress";
 
 export const revalidate = 300;
@@ -102,15 +104,13 @@ ${String(parsedDate.getDate()).padStart(2, "0")}`;
 
 export default async function HomePage() {
 
-  const [posts, mediaImages] =
+  const [posts, mediaImages, moments] = await Promise.all([
+  getPosts(20),
+  getMediaImages(100),
+  getMoments(1),
+]);
 
-  await Promise.all([
-
-    getPosts(20),
-
-    getMediaImages(100),
-
-  ]);
+const latestMoment = moments[0];
 
   const featured = posts[0];
   const cards = posts.slice(1, 4);
@@ -614,7 +614,14 @@ export default async function HomePage() {
         </div>
       </section>
 
+{latestMoment && (
 
+  <MomentBubble
+  content={latestMoment.content}
+  date={latestMoment.date}
+/>
+
+)}
 
       {/* 页脚 */}
       <footer className="site-footer shell">

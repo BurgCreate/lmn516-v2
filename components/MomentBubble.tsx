@@ -4,10 +4,12 @@ import { useState } from "react";
 
 type MomentBubbleProps = {
   content: string;
+  date: string;
 };
 
 export default function MomentBubble({
   content,
+  date,
 }: MomentBubbleProps) {
   const [isMoving, setIsMoving] = useState(false);
 
@@ -38,6 +40,10 @@ export default function MomentBubble({
           __html: content,
         }}
       />
+
+      <small className="moment-bubble-time">
+        {date}
+      </small>
     </button>
   );
 }
