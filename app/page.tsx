@@ -505,22 +505,33 @@ export default async function HomePage() {
 
 
         <div className="archive-grid">
-          <a
-            href="#"
-            className="archive-card"
-          >
-            <span className="archive-icon">
-              ♫
-            </span>
+          <Link
 
-            <strong>
-              音乐清单
-            </strong>
+  href="/music"
 
-            <small>
-              反复播放的声音
-            </small>
-          </a>
+  className="archive-card"
+
+>
+
+  <span className="archive-icon">
+
+    ♫
+
+  </span>
+
+  <strong>
+
+    音乐清单
+
+  </strong>
+
+  <small>
+
+    反复播放的声音
+
+  </small>
+
+</Link>
 
 
           <a
