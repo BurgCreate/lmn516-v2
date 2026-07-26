@@ -135,24 +135,29 @@ main,
 }
 
 .brand {
-  display: flex;
-  align-items: baseline;
-  gap: 4px;
+  display: inline-flex;
+  align-items: center;
 
-  font-family: Inter, sans-serif;
-  font-weight: 600;
-  letter-spacing: -0.05em;
+  color: var(--text);
+
+  font-family:
+    Inter,
+    Arial,
+    sans-serif;
+
+  font-size: 28px;
+  font-weight: 650;
+  line-height: 1;
+  letter-spacing: -0.045em;
+
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
 }
 
-.brand-mark {
-  font-size: 22px;
-}
-
-.brand-number {
-  color: var(--muted);
-
-  font-size: 12px;
-  letter-spacing: 0.08em;
+.brand:hover {
+  opacity: 0.72;
+  transform: translateY(-1px);
 }
 
 .nav {

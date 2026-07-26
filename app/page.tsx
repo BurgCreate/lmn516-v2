@@ -138,18 +138,12 @@ export default async function HomePage() {
       {/* 顶部导航 */}
       <header className="site-header shell">
         <Link
-          href="/"
-          className="brand"
-          aria-label="LMN516 首页"
-        >
-          <span className="brand-mark">
-            LMN
-          </span>
-
-          <span className="brand-number">
-            516
-          </span>
-        </Link>
+  href="/"
+  className="brand"
+  aria-label="LMN516 首页"
+>
+  LMN516
+</Link>
 
 
         <nav
