@@ -1,10 +1,9 @@
 import Link from "next/link";
 import ThemeToggle from "@/components/ThemeToggle";
-import MomentBubble from "@/components/MomentBubble";
+import RandomPhotoWall from "@/components/RandomPhotoWall";
 import {
   getPosts,
   getPostById,
-  getMoments,
 } from "@/lib/wordpress";
 
 export const revalidate = 300;
@@ -102,18 +101,27 @@ ${String(parsedDate.getDate()).padStart(2, "0")}`;
 
 export default async function HomePage() {
 
-  const [posts, moments] = await Promise.all([
-
-    getPosts(4),
-
-    getMoments(1),
-
-  ]);
-
-  const latestMoment = moments[0];
+  const posts = await getPosts(20);
 
   const featured = posts[0];
   const cards = posts.slice(1, 4);
+const photoPosts = posts
+
+  .filter((post) => post.image)
+
+  .map((post) => ({
+
+    id: post.id,
+
+    slug: post.slug,
+
+    title: post.title,
+
+    image: post.image,
+
+    date: post.date,
+
+  }));
 
   const pushupPost = await getPostById(347);
 
@@ -186,44 +194,28 @@ export default async function HomePage() {
 
       {/* 卷首 */}
       <section className="hero shell">
-        <div className="hero-copy">
-          <p className="eyebrow">
-  今日片段
-</p>
+       <div className="hero-photo-area">
+  <div className="hero-photo-heading">
+    <div>
+      <p className="eyebrow">
+        随机翻阅
+      </p>
 
-{latestMoment ? (
-  <MomentBubble content={latestMoment.content} />
-) : (
-  <h1>
-    把普通日子，
-    <br />
-    认真存档。
-  </h1>
-)}
+      <h1>
+        生活留下的片段
+      </h1>
+    </div>
 
-<p className="intro">
-  {latestMoment
-    ? latestMoment.date
-    : "这里是 Mo 的个人生活杂志。"}
-</p>
+    <Link
+      className="text-link"
+      href="/posts"
+    >
+      全部文章 →
+    </Link>
+  </div>
 
-
-          <div className="hero-actions">
-            <a
-              className="button primary"
-              href="#notes"
-            >
-              阅读本期
-            </a>
-
-            <a
-              className="button ghost"
-              href="#archive"
-            >
-              翻阅收藏
-            </a>
-          </div>
-        </div>
+  <RandomPhotoWall posts={photoPosts} />
+</div>
 
 
 
