@@ -65,29 +65,7 @@ export default async function HomePage() {
 
 
 
-  const cards = [
-    {
-      title: "寻找夏天的感觉 🍺",
-      date: "2026.06.29 · 周记",
-      visual: "06<br>29",
-      text: "生日、时间、世界杯与夏天。27 岁的日子，继续向前。",
-      color: "visual-yellow"
-    },
-    {
-      title: "AI 时代浪潮 🌊",
-      date: "2026.05.14 · 周记",
-      visual: "AI<br>ERA",
-      text: "网站续费、散步、旅行视频，以及这个快速变化的时代。",
-      color: "visual-blue"
-    },
-    {
-      title: "昆明游记 🌸",
-      date: "2026.04.10 · 旅行",
-      visual: "昆明<br>春",
-      text: "第一次去云南，滇池、翠湖和一座春天很长的城市。",
-      color: "visual-green"
-    }
-  ];
+  const cards = posts.slice(1, 4);
 
 
   return (
@@ -457,51 +435,60 @@ export default async function HomePage() {
 
         <div className="post-grid">
 
+  {cards.map((post, index) => (
 
-          {cards.map((card)=>(
+    <article
+      className="post-card small"
+      key={post.id}
+    >
 
-            <article
-              className="post-card small"
-              key={card.title}
-            >
+      <div
+        className={`post-visual ${
+          index === 0
+            ? "visual-yellow"
+            : index === 1
+              ? "visual-blue"
+              : "visual-green"
+        }`}
+      >
+        <span>
+          {new Date(post.date).toLocaleDateString("zh-CN", {
+            month: "2-digit",
+            day: "2-digit"
+          })}
+        </span>
+      </div>
 
+      <div className="post-content">
 
-              <div
-                className={`post-visual ${card.color}`}
-                dangerouslySetInnerHTML={{
-                  __html: card.visual
-                }}
-              />
+        <p className="post-meta">
+          {new Date(post.date).toLocaleDateString("zh-CN")}
+        </p>
 
+        <h3>
+          <Link href={`/posts/${post.slug}`}>
+            {post.title}
+          </Link>
+        </h3>
 
-              <div className="post-content">
+        <p>
+          {post.excerpt}
+        </p>
 
+        <Link
+          className="text-link"
+          href={`/posts/${post.slug}`}
+        >
+          继续阅读 →
+        </Link>
 
-                <p className="post-meta">
-                  {card.date}
-                </p>
+      </div>
 
+    </article>
 
-                <h3>
-                  {card.title}
-                </h3>
+  ))}
 
-
-                <p>
-                  {card.text}
-                </p>
-
-
-              </div>
-
-
-            </article>
-
-
-          ))}
-
-
-        </div>
+</div>
 
 
 
