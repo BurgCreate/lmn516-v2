@@ -6,32 +6,44 @@ export default function ThemeToggle() {
   const [dark, setDark] = useState(false);
 
   useEffect(() => {
-    const saved = localStorage.getItem("lmn516-theme");
+    const savedTheme = localStorage.getItem("lmn516-theme");
+    const isDark = savedTheme === "dark";
 
-    if (saved === "dark") {
-      document.body.classList.add("dark");
-      setDark(true);
-    }
+    document.documentElement.setAttribute(
+      "data-theme",
+      isDark ? "dark" : "light"
+    );
+
+    document.body.classList.toggle("dark", isDark);
+
+    setDark(isDark);
   }, []);
 
   function toggleTheme() {
-    const next = !dark;
+    const nextDark = !dark;
 
-    setDark(next);
+    setDark(nextDark);
 
-    document.body.classList.toggle("dark", next);
+    document.documentElement.setAttribute(
+      "data-theme",
+      nextDark ? "dark" : "light"
+    );
+
+    document.body.classList.toggle("dark", nextDark);
 
     localStorage.setItem(
       "lmn516-theme",
-      next ? "dark" : "light"
+      nextDark ? "dark" : "light"
     );
   }
 
   return (
     <button
       className="theme-toggle"
-      onClick={toggleTheme}
       type="button"
+      onClick={toggleTheme}
+      aria-label={dark ? "切换到浅色模式" : "切换到深色模式"}
+      title={dark ? "切换到浅色模式" : "切换到深色模式"}
     >
       {dark ? "☀︎" : "◐"}
     </button>
