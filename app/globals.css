@@ -1973,3 +1973,69 @@ html[data-theme="dark"]::-webkit-scrollbar-thumb {
     line-height: 1.2;
   }
 }
+.moment-bubble {
+  display: inline-block;
+  position: relative;
+  max-width: min(620px, 100%);
+  margin: 18px 0;
+  padding: 18px 28px;
+
+  border: 1px solid rgba(32, 36, 31, 0.08);
+  border-radius: 999px;
+
+  background: rgba(255, 255, 255, 0.62);
+  color: var(--text);
+
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  box-shadow:
+    0 12px 30px rgba(32, 36, 31, 0.07);
+
+  animation: moment-float 7s ease-in-out infinite;
+}
+
+.moment-bubble-content,
+.moment-bubble-content p {
+  margin: 0;
+  font-size: clamp(24px, 3.6vw, 34px);
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.moment-bubble-active {
+  animation: moment-pop 0.7s ease;
+}
+
+@keyframes moment-float {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+
+  50% {
+    transform: translate(4px, -9px);
+  }
+}
+
+@keyframes moment-pop {
+  0% {
+    transform: scale(1);
+  }
+
+  30% {
+    transform: translateY(-14px) scale(0.95) rotate(1deg);
+  }
+
+  60% {
+    transform: translateY(-4px) scale(1.05) rotate(-1deg);
+  }
+
+  100% {
+    transform: translateY(0) scale(1);
+  }
+}

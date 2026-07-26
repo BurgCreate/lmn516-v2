@@ -1,5 +1,6 @@
 import Link from "next/link";
 import ThemeToggle from "@/components/ThemeToggle";
+import MomentBubble from "@/components/MomentBubble";
 import {
   getPosts,
   getPostById,
@@ -191,12 +192,7 @@ export default async function HomePage() {
 </p>
 
 {latestMoment ? (
-  <div
-    className="hero-moment"
-    dangerouslySetInnerHTML={{
-      __html: latestMoment.content,
-    }}
-  />
+  <MomentBubble content={latestMoment.content} />
 ) : (
   <h1>
     把普通日子，
