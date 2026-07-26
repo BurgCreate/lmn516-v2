@@ -1,4 +1,5 @@
 import Link from "next/link";
+import ThemeToggle from "@/components/ThemeToggle";
 import {
   getPosts,
   getPostById,
@@ -118,12 +119,7 @@ export default async function HomePage() {
         </nav>
 
 
-        <button
-          className="theme-toggle"
-          type="button"
-        >
-          ◐
-        </button>
+        <ThemeToggle />
 
 
       </header>

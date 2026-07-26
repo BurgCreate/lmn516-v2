@@ -1081,30 +1081,283 @@ h2 {
    深色模式
 =========================== */
 
-body.dark {
+/*
+  同时兼容两种切换方式：
+
+  document.body.classList.add("dark");
+
+  或：
+
+  document.documentElement.dataset.theme = "dark";
+*/
+
+body.dark,
+html[data-theme="dark"] body {
   color-scheme: dark;
 
-  --bg: #191c19;
-  --paper: rgba(255, 255, 255, 0.045);
-  --text: #ecebe4;
-  --muted: #a7aaa3;
-  --line: rgba(255, 255, 255, 0.12);
-  --accent: #9cc5bd;
-  --accent-soft: #253a36;
-  --shadow: 0 20px 60px rgba(0, 0, 0, 0.22);
+  --bg: #171a18;
+  --paper: rgba(38, 43, 39, 0.68);
+  --text: #ebeae3;
+  --muted: #a4aaa2;
+  --line: rgba(235, 234, 227, 0.12);
+  --accent: #92bdb5;
+  --accent-soft: rgba(76, 113, 105, 0.28);
+  --shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+
+  background:
+    radial-gradient(
+      circle at 15% 10%,
+      rgba(92, 126, 117, 0.08),
+      transparent 34%
+    ),
+    radial-gradient(
+      circle at 85% 75%,
+      rgba(80, 95, 86, 0.06),
+      transparent 38%
+    ),
+    var(--bg);
+
+  color: var(--text);
 }
 
-body.dark .archive-card {
-  background: rgba(255, 255, 255, 0.025);
+
+/* 宣纸纹理在夜间减弱，避免画面发脏 */
+body.dark .paper-noise,
+html[data-theme="dark"] .paper-noise {
+  opacity: 0.07;
+  filter: invert(1);
+  mix-blend-mode: screen;
 }
 
-body.dark .button.primary {
+
+/* 顶部导航 */
+body.dark .site-header,
+html[data-theme="dark"] .site-header {
+  background: rgba(23, 26, 24, 0.72);
+
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+}
+
+
+/* 黑暗模式切换按钮 */
+body.dark .theme-toggle,
+html[data-theme="dark"] .theme-toggle {
+  background: rgba(255, 255, 255, 0.035);
+}
+
+body.dark .theme-toggle:hover,
+html[data-theme="dark"] .theme-toggle:hover {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+}
+
+
+/* 主要按钮 */
+body.dark .button.primary,
+html[data-theme="dark"] .button.primary {
   background: var(--text);
   color: var(--bg);
 }
 
-body.dark .article-body code {
-  background: rgba(156, 197, 189, 0.1);
+body.dark .button.primary:hover,
+html[data-theme="dark"] .button.primary:hover {
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.35);
+}
+
+body.dark .button.ghost,
+html[data-theme="dark"] .button.ghost {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+
+/* 今日卡片 */
+body.dark .today-card,
+html[data-theme="dark"] .today-card {
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.055),
+      rgba(255, 255, 255, 0.025)
+    );
+
+  box-shadow:
+    0 24px 70px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+
+/* 俯卧撑进度面板 */
+body.dark .progress-panel,
+html[data-theme="dark"] .progress-panel {
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.045),
+      rgba(255, 255, 255, 0.02)
+    );
+}
+
+body.dark .progress-track,
+html[data-theme="dark"] .progress-track {
+  background: rgba(146, 189, 181, 0.12);
+}
+
+
+/* 首页文章卡片 */
+body.dark .post-card,
+html[data-theme="dark"] .post-card {
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.045),
+      rgba(255, 255, 255, 0.018)
+    );
+}
+
+body.dark .post-card:hover,
+html[data-theme="dark"] .post-card:hover {
+  border-color: rgba(146, 189, 181, 0.3);
+
+  box-shadow:
+    0 22px 70px rgba(0, 0, 0, 0.32),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+
+/* 生活档案卡片 */
+body.dark .archive-card,
+html[data-theme="dark"] .archive-card {
+  background: rgba(255, 255, 255, 0.025);
+}
+
+body.dark .archive-card:hover,
+html[data-theme="dark"] .archive-card:hover {
+  background: var(--accent-soft);
+  border-color: rgba(146, 189, 181, 0.26);
+}
+
+
+/* 文章正文代码 */
+body.dark .article-body code,
+html[data-theme="dark"] .article-body code {
+  background: rgba(146, 189, 181, 0.11);
+}
+
+body.dark .article-body pre,
+html[data-theme="dark"] .article-body pre {
+  background: rgba(255, 255, 255, 0.035);
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.03),
+    0 12px 40px rgba(0, 0, 0, 0.16);
+}
+
+
+/* 表格表头 */
+body.dark .article-body th,
+html[data-theme="dark"] .article-body th {
+  background: rgba(255, 255, 255, 0.045);
+}
+
+
+/* 引用 */
+body.dark .article-body blockquote,
+html[data-theme="dark"] .article-body blockquote {
+  background: rgba(146, 189, 181, 0.035);
+}
+
+
+/* 图片在夜间稍微降低亮度，避免突然刺眼 */
+body.dark .article-body img,
+html[data-theme="dark"] .article-body img {
+  filter: brightness(0.9) contrast(0.97);
+
+  box-shadow: 0 16px 50px rgba(0, 0, 0, 0.16);
+
+  transition:
+    filter 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+body.dark .article-body img:hover,
+html[data-theme="dark"] .article-body img:hover {
+  filter: brightness(1) contrast(1);
+}
+
+
+/* 首页彩色封面稍微降低亮度 */
+body.dark .post-visual,
+html[data-theme="dark"] .post-visual {
+  filter: brightness(0.86) saturate(0.88);
+}
+
+
+/* 输入框与表单 */
+body.dark input,
+body.dark textarea,
+body.dark select,
+html[data-theme="dark"] input,
+html[data-theme="dark"] textarea,
+html[data-theme="dark"] select {
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--line);
+}
+
+body.dark input::placeholder,
+body.dark textarea::placeholder,
+html[data-theme="dark"] input::placeholder,
+html[data-theme="dark"] textarea::placeholder {
+  color: var(--muted);
+}
+
+
+/* 文字选中状态 */
+body.dark ::selection,
+html[data-theme="dark"] ::selection {
+  color: var(--text);
+  background: rgba(146, 189, 181, 0.28);
+}
+
+
+/* 浏览器自动填充输入框 */
+body.dark input:-webkit-autofill,
+body.dark textarea:-webkit-autofill,
+html[data-theme="dark"] input:-webkit-autofill,
+html[data-theme="dark"] textarea:-webkit-autofill {
+  -webkit-text-fill-color: var(--text);
+  box-shadow: 0 0 0 1000px #202522 inset;
+}
+
+
+/* 滚动条 */
+body.dark,
+html[data-theme="dark"] {
+  scrollbar-color: rgba(146, 189, 181, 0.34) transparent;
+}
+
+body.dark::-webkit-scrollbar,
+html[data-theme="dark"]::-webkit-scrollbar {
+  width: 10px;
+}
+
+body.dark::-webkit-scrollbar-track,
+html[data-theme="dark"]::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+body.dark::-webkit-scrollbar-thumb,
+html[data-theme="dark"]::-webkit-scrollbar-thumb {
+  border: 3px solid transparent;
+  border-radius: 999px;
+
+  background:
+    linear-gradient(
+      rgba(146, 189, 181, 0.34),
+      rgba(146, 189, 181, 0.34)
+    )
+    padding-box;
 }
 
 /* ===========================
