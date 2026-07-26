@@ -514,16 +514,24 @@ h2 {
 }
 
 .post-visual {
+  position: relative;
   min-height: 230px;
-  padding: 28px;
+  padding: 0;
 
   display: flex;
   align-items: flex-end;
+
+  overflow: hidden;
 
   font-family: Inter, sans-serif;
   font-size: 44px;
   line-height: 0.95;
   letter-spacing: -0.06em;
+}
+
+/* 没有图片时，日期文字仍保留原来的间距 */
+.post-visual > span {
+  padding: 28px;
 }
 
 .visual-summer {
@@ -1604,14 +1612,15 @@ html[data-theme="dark"]::-webkit-scrollbar-thumb {
     scroll-behavior: auto !important;
   }
 }
-.post-visual {
-  position: relative;
-  overflow: hidden;
-}
-
 .post-image {
+  position: absolute;
+  inset: 0;
+
   width: 100%;
   height: 100%;
+
   display: block;
+
   object-fit: cover;
+  object-position: center;
 }
