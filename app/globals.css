@@ -1946,10 +1946,21 @@ html[data-theme="dark"]::-webkit-scrollbar-thumb {
   max-width: 760px;
   margin: 0;
 
-  font-size: clamp(42px, 7vw, 76px);
-  font-weight: 700;
-  line-height: 1.18;
-  letter-spacing: -0.035em;
+  font-size: clamp(28px, 4vw, 38px);
+  font-weight: 600;
+  line-height: 1.5;
+  letter-spacing: -0.02em;
+}
+
+.hero-moment p {
+  margin: 0;
+}
+
+@media (max-width: 720px) {
+  .hero-moment {
+    font-size: clamp(24px, 6vw, 30px);
+    line-height: 1.45;
+  }
 }
 
 .hero-moment p {
