@@ -4,6 +4,7 @@ import RandomPhotoWall from "@/components/RandomPhotoWall";
 import {
   getPosts,
   getPostById,
+  getMediaImages,
 } from "@/lib/wordpress";
 
 export const revalidate = 300;
@@ -101,27 +102,18 @@ ${String(parsedDate.getDate()).padStart(2, "0")}`;
 
 export default async function HomePage() {
 
-  const posts = await getPosts(20);
+  const [posts, mediaImages] =
+
+  await Promise.all([
+
+    getPosts(20),
+
+    getMediaImages(100),
+
+  ]);
 
   const featured = posts[0];
   const cards = posts.slice(1, 4);
-const photoPosts = posts
-
-  .filter((post) => post.image)
-
-  .map((post) => ({
-
-    id: post.id,
-
-    slug: post.slug,
-
-    title: post.title,
-
-    image: post.image,
-
-    date: post.date,
-
-  }));
 
   const pushupPost = await getPostById(347);
 
@@ -196,25 +188,22 @@ const photoPosts = posts
       <section className="hero shell">
        <div className="hero-photo-area">
   <div className="hero-photo-heading">
-    <div>
-      <p className="eyebrow">
-        随机翻阅
-      </p>
+  <div>
+    <p className="eyebrow">
+      随机翻阅
+    </p>
 
-      <h1>
-        生活留下的片段
-      </h1>
-    </div>
-
-    <Link
-      className="text-link"
-      href="/posts"
-    >
-      全部文章 →
-    </Link>
+    <h1>
+      生活留下的片段
+    </h1>
   </div>
 
-  <RandomPhotoWall posts={photoPosts} />
+  <span className="photo-auto-note">
+    每 8 秒自动更换
+  </span>
+</div>
+
+<RandomPhotoWall images={mediaImages} />
 </div>
 
 

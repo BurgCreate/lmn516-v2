@@ -463,3 +463,62 @@ export async function getPostById(
     );
   }
 }
+
+export type MediaImage = {
+  id: number;
+  sourceUrl: string;
+  alt: string;
+  caption: string;
+  date: string;
+};
+
+export async function getMediaImages(
+  count = 100
+): Promise<MediaImage[]> {
+  try {
+    const response = await fetch(
+      `${WP_URL}/index.php?rest_route=/wp/v2/media&media_type=image&per_page=${Math.min(
+        count,
+        100
+      )}`,
+      {
+        next: {
+          revalidate: 300,
+        },
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error(
+        "WordPress 媒体库 API unavailable"
+      );
+    }
+
+    const media = await response.json();
+
+    return media
+      .filter(
+        (item: any) =>
+          typeof item.source_url === "string" &&
+          item.source_url.length > 0
+      )
+      .map((item: any) => ({
+        id: item.id,
+        sourceUrl: item.source_url,
+        alt:
+          cleanHtml(item.alt_text || "") ||
+          "生活照片",
+        caption: cleanHtml(
+          item.caption?.rendered || ""
+        ),
+        date: formatDate(item.date),
+      }));
+  } catch (error) {
+    console.error(
+      "WordPress 媒体库获取失败:",
+      error
+    );
+
+    return [];
+  }
+}
