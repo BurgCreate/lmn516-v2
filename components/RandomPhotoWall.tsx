@@ -53,7 +53,7 @@ export default function RandomPhotoWall({
 
     const timer = window.setInterval(() => {
       showRandomImage();
-    }, 8000);
+    }, 12000);
 
     return () => {
       window.clearInterval(timer);
