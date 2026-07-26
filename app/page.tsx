@@ -376,15 +376,23 @@ export default async function HomePage() {
           <article className="featured-post post-card">
 
 
-            <div className="post-visual visual-summer">
+           <div className="post-visual visual-summer">
 
-              <span>
-                盛夏
-                <br />
-                2026
-              </span>
+  {featured.image ? (
+    <img
+      src={featured.image}
+      alt={featured.title}
+      className="post-image"
+    />
+  ) : (
+    <span>
+      盛夏
+      <br />
+      2026
+    </span>
+  )}
 
-            </div>
+</div>
 
 
 
@@ -445,21 +453,29 @@ export default async function HomePage() {
     >
 
       <div
-        className={`post-visual ${
-          index === 0
-            ? "visual-yellow"
-            : index === 1
-              ? "visual-blue"
-              : "visual-green"
-        }`}
-      >
-        <span>
-          {new Date(post.date).toLocaleDateString("zh-CN", {
-            month: "2-digit",
-            day: "2-digit"
-          })}
-        </span>
-      </div>
+  className={`post-visual ${
+    index === 0
+      ? "visual-yellow"
+      : index === 1
+        ? "visual-blue"
+        : "visual-green"
+  }`}
+>
+  {post.image ? (
+    <img
+      src={post.image}
+      alt={post.title}
+      className="post-image"
+    />
+  ) : (
+    <span>
+      {new Date(post.date).toLocaleDateString("zh-CN", {
+        month: "2-digit",
+        day: "2-digit"
+      })}
+    </span>
+  )}
+</div>
 
       <div className="post-content">
 
