@@ -32,7 +32,7 @@ const fallbackPosts: Post[] = [
   {
     id: 347,
     slug: "yi-wan-ge-fu-wo-cheng",
-    title: "一万个俯卧撑💪",
+    title: "一万个俯卧撑💪，已完成1833个",
     excerpt: "一个长期进行中的身体计划，也是关于耐心的记录。",
     content:
       "<p>连接成功后，这里会自动显示你的真实正文。</p>",

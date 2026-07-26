@@ -1,5 +1,8 @@
 import Link from "next/link";
-import { getPosts } from "@/lib/wordpress";
+import {
+  getPosts,
+  getPostBySlug,
+} from "@/lib/wordpress";
 
 export const revalidate = 300;
 
@@ -36,15 +39,32 @@ export default async function HomePage() {
 
   const featured = posts[0];
 
+  const pushupPost = await getPostBySlug(
+    "yi-wan-ge-fu-wo-cheng"
+  );
+
+  const pushupMatch = pushupPost?.title.match(
+    /已完成\s*([\d,]+)\s*个/
+  );
+
+  const pushups = pushupMatch
+    ? Number(pushupMatch[1].replace(/,/g, ""))
+    : 0;
+   
+  const target = 10000;
+
+  const pushupProgress =
+   target > 0
+     ? ((pushups / target) * 100).toFixed(2)
+     : "0.00";
+
+  const remaining = Math.max(target - pushups, 0);
+
   const today = getTodayInfo();
 
   const yearProgress = getYearProgress();
-  
-  const pushups = 1833;
-  const target = 10000;
 
-  const pushupProgress = ((pushups / target) * 100).toFixed(2);
-  const remaining = target - pushups;
+
 
 
   const cards = [
