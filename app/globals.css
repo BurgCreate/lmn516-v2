@@ -2203,3 +2203,64 @@ html[data-theme="dark"] .moment-bubble:hover {
     transform: none;
   }
 }
+
+/* ===========================
+   页面切换动画
+=========================== */
+
+body {
+  transition:
+    opacity 0.42s ease,
+    transform 0.42s ease,
+    filter 0.42s ease;
+}
+
+html.page-leaving body {
+  opacity: 0;
+  transform: scale(0.985);
+  filter: blur(3px);
+  pointer-events: none;
+}
+
+html.page-entering body {
+  animation: page-enter 0.55s ease both;
+}
+
+.moment-bubble-leaving {
+  transform: scale(1.08);
+  opacity: 0.72;
+
+  transition:
+    transform 0.42s ease,
+    opacity 0.42s ease;
+}
+
+@keyframes page-enter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+    filter: blur(3px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body,
+  .moment-bubble-leaving {
+    transition: none;
+  }
+
+  html.page-entering body {
+    animation: none;
+  }
+
+  html.page-leaving body {
+    transform: none;
+    filter: none;
+  }
+}
