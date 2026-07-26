@@ -1,7 +1,7 @@
 import Link from "next/link";
 import {
   getPosts,
-  getPostBySlug,
+  getPostById,
 } from "@/lib/wordpress";
 
 export const revalidate = 300;
@@ -39,9 +39,7 @@ export default async function HomePage() {
 
   const featured = posts[0];
 
-  const pushupPost = await getPostBySlug(
-    "yi-wan-ge-fu-wo-cheng"
-  );
+  const pushupPost = await getPostById(347);
 
   const pushupMatch = pushupPost?.title.match(
     /已完成\s*([\d,]+)\s*个/

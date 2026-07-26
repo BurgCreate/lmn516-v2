@@ -210,3 +210,52 @@ export async function getPostBySlug(
   }
 
 }
+// 根据文章 ID 获取单篇文章
+export async function getPostById(
+  id: number
+): Promise<Post | null> {
+  try {
+    const response = await fetch(
+      `${WP_URL}/index.php?rest_route=/wp/v2/posts/${id}&_fields=id,slug,date,title,excerpt,content`,
+      {
+        next: {
+          revalidate: 300,
+        },
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("WordPress API unavailable");
+    }
+
+    const item = await response.json();
+
+    return {
+      id: item.id,
+      slug: item.slug,
+
+      title: cleanHtml(
+        item.title.rendered
+      ),
+
+      excerpt: cleanHtml(
+        item.excerpt.rendered
+      ).slice(0, 120),
+
+      content: item.content.rendered,
+
+      date: formatDate(item.date),
+    };
+  } catch (error) {
+    console.error(
+      "WordPress 按 ID 获取失败:",
+      error
+    );
+
+    return (
+      fallbackPosts.find(
+        (post) => post.id === id
+      ) || null
+    );
+  }
+}
