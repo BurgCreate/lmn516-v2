@@ -405,9 +405,15 @@ export default async function HomePage() {
               </h3>
 
 
-              <p>
-                {featured.excerpt}
-              </p>
+             <p>
+
+  {(featured.excerpt ?? "")
+
+    .replace(/\[&hellip;\]/g, "")
+
+    .replace(/&hellip;/g, "…")}
+
+</p>
 
 
               <Link
@@ -467,10 +473,15 @@ export default async function HomePage() {
           </Link>
         </h3>
 
-        <p>
-          {post.excerpt}
-        </p>
+       <p>
 
+  {(post.excerpt ?? "")
+
+    .replace(/\[&hellip;\]/g, "")
+
+    .replace(/&hellip;/g, "…")}
+
+</p>
         <Link
           className="text-link"
           href={`/posts/${post.slug}`}
