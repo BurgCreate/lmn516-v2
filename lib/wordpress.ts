@@ -44,7 +44,7 @@ const fallbackPosts: Post[] = [
 function cleanHtml(input: string) {
   return input
     .replace(/<[^>]+>/g, "")
-    .replace(/\[&hellip;\]/g, "")
+    .replace(/\[&hellip;\]/g, "…")
     .replace(/&hellip;/g, "…")
     .replace(/&nbsp;/g, " ")
     .replace(/&#8217;/g, "’")
