@@ -3,6 +3,7 @@ import ThemeToggle from "@/components/ThemeToggle";
 import {
   getPosts,
   getPostById,
+  getMoments,
 } from "@/lib/wordpress";
 
 export const revalidate = 300;
@@ -99,7 +100,16 @@ ${String(parsedDate.getDate()).padStart(2, "0")}`;
 
 
 export default async function HomePage() {
-  const posts = await getPosts(4);
+
+  const [posts, moments] = await Promise.all([
+
+    getPosts(4),
+
+    getMoments(1),
+
+  ]);
+
+  const latestMoment = moments[0];
 
   const featured = posts[0];
   const cards = posts.slice(1, 4);
@@ -177,23 +187,29 @@ export default async function HomePage() {
       <section className="hero shell">
         <div className="hero-copy">
           <p className="eyebrow">
-            今日片段
-          </p>
+  今日片段
+</p>
 
+{latestMoment ? (
+  <div
+    className="hero-moment"
+    dangerouslySetInnerHTML={{
+      __html: latestMoment.content,
+    }}
+  />
+) : (
+  <h1>
+    把普通日子，
+    <br />
+    认真存档。
+  </h1>
+)}
 
-          <h1>
-            把普通日子，
-            <br />
-            认真存档。
-          </h1>
-
-
-          <p className="intro">
-            这里是 Mo 的个人生活杂志。
-            记录周记、旅行、影像、音乐，
-            以及一些看起来没什么用、
-            但多年以后一定会很珍贵的事情。
-          </p>
+<p className="intro">
+  {latestMoment
+    ? latestMoment.date
+    : "这里是 Mo 的个人生活杂志。"}
+</p>
 
 
           <div className="hero-actions">

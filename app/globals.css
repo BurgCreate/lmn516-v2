@@ -1940,3 +1940,25 @@ html[data-theme="dark"]::-webkit-scrollbar-thumb {
     margin-top: 14px;
   }
 }
+/* 首页最新 Moment */
+
+.hero-moment {
+  max-width: 760px;
+  margin: 0;
+
+  font-size: clamp(42px, 7vw, 76px);
+  font-weight: 700;
+  line-height: 1.18;
+  letter-spacing: -0.035em;
+}
+
+.hero-moment p {
+  margin: 0;
+}
+
+@media (max-width: 720px) {
+  .hero-moment {
+    font-size: clamp(36px, 12vw, 54px);
+    line-height: 1.2;
+  }
+}
