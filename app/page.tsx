@@ -39,6 +39,12 @@ export default async function HomePage() {
   const today = getTodayInfo();
 
   const yearProgress = getYearProgress();
+  
+  const pushups = 1833;
+  const target = 10000;
+
+  const pushupProgress = ((pushups / target) * 100).toFixed(2);
+  const remaining = target - pushups;
 
 
   const cards = [
@@ -234,7 +240,7 @@ export default async function HomePage() {
               </dt>
 
               <dd>
-                1,833 / 10,000
+                {pushups.toLocaleString()} / {target.toLocaleString()}
               </dd>
 
             </div>
@@ -290,11 +296,11 @@ export default async function HomePage() {
           <div className="progress-number">
 
             <strong>
-              1,833
+              {pushups.toLocaleString()}
             </strong>
 
             <span>
-              / 10,000
+              / {target.toLocaleString()}
             </span>
 
 
@@ -306,7 +312,7 @@ export default async function HomePage() {
 
             <span
               style={{
-                width:"18.33%"
+                width: `${pushupProgress}%`
               }}
             />
 
@@ -317,11 +323,11 @@ export default async function HomePage() {
           <div className="progress-meta">
 
             <span>
-              已完成 18.33%
+              已完成 {pushupProgress}%
             </span>
 
             <span>
-              剩余 8,167
+              剩余 {remaining.toLocaleString()}
             </span>
 
           </div>
