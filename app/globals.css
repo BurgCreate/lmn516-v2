@@ -2412,45 +2412,24 @@ html[data-theme="dark"] .photo-wall-item:hover img {
 =========================== */
 
 .hero {
+
   min-height: auto;
+
   grid-template-columns: 1fr;
+
   align-items: stretch;
+
   gap: 36px;
-  padding-block: 72px;
+
+  padding-block: 48px 72px;
+
 }
 
 .hero-photo-area {
   min-width: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
+  width: 100%;
 }
 
-.hero-photo-heading {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 24px;
-}
-
-.hero-photo-heading .eyebrow {
-  margin-bottom: 10px;
-}
-
-.hero-photo-heading h1 {
-  margin: 0;
-  font-size: clamp(36px, 5vw, 64px);
-  line-height: 1.15;
-  letter-spacing: -0.045em;
-}
-
-.photo-auto-note {
-  padding-bottom: 8px;
-  color: var(--muted);
-  font-family: Inter, sans-serif;
-  font-size: 12px;
-  letter-spacing: 0.06em;
-}
 
 .random-photo-stage {
   position: relative;
@@ -2661,16 +2640,7 @@ html[data-theme="dark"] .random-photo-image {
 }
 
 @media (max-width: 620px) {
-  .hero-photo-heading {
-    align-items: flex-start;
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  .photo-auto-note {
-    padding-bottom: 0;
-  }
-
+  
   .random-photo-stage {
     height: 62vh;
     min-height: 380px;

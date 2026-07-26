@@ -187,23 +187,7 @@ export default async function HomePage() {
       {/* 卷首 */}
       <section className="hero shell">
        <div className="hero-photo-area">
-  <div className="hero-photo-heading">
-  <div>
-    <p className="eyebrow">
-      随机翻阅
-    </p>
-
-    <h1>
-      生活留下的片段
-    </h1>
-  </div>
-
-  <span className="photo-auto-note">
-    每 8 秒自动更换
-  </span>
-</div>
-
-<RandomPhotoWall images={mediaImages} />
+  <RandomPhotoWall images={mediaImages} />
 </div>
 
 
