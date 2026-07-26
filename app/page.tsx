@@ -221,7 +221,7 @@ export default async function HomePage() {
               </dt>
 
               <dd>
-                不如做熊猫
+                {featured?.title}
               </dd>
 
             </div>
