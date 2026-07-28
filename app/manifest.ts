@@ -5,7 +5,7 @@ export default function manifest(): MetadataRoute.Manifest {
     name: "LMN516",
     short_name: "LMN516",
     description: "Mo 的个人生活档案，记录周记、旅行、影像、音乐与长期计划。",
-    start_url: "/",
+    start_url: "/pwa-test",
     display: "standalone",
     background_color: "#f2efe7",
     theme_color: "#f2efe7",
