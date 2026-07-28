@@ -303,3 +303,149 @@
   font-weight: 600;
 }
 
+
+/* ==========================
+   12.1 音乐回忆
+========================== */
+
+.music-page {
+  max-width: 1080px;
+}
+
+.music-page-header {
+  max-width: 760px;
+  margin-bottom: 46px;
+}
+
+.music-page-header h1 {
+  margin-bottom: 18px;
+}
+
+.music-page-intro {
+  margin: 0;
+  color: var(--muted);
+  font-size: 17px;
+  line-height: 1.9;
+}
+
+.music-replay-card {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(22px, 4vw, 42px);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-xl);
+  background:
+    radial-gradient(circle at 88% 8%, color-mix(in srgb, var(--accent-soft) 78%, transparent), transparent 34%),
+    var(--card-bg);
+  box-shadow: var(--card-shadow);
+}
+
+.music-replay-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 26px;
+}
+
+.music-replay-kicker {
+  margin: 0 0 8px;
+  color: var(--accent);
+  font-family: var(--font-ui);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+}
+
+.music-replay-heading h2 {
+  margin: 0;
+  font-size: clamp(26px, 4vw, 40px);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+}
+
+.music-replay-year {
+  color: color-mix(in srgb, var(--accent) 22%, transparent);
+  font-family: var(--font-ui);
+  font-size: clamp(70px, 12vw, 132px);
+  font-weight: 700;
+  line-height: 0.75;
+  letter-spacing: -0.08em;
+  user-select: none;
+}
+
+.music-embed-frame {
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: #ffffff;
+}
+
+.music-embed-frame iframe {
+  display: block;
+  width: 100%;
+  height: 660px;
+  border: 0;
+}
+
+.music-replay-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin-top: 24px;
+}
+
+.music-replay-footer p {
+  max-width: 560px;
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.75;
+}
+
+@media (max-width: 720px) {
+  .music-page-header {
+    margin-bottom: 32px;
+  }
+
+  .music-replay-heading {
+    align-items: center;
+  }
+
+  .music-replay-year {
+    font-size: 70px;
+  }
+
+  .music-embed-frame iframe {
+    height: 600px;
+  }
+
+  .music-replay-footer {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 520px) {
+  .music-replay-card {
+    padding: 16px;
+  }
+
+  .music-replay-heading {
+    margin-bottom: 18px;
+  }
+
+  .music-replay-year {
+    font-size: 56px;
+  }
+
+  .music-embed-frame {
+    border-radius: 14px;
+  }
+
+  .music-embed-frame iframe {
+    height: 560px;
+  }
+}
