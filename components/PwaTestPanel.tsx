@@ -117,6 +117,9 @@ export default function PwaTestPanel() {
     const publicKey =
       process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY;
 
+    console.log("Public Key =", publicKey);
+    alert(publicKey ?? "undefined");
+
     if (!publicKey) {
       setStatus("error");
       setMessage(
