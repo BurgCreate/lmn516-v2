@@ -2633,8 +2633,9 @@ html.page-entering body {
 
 /* ==========================
    18. UI Design System v1.0
-   Phase 1: Typography application layer
-   Added after existing rules to preserve current layout and mobile fixes.
+   Phase 1.5: Typography consolidation
+   This application layer intentionally sits after legacy component rules.
+   It standardizes type without changing layout or established mobile behavior.
 ========================== */
 
 ::selection {
@@ -2646,6 +2647,7 @@ body {
   line-height: var(--leading-body);
 }
 
+/* Shared text roles */
 .eyebrow,
 .card-label,
 .post-meta,
@@ -2666,7 +2668,7 @@ body {
   letter-spacing: var(--tracking-label);
 }
 
-/* 首页主视觉标题 */
+/* Display: homepage only */
 .hero h1,
 .hero-photo-heading h1 {
   font-size: var(--text-display);
@@ -2674,7 +2676,7 @@ body {
   letter-spacing: var(--tracking-display);
 }
 
-/* 普通页面 H1 */
+/* Page title: archive, article, subpages, changelog and moments */
 .posts-header h1,
 .article h1,
 .subpage h1,
@@ -2685,18 +2687,25 @@ body {
   letter-spacing: var(--tracking-title);
 }
 
-/* Section H2 */
+/* Section title */
+h2,
 .section-heading h2,
 .project-copy h2,
 .about-grid h2,
-.release-card h2,
-.article-body h2 {
+.release-card h2 {
   font-size: var(--text-section-title);
   line-height: var(--leading-title);
   letter-spacing: var(--tracking-title);
 }
 
-/* 卡片 H3 */
+/* Reading-area headings stay slightly smaller than page sections */
+.article-body h2 {
+  font-size: var(--text-card-title);
+  line-height: 1.45;
+  letter-spacing: -0.015em;
+}
+
+/* Card and content headings */
 .post-content h3,
 .release-card h3,
 .article-body h3 {
@@ -2705,7 +2714,14 @@ body {
   letter-spacing: -0.015em;
 }
 
-/* 正文与说明 */
+.post-row h2,
+.archive-card strong {
+  font-size: var(--text-card-title);
+  line-height: 1.4;
+  letter-spacing: -0.015em;
+}
+
+/* Introductory and reading copy */
 .intro,
 .changelog-intro,
 .release-summary,
@@ -2734,12 +2750,13 @@ body {
   line-height: var(--leading-meta);
 }
 
+/* Mobile type scale. Layout declarations remain in their original media queries. */
 @media (max-width: 720px) {
   :root {
     --text-display: clamp(29px, 8vw, 35px);
     --text-page-title: clamp(25px, 7vw, 30px);
     --text-section-title: clamp(22px, 6vw, 26px);
-    --text-card-title: 21px;
+    --text-card-title: 20px;
     --text-body-lg: 16px;
     --text-body: 15px;
     --text-body-sm: 13px;
@@ -2763,12 +2780,12 @@ body {
   }
 
   .section-heading h2 {
-    font-size: clamp(25px, 7vw, 30px);
+    font-size: clamp(24px, 6.8vw, 28px);
   }
 
   .project-copy h2,
   .about-grid h2 {
-    font-size: 24px;
+    font-size: 23px;
   }
 
   .article-body h2 {
@@ -2779,13 +2796,13 @@ body {
     font-size: 18px;
   }
 
-  .post-row h2 {
+  .post-row h2,
+  .archive-card strong {
     font-size: 20px;
-    line-height: 1.4;
   }
 
   .changelog-hero h1 {
-    font-size: clamp(26px, 7vw, 31px);
+    font-size: clamp(25px, 6.8vw, 30px);
   }
 }
 
@@ -2802,7 +2819,7 @@ body {
   }
 
   .section-heading h2 {
-    font-size: 24px;
+    font-size: 23px;
   }
 
   .article h1 {
@@ -2814,4 +2831,3 @@ body {
     font-size: 22px;
   }
 }
-
