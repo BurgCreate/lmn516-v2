@@ -1,5 +1,5 @@
-import Image from "next/image";
 import Link from "next/link";
+import MusicCoverGrid from "@/components/MusicCoverGrid";
 import { music2026 } from "@/lib/music";
 
 const playlistUrl =
@@ -19,6 +19,7 @@ export default function MusicPage() {
         <div className="music-hero-copy">
           <p className="eyebrow">生活档案 · 音乐</p>
           <h1>2026 音乐回忆</h1>
+
           <p className="music-intro">
             收藏这一年反复播放的声音。歌单会继续更新，留下旋律，也留下它们经过生活时的痕迹。
           </p>
@@ -54,24 +55,7 @@ export default function MusicPage() {
           <p>{music2026.length} 首正在收藏的声音</p>
         </div>
 
-        <div className="music-cover-grid">
-          {music2026.map((track) => (
-            <article key={track.id} className="music-cover-card">
-              <span className="music-cover-frame">
-                <Image
-                  src={track.cover}
-                  alt={`${track.song} - ${track.artist}`}
-                  width={416}
-                  height={416}
-                  sizes="(max-width: 520px) 46vw, (max-width: 900px) 30vw, 220px"
-                />
-              </span>
-
-              <span className="music-cover-title">{track.song}</span>
-              <span className="music-cover-artist">{track.artist}</span>
-            </article>
-          ))}
-        </div>
+        <MusicCoverGrid tracks={music2026} />
       </section>
 
       <section
