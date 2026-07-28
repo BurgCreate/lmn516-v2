@@ -96,3 +96,11 @@ npm run dev
 - Added current-page and current-section states with `aria-current` support.
 - Unified desktop navigation, mobile horizontal navigation, logo behavior, theme-toggle alignment, focus, active, and reduced-motion behavior.
 - Preserved lightweight back links on reading and utility pages instead of forcing the full site header onto every page.
+
+## UI Design System v1.0 - Phase 7
+
+- Added shared motion duration and easing tokens.
+- Unified card, control, navigation, photo, theme, and page-exit timing.
+- Preserved expressive motion for the photo wall and moment bubble while reducing inconsistent one-off timings.
+- Added comprehensive `prefers-reduced-motion` behavior, including immediate moment-page navigation.
+

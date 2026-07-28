@@ -31,9 +31,13 @@ export default function MomentBubble({
       "page-leaving"
     );
 
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
     window.setTimeout(() => {
       router.push("/moments");
-    }, 420);
+    }, prefersReducedMotion ? 0 : 420);
   }
 
   return (
