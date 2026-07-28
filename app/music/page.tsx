@@ -1,25 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-
-type FeaturedAlbum = {
-  title: string;
-  artist: string;
-  cover: string;
-  href?: string;
-};
-
-/*
- * 把下载好的 WebP 封面放进 public/images/music/，
- * 再按下面的格式添加即可：
- *
- * {
- *   title: "歌曲或专辑名称",
- *   artist: "歌手名称",
- *   cover: "/images/music/文件名.webp",
- *   href: "Apple Music 链接（可选）",
- * },
- */
-const featuredAlbums: FeaturedAlbum[] = [];
+import { music2026 } from "@/lib/music";
 
 const playlistUrl =
   "https://music.apple.com/cn/playlist/2026-%E9%9F%B3%E4%B9%90%E5%9B%9E%E5%BF%86/pl.rp-Yb77hn90p9yd";
@@ -60,63 +41,49 @@ export default function MusicPage() {
         </div>
       </header>
 
-      {featuredAlbums.length > 0 && (
-        <section className="music-section" aria-labelledby="featured-music-title">
-          <div className="music-section-heading">
-            <div>
-              <p className="eyebrow">反复播放</p>
-              <h2 id="featured-music-title">精选封面</h2>
-            </div>
-            <p>{featuredAlbums.length} 张正在收藏的声音</p>
+      <section
+        className="music-section"
+        aria-labelledby="featured-music-title"
+      >
+        <div className="music-section-heading">
+          <div>
+            <p className="eyebrow">反复播放</p>
+            <h2 id="featured-music-title">精选封面</h2>
           </div>
 
-          <div className="music-cover-grid">
-            {featuredAlbums.map((album) => {
-              const content = (
-                <>
-                  <span className="music-cover-frame">
-                    <Image
-                      src={album.cover}
-                      alt={`${album.title} - ${album.artist}`}
-                      width={640}
-                      height={640}
-                      sizes="(max-width: 520px) 46vw, (max-width: 900px) 30vw, 220px"
-                    />
-                  </span>
-                  <span className="music-cover-title">{album.title}</span>
-                  <span className="music-cover-artist">{album.artist}</span>
-                </>
-              );
+          <p>{music2026.length} 首正在收藏的声音</p>
+        </div>
 
-              return album.href ? (
-                <a
-                  key={`${album.title}-${album.artist}`}
-                  className="music-cover-card"
-                  href={album.href}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  {content}
-                </a>
-              ) : (
-                <article
-                  key={`${album.title}-${album.artist}`}
-                  className="music-cover-card"
-                >
-                  {content}
-                </article>
-              );
-            })}
-          </div>
-        </section>
-      )}
+        <div className="music-cover-grid">
+          {music2026.map((track) => (
+            <article key={track.id} className="music-cover-card">
+              <span className="music-cover-frame">
+                <Image
+                  src={track.cover}
+                  alt={`${track.song} - ${track.artist}`}
+                  width={416}
+                  height={416}
+                  sizes="(max-width: 520px) 46vw, (max-width: 900px) 30vw, 220px"
+                />
+              </span>
 
-      <section className="music-section music-player-section" aria-labelledby="playlist-title">
+              <span className="music-cover-title">{track.song}</span>
+              <span className="music-cover-artist">{track.artist}</span>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section
+        className="music-section music-player-section"
+        aria-labelledby="playlist-title"
+      >
         <div className="music-section-heading">
           <div>
             <p className="eyebrow">完整歌单</p>
             <h2 id="playlist-title">继续播放</h2>
           </div>
+
           <p>由 Apple Music 提供播放与同步</p>
         </div>
 
