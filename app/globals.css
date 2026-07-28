@@ -2308,3 +2308,234 @@ html.page-entering body {
     filter: none;
   }
 }
+/* ==========================
+   2026-07-28 手机端字体优化
+   仅影响手机，不影响电脑端
+========================== */
+
+@media (max-width: 720px) {
+  /* 首页整体留白 */
+  .hero {
+    padding-block: 42px;
+  }
+
+  .section-space {
+    padding-block: 56px;
+  }
+
+  /* 首页普通主标题 */
+  .hero h1 {
+    margin-bottom: 20px;
+    font-size: clamp(29px, 8vw, 35px);
+    line-height: 1.25;
+    letter-spacing: -0.025em;
+  }
+
+  /* 首页随机照片区域标题 */
+  .hero-photo-heading h1 {
+    font-size: clamp(27px, 7.5vw, 34px);
+    line-height: 1.25;
+    letter-spacing: -0.025em;
+  }
+
+  /* 今日档案、持续进行、最近更新等标题 */
+  .section-heading h2 {
+    font-size: clamp(25px, 7vw, 30px);
+    line-height: 1.3;
+    letter-spacing: -0.02em;
+  }
+
+  /* 小型栏目文字 */
+  .eyebrow,
+  .card-label {
+    font-size: 11px;
+    line-height: 1.4;
+    letter-spacing: 0.12em;
+  }
+
+  /* 今日日期大数字 */
+  .date-block strong {
+    font-size: 46px;
+    line-height: 1;
+  }
+
+  .date-block span {
+    font-size: 13px;
+  }
+
+  /* 今日档案信息 */
+  .today-card dt {
+    font-size: 12px;
+  }
+
+  .today-card dd {
+    font-size: 15px;
+  }
+
+  /* 持续进行说明文字 */
+  .project-copy p:not(.eyebrow) {
+    font-size: 15px;
+    line-height: 1.8;
+  }
+
+  /* 俯卧撑进度数字 */
+  .progress-number strong {
+    font-size: 42px;
+  }
+
+  .progress-number span {
+    font-size: 13px;
+  }
+
+  /* 首页文章卡片标题 */
+  .post-content h3 {
+    font-size: 22px;
+    line-height: 1.35;
+  }
+
+  .post-content p {
+    font-size: 14px;
+    line-height: 1.75;
+  }
+
+  /* 首页精选文章内容区域 */
+  .post-content,
+  .featured-post .post-content {
+    padding: 24px;
+  }
+
+  /* 全部文章页面主标题 */
+  .posts-header h1 {
+    font-size: 29px;
+    line-height: 1.3;
+  }
+
+  /* 文章列表标题 */
+  .post-row h2 {
+    font-size: 20px;
+    line-height: 1.4;
+  }
+
+  .post-row div > p:last-child {
+    font-size: 13px;
+    line-height: 1.75;
+  }
+
+  /* 单篇文章标题 */
+  .article h1 {
+    margin-bottom: 24px;
+    font-size: clamp(25px, 6.8vw, 29px);
+    line-height: 1.38;
+    letter-spacing: -0.015em;
+  }
+
+  /* 音乐、关于、散步等内页标题 */
+  .subpage h1 {
+    margin-bottom: 20px;
+    font-size: clamp(25px, 7vw, 30px);
+    line-height: 1.35;
+    letter-spacing: -0.015em;
+  }
+
+  .subpage > p:last-child {
+    font-size: 15px;
+    line-height: 1.8;
+  }
+
+  /* 文章正文 */
+  .article-body {
+    font-size: 16px;
+    line-height: 1.9;
+  }
+
+  .article-body h2 {
+    font-size: 21px;
+    line-height: 1.45;
+  }
+
+  .article-body h3 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+
+  .article-body blockquote {
+    font-size: 16px;
+    line-height: 1.85;
+  }
+
+  /* 碎碎念列表正文 */
+  .moment-content {
+    font-size: 16px;
+    line-height: 1.8;
+  }
+
+  .moments-intro {
+    font-size: 14px;
+    line-height: 1.75;
+  }
+
+  /* 碎碎念页面的大标题 */
+  .hero-moment {
+    font-size: clamp(30px, 9vw, 42px);
+    line-height: 1.25;
+  }
+
+  /* 随机照片上的文字 */
+  .random-photo-info > span {
+    font-size: 15px;
+  }
+
+  .random-photo-info small {
+    font-size: 11px;
+  }
+
+  /* 右下角碎碎念气泡 */
+  .moment-bubble-content,
+  .moment-bubble-content p {
+    font-size: 14px;
+    line-height: 1.45;
+  }
+
+  .moment-bubble-time {
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 520px) {
+  /* 小屏手机进一步缩小 */
+  .hero h1 {
+    font-size: clamp(28px, 8vw, 33px);
+  }
+
+  .hero-photo-heading h1 {
+    font-size: clamp(26px, 7.5vw, 31px);
+  }
+
+  .section-heading h2 {
+    font-size: 24px;
+  }
+
+  .posts-header h1 {
+    font-size: 28px;
+  }
+
+  .article h1 {
+    font-size: clamp(24px, 6.8vw, 28px);
+  }
+
+  .subpage h1 {
+    font-size: clamp(24px, 7vw, 29px);
+  }
+
+  .post-content h3 {
+    font-size: 21px;
+  }
+
+  .date-block strong {
+    font-size: 44px;
+  }
+
+  .progress-number strong {
+    font-size: 40px;
+  }
+}
