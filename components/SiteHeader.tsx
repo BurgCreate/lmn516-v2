@@ -9,7 +9,23 @@ type SiteHeaderProps = {
   className?: string;
 };
 
-const navigationItems = [
+type HashNavigationItem = {
+  label: string;
+  hash: string;
+  href?: never;
+};
+
+type PageNavigationItem = {
+  label: string;
+  href: string;
+  hash?: never;
+};
+
+type NavigationItem =
+  | HashNavigationItem
+  | PageNavigationItem;
+
+const navigationItems: NavigationItem[] = [
   { label: "本期", hash: "notes" },
   { label: "专题", hash: "project" },
   { label: "收藏", hash: "archive" },
@@ -39,11 +55,12 @@ export default function SiteHeader({
       syncHash
     );
 
-    return () =>
+    return () => {
       window.removeEventListener(
         "hashchange",
         syncHash
       );
+    };
   }, [pathname]);
 
   return (
@@ -66,14 +83,14 @@ export default function SiteHeader({
       >
         {navigationItems.map((item) => {
           const href =
-            "href" in item
+            item.href !== undefined
               ? item.href
               : isHome
                 ? `#${item.hash}`
                 : `/#${item.hash}`;
 
           const isCurrent =
-            "href" in item
+            item.href !== undefined
               ? pathname === item.href
               : isHome &&
                 activeHash === item.hash;
@@ -81,7 +98,7 @@ export default function SiteHeader({
           return (
             <Link
               key={
-                "href" in item
+                item.href !== undefined
                   ? item.href
                   : item.hash
               }
@@ -93,7 +110,7 @@ export default function SiteHeader({
               }
               aria-current={
                 isCurrent
-                  ? "href" in item
+                  ? item.href !== undefined
                     ? "page"
                     : "location"
                   : undefined
