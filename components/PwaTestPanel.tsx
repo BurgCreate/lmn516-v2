@@ -116,8 +116,24 @@ export default function PwaTestPanel() {
     setStatus("working");
 
     try {
-      setMessage("步骤 1/5：正在读取公钥……");
+      // iPhone 要求通知权限请求直接发生在用户点击事件中。
+      // 这里必须先请求权限，不能先 await fetch，否则 Safari 可能丢失用户激活状态。
+      setMessage("步骤 1/5：正在请求通知权限……");
+      const result = await Notification.requestPermission();
+      setPermission(result);
+
+      if (result !== "granted") {
+        throw new Error("通知权限没有开启。请在 iPhone 设置中允许 LMN516 通知。 ");
+      }
+
+      setMessage("步骤 2/5：正在读取公钥……");
       const keyResponse = await fetch("/api/push/public-key", { cache: "no-store" });
+      const contentType = keyResponse.headers.get("content-type") || "";
+
+      if (!contentType.includes("application/json")) {
+        throw new Error(`公钥接口返回了非 JSON 内容，HTTP ${keyResponse.status}。`);
+      }
+
       const keyResult = (await keyResponse.json()) as {
         ok?: boolean;
         publicKey?: string;
@@ -129,14 +145,6 @@ export default function PwaTestPanel() {
       }
 
       const applicationServerKey = urlBase64ToUint8Array(keyResult.publicKey);
-
-      setMessage("步骤 2/5：正在请求通知权限……");
-      const result = await Notification.requestPermission();
-      setPermission(result);
-
-      if (result !== "granted") {
-        throw new Error("通知权限没有开启。请在 iPhone 设置中允许 LMN516 通知。 ");
-      }
 
       setMessage("步骤 3/5：正在检查 Service Worker……");
       const registration = await navigator.serviceWorker.ready;
