@@ -1,6 +1,6 @@
 /* ==========================
    LMN516 UI Design System v1.0
-   Phase 4: Design Tokens + Typography + Spacing + Responsive + Container + Card
+   Phase 5: Design Tokens + Typography + Spacing + Responsive + Container + Card + Button
 ========================== */
 
 :root {
@@ -106,6 +106,36 @@
   --card-shadow-hover: var(--shadow-md);
   --card-lift: -3px;
   --card-transition: 220ms cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Button and interactive control system */
+  --control-height-sm: 36px;
+  --control-height-md: 44px;
+  --control-height-lg: 50px;
+  --control-padding-sm: 14px;
+  --control-padding-md: 20px;
+  --control-padding-lg: 24px;
+  --control-radius: var(--radius-pill);
+  --control-font-size: 14px;
+  --control-font-weight: 600;
+  --control-lift: -2px;
+  --control-press-scale: 0.98;
+  --control-transition: 180ms cubic-bezier(0.22, 1, 0.36, 1);
+
+  --focus-ring-color: color-mix(in srgb, var(--color-accent) 72%, transparent);
+  --focus-ring-shadow: 0 0 0 4px color-mix(in srgb, var(--color-accent) 18%, transparent);
+
+  --button-primary-bg: var(--color-text);
+  --button-primary-text: var(--color-bg);
+  --button-primary-hover-bg: color-mix(in srgb, var(--color-text) 88%, var(--color-accent));
+  --button-secondary-bg: var(--color-surface);
+  --button-secondary-hover-bg: var(--color-surface-strong);
+  --button-border: var(--color-border);
+  --button-border-hover: color-mix(in srgb, var(--color-accent) 42%, var(--color-border));
+  --button-shadow-hover: var(--shadow-sm);
+
+  --link-color: var(--color-accent);
+  --link-underline: color-mix(in srgb, var(--color-accent) 42%, transparent);
+  --link-underline-hover: var(--color-accent);
 }
 
 
@@ -3464,6 +3494,257 @@ html[data-theme="dark"] .archive-card:hover {
   .today-card:hover,
   .post-card:hover,
   .archive-card:hover {
+    transform: none;
+  }
+}
+
+/* ==========================
+   22. UI Design System v1.0
+   Phase 5: Button System
+   Shared sizing, focus, hover, active and text-link behavior.
+========================== */
+
+/* Global interactive focus language */
+a:focus-visible,
+button:focus-visible,
+[role="button"]:focus-visible {
+  outline: 2px solid var(--focus-ring-color);
+  outline-offset: 3px;
+  box-shadow: var(--focus-ring-shadow);
+}
+
+/* Standard button roles */
+.button {
+  min-height: var(--control-height-md);
+  padding-inline: var(--control-padding-md);
+  padding-block: 0;
+  gap: var(--space-2);
+  border-radius: var(--control-radius);
+  font-family: var(--font-sans);
+  font-size: var(--control-font-size);
+  font-weight: var(--control-font-weight);
+  line-height: 1;
+  cursor: pointer;
+  user-select: none;
+  transition:
+    transform var(--control-transition),
+    color var(--control-transition),
+    background-color var(--control-transition),
+    border-color var(--control-transition),
+    box-shadow var(--control-transition),
+    opacity var(--control-transition);
+}
+
+.button:hover {
+  transform: translateY(var(--control-lift));
+}
+
+.button:active {
+  transform: translateY(0) scale(var(--control-press-scale));
+}
+
+.button.primary {
+  border-color: var(--button-primary-bg);
+  background: var(--button-primary-bg);
+  color: var(--button-primary-text);
+}
+
+.button.primary:hover {
+  border-color: var(--button-primary-hover-bg);
+  background: var(--button-primary-hover-bg);
+  box-shadow: var(--button-shadow-hover);
+}
+
+.button.ghost {
+  border-color: var(--button-border);
+  background: var(--button-secondary-bg);
+  color: var(--color-text);
+}
+
+.button.ghost:hover {
+  border-color: var(--button-border-hover);
+  background: var(--button-secondary-hover-bg);
+  box-shadow: var(--button-shadow-hover);
+}
+
+/* Text links keep a quieter hierarchy than buttons. */
+.text-link,
+.about-links a,
+.changelog-footer a {
+  color: var(--link-color);
+  text-decoration-line: underline;
+  text-decoration-color: var(--link-underline);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.28em;
+  border-bottom: 0;
+  transition:
+    color var(--control-transition),
+    text-decoration-color var(--control-transition),
+    opacity var(--control-transition);
+}
+
+.text-link:hover,
+.about-links a:hover,
+.changelog-footer a:hover {
+  border-color: transparent;
+  text-decoration-color: var(--link-underline-hover);
+}
+
+.text-link:active,
+.about-links a:active,
+.changelog-footer a:active {
+  opacity: 0.7;
+}
+
+/* Back links are directional controls, not decorative underlined links. */
+.back,
+.subpage .text-link,
+.changelog-back-link {
+  min-height: var(--control-height-sm);
+  display: inline-flex;
+  align-items: center;
+  color: var(--color-text-muted);
+  font-family: var(--font-sans);
+  font-size: var(--text-body-sm);
+  text-decoration: none;
+  border-bottom: 0;
+  transition:
+    color var(--control-transition),
+    transform var(--control-transition),
+    opacity var(--control-transition);
+}
+
+.back:hover,
+.subpage .text-link:hover,
+.changelog-back-link:hover {
+  color: var(--color-text);
+  border-color: transparent;
+  transform: translateX(-3px);
+}
+
+.back:active,
+.subpage .text-link:active,
+.changelog-back-link:active {
+  transform: translateX(-1px);
+  opacity: 0.72;
+}
+
+/* Icon controls */
+.theme-toggle {
+  width: var(--control-height-md);
+  height: var(--control-height-md);
+  flex: 0 0 var(--control-height-md);
+  border-color: var(--button-border);
+  border-radius: 50%;
+  background: var(--button-secondary-bg);
+  font-family: var(--font-sans);
+  cursor: pointer;
+  transition:
+    transform var(--control-transition),
+    color var(--control-transition),
+    background-color var(--control-transition),
+    border-color var(--control-transition),
+    box-shadow var(--control-transition);
+}
+
+.theme-toggle:hover {
+  transform: translateY(-1px) rotate(8deg);
+  border-color: var(--button-border-hover);
+  background: var(--button-secondary-hover-bg);
+  box-shadow: var(--button-shadow-hover);
+}
+
+.theme-toggle:active {
+  transform: scale(var(--control-press-scale));
+}
+
+/* Large and special interactive surfaces inherit the common feedback language. */
+.random-photo-stage,
+.moment-bubble {
+  cursor: pointer;
+}
+
+.random-photo-stage:focus-visible,
+.moment-bubble:focus-visible {
+  outline: 2px solid var(--focus-ring-color);
+  outline-offset: 4px;
+  box-shadow: var(--focus-ring-shadow), var(--card-shadow-hover);
+}
+
+/* Disabled controls remain visibly inactive. */
+.button:disabled,
+.theme-toggle:disabled,
+button[aria-disabled="true"],
+a[aria-disabled="true"] {
+  cursor: not-allowed;
+  opacity: 0.48;
+  pointer-events: none;
+  transform: none;
+  box-shadow: none;
+}
+
+body.dark,
+html[data-theme="dark"] body {
+  --button-primary-bg: var(--color-text);
+  --button-primary-text: var(--color-bg);
+  --button-primary-hover-bg: color-mix(in srgb, var(--color-text) 88%, var(--color-accent));
+  --button-secondary-bg: rgba(255, 255, 255, 0.025);
+  --button-secondary-hover-bg: var(--color-accent-soft);
+  --button-border: var(--color-border);
+  --button-border-hover: rgba(146, 189, 181, 0.42);
+  --button-shadow-hover: 0 12px 34px rgba(0, 0, 0, 0.24);
+  --focus-ring-shadow: 0 0 0 4px rgba(146, 189, 181, 0.14);
+}
+
+@media (max-width: 720px) {
+  :root {
+    --control-height-sm: 40px;
+    --control-height-md: 44px;
+    --control-height-lg: 50px;
+    --control-padding-md: 18px;
+    --control-lift: -1px;
+  }
+
+  .button,
+  .theme-toggle,
+  .back,
+  .subpage .text-link,
+  .changelog-back-link {
+    touch-action: manipulation;
+  }
+}
+
+@media (max-width: 520px) {
+  .hero-actions .button {
+    min-height: var(--control-height-lg);
+  }
+}
+
+@media (hover: none) {
+  .button:hover,
+  .theme-toggle:hover {
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button,
+  .theme-toggle,
+  .text-link,
+  .about-links a,
+  .back,
+  .subpage .text-link,
+  .changelog-back-link {
+    transition: none;
+  }
+
+  .button:hover,
+  .button:active,
+  .theme-toggle:hover,
+  .theme-toggle:active,
+  .back:hover,
+  .subpage .text-link:hover,
+  .changelog-back-link:hover {
     transform: none;
   }
 }

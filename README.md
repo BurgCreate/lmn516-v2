@@ -81,3 +81,10 @@ npm run dev
 - Moved dark card styling onto shared variables instead of component-by-component values.
 - Preserved list and timeline layouts that are not semantically cards.
 
+## UI Design System v1.0 - Phase 5
+
+- Added shared control height, padding, radius, focus-ring, motion, and color tokens.
+- Unified primary and ghost buttons across hover, active, focus, disabled, mobile, and dark states.
+- Standardized text links, back links, theme toggle controls, and special interactive focus states.
+- Preserved the unique behavior of the photo wall and moment bubble while giving them common accessibility feedback.
+

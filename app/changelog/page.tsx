@@ -427,15 +427,27 @@ export default function ChangelogPage() {
         }
 
         .changelog-back-link {
+          min-height: var(--control-height-sm);
+          display: inline-flex;
+          align-items: center;
           color: var(--muted);
-          font-family: Inter, system-ui, sans-serif;
-          font-size: 13px;
+          font-family: var(--font-sans);
+          font-size: var(--text-body-sm);
           text-decoration: none;
-          transition: color 0.2s ease;
+          transition:
+            color var(--control-transition),
+            transform var(--control-transition),
+            opacity var(--control-transition);
         }
 
         .changelog-back-link:hover {
           color: var(--text);
+          transform: translateX(-3px);
+        }
+
+        .changelog-back-link:active {
+          transform: translateX(-1px);
+          opacity: 0.72;
         }
 
         .changelog-hero {
@@ -658,11 +670,26 @@ export default function ChangelogPage() {
 
         .changelog-footer a {
           flex: 0 0 auto;
-          color: var(--text);
-          font-family: Inter, system-ui, sans-serif;
-          font-size: 12px;
+          color: var(--link-color);
+          font-family: var(--font-sans);
+          font-size: var(--text-meta);
           font-weight: 700;
-          text-decoration: none;
+          text-decoration-line: underline;
+          text-decoration-color: var(--link-underline);
+          text-decoration-thickness: 1px;
+          text-underline-offset: 0.28em;
+          transition:
+            color var(--control-transition),
+            text-decoration-color var(--control-transition),
+            opacity var(--control-transition);
+        }
+
+        .changelog-footer a:hover {
+          text-decoration-color: var(--link-underline-hover);
+        }
+
+        .changelog-footer a:active {
+          opacity: 0.7;
         }
 
         @media (max-width: 720px) {
