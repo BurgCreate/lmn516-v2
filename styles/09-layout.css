@@ -97,7 +97,7 @@
   }
 
   .random-photo-stage {
-    aspect-ratio: 16 / 9;
+    aspect-ratio: 4 / 3;
     height: auto;
     min-height: 0;
     max-height: none;
