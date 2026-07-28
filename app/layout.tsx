@@ -9,7 +9,17 @@ export const metadata: Metadata = {
     template: "%s · LMN516"
   },
   description:
-    "Mo 的个人生活档案，记录周记、旅行、影像、音乐与长期计划。"
+    "Mo 的个人生活档案，记录周记、旅行、影像、音乐与长期计划。",
+  manifest: "/manifest.webmanifest",
+  appleWebApp: {
+    capable: true,
+    title: "LMN516",
+    statusBarStyle: "default"
+  },
+  icons: {
+    icon: "/icons/icon-192.png",
+    apple: "/icons/icon-192.png"
+  }
 };
 
 export default function RootLayout({

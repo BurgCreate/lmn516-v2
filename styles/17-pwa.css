@@ -1,0 +1,144 @@
+.pwa-test-page {
+  min-height: 100vh;
+  padding: clamp(32px, 7vw, 96px) 20px;
+}
+
+.pwa-test-shell {
+  width: min(760px, 100%);
+  margin: 0 auto;
+}
+
+.pwa-test-back {
+  display: inline-flex;
+  margin-bottom: 48px;
+  color: var(--muted);
+}
+
+.pwa-test-eyebrow {
+  margin: 0 0 12px;
+  color: var(--accent);
+  font-family: var(--font-ui, sans-serif);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .18em;
+}
+
+.pwa-test-page h1 {
+  margin: 0;
+  font-size: clamp(36px, 8vw, 72px);
+  line-height: 1.05;
+}
+
+.pwa-test-intro {
+  max-width: 640px;
+  margin: 24px 0 42px;
+  color: var(--muted);
+}
+
+.pwa-test-panel {
+  padding: clamp(20px, 5vw, 36px);
+  border: 1px solid var(--line);
+  border-radius: 28px;
+  background: var(--paper);
+  box-shadow: var(--shadow);
+}
+
+.pwa-status-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.pwa-status-card {
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+}
+
+.pwa-status-card span,
+.pwa-status-card strong {
+  display: block;
+}
+
+.pwa-status-card span {
+  margin-bottom: 6px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.pwa-status-card strong {
+  font-size: 15px;
+}
+
+.pwa-test-message {
+  min-height: 64px;
+  margin: 20px 0;
+  padding: 16px 18px;
+  border-radius: 18px;
+  background: var(--accent-soft);
+  white-space: pre-line;
+}
+
+.pwa-test-message-error {
+  outline: 1px solid rgba(170, 65, 53, .35);
+}
+
+.pwa-test-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.pwa-test-actions button {
+  flex: 1;
+  min-height: 48px;
+  padding: 0 18px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--accent);
+  color: #fff;
+  cursor: pointer;
+}
+
+.pwa-test-actions button + button {
+  background: transparent;
+  color: var(--text);
+}
+
+.pwa-test-actions button:disabled {
+  cursor: not-allowed;
+  opacity: .45;
+}
+
+.pwa-test-help {
+  margin-top: 24px;
+  color: var(--muted);
+}
+
+.pwa-test-help summary {
+  cursor: pointer;
+  color: var(--text);
+  font-weight: 700;
+}
+
+.pwa-test-help ol {
+  margin: 16px 0 0;
+  padding-left: 22px;
+}
+
+.pwa-test-help li + li {
+  margin-top: 8px;
+}
+
+@media (max-width: 640px) {
+  .pwa-test-back {
+    margin-bottom: 36px;
+  }
+
+  .pwa-status-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .pwa-test-actions {
+    flex-direction: column;
+  }
+}
