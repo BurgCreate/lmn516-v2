@@ -463,7 +463,8 @@ html[data-theme="dark"] .random-photo-image {
   .hero-photo-heading { align-items: flex-start; }
 
   .random-photo-stage {
-    height: clamp(360px, 70vw, 520px);
+    aspect-ratio: 16 / 9;
+    height: auto;
     border-radius: 22px;
   }
 
@@ -629,9 +630,10 @@ html[data-theme="dark"] .random-photo-image {
   }
 
   .random-photo-stage {
-    height: 62vh;
-    min-height: 380px;
-    max-height: 560px;
+    aspect-ratio: 16 / 9;
+    height: auto;
+    min-height: 0;
+    max-height: none;
     border-radius: 18px;
   }
 
