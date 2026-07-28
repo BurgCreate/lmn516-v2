@@ -88,3 +88,11 @@ npm run dev
 - Standardized text links, back links, theme toggle controls, and special interactive focus states.
 - Preserved the unique behavior of the photo wall and moment bubble while giving them common accessibility feedback.
 
+
+## UI Design System v1.0 - Phase 6
+
+- Added shared navigation tokens for header height, link color, spacing, indicators, and mobile navigation surfaces.
+- Replaced separate homepage and Change Log headers with one reusable `SiteHeader` component.
+- Added current-page and current-section states with `aria-current` support.
+- Unified desktop navigation, mobile horizontal navigation, logo behavior, theme-toggle alignment, focus, active, and reduced-motion behavior.
+- Preserved lightweight back links on reading and utility pages instead of forcing the full site header onto every page.

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import ThemeToggle from "@/components/ThemeToggle";
+import SiteHeader from "@/components/SiteHeader";
 import RandomPhotoWall from "@/components/RandomPhotoWall";
 import MomentBubble from "@/components/MomentBubble";
 import {
@@ -147,45 +147,7 @@ const latestMoment = moments[0];
 
 
       {/* 顶部导航 */}
-      <header className="site-header shell">
-        <Link
-  href="/"
-  className="brand"
-  aria-label="LMN516 首页"
->
-  LMN516
-</Link>
-
-
-        <nav
-          className="nav"
-          aria-label="网站导航"
-        >
-          <a href="#notes">
-            本期
-          </a>
-
-          <a href="#project">
-            专题
-          </a>
-
-          <a href="#archive">
-            收藏
-          </a>
-
-          <a href="#about">
-            关于
-          </a>
-
-          <Link href="/changelog">
-            生长记录
-          </Link>
-        </nav>
-
-
-        <ThemeToggle />
-      </header>
-
+      <SiteHeader />
 
 
       {/* 卷首 */}

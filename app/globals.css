@@ -1,6 +1,6 @@
 /* ==========================
    LMN516 UI Design System v1.0
-   Phase 5: Design Tokens + Typography + Spacing + Responsive + Container + Card + Button
+   Phase 6: Design Tokens + Typography + Spacing + Responsive + Container + Card + Button + Navigation
 ========================== */
 
 :root {
@@ -136,6 +136,19 @@
   --link-color: var(--color-accent);
   --link-underline: color-mix(in srgb, var(--color-accent) 42%, transparent);
   --link-underline-hover: var(--color-accent);
+
+  /* Navigation system */
+  --header-height: 96px;
+  --header-border: var(--color-border);
+  --nav-gap: var(--space-6);
+  --nav-font-size: 14px;
+  --nav-font-weight: 560;
+  --nav-link-color: var(--color-text-muted);
+  --nav-link-hover: var(--color-text);
+  --nav-link-active: var(--color-accent);
+  --nav-indicator: var(--color-accent);
+  --nav-mobile-bg: var(--color-surface);
+  --nav-mobile-border: var(--color-border);
 }
 
 
@@ -3749,3 +3762,166 @@ html[data-theme="dark"] body {
   }
 }
 
+
+/* ==========================
+   Phase 6: Navigation System
+========================== */
+
+.site-header {
+  min-height: var(--header-height);
+  gap: var(--space-5);
+  border-bottom-color: var(--header-border);
+}
+
+.brand {
+  flex: 0 0 auto;
+  font-family: var(--font-sans);
+  font-size: 28px;
+  font-weight: 680;
+  letter-spacing: -0.045em;
+  text-decoration: none;
+}
+
+.nav {
+  min-width: 0;
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--nav-gap);
+  color: var(--nav-link-color);
+  font-family: var(--font-sans);
+  font-size: var(--nav-font-size);
+  font-weight: var(--nav-font-weight);
+}
+
+.nav .nav-link {
+  position: relative;
+  min-height: var(--control-height-sm);
+  display: inline-flex;
+  align-items: center;
+  color: var(--nav-link-color);
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    color var(--control-transition),
+    opacity var(--control-transition),
+    transform var(--control-transition);
+}
+
+.nav .nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 1px;
+  height: 2px;
+  border-radius: var(--radius-pill);
+  background: var(--nav-indicator);
+  opacity: 0;
+  transform: scaleX(0.35);
+  transform-origin: center;
+  transition:
+    opacity var(--control-transition),
+    transform var(--control-transition);
+}
+
+.nav .nav-link:hover {
+  color: var(--nav-link-hover);
+}
+
+.nav .nav-link:active {
+  transform: translateY(1px);
+}
+
+.nav .nav-link.is-current,
+.nav .nav-link[aria-current="page"],
+.nav .nav-link[aria-current="location"] {
+  color: var(--nav-link-active);
+}
+
+.nav .nav-link.is-current::after,
+.nav .nav-link[aria-current="page"]::after,
+.nav .nav-link[aria-current="location"]::after {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+.changelog-site-header {
+  width: min(var(--container-changelog), calc(100% - (var(--page-gutter) * 2)));
+}
+
+@media (max-width: 960px) {
+  .site-header {
+    min-height: 0;
+    column-gap: var(--space-4);
+    row-gap: var(--space-3);
+    padding-block: var(--space-4) var(--space-3);
+  }
+
+  .brand {
+    font-size: 25px;
+  }
+
+  .nav {
+    width: 100%;
+    margin-left: 0;
+    justify-content: flex-start;
+    gap: var(--space-2);
+    overflow-x: auto;
+    padding-bottom: 2px;
+    scroll-padding-inline: var(--space-2);
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .nav .nav-link {
+    min-height: var(--control-height-sm);
+    padding-inline: var(--control-padding-sm);
+    border: 1px solid var(--nav-mobile-border);
+    border-radius: var(--control-radius);
+    background: var(--nav-mobile-bg);
+    font-size: 13px;
+  }
+
+  .nav .nav-link::after {
+    display: none;
+  }
+
+  .nav .nav-link:hover,
+  .nav .nav-link.is-current,
+  .nav .nav-link[aria-current="page"],
+  .nav .nav-link[aria-current="location"] {
+    color: var(--nav-link-hover);
+    border-color: var(--button-border-hover);
+    background: var(--button-secondary-hover-bg);
+  }
+}
+
+@media (max-width: 520px) {
+  .site-header {
+    padding-block: 14px 12px;
+  }
+
+  .brand {
+    font-size: 23px;
+  }
+
+  .nav .nav-link {
+    min-height: 34px;
+    padding-inline: 12px;
+    font-size: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav .nav-link,
+  .nav .nav-link::after,
+  .brand {
+    transition: none;
+  }
+}

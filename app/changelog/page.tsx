@@ -1,5 +1,5 @@
 import Link from "next/link";
-import ThemeToggle from "@/components/ThemeToggle";
+import SiteHeader from "@/components/SiteHeader";
 
 type ReleaseTone = "new" | "improved" | "fixed" | "rebuilt";
 
@@ -322,18 +322,7 @@ const toneLabels: Record<ReleaseTone, string> = {
 export default function ChangelogPage() {
   return (
     <main className="changelog-page">
-      <header className="changelog-header shell">
-        <Link href="/" className="changelog-brand" aria-label="返回 LMN516 首页">
-          LMN516
-        </Link>
-
-        <div className="changelog-header-actions">
-          <Link href="/" className="changelog-back-link">
-            返回首页
-          </Link>
-          <ThemeToggle />
-        </div>
-      </header>
+      <SiteHeader className="changelog-site-header" />
 
       <section className="changelog-hero shell">
         <p className="changelog-eyebrow">生长记录</p>
