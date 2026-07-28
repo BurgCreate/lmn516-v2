@@ -1,13 +1,64 @@
+/* ==========================
+   LMN516 UI Design System v1.0
+   Phase 1: Design Tokens + Typography
+========================== */
+
 :root {
-  --bg: #f2efe7;
-  --paper: rgba(255, 255, 255, 0.48);
-  --text: #20241f;
-  --muted: #6f746c;
-  --line: rgba(32, 36, 31, 0.14);
-  --accent: #2f5e59;
-  --accent-soft: #dfe9e5;
-  --shadow: 0 20px 60px rgba(44, 50, 43, 0.08);
+  /* Color tokens */
+  --color-bg: #f2efe7;
+  --color-surface: rgba(255, 255, 255, 0.48);
+  --color-surface-strong: rgba(255, 255, 255, 0.72);
+  --color-text: #20241f;
+  --color-text-muted: #6f746c;
+  --color-accent: #2f5e59;
+  --color-accent-soft: #dfe9e5;
+  --color-border: rgba(32, 36, 31, 0.14);
+  --color-border-strong: rgba(32, 36, 31, 0.22);
+  --color-selection: rgba(47, 94, 89, 0.18);
+
+  /* Shadow tokens */
+  --shadow-sm: 0 8px 24px rgba(44, 50, 43, 0.06);
+  --shadow-md: 0 20px 60px rgba(44, 50, 43, 0.08);
+  --shadow-lg: 0 28px 80px rgba(44, 50, 43, 0.12);
+
+  /* Backward-compatible aliases */
+  --bg: var(--color-bg);
+  --paper: var(--color-surface);
+  --text: var(--color-text);
+  --muted: var(--color-text-muted);
+  --line: var(--color-border);
+  --accent: var(--color-accent);
+  --accent-soft: var(--color-accent-soft);
+  --shadow: var(--shadow-md);
+
+  /* Font families */
+  --font-serif: "Noto Serif SC", "Songti SC", "STSong", serif;
+  --font-sans: Inter, "PingFang SC", "Microsoft YaHei", sans-serif;
+
+  /* Type scale: desktop */
+  --text-display: clamp(40px, 5vw, 64px);
+  --text-page-title: clamp(34px, 4vw, 48px);
+  --text-section-title: clamp(28px, 3vw, 40px);
+  --text-card-title: clamp(20px, 2vw, 26px);
+  --text-body-lg: 18px;
+  --text-body: 16px;
+  --text-body-sm: 14px;
+  --text-meta: 12px;
+  --text-footer: 12px;
+
+  /* Line-height tokens */
+  --leading-display: 1.16;
+  --leading-title: 1.28;
+  --leading-body: 1.8;
+  --leading-reading: 1.95;
+  --leading-meta: 1.5;
+
+  /* Letter-spacing tokens */
+  --tracking-display: -0.035em;
+  --tracking-title: -0.025em;
+  --tracking-label: 0.14em;
 }
+
 
 /* ==========================
    1. 基础与通用
@@ -31,7 +82,7 @@ body {
   overflow-wrap: break-word;
   background: var(--bg);
   color: var(--text);
-  font-family: "Noto Serif SC", "Songti SC", serif;
+  font-family: var(--font-serif);
   line-height: 1.8;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -1224,14 +1275,28 @@ main,
 body.dark,
 html[data-theme="dark"] body {
   color-scheme: dark;
-  --bg: #171a18;
-  --paper: rgba(38, 43, 39, 0.68);
-  --text: #ebeae3;
-  --muted: #a4aaa2;
-  --line: rgba(235, 234, 227, 0.12);
-  --accent: #92bdb5;
-  --accent-soft: rgba(76, 113, 105, 0.28);
-  --shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  --color-bg: #171a18;
+  --color-surface: rgba(38, 43, 39, 0.68);
+  --color-surface-strong: rgba(48, 54, 49, 0.82);
+  --color-text: #ebeae3;
+  --color-text-muted: #a4aaa2;
+  --color-accent: #92bdb5;
+  --color-accent-soft: rgba(76, 113, 105, 0.28);
+  --color-border: rgba(235, 234, 227, 0.12);
+  --color-border-strong: rgba(235, 234, 227, 0.2);
+  --color-selection: rgba(146, 189, 181, 0.28);
+  --shadow-sm: 0 8px 24px rgba(0, 0, 0, 0.18);
+  --shadow-md: 0 20px 60px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 28px 80px rgba(0, 0, 0, 0.38);
+
+  --bg: var(--color-bg);
+  --paper: var(--color-surface);
+  --text: var(--color-text);
+  --muted: var(--color-text-muted);
+  --line: var(--color-border);
+  --accent: var(--color-accent);
+  --accent-soft: var(--color-accent-soft);
+  --shadow: var(--shadow-md);
   background:
     radial-gradient(circle at 15% 10%, rgba(92, 126, 117, 0.08), transparent 34%),
     radial-gradient(circle at 85% 75%, rgba(80, 95, 86, 0.06), transparent 38%),
@@ -2565,3 +2630,188 @@ html.page-entering body {
     font-size: 22px;
   }
 }
+
+/* ==========================
+   18. UI Design System v1.0
+   Phase 1: Typography application layer
+   Added after existing rules to preserve current layout and mobile fixes.
+========================== */
+
+::selection {
+  background: var(--color-selection);
+}
+
+body {
+  font-size: var(--text-body);
+  line-height: var(--leading-body);
+}
+
+.eyebrow,
+.card-label,
+.post-meta,
+.post-date,
+.release-date,
+.current-badge,
+.change-label,
+.moment-date,
+.moment-bubble-time,
+.random-photo-info small {
+  font-family: var(--font-sans);
+  font-size: var(--text-meta);
+  line-height: var(--leading-meta);
+}
+
+.eyebrow,
+.card-label {
+  letter-spacing: var(--tracking-label);
+}
+
+/* 首页主视觉标题 */
+.hero h1,
+.hero-photo-heading h1 {
+  font-size: var(--text-display);
+  line-height: var(--leading-display);
+  letter-spacing: var(--tracking-display);
+}
+
+/* 普通页面 H1 */
+.posts-header h1,
+.article h1,
+.subpage h1,
+.changelog-hero h1,
+.hero-moment {
+  font-size: var(--text-page-title);
+  line-height: var(--leading-title);
+  letter-spacing: var(--tracking-title);
+}
+
+/* Section H2 */
+.section-heading h2,
+.project-copy h2,
+.about-grid h2,
+.release-card h2,
+.article-body h2 {
+  font-size: var(--text-section-title);
+  line-height: var(--leading-title);
+  letter-spacing: var(--tracking-title);
+}
+
+/* 卡片 H3 */
+.post-content h3,
+.release-card h3,
+.article-body h3 {
+  font-size: var(--text-card-title);
+  line-height: 1.4;
+  letter-spacing: -0.015em;
+}
+
+/* 正文与说明 */
+.intro,
+.changelog-intro,
+.release-summary,
+.moments-intro,
+.subpage > p:last-child {
+  font-size: var(--text-body-lg);
+  line-height: var(--leading-body);
+}
+
+.article-body {
+  font-size: var(--text-body-lg);
+  line-height: var(--leading-reading);
+}
+
+.post-content p,
+.post-row div > p:last-child,
+.project-copy p:not(.eyebrow),
+.moment-content,
+.change-group li {
+  line-height: var(--leading-body);
+}
+
+.site-footer {
+  font-family: var(--font-sans);
+  font-size: var(--text-footer);
+  line-height: var(--leading-meta);
+}
+
+@media (max-width: 720px) {
+  :root {
+    --text-display: clamp(29px, 8vw, 35px);
+    --text-page-title: clamp(25px, 7vw, 30px);
+    --text-section-title: clamp(22px, 6vw, 26px);
+    --text-card-title: 21px;
+    --text-body-lg: 16px;
+    --text-body: 15px;
+    --text-body-sm: 13px;
+    --text-meta: 11px;
+    --text-footer: 11px;
+    --leading-display: 1.25;
+    --leading-title: 1.38;
+    --leading-body: 1.8;
+    --leading-reading: 1.9;
+    --tracking-display: -0.025em;
+    --tracking-title: -0.015em;
+    --tracking-label: 0.12em;
+  }
+
+  .hero-photo-heading h1 {
+    font-size: clamp(27px, 7.5vw, 34px);
+  }
+
+  .article h1 {
+    font-size: clamp(25px, 6.8vw, 29px);
+  }
+
+  .section-heading h2 {
+    font-size: clamp(25px, 7vw, 30px);
+  }
+
+  .project-copy h2,
+  .about-grid h2 {
+    font-size: 24px;
+  }
+
+  .article-body h2 {
+    font-size: 21px;
+  }
+
+  .article-body h3 {
+    font-size: 18px;
+  }
+
+  .post-row h2 {
+    font-size: 20px;
+    line-height: 1.4;
+  }
+
+  .changelog-hero h1 {
+    font-size: clamp(26px, 7vw, 31px);
+  }
+}
+
+@media (max-width: 520px) {
+  :root {
+    --text-display: clamp(28px, 8vw, 33px);
+    --text-page-title: clamp(24px, 7vw, 29px);
+    --text-section-title: 22px;
+    --text-card-title: 20px;
+  }
+
+  .hero-photo-heading h1 {
+    font-size: clamp(26px, 7.5vw, 31px);
+  }
+
+  .section-heading h2 {
+    font-size: 24px;
+  }
+
+  .article h1 {
+    font-size: clamp(24px, 6.8vw, 28px);
+  }
+
+  .project-copy h2,
+  .about-grid h2 {
+    font-size: 22px;
+  }
+}
+
