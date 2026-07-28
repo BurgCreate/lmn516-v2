@@ -176,6 +176,10 @@ const latestMoment = moments[0];
           <a href="#about">
             关于
           </a>
+
+          <Link href="/changelog">
+            生长记录
+          </Link>
         </nav>
 
 
@@ -632,6 +636,10 @@ const latestMoment = moments[0];
         <span>
           一本持续更新的个人生活杂志。
         </span>
+
+        <Link href="/changelog" className="footer-version">
+          当前版本 · V2.1
+        </Link>
       </footer>
     </main>
   );
