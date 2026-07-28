@@ -72,3 +72,12 @@ npm run dev
 - Standardized responsive breakpoints around 960px, 720px, and 520px.
 - Unified shell, archive, article, subpage, moments, and changelog widths.
 - Preserved existing mobile typography and component-specific visual behavior.
+
+## UI Design System v1.0 - Phase 4
+
+- Added shared card tokens for radius, surfaces, borders, shadows and interaction timing.
+- Unified Today, Progress, Post, Archive and empty-state card styling.
+- Added consistent hover, focus-visible and reduced-motion behavior.
+- Moved dark card styling onto shared variables instead of component-by-component values.
+- Preserved list and timeline layouts that are not semantically cards.
+
