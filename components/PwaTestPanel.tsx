@@ -4,18 +4,37 @@ import { useEffect, useState } from "react";
 
 type Status = "idle" | "working" | "success" | "error";
 
-function urlBase64ToUint8Array(base64String: string) {
-  const padding = "=".repeat((4 - (base64String.length % 4)) % 4);
+function normalizeVapidPublicKey(value: string) {
+  return value
+    .trim()
+    .replace(/^NEXT_PUBLIC_VAPID_PUBLIC_KEY\s*=\s*/i, "")
+    .replace(/^['"]|['"]$/g, "")
+    .replace(/\s+/g, "");
+}
 
-  const base64 = (base64String + padding)
+function urlBase64ToUint8Array(base64String: string) {
+  const normalized = normalizeVapidPublicKey(base64String);
+
+  if (!/^[A-Za-z0-9_-]{87}$/.test(normalized)) {
+    throw new Error(
+      `VAPID 公钥格式不正确：清理后长度为 ${normalized.length}，应为 87。`
+    );
+  }
+
+  const padding = "=".repeat((4 - (normalized.length % 4)) % 4);
+  const base64 = (normalized + padding)
     .replace(/-/g, "+")
     .replace(/_/g, "/");
-
   const rawData = window.atob(base64);
-
-  return Uint8Array.from(
+  const bytes = Uint8Array.from(
     [...rawData].map((character) => character.charCodeAt(0))
   );
+
+  if (bytes.length !== 65 || bytes[0] !== 4) {
+    throw new Error("VAPID 公钥内容无效，请重新生成一组密钥。");
+  }
+
+  return bytes;
 }
 
 function isStandaloneMode() {
@@ -134,7 +153,7 @@ export default function PwaTestPanel() {
         );
       }
 
-      const publicKey = keyResult.publicKey;
+      const publicKey = normalizeVapidPublicKey(keyResult.publicKey);
 
       setMessage("正在请求通知权限……");
       const result =
@@ -155,6 +174,8 @@ export default function PwaTestPanel() {
 
       const currentSubscription =
         await registration.pushManager.getSubscription();
+
+      setMessage("正在创建设备推送订阅……");
 
       const nextSubscription =
         currentSubscription ||
