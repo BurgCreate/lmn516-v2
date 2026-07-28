@@ -5320,8 +5320,42 @@ html[data-theme="dark"]::-webkit-scrollbar-thumb {
   }
 }
 
+/* =========================================================
+   照片墙
+========================================================= */
+
+.photos-page {
+  padding-block: 44px 96px;
+}
+
+.photos-page-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 40px;
+  margin: 48px 0 46px;
+  padding-bottom: 34px;
+  border-bottom: 1px solid var(--line);
+}
+
+.photos-page-header h1 {
+  margin: 0;
+  font-size: clamp(42px, 7vw, 78px);
+  line-height: 1.02;
+  letter-spacing: -0.055em;
+}
+
+.photos-page-intro {
+  max-width: 620px;
+  margin: 22px 0 0;
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1.85;
+}
 
 .photos-page-count {
+  flex: 0 0 auto;
+  margin: 0;
   text-align: right;
 }
 
