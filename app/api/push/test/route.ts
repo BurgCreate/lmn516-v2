@@ -19,25 +19,54 @@ type PushRequestBody = {
   delaySeconds?: number;
 };
 
-function cleanEnvironmentValue(value: string | undefined) {
+type WebPushError = Error & {
+  statusCode?: number;
+  headers?: Record<string, string | string[] | undefined>;
+  body?: string;
+  endpoint?: string;
+};
+
+function cleanValue(value: string | undefined) {
   return value
     ?.trim()
     .replace(/^['"]|['"]$/g, "")
     .replace(/\s+/g, "");
 }
 
-export async function POST(request: Request) {
+function safeEndpoint(endpoint: string | undefined) {
+  if (!endpoint) return null;
+
   try {
-    const privateKey = cleanEnvironmentValue(
-      process.env.VAPID_PRIVATE_KEY
-    );
+    const url = new URL(endpoint);
+    return `${url.protocol}//${url.host}${url.pathname.slice(0, 24)}…`;
+  } catch {
+    return "invalid-endpoint";
+  }
+}
+
+export async function POST(request: Request) {
+  let stage = "开始处理请求";
+
+  try {
+    stage = "读取 VAPID 环境变量";
+
+    const privateKey = cleanValue(process.env.VAPID_PRIVATE_KEY);
     const subject =
       process.env.VAPID_SUBJECT?.trim().replace(/^['"]|['"]$/g, "") ||
       "mailto:hello@lmn516.com";
 
     if (!privateKey) {
       return NextResponse.json(
-        { ok: false, error: "服务器没有读取到 VAPID_PRIVATE_KEY。" },
+        {
+          ok: false,
+          stage,
+          error: "服务器没有读取到 VAPID_PRIVATE_KEY。",
+          debug: {
+            hasPrivateKey: false,
+            hasSubject: Boolean(subject),
+            nodeEnv: process.env.NODE_ENV
+          }
+        },
         { status: 503 }
       );
     }
@@ -49,12 +78,17 @@ export async function POST(request: Request) {
       return NextResponse.json(
         {
           ok: false,
-          error:
-            "VAPID_SUBJECT 格式错误，必须以 mailto: 或 https:// 开头。"
+          stage,
+          error: "VAPID_SUBJECT 格式错误。",
+          debug: {
+            subjectPrefix: subject.split(":")[0] || null
+          }
         },
         { status: 500 }
       );
     }
+
+    stage = "解析浏览器订阅信息";
 
     const body = (await request.json()) as PushRequestBody;
     const subscription = body.subscription;
@@ -65,23 +99,73 @@ export async function POST(request: Request) {
       !subscription.keys?.auth
     ) {
       return NextResponse.json(
-        { ok: false, error: "浏览器推送订阅信息不完整，请重新开启通知。" },
+        {
+          ok: false,
+          stage,
+          error: "浏览器推送订阅信息不完整，请重新开启通知。",
+          debug: {
+            hasEndpoint: Boolean(subscription?.endpoint),
+            hasP256dh: Boolean(subscription?.keys?.p256dh),
+            hasAuth: Boolean(subscription?.keys?.auth)
+          }
+        },
         { status: 400 }
       );
     }
 
-    if (!subscription.endpoint.startsWith("https://")) {
+    stage = "校验订阅 endpoint";
+
+    try {
+      const endpointUrl = new URL(subscription.endpoint);
+
+      if (endpointUrl.protocol !== "https:") {
+        throw new Error("endpoint 不是 HTTPS 地址。");
+      }
+    } catch (error) {
       return NextResponse.json(
-        { ok: false, error: "推送订阅 endpoint 格式无效。" },
+        {
+          ok: false,
+          stage,
+          error:
+            error instanceof Error
+              ? error.message
+              : "订阅 endpoint 格式无效。",
+          debug: {
+            endpoint: safeEndpoint(subscription.endpoint)
+          }
+        },
         { status: 400 }
       );
     }
 
-    webpush.setVapidDetails(
-      subject,
-      VAPID_PUBLIC_KEY,
-      privateKey
-    );
+    stage = "配置 VAPID 密钥";
+
+    try {
+      webpush.setVapidDetails(
+        subject,
+        VAPID_PUBLIC_KEY,
+        privateKey
+      );
+    } catch (error) {
+      const detail =
+        error instanceof Error ? error.message : String(error);
+
+      return NextResponse.json(
+        {
+          ok: false,
+          stage,
+          error: `VAPID 配置失败：${detail}`,
+          debug: {
+            errorName:
+              error instanceof Error ? error.name : "UnknownError",
+            publicKeyLength: VAPID_PUBLIC_KEY.length,
+            privateKeyLength: privateKey.length,
+            subject
+          }
+        },
+        { status: 500 }
+      );
+    }
 
     const delaySeconds = Math.min(
       Math.max(Number(body.delaySeconds) || 0, 0),
@@ -89,10 +173,14 @@ export async function POST(request: Request) {
     );
 
     if (delaySeconds > 0) {
+      stage = "等待测试延迟";
+
       await new Promise((resolve) =>
         setTimeout(resolve, delaySeconds * 1000)
       );
     }
+
+    stage = "调用 Web Push 服务";
 
     const payload = JSON.stringify({
       title: "LMN516",
@@ -102,7 +190,7 @@ export async function POST(request: Request) {
       badge: "/icons/icon-192.png"
     });
 
-    await webpush.sendNotification(
+    const response = await webpush.sendNotification(
       {
         endpoint: subscription.endpoint,
         expirationTime: subscription.expirationTime ?? null,
@@ -118,21 +206,46 @@ export async function POST(request: Request) {
     );
 
     return NextResponse.json(
-      { ok: true },
-      { headers: { "Cache-Control": "no-store" } }
+      {
+        ok: true,
+        stage: "发送完成",
+        debug: {
+          statusCode: response.statusCode,
+          endpoint: safeEndpoint(subscription.endpoint)
+        }
+      },
+      {
+        headers: {
+          "Cache-Control": "no-store"
+        }
+      }
     );
   } catch (error) {
-    console.error("Push test failed:", error);
+    const pushError = error as WebPushError;
 
-    const name =
-      error instanceof Error ? error.name : "UnknownError";
-    const message =
-      error instanceof Error ? error.message : String(error);
+    console.error("Push test failed:", {
+      stage,
+      name: pushError?.name,
+      message: pushError?.message,
+      statusCode: pushError?.statusCode,
+      body: pushError?.body,
+      endpoint: safeEndpoint(pushError?.endpoint),
+      stack: pushError?.stack
+    });
 
     return NextResponse.json(
       {
         ok: false,
-        error: `发送通知失败 [${name}]：${message}`
+        stage,
+        error: `发送通知失败 [${pushError?.name || "UnknownError"}]：${
+          pushError?.message || String(error)
+        }`,
+        debug: {
+          statusCode: pushError?.statusCode ?? null,
+          responseBody: pushError?.body ?? null,
+          endpoint: safeEndpoint(pushError?.endpoint),
+          hasHeaders: Boolean(pushError?.headers)
+        }
       },
       { status: 500 }
     );
