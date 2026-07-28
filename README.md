@@ -56,3 +56,19 @@ npm run dev
 浏览器打开：
 
 `http://localhost:3000`
+
+## LMN516 UI Design System v1.0
+
+### Phase 2 - Spacing System
+
+- Added an 11-step spacing scale from 4px to 120px.
+- Added semantic spacing roles for page gutters, page rhythm, sections, cards and grids.
+- Unified key spacing across the homepage, archive, article, subpages and footer.
+- Added responsive spacing roles at 720px and 520px without changing component structure.
+
+## UI Design System v1.0 - Phase 3
+
+- Added shared container tokens for wide, page, reading, narrow, and changelog layouts.
+- Standardized responsive breakpoints around 960px, 720px, and 520px.
+- Unified shell, archive, article, subpage, moments, and changelog widths.
+- Preserved existing mobile typography and component-specific visual behavior.

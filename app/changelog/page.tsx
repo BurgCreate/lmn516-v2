@@ -665,9 +665,9 @@ export default function ChangelogPage() {
           text-decoration: none;
         }
 
-        @media (max-width: 760px) {
+        @media (max-width: 720px) {
           .changelog-page .shell {
-            width: min(100% - 32px, 1120px);
+            width: 100%;
           }
 
           .changelog-header {
@@ -731,7 +731,7 @@ export default function ChangelogPage() {
           }
         }
 
-        @media (max-width: 420px) {
+        @media (max-width: 520px) {
           .changelog-hero h1 {
             font-size: 32px;
           }
