@@ -104,3 +104,22 @@ npm run dev
 - Preserved expressive motion for the photo wall and moment bubble while reducing inconsistent one-off timings.
 - Added comprehensive `prefers-reduced-motion` behavior, including immediate moment-page navigation.
 
+
+## UI Design System v1.0 - Phase 8
+
+- Audited dark-theme background, surface, border, text, accent, shadow, button, link and navigation tokens.
+- Unified dark card hierarchy across homepage, archive, moments and changelog surfaces.
+- Improved article readability for headings, links, blockquotes, inline code, code blocks, tables, captions, rules and images.
+- Improved dark-theme treatment for the random photo area, controls, forms, navigation and changelog interactions.
+- Preserved all existing layout, content, responsive and animation behavior.
+
+## UI Design System v1.0 - Phase 8 Redesign
+
+Phase 8 was rebuilt as **LMN516 Night Language** rather than a conventional dark-theme audit.
+
+- Replaced the green-tinted dark palette with a calm, warm-neutral gray system.
+- Introduced explicit night background, surface, text, border, accent, code, and overlay tokens.
+- Reduced card and component shadows to near-zero and moved hierarchy into surface contrast.
+- Unified navigation, buttons, cards, article content, forms, changelog, photo presentation, and the moment bubble.
+- Preserved existing layout, typography sizing, component dimensions, and motion behavior.
+- Borrowed the restraint of modern reading interfaces without copying ChatGPT's layout or component identity.
