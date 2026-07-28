@@ -20,50 +20,40 @@ const releases: Release[] = [
   {
     version: "V2.1",
     date: "2026.07.28",
-    title: "让首页更完整，也更像一座数字花园",
+    title: "进入持续打磨阶段",
     summary:
-      "这一版集中整理首页体验，让照片、文章、导航与时间信息更自然地待在一起。",
+      "继续调整首页图片、移动端体验、导航与页面比例，并新增生长记录，让网站的变化本身也被保存下来。",
     current: true,
     groups: [
       {
         title: "新增",
         tone: "new",
-        items: ["精选随机照片机制", "手机端导航菜单", "网站生长记录页面"],
+        items: ["生长记录页面", "精选随机照片机制", "移动端导航入口"],
       },
       {
         title: "优化",
         tone: "improved",
         items: [
-          "横版照片完整显示，减少不必要的裁切",
-          "碎碎念气泡在手机端尽量保持单行",
+          "调整首页照片展示比例",
           "首页展示最近 4 篇文章",
-          "日期与时间信息增加分钟级刷新",
-          "电脑端文字阅读体验",
+          "优化碎碎念与移动端排版",
+          "统一全站标题与正文的字号层级",
         ],
       },
       {
         title: "修复",
         tone: "fixed",
-        items: ["部分导航按钮无法点击", "页面切换后滚动位置没有重置"],
+        items: ["部分导航入口无法点击", "页面切换后滚动位置未重置"],
       },
     ],
   },
   {
     version: "V2.0",
     date: "2026.07.26",
-    title: "从博客模板走向独立前端",
+    title: "新版首页与主要功能集中完成",
     summary:
-      "网站完成前后端分离。WordPress 继续负责内容，Next.js 负责呈现，GitHub 与 Vercel 接管版本和部署。",
+      "在完成迁移后的第二天，网站开始真正形成现在的样子。首页、文章系统、生活档案和互动功能被逐步补齐。",
     groups: [
-      {
-        title: "重构",
-        tone: "rebuilt",
-        items: [
-          "采用 WordPress Headless + Next.js 架构",
-          "接入 GitHub 版本管理与 Vercel 自动部署",
-          "建立文章详情、归档、音乐与关于页面",
-        ],
-      },
       {
         title: "新增",
         tone: "new",
@@ -76,19 +66,52 @@ const releases: Release[] = [
           "碎碎念气泡",
         ],
       },
+      {
+        title: "完善",
+        tone: "improved",
+        items: [
+          "文章详情页与全部文章页面",
+          "音乐、关于等独立页面",
+          "WordPress 内容与首页图片连接",
+          "GitHub 推送后由 Vercel 自动部署",
+        ],
+      },
+    ],
+  },
+  {
+    version: "V1.5",
+    date: "2026.07.25",
+    title: "开始迁移到 Next.js",
+    summary:
+      "从传统 WordPress 模板迁移到 WordPress Headless + Next.js。WordPress 继续保存内容，新的前端开始接管网站的设计与交互。",
+    groups: [
+      {
+        title: "重构",
+        tone: "rebuilt",
+        items: [
+          "建立 Next.js 前端项目",
+          "通过 REST API 读取 WordPress 内容",
+          "接入 GitHub 版本管理",
+          "接入 Vercel 自动构建与部署",
+        ],
+      },
     ],
   },
   {
     version: "V1.0",
     date: "2026.01",
-    title: "WordPress 博客正式上线",
+    title: "个人网站正式上线",
     summary:
-      "LMN516 开始成为一个真正属于自己的写作空间，文章、照片和生活记录有了固定住所。",
+      "以第一篇文章发布为起点，LMN516 正式成为一个属于自己的写作与生活记录空间。",
     groups: [
       {
         title: "起点",
         tone: "new",
-        items: ["完成域名与服务器配置", "安装并启用 WordPress", "开始持续发布个人文章"],
+        items: [
+          "完成域名、服务器与 WordPress 配置",
+          "发布第一篇文章",
+          "开始保存文章、照片与生活记录",
+        ],
       },
     ],
   },
