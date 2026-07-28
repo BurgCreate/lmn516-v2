@@ -114,24 +114,29 @@ export default function PwaTestPanel() {
       return;
     }
 
-    const publicKey =
-      process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY;
-
-    console.log("Public Key =", publicKey);
-    alert(publicKey ?? "undefined");
-
-    if (!publicKey) {
-      setStatus("error");
-      setMessage(
-        "网站尚未读取到 VAPID 公钥，请检查 Vercel 环境变量并重新部署。"
-      );
-      return;
-    }
-
     setStatus("working");
-    setMessage("正在请求通知权限……");
+    setMessage("正在读取推送公钥……");
 
     try {
+      const keyResponse = await fetch("/api/push/public-key", {
+        cache: "no-store"
+      });
+
+      const keyResult = (await keyResponse.json()) as {
+        ok?: boolean;
+        publicKey?: string;
+        error?: string;
+      };
+
+      if (!keyResponse.ok || !keyResult.publicKey) {
+        throw new Error(
+          keyResult.error || "服务器没有返回 VAPID 公钥。"
+        );
+      }
+
+      const publicKey = keyResult.publicKey;
+
+      setMessage("正在请求通知权限……");
       const result =
         await Notification.requestPermission();
 
@@ -168,7 +173,9 @@ export default function PwaTestPanel() {
       console.error(error);
       setStatus("error");
       setMessage(
-        "开启通知失败。请确认通过 HTTPS 打开，并从主屏幕 App 运行。"
+        error instanceof Error
+          ? error.message
+          : "开启通知失败。请确认通过 HTTPS 打开，并从主屏幕 App 运行。"
       );
     }
   }
