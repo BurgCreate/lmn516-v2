@@ -251,14 +251,16 @@ main,
 .random-photo-stage {
   position: relative;
   width: 100%;
-  height: clamp(420px, 55vw, 680px);
+  aspect-ratio: 16 / 9;
+  min-height: 0;
+  max-height: 72vh;
   padding: 0;
   display: block;
   overflow: hidden;
   appearance: none;
   border: 1px solid var(--line);
   border-radius: 28px;
-  background: var(--paper);
+  background: #171a18;
   color: inherit;
   cursor: pointer;
   box-shadow: 0 20px 60px rgba(32, 36, 31, 0.1);
@@ -276,13 +278,27 @@ main,
   transform: scale(0.995);
 }
 
+.random-photo-background {
+  position: absolute;
+  inset: -30px;
+  z-index: 0;
+  display: block;
+  background-position: center;
+  background-size: cover;
+  filter: blur(24px);
+  opacity: 0.48;
+  transform: scale(1.08);
+  animation: random-photo-background-in 0.8s ease;
+}
+
 .random-photo-image {
   position: absolute;
   inset: 0;
+  z-index: 1;
   width: 100%;
   height: 100%;
   display: block;
-  object-fit: cover;
+  object-fit: contain;
   object-position: center;
   animation: random-photo-in 0.8s ease;
 }
@@ -298,10 +314,21 @@ main,
   }
 }
 
+@keyframes random-photo-background-in {
+  from {
+    opacity: 0;
+    transform: scale(1.12);
+  }
+  to {
+    opacity: 0.48;
+    transform: scale(1.08);
+  }
+}
+
 .random-photo-overlay {
   position: absolute;
   inset: 0;
-  z-index: 1;
+  z-index: 2;
   background: linear-gradient(to top, rgba(10, 14, 12, 0.62) 0%, rgba(10, 14, 12, 0.12) 42%, transparent 72%);
   pointer-events: none;
 }
@@ -311,7 +338,7 @@ main,
   right: 30px;
   bottom: 28px;
   left: 30px;
-  z-index: 2;
+  z-index: 3;
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
@@ -339,7 +366,7 @@ main,
   position: absolute;
   top: 22px;
   right: 22px;
-  z-index: 2;
+  z-index: 3;
   padding: 8px 13px;
   border: 1px solid rgba(255, 255, 255, 0.28);
   border-radius: 999px;
@@ -1451,7 +1478,8 @@ html[data-theme="dark"] .random-photo-image {
   .hero-photo-heading { align-items: flex-start; }
 
   .random-photo-stage {
-    height: clamp(360px, 70vw, 520px);
+    aspect-ratio: 16 / 10;
+    max-height: 68vh;
     border-radius: 22px;
   }
 
@@ -1617,9 +1645,9 @@ html[data-theme="dark"] .random-photo-image {
   }
 
   .random-photo-stage {
-    height: 62vh;
-    min-height: 380px;
-    max-height: 560px;
+    aspect-ratio: 4 / 3;
+    min-height: 0;
+    max-height: none;
     border-radius: 18px;
   }
 

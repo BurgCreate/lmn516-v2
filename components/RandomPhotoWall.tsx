@@ -79,6 +79,15 @@ export default function RandomPhotoWall({
       aria-label="随机更换一张照片"
       title="点击随机更换照片"
     >
+      <span
+        key={`background-${currentImage.id}`}
+        className="random-photo-background"
+        style={{
+          backgroundImage: `url("${currentImage.sourceUrl}")`,
+        }}
+        aria-hidden="true"
+      />
+
       <img
         key={currentImage.id}
         src={currentImage.sourceUrl}
