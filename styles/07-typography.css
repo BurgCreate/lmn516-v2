@@ -1,0 +1,201 @@
+/* ==========================
+   18. UI Design System v1.0
+   Phase 1.5: Typography consolidation
+   This application layer intentionally sits after legacy component rules.
+   It standardizes type without changing layout or established mobile behavior.
+========================== */
+
+::selection {
+  background: var(--color-selection);
+}
+
+body {
+  font-size: var(--text-body);
+  line-height: var(--leading-body);
+}
+
+/* Shared text roles */
+.eyebrow,
+.card-label,
+.post-meta,
+.post-date,
+.release-date,
+.current-badge,
+.change-label,
+.moment-date,
+.moment-bubble-time,
+.random-photo-info small {
+  font-family: var(--font-sans);
+  font-size: var(--text-meta);
+  line-height: var(--leading-meta);
+}
+
+.eyebrow,
+.card-label {
+  letter-spacing: var(--tracking-label);
+}
+
+/* Display: homepage only */
+.hero h1,
+.hero-photo-heading h1 {
+  font-size: var(--text-display);
+  line-height: var(--leading-display);
+  letter-spacing: var(--tracking-display);
+}
+
+/* Page title: archive, article, subpages, changelog and moments */
+.posts-header h1,
+.article h1,
+.subpage h1,
+.changelog-hero h1,
+.hero-moment {
+  font-size: var(--text-page-title);
+  line-height: var(--leading-title);
+  letter-spacing: var(--tracking-title);
+}
+
+/* Section title */
+h2,
+.section-heading h2,
+.project-copy h2,
+.about-grid h2,
+.release-card h2 {
+  font-size: var(--text-section-title);
+  line-height: var(--leading-title);
+  letter-spacing: var(--tracking-title);
+}
+
+/* Reading-area headings stay slightly smaller than page sections */
+.article-body h2 {
+  font-size: var(--text-card-title);
+  line-height: 1.45;
+  letter-spacing: -0.015em;
+}
+
+/* Card and content headings */
+.post-content h3,
+.release-card h3,
+.article-body h3 {
+  font-size: var(--text-card-title);
+  line-height: 1.4;
+  letter-spacing: -0.015em;
+}
+
+.post-row h2,
+.archive-card strong {
+  font-size: var(--text-card-title);
+  line-height: 1.4;
+  letter-spacing: -0.015em;
+}
+
+/* Introductory and reading copy */
+.intro,
+.changelog-intro,
+.release-summary,
+.moments-intro,
+.subpage > p:last-child {
+  font-size: var(--text-body-lg);
+  line-height: var(--leading-body);
+}
+
+.article-body {
+  font-size: var(--text-body-lg);
+  line-height: var(--leading-reading);
+}
+
+.post-content p,
+.post-row div > p:last-child,
+.project-copy p:not(.eyebrow),
+.moment-content,
+.change-group li {
+  line-height: var(--leading-body);
+}
+
+.site-footer {
+  font-family: var(--font-sans);
+  font-size: var(--text-footer);
+  line-height: var(--leading-meta);
+}
+
+/* Mobile type scale. Layout declarations remain in their original media queries. */
+@media (max-width: 720px) {
+  :root {
+    --text-display: clamp(29px, 8vw, 35px);
+    --text-page-title: clamp(25px, 7vw, 30px);
+    --text-section-title: clamp(22px, 6vw, 26px);
+    --text-card-title: 20px;
+    --text-body-lg: 16px;
+    --text-body: 15px;
+    --text-body-sm: 13px;
+    --text-meta: 11px;
+    --text-footer: 11px;
+    --leading-display: 1.25;
+    --leading-title: 1.38;
+    --leading-body: 1.8;
+    --leading-reading: 1.9;
+    --tracking-display: -0.025em;
+    --tracking-title: -0.015em;
+    --tracking-label: 0.12em;
+  }
+
+  .hero-photo-heading h1 {
+    font-size: clamp(27px, 7.5vw, 34px);
+  }
+
+  .article h1 {
+    font-size: clamp(25px, 6.8vw, 29px);
+  }
+
+  .section-heading h2 {
+    font-size: clamp(24px, 6.8vw, 28px);
+  }
+
+  .project-copy h2,
+  .about-grid h2 {
+    font-size: 23px;
+  }
+
+  .article-body h2 {
+    font-size: 21px;
+  }
+
+  .article-body h3 {
+    font-size: 18px;
+  }
+
+  .post-row h2,
+  .archive-card strong {
+    font-size: 20px;
+  }
+
+  .changelog-hero h1 {
+    font-size: clamp(25px, 6.8vw, 30px);
+  }
+}
+
+@media (max-width: 520px) {
+  :root {
+    --text-display: clamp(28px, 8vw, 33px);
+    --text-page-title: clamp(24px, 7vw, 29px);
+    --text-section-title: 22px;
+    --text-card-title: 20px;
+  }
+
+  .hero-photo-heading h1 {
+    font-size: clamp(26px, 7.5vw, 31px);
+  }
+
+  .section-heading h2 {
+    font-size: 23px;
+  }
+
+  .article h1 {
+    font-size: clamp(24px, 6.8vw, 28px);
+  }
+
+  .project-copy h2,
+  .about-grid h2 {
+    font-size: 22px;
+  }
+}
+

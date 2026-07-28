@@ -1,0 +1,104 @@
+/* ==========================
+   20. UI Design System v1.0
+   Phase 3: Responsive + Container
+   Standard breakpoints: 960px / 720px / 520px.
+========================== */
+
+/* Shared container roles */
+.shell {
+  width: min(var(--container-wide), calc(100% - (var(--page-gutter) * 2)));
+  margin-inline: auto;
+}
+
+.posts-header,
+.posts-list {
+  width: min(100%, var(--container-page));
+  max-width: none;
+  margin-inline: auto;
+}
+
+.page.narrow,
+.subpage.narrow,
+.narrow {
+  width: min(100%, var(--container-reading));
+  max-width: none;
+  margin-inline: auto;
+}
+
+.article {
+  width: min(100%, var(--container-reading));
+  max-width: none;
+  margin-inline: auto;
+}
+
+.article h1,
+.subpage h1,
+.subpage > p:last-child,
+.article-body,
+.moments-list {
+  max-width: var(--container-reading);
+}
+
+.intro,
+.posts-header > p:last-child {
+  max-width: var(--container-narrow);
+}
+
+/* Tablet and compact desktop */
+@media (max-width: 960px) {
+  :root {
+    --page-gutter: 20px;
+    --container-wide: 100%;
+    --container-page: 900px;
+  }
+
+  .project,
+  .featured-post,
+  .about-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .post-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .archive-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Phone */
+@media (max-width: 720px) {
+  :root {
+    --container-page: 100%;
+    --container-reading: 100%;
+    --container-narrow: 100%;
+  }
+
+  .shell,
+  .posts-header,
+  .posts-list,
+  .page.narrow,
+  .subpage.narrow,
+  .narrow,
+  .article {
+    width: 100%;
+  }
+
+  .archive-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Small phone */
+@media (max-width: 520px) {
+  :root {
+    --page-gutter: 16px;
+  }
+
+  .random-photo-stage {
+    min-height: 360px;
+    max-height: 540px;
+  }
+}
+

@@ -1,0 +1,172 @@
+/* ==========================
+   LMN516 UI Design System v1.0
+   Phase 8: Design Tokens + Typography + Spacing + Responsive + Container + Card + Button + Navigation + Motion + Night Language
+========================== */
+
+:root {
+  /* Color tokens */
+  --color-bg: #f2efe7;
+  --color-surface: rgba(255, 255, 255, 0.48);
+  --color-surface-strong: rgba(255, 255, 255, 0.72);
+  --color-text: #20241f;
+  --color-text-muted: #6f746c;
+  --color-accent: #2f5e59;
+  --color-accent-soft: #dfe9e5;
+  --color-border: rgba(32, 36, 31, 0.14);
+  --color-border-strong: rgba(32, 36, 31, 0.22);
+  --color-selection: rgba(47, 94, 89, 0.18);
+
+  /* Shadow tokens */
+  --shadow-sm: 0 8px 24px rgba(44, 50, 43, 0.06);
+  --shadow-md: 0 20px 60px rgba(44, 50, 43, 0.08);
+  --shadow-lg: 0 28px 80px rgba(44, 50, 43, 0.12);
+
+  /* Backward-compatible aliases */
+  --bg: var(--color-bg);
+  --paper: var(--color-surface);
+  --text: var(--color-text);
+  --muted: var(--color-text-muted);
+  --line: var(--color-border);
+  --accent: var(--color-accent);
+  --accent-soft: var(--color-accent-soft);
+  --shadow: var(--shadow-md);
+
+  /* Font families */
+  --font-serif: "Noto Serif SC", "Songti SC", "STSong", serif;
+  --font-sans: Inter, "PingFang SC", "Microsoft YaHei", sans-serif;
+
+  /* Type scale: desktop */
+  --text-display: clamp(40px, 5vw, 64px);
+  --text-page-title: clamp(34px, 4vw, 48px);
+  --text-section-title: clamp(28px, 3vw, 40px);
+  --text-card-title: clamp(20px, 2vw, 26px);
+  --text-body-lg: 18px;
+  --text-body: 16px;
+  --text-body-sm: 14px;
+  --text-meta: 12px;
+  --text-footer: 12px;
+
+  /* Line-height tokens */
+  --leading-display: 1.16;
+  --leading-title: 1.28;
+  --leading-body: 1.8;
+  --leading-reading: 1.95;
+  --leading-meta: 1.5;
+
+  /* Letter-spacing tokens */
+  --tracking-display: -0.035em;
+  --tracking-title: -0.025em;
+  --tracking-label: 0.14em;
+
+  /* Spacing scale */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+  --space-9: 80px;
+  --space-10: 96px;
+  --space-11: 120px;
+
+
+  /* Container scale */
+  --container-wide: 1160px;
+  --container-page: 980px;
+  --container-reading: 760px;
+  --container-narrow: 680px;
+  --container-changelog: 1120px;
+
+  /* Semantic spacing roles */
+  --page-gutter: 20px;
+  --page-space-top: var(--space-8);
+  --page-space-bottom: var(--space-11);
+  --section-space: var(--space-10);
+  --section-heading-gap: var(--space-6);
+  --card-padding: var(--space-6);
+  --card-padding-lg: var(--space-7);
+  --grid-gap: var(--space-5);
+  --content-gap: var(--space-4);
+
+  /* Card system */
+  --radius-sm: 14px;
+  --radius-md: 20px;
+  --radius-lg: 26px;
+  --radius-xl: 30px;
+  --radius-pill: 999px;
+
+  --card-bg: var(--color-surface);
+  --card-bg-subtle: color-mix(in srgb, var(--color-surface) 62%, transparent);
+  --card-bg-hover: var(--color-surface-strong);
+  --card-border: var(--color-border);
+  --card-border-hover: color-mix(in srgb, var(--color-accent) 32%, var(--color-border));
+  --card-shadow: var(--shadow-sm);
+  --card-shadow-hover: var(--shadow-md);
+  --card-lift: -3px;
+  --card-transition: var(--motion-base) var(--ease-emphasized);
+
+  /* Button and interactive control system */
+  --control-height-sm: 36px;
+  --control-height-md: 44px;
+  --control-height-lg: 50px;
+  --control-padding-sm: 14px;
+  --control-padding-md: 20px;
+  --control-padding-lg: 24px;
+  --control-radius: var(--radius-pill);
+  --control-font-size: 14px;
+  --control-font-weight: 600;
+  --control-lift: var(--motion-lift-control);
+  --control-press-scale: var(--motion-press-scale);
+  --control-transition: var(--motion-fast) var(--ease-emphasized);
+
+  --focus-ring-color: color-mix(in srgb, var(--color-accent) 72%, transparent);
+  --focus-ring-shadow: 0 0 0 4px color-mix(in srgb, var(--color-accent) 18%, transparent);
+
+  --button-primary-bg: var(--color-text);
+  --button-primary-text: var(--color-bg);
+  --button-primary-hover-bg: color-mix(in srgb, var(--color-text) 88%, var(--color-accent));
+  --button-secondary-bg: var(--color-surface);
+  --button-secondary-hover-bg: var(--color-surface-strong);
+  --button-border: var(--color-border);
+  --button-border-hover: color-mix(in srgb, var(--color-accent) 42%, var(--color-border));
+  --button-shadow-hover: var(--shadow-sm);
+
+  --link-color: var(--color-accent);
+  --link-underline: color-mix(in srgb, var(--color-accent) 42%, transparent);
+  --link-underline-hover: var(--color-accent);
+
+  /* Motion system */
+  --motion-instant: 120ms;
+  --motion-fast: 180ms;
+  --motion-base: 240ms;
+  --motion-slow: 420ms;
+  --motion-photo: 800ms;
+
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --ease-emphasized: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-enter: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-exit: cubic-bezier(0.4, 0, 1, 1);
+
+  --motion-lift-subtle: -1px;
+  --motion-lift-control: -2px;
+  --motion-lift-card: -3px;
+  --motion-press-scale: 0.98;
+  --motion-photo-scale: 1.025;
+
+  /* Navigation system */
+  --header-height: 96px;
+  --header-border: var(--color-border);
+  --nav-gap: var(--space-6);
+  --nav-font-size: 14px;
+  --nav-font-weight: 560;
+  --nav-link-color: var(--color-text-muted);
+  --nav-link-hover: var(--color-text);
+  --nav-link-active: var(--color-accent);
+  --nav-indicator: var(--color-accent);
+  --nav-mobile-bg: var(--color-surface);
+  --nav-mobile-border: var(--color-border);
+}
+
+

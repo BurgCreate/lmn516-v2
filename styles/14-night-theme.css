@@ -1,0 +1,1228 @@
+/* ==========================
+   Phase 8: LMN516 Night Language
+   Calm neutral surfaces inspired by modern reading interfaces
+========================== */
+
+body.dark,
+html[data-theme="dark"] body {
+  color-scheme: dark;
+
+  /* Night palette */
+  --night-bg: #212121;
+  --night-surface-1: #272727;
+  --night-surface-2: #2f2f2f;
+  --night-surface-3: #383838;
+  --night-surface-floating: #303030;
+  --night-text-primary: #ececec;
+  --night-text-secondary: #b4b4b4;
+  --night-text-muted: #8f8f8f;
+  --night-border: rgba(255, 255, 255, 0.08);
+  --night-border-strong: rgba(255, 255, 255, 0.13);
+  --night-accent: #a8c7fa;
+  --night-accent-hover: #c2d8fb;
+  --night-accent-soft: rgba(168, 199, 250, 0.12);
+  --night-selection: rgba(168, 199, 250, 0.24);
+  --night-code-bg: #181818;
+  --night-photo-overlay: linear-gradient(180deg, transparent 46%, rgba(0, 0, 0, 0.72) 100%);
+
+  /* Map the new language onto the existing design system */
+  --color-bg: var(--night-bg);
+  --color-surface: var(--night-surface-1);
+  --color-surface-strong: var(--night-surface-2);
+  --color-text: var(--night-text-primary);
+  --color-text-muted: var(--night-text-secondary);
+  --color-accent: var(--night-accent);
+  --color-accent-soft: var(--night-accent-soft);
+  --color-border: var(--night-border);
+  --color-border-strong: var(--night-border-strong);
+  --color-selection: var(--night-selection);
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.18);
+  --shadow-md: 0 4px 18px rgba(0, 0, 0, 0.2);
+  --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.24);
+
+  --card-bg: var(--night-surface-1);
+  --card-bg-subtle: color-mix(in srgb, var(--night-surface-1) 72%, transparent);
+  --card-bg-hover: var(--night-surface-2);
+  --card-border: var(--night-border);
+  --card-border-hover: var(--night-border-strong);
+  --card-shadow: none;
+  --card-shadow-hover: none;
+
+  --button-primary-bg: var(--night-text-primary);
+  --button-primary-text: var(--night-bg);
+  --button-primary-hover-bg: #ffffff;
+  --button-secondary-bg: var(--night-surface-2);
+  --button-secondary-hover-bg: var(--night-surface-3);
+  --button-border: var(--night-border);
+  --button-border-hover: var(--night-border-strong);
+  --button-shadow-hover: none;
+
+  --link-color: var(--night-accent);
+  --link-underline: rgba(168, 199, 250, 0.38);
+  --link-underline-hover: var(--night-accent-hover);
+
+  --nav-link-color: var(--night-text-secondary);
+  --nav-link-hover: var(--night-text-primary);
+  --nav-link-active: var(--night-text-primary);
+  --nav-indicator: var(--night-accent);
+  --nav-mobile-bg: var(--night-surface-2);
+  --nav-mobile-border: var(--night-border);
+
+  --focus-ring-color: var(--night-accent);
+  --focus-ring-shadow: 0 0 0 4px rgba(168, 199, 250, 0.16);
+
+  --bg: var(--color-bg);
+  --paper: var(--color-surface);
+  --text: var(--color-text);
+  --muted: var(--color-text-muted);
+  --line: var(--color-border);
+  --accent: var(--color-accent);
+  --accent-soft: var(--color-accent-soft);
+  --shadow: var(--shadow-md);
+
+  background: var(--night-bg);
+}
+
+body.dark ::selection,
+html[data-theme="dark"] ::selection {
+  color: var(--night-text-primary);
+  background: var(--night-selection);
+}
+
+body.dark .paper-noise,
+html[data-theme="dark"] .paper-noise {
+  opacity: 0.025;
+  filter: invert(1);
+  mix-blend-mode: screen;
+}
+
+body.dark .site-header,
+html[data-theme="dark"] .site-header {
+  border-color: var(--night-border);
+  background: rgba(33, 33, 33, 0.82);
+  box-shadow: none;
+  -webkit-backdrop-filter: blur(18px) saturate(1.08);
+  backdrop-filter: blur(18px) saturate(1.08);
+}
+
+body.dark .site-logo,
+html[data-theme="dark"] .site-logo {
+  color: var(--night-text-primary);
+}
+
+body.dark .site-nav a,
+html[data-theme="dark"] .site-nav a {
+  color: var(--night-text-secondary);
+}
+
+body.dark .site-nav a:hover,
+html[data-theme="dark"] .site-nav a:hover,
+body.dark .site-nav a[aria-current],
+html[data-theme="dark"] .site-nav a[aria-current] {
+  color: var(--night-text-primary);
+}
+
+body.dark .theme-toggle,
+html[data-theme="dark"] .theme-toggle,
+body.dark .button.ghost,
+html[data-theme="dark"] .button.ghost {
+  color: var(--night-text-primary);
+  border-color: var(--night-border);
+  background: var(--night-surface-2);
+  box-shadow: none;
+}
+
+body.dark .theme-toggle:hover,
+html[data-theme="dark"] .theme-toggle:hover,
+body.dark .button.ghost:hover,
+html[data-theme="dark"] .button.ghost:hover {
+  border-color: var(--night-border-strong);
+  background: var(--night-surface-3);
+  box-shadow: none;
+}
+
+body.dark .button.primary,
+html[data-theme="dark"] .button.primary {
+  color: var(--button-primary-text);
+  background: var(--button-primary-bg);
+  box-shadow: none;
+}
+
+body.dark .button.primary:hover,
+html[data-theme="dark"] .button.primary:hover {
+  background: var(--button-primary-hover-bg);
+  box-shadow: none;
+}
+
+body.dark .today-card,
+html[data-theme="dark"] .today-card,
+body.dark .progress-panel,
+html[data-theme="dark"] .progress-panel,
+body.dark .post-card,
+html[data-theme="dark"] .post-card,
+body.dark .archive-card,
+html[data-theme="dark"] .archive-card,
+body.dark .moments-empty,
+html[data-theme="dark"] .moments-empty {
+  border-color: var(--night-border);
+  background: var(--night-surface-1);
+  box-shadow: none;
+}
+
+body.dark .today-card:hover,
+html[data-theme="dark"] .today-card:hover,
+body.dark .post-card:hover,
+html[data-theme="dark"] .post-card:hover,
+body.dark .archive-card:hover,
+html[data-theme="dark"] .archive-card:hover {
+  border-color: var(--night-border-strong);
+  background: var(--night-surface-2);
+  box-shadow: none;
+}
+
+body.dark .progress-track,
+html[data-theme="dark"] .progress-track {
+  border: 1px solid var(--night-border);
+  background: var(--night-surface-3);
+}
+
+body.dark .random-photo-stage,
+html[data-theme="dark"] .random-photo-stage {
+  border-color: var(--night-border);
+  background: #171717;
+  box-shadow: none;
+}
+
+body.dark .random-photo-image,
+html[data-theme="dark"] .random-photo-image {
+  filter: brightness(0.9) saturate(0.94) contrast(1.01);
+}
+
+body.dark .random-photo-overlay,
+html[data-theme="dark"] .random-photo-overlay {
+  background: var(--night-photo-overlay);
+}
+
+body.dark .random-photo-info,
+html[data-theme="dark"] .random-photo-info,
+body.dark .random-photo-hint,
+html[data-theme="dark"] .random-photo-hint {
+  color: rgba(255, 255, 255, 0.92);
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.42);
+}
+
+body.dark .article-body,
+html[data-theme="dark"] .article-body {
+  color: #dedede;
+}
+
+body.dark .article-body h2,
+body.dark .article-body h3,
+body.dark .article-body h4,
+html[data-theme="dark"] .article-body h2,
+html[data-theme="dark"] .article-body h3,
+html[data-theme="dark"] .article-body h4 {
+  color: var(--night-text-primary);
+}
+
+body.dark .article-body a,
+html[data-theme="dark"] .article-body a {
+  color: var(--night-accent);
+  text-decoration-color: var(--link-underline);
+}
+
+body.dark .article-body a:hover,
+html[data-theme="dark"] .article-body a:hover {
+  color: var(--night-accent-hover);
+  text-decoration-color: currentColor;
+}
+
+body.dark .article-body blockquote,
+html[data-theme="dark"] .article-body blockquote {
+  color: #d6d6d6;
+  border-left-color: var(--night-border-strong);
+  background: var(--night-surface-1);
+}
+
+body.dark .article-body code,
+html[data-theme="dark"] .article-body code {
+  color: #e6e6e6;
+  border: 1px solid var(--night-border);
+  background: var(--night-surface-2);
+}
+
+body.dark .article-body pre,
+html[data-theme="dark"] .article-body pre {
+  color: #e8e8e8;
+  border: 1px solid var(--night-border);
+  background: var(--night-code-bg);
+  box-shadow: none;
+}
+
+body.dark .article-body pre code,
+html[data-theme="dark"] .article-body pre code {
+  color: inherit;
+  border: 0;
+  background: transparent;
+}
+
+body.dark .article-body table,
+html[data-theme="dark"] .article-body table {
+  border-color: var(--night-border-strong);
+  background: var(--night-surface-1);
+}
+
+body.dark .article-body th,
+html[data-theme="dark"] .article-body th {
+  color: var(--night-text-primary);
+  border-color: var(--night-border-strong);
+  background: var(--night-surface-2);
+}
+
+body.dark .article-body td,
+html[data-theme="dark"] .article-body td {
+  border-color: var(--night-border);
+}
+
+body.dark .article-body tr:nth-child(even) td,
+html[data-theme="dark"] .article-body tr:nth-child(even) td {
+  background: rgba(255, 255, 255, 0.018);
+}
+
+body.dark .article-body figcaption,
+body.dark .article-body .wp-element-caption,
+html[data-theme="dark"] .article-body figcaption,
+html[data-theme="dark"] .article-body .wp-element-caption {
+  color: var(--night-text-muted);
+}
+
+body.dark .article-body hr,
+html[data-theme="dark"] .article-body hr {
+  border-color: var(--night-border);
+}
+
+body.dark .article-body img,
+html[data-theme="dark"] .article-body img {
+  filter: brightness(0.92) contrast(1.01);
+  box-shadow: none;
+}
+
+body.dark .article-body img:hover,
+html[data-theme="dark"] .article-body img:hover {
+  filter: brightness(0.98) contrast(1.01);
+}
+
+body.dark .changelog-page,
+html[data-theme="dark"] .changelog-page {
+  color: var(--night-text-primary);
+}
+
+body.dark .changelog-card,
+html[data-theme="dark"] .changelog-card,
+body.dark .changelog-entry,
+html[data-theme="dark"] .changelog-entry {
+  border-color: var(--night-border);
+  background: var(--night-surface-1);
+  box-shadow: none;
+}
+
+body.dark .changelog-footer,
+html[data-theme="dark"] .changelog-footer {
+  border-color: var(--night-border);
+}
+
+body.dark .changelog-footer a,
+body.dark .changelog-back-link,
+html[data-theme="dark"] .changelog-footer a,
+html[data-theme="dark"] .changelog-back-link {
+  color: var(--night-text-secondary);
+  border-color: var(--night-border);
+  background: var(--night-surface-1);
+}
+
+body.dark .changelog-footer a:hover,
+body.dark .changelog-back-link:hover,
+html[data-theme="dark"] .changelog-footer a:hover,
+html[data-theme="dark"] .changelog-back-link:hover {
+  color: var(--night-text-primary);
+  border-color: var(--night-border-strong);
+  background: var(--night-surface-2);
+}
+
+body.dark .moment-bubble,
+html[data-theme="dark"] .moment-bubble {
+  color: var(--night-text-primary);
+  border-color: var(--night-border);
+  background: var(--night-surface-floating);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.22);
+}
+
+body.dark .moment-bubble::before,
+html[data-theme="dark"] .moment-bubble::before {
+  opacity: 0.14;
+}
+
+body.dark .moment-bubble:hover,
+html[data-theme="dark"] .moment-bubble:hover {
+  border-color: var(--night-border-strong);
+  background: var(--night-surface-3);
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.24);
+}
+
+body.dark input,
+body.dark textarea,
+body.dark select,
+html[data-theme="dark"] input,
+html[data-theme="dark"] textarea,
+html[data-theme="dark"] select {
+  color: var(--night-text-primary);
+  border-color: var(--night-border);
+  background: var(--night-surface-2);
+}
+
+body.dark input::placeholder,
+body.dark textarea::placeholder,
+html[data-theme="dark"] input::placeholder,
+html[data-theme="dark"] textarea::placeholder {
+  color: var(--night-text-muted);
+}
+
+body.dark input:focus,
+body.dark textarea:focus,
+body.dark select:focus,
+html[data-theme="dark"] input:focus,
+html[data-theme="dark"] textarea:focus,
+html[data-theme="dark"] select:focus {
+  border-color: rgba(168, 199, 250, 0.46);
+  box-shadow: var(--focus-ring-shadow);
+}
+
+body.dark input:-webkit-autofill,
+body.dark textarea:-webkit-autofill,
+html[data-theme="dark"] input:-webkit-autofill,
+html[data-theme="dark"] textarea:-webkit-autofill {
+  -webkit-text-fill-color: var(--night-text-primary);
+  box-shadow: 0 0 0 1000px var(--night-surface-2) inset;
+}
+
+body.dark,
+html[data-theme="dark"] {
+  scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+}
+
+body.dark::-webkit-scrollbar-thumb,
+html[data-theme="dark"]::-webkit-scrollbar-thumb {
+  border: 3px solid transparent;
+  background: linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)) padding-box;
+}
+
+/* ==========================
+   Phase 9: Night Surface System
+   Canvas -> section -> card -> interactive -> floating
+========================== */
+
+body.dark,
+html[data-theme="dark"] body {
+  /* Semantic surface roles */
+  --surface-canvas: #212121;
+  --surface-section: #242424;
+  --surface-card: #292929;
+  --surface-card-hover: #2d2d2d;
+  --surface-interactive: #303030;
+  --surface-interactive-hover: #383838;
+  --surface-floating: #323232;
+  --surface-inset: #1b1b1b;
+
+  --surface-separator: rgba(255, 255, 255, 0.075);
+  --surface-separator-strong: rgba(255, 255, 255, 0.12);
+  --surface-highlight: rgba(255, 255, 255, 0.035);
+  --surface-floating-shadow: 0 10px 34px rgba(0, 0, 0, 0.22);
+
+  /* Keep the existing system compatible with the semantic roles */
+  --night-bg: var(--surface-canvas);
+  --night-surface-1: var(--surface-card);
+  --night-surface-2: var(--surface-interactive);
+  --night-surface-3: var(--surface-interactive-hover);
+  --night-surface-floating: var(--surface-floating);
+  --night-border: var(--surface-separator);
+  --night-border-strong: var(--surface-separator-strong);
+
+  --color-bg: var(--surface-canvas);
+  --color-surface: var(--surface-card);
+  --color-surface-strong: var(--surface-interactive);
+  --color-border: var(--surface-separator);
+  --color-border-strong: var(--surface-separator-strong);
+
+  --card-bg: var(--surface-card);
+  --card-bg-subtle: var(--surface-section);
+  --card-bg-hover: var(--surface-card-hover);
+  --card-border: var(--surface-separator);
+  --card-border-hover: var(--surface-separator-strong);
+
+  --button-secondary-bg: var(--surface-interactive);
+  --button-secondary-hover-bg: var(--surface-interactive-hover);
+  --nav-mobile-bg: var(--surface-floating);
+  --nav-mobile-border: var(--surface-separator);
+}
+
+/* Level 0: the uninterrupted reading canvas */
+body.dark,
+html[data-theme="dark"] body {
+  background: var(--surface-canvas);
+}
+
+/* Level 1: broad sections remain almost flush with the canvas */
+body.dark .about,
+body.dark .archive,
+body.dark .article,
+body.dark .posts-header,
+body.dark .moments-intro,
+html[data-theme="dark"] .about,
+html[data-theme="dark"] .archive,
+html[data-theme="dark"] .article,
+html[data-theme="dark"] .posts-header,
+html[data-theme="dark"] .moments-intro {
+  background: transparent;
+}
+
+/* Level 2: ordinary content cards */
+body.dark .today-card,
+body.dark .progress-panel,
+body.dark .post-card,
+body.dark .archive-card,
+body.dark .moments-empty,
+body.dark .changelog-card,
+body.dark .changelog-entry,
+html[data-theme="dark"] .today-card,
+html[data-theme="dark"] .progress-panel,
+html[data-theme="dark"] .post-card,
+html[data-theme="dark"] .archive-card,
+html[data-theme="dark"] .moments-empty,
+html[data-theme="dark"] .changelog-card,
+html[data-theme="dark"] .changelog-entry {
+  border-color: var(--surface-separator);
+  background: var(--surface-card);
+  box-shadow: inset 0 1px 0 var(--surface-highlight);
+}
+
+/* Hover raises one level, without fake elevation or glow. */
+body.dark .today-card:hover,
+body.dark .post-card:hover,
+body.dark .archive-card:hover,
+html[data-theme="dark"] .today-card:hover,
+html[data-theme="dark"] .post-card:hover,
+html[data-theme="dark"] .archive-card:hover {
+  border-color: var(--surface-separator-strong);
+  background: var(--surface-card-hover);
+  box-shadow: inset 0 1px 0 var(--surface-highlight);
+}
+
+/* Level 3: controls and compact interactive surfaces */
+body.dark .theme-toggle,
+body.dark .button.ghost,
+body.dark input,
+body.dark textarea,
+body.dark select,
+body.dark .changelog-footer a,
+body.dark .changelog-back-link,
+html[data-theme="dark"] .theme-toggle,
+html[data-theme="dark"] .button.ghost,
+html[data-theme="dark"] input,
+html[data-theme="dark"] textarea,
+html[data-theme="dark"] select,
+html[data-theme="dark"] .changelog-footer a,
+html[data-theme="dark"] .changelog-back-link {
+  border-color: var(--surface-separator);
+  background: var(--surface-interactive);
+  box-shadow: inset 0 1px 0 var(--surface-highlight);
+}
+
+body.dark .theme-toggle:hover,
+body.dark .button.ghost:hover,
+body.dark .changelog-footer a:hover,
+body.dark .changelog-back-link:hover,
+html[data-theme="dark"] .theme-toggle:hover,
+html[data-theme="dark"] .button.ghost:hover,
+html[data-theme="dark"] .changelog-footer a:hover,
+html[data-theme="dark"] .changelog-back-link:hover {
+  border-color: var(--surface-separator-strong);
+  background: var(--surface-interactive-hover);
+}
+
+/* Level 4: truly floating UI. Use sparingly. */
+body.dark .moment-bubble,
+html[data-theme="dark"] .moment-bubble {
+  border-color: var(--surface-separator-strong);
+  background: var(--surface-floating);
+  box-shadow: var(--surface-floating-shadow), inset 0 1px 0 var(--surface-highlight);
+}
+
+body.dark .moment-bubble:hover,
+html[data-theme="dark"] .moment-bubble:hover {
+  background: var(--surface-interactive-hover);
+  box-shadow: 0 12px 38px rgba(0, 0, 0, 0.24), inset 0 1px 0 var(--surface-highlight);
+}
+
+/* Header belongs between the canvas and floating UI. */
+body.dark .site-header,
+html[data-theme="dark"] .site-header {
+  border-color: var(--surface-separator);
+  background: color-mix(in srgb, var(--surface-canvas) 86%, transparent);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.018);
+}
+
+/* Insets should recede instead of competing with cards. */
+body.dark .progress-track,
+body.dark .article-body pre,
+html[data-theme="dark"] .progress-track,
+html[data-theme="dark"] .article-body pre {
+  border-color: var(--surface-separator);
+  background: var(--surface-inset);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.18);
+}
+
+body.dark .article-body code,
+body.dark .article-body th,
+html[data-theme="dark"] .article-body code,
+html[data-theme="dark"] .article-body th {
+  background: var(--surface-interactive);
+}
+
+body.dark .article-body blockquote,
+body.dark .article-body table,
+html[data-theme="dark"] .article-body blockquote,
+html[data-theme="dark"] .article-body table {
+  border-color: var(--surface-separator);
+  background: var(--surface-section);
+  box-shadow: inset 0 1px 0 var(--surface-highlight);
+}
+
+/* Images are visual content, not another card layer. */
+body.dark .random-photo-stage,
+html[data-theme="dark"] .random-photo-stage {
+  border-color: var(--surface-separator);
+  background: var(--surface-inset);
+  box-shadow: inset 0 1px 0 var(--surface-highlight);
+}
+
+/* Mobile navigation is floating, but deliberately quieter than the moment bubble. */
+@media (max-width: 760px) {
+  body.dark .nav,
+  html[data-theme="dark"] .nav {
+    border-color: var(--surface-separator);
+    background: color-mix(in srgb, var(--surface-floating) 94%, transparent);
+    box-shadow: 0 8px 26px rgba(0, 0, 0, 0.2), inset 0 1px 0 var(--surface-highlight);
+  }
+}
+
+/* ==========================
+   LMN516 Night Final
+   Complete dark-blue theme system
+   Inspired by calm developer-tool interfaces, evolved for long-form reading.
+========================== */
+
+body.dark,
+html[data-theme="dark"] body {
+  color-scheme: dark;
+
+  /* Core palette: dark navy rather than neutral charcoal */
+  --night-canvas: #0d1117;
+  --night-section: #111827;
+  --night-card: #161b22;
+  --night-card-hover: #1c2533;
+  --night-control: #212a38;
+  --night-control-hover: #2a3546;
+  --night-floating: #1b2432;
+  --night-inset: #090d13;
+
+  --night-text: #e6edf3;
+  --night-text-soft: #c5d1de;
+  --night-text-secondary: #9aa9ba;
+  --night-text-muted: #728196;
+  --night-heading: #f2f6fa;
+
+  --night-line: rgba(139, 157, 180, 0.16);
+  --night-line-strong: rgba(157, 176, 200, 0.28);
+  --night-highlight: rgba(255, 255, 255, 0.035);
+
+  --night-accent: #7aa2f7;
+  --night-accent-hover: #9bb9ff;
+  --night-accent-soft: rgba(122, 162, 247, 0.13);
+  --night-accent-line: rgba(122, 162, 247, 0.4);
+  --night-violet: #b7a7ff;
+  --night-success: #7ee2a8;
+
+  /* Remap the complete existing design system */
+  --surface-canvas: var(--night-canvas);
+  --surface-section: var(--night-section);
+  --surface-card: var(--night-card);
+  --surface-card-hover: var(--night-card-hover);
+  --surface-interactive: var(--night-control);
+  --surface-interactive-hover: var(--night-control-hover);
+  --surface-floating: var(--night-floating);
+  --surface-inset: var(--night-inset);
+  --surface-separator: var(--night-line);
+  --surface-separator-strong: var(--night-line-strong);
+  --surface-highlight: var(--night-highlight);
+  --surface-floating-shadow: 0 16px 44px rgba(0, 0, 0, 0.34);
+
+  --night-bg: var(--night-canvas);
+  --night-surface-1: var(--night-card);
+  --night-surface-2: var(--night-control);
+  --night-surface-3: var(--night-control-hover);
+  --night-surface-floating: var(--night-floating);
+  --night-border: var(--night-line);
+  --night-border-strong: var(--night-line-strong);
+  --night-text-primary: var(--night-text);
+  --night-code-bg: var(--night-inset);
+
+  --bg: var(--night-canvas);
+  --paper: var(--night-card);
+  --text: var(--night-text);
+  --muted: var(--night-text-secondary);
+  --line: var(--night-line);
+  --accent: var(--night-accent);
+  --accent-soft: var(--night-accent-soft);
+
+  --color-bg: var(--night-canvas);
+  --color-surface: var(--night-card);
+  --color-surface-strong: var(--night-control);
+  --color-text: var(--night-text);
+  --color-text-muted: var(--night-text-secondary);
+  --color-border: var(--night-line);
+  --color-border-strong: var(--night-line-strong);
+  --color-accent: var(--night-accent);
+  --color-accent-soft: var(--night-accent-soft);
+
+  --card-bg: var(--night-card);
+  --card-bg-subtle: var(--night-section);
+  --card-bg-hover: var(--night-card-hover);
+  --card-border: var(--night-line);
+  --card-border-hover: var(--night-line-strong);
+
+  --button-secondary-bg: var(--night-control);
+  --button-secondary-hover-bg: var(--night-control-hover);
+  --nav-mobile-bg: var(--night-floating);
+  --nav-mobile-border: var(--night-line);
+
+  background:
+    radial-gradient(circle at 15% -10%, rgba(74, 104, 170, 0.12), transparent 34rem),
+    radial-gradient(circle at 95% 10%, rgba(95, 74, 150, 0.08), transparent 30rem),
+    var(--night-canvas);
+  color: var(--night-text);
+}
+
+body.dark .paper-noise,
+html[data-theme="dark"] .paper-noise {
+  opacity: 0.035;
+  mix-blend-mode: soft-light;
+}
+
+/* Global text hierarchy */
+body.dark h1,
+body.dark h2,
+body.dark h3,
+body.dark h4,
+body.dark h5,
+body.dark h6,
+html[data-theme="dark"] h1,
+html[data-theme="dark"] h2,
+html[data-theme="dark"] h3,
+html[data-theme="dark"] h4,
+html[data-theme="dark"] h5,
+html[data-theme="dark"] h6 {
+  color: var(--night-heading);
+}
+
+body.dark p,
+body.dark li,
+body.dark dd,
+html[data-theme="dark"] p,
+html[data-theme="dark"] li,
+html[data-theme="dark"] dd {
+  color: inherit;
+}
+
+body.dark .eyebrow,
+body.dark .card-label,
+body.dark .post-meta,
+body.dark .post-date,
+body.dark .moment-date,
+body.dark .progress-meta,
+body.dark .footer-version,
+body.dark .release-meta,
+body.dark .changelog-eyebrow,
+html[data-theme="dark"] .eyebrow,
+html[data-theme="dark"] .card-label,
+html[data-theme="dark"] .post-meta,
+html[data-theme="dark"] .post-date,
+html[data-theme="dark"] .moment-date,
+html[data-theme="dark"] .progress-meta,
+html[data-theme="dark"] .footer-version,
+html[data-theme="dark"] .release-meta,
+html[data-theme="dark"] .changelog-eyebrow {
+  color: var(--night-text-muted);
+}
+
+body.dark a,
+html[data-theme="dark"] a {
+  text-decoration-color: rgba(122, 162, 247, 0.42);
+}
+
+body.dark .text-link,
+body.dark .back,
+body.dark .about-links a,
+html[data-theme="dark"] .text-link,
+html[data-theme="dark"] .back,
+html[data-theme="dark"] .about-links a {
+  color: var(--night-accent);
+}
+
+body.dark .text-link:hover,
+body.dark .back:hover,
+body.dark .about-links a:hover,
+html[data-theme="dark"] .text-link:hover,
+html[data-theme="dark"] .back:hover,
+html[data-theme="dark"] .about-links a:hover {
+  color: var(--night-accent-hover);
+}
+
+/* Header, navigation and controls */
+body.dark .site-header,
+html[data-theme="dark"] .site-header {
+  border-color: var(--night-line);
+  background: color-mix(in srgb, var(--night-canvas) 82%, transparent);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.025);
+  backdrop-filter: blur(18px) saturate(125%);
+  -webkit-backdrop-filter: blur(18px) saturate(125%);
+}
+
+body.dark .nav a,
+html[data-theme="dark"] .nav a {
+  color: var(--night-text-secondary);
+}
+
+body.dark .nav a:hover,
+body.dark .nav a[aria-current="page"],
+body.dark .nav a[aria-current="location"],
+html[data-theme="dark"] .nav a:hover,
+html[data-theme="dark"] .nav a[aria-current="page"],
+html[data-theme="dark"] .nav a[aria-current="location"] {
+  color: var(--night-heading);
+  background: var(--night-accent-soft);
+}
+
+body.dark .theme-toggle,
+body.dark .button.ghost,
+body.dark input,
+body.dark textarea,
+body.dark select,
+html[data-theme="dark"] .theme-toggle,
+html[data-theme="dark"] .button.ghost,
+html[data-theme="dark"] input,
+html[data-theme="dark"] textarea,
+html[data-theme="dark"] select {
+  color: var(--night-text-soft);
+  border-color: var(--night-line);
+  background: var(--night-control);
+  box-shadow: inset 0 1px 0 var(--night-highlight);
+}
+
+body.dark .theme-toggle:hover,
+body.dark .button.ghost:hover,
+html[data-theme="dark"] .theme-toggle:hover,
+html[data-theme="dark"] .button.ghost:hover {
+  color: var(--night-heading);
+  border-color: var(--night-line-strong);
+  background: var(--night-control-hover);
+}
+
+body.dark .button:not(.ghost),
+html[data-theme="dark"] .button:not(.ghost) {
+  color: #08101d;
+  border-color: transparent;
+  background: var(--night-accent);
+  box-shadow: none;
+}
+
+body.dark .button:not(.ghost):hover,
+html[data-theme="dark"] .button:not(.ghost):hover {
+  background: var(--night-accent-hover);
+}
+
+body.dark :focus-visible,
+html[data-theme="dark"] :focus-visible {
+  outline: 2px solid var(--night-accent);
+  outline-offset: 3px;
+}
+
+/* Main pages and sections */
+body.dark .about,
+body.dark .archive,
+body.dark .article,
+body.dark .posts-page,
+body.dark .posts-header,
+body.dark .subpage,
+body.dark .moments-intro,
+body.dark .changelog-page,
+html[data-theme="dark"] .about,
+html[data-theme="dark"] .archive,
+html[data-theme="dark"] .article,
+html[data-theme="dark"] .posts-page,
+html[data-theme="dark"] .posts-header,
+html[data-theme="dark"] .subpage,
+html[data-theme="dark"] .moments-intro,
+html[data-theme="dark"] .changelog-page {
+  color: var(--night-text-soft);
+  background: transparent;
+}
+
+body.dark .today-card,
+body.dark .progress-panel,
+body.dark .post-card,
+body.dark .archive-card,
+body.dark .moment-item,
+body.dark .moments-empty,
+body.dark .changelog-card,
+body.dark .changelog-entry,
+body.dark .release-group,
+html[data-theme="dark"] .today-card,
+html[data-theme="dark"] .progress-panel,
+html[data-theme="dark"] .post-card,
+html[data-theme="dark"] .archive-card,
+html[data-theme="dark"] .moment-item,
+html[data-theme="dark"] .moments-empty,
+html[data-theme="dark"] .changelog-card,
+html[data-theme="dark"] .changelog-entry,
+html[data-theme="dark"] .release-group {
+  color: var(--night-text-soft);
+  border-color: var(--night-line);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.018), transparent 42%), var(--night-card);
+  box-shadow: inset 0 1px 0 var(--night-highlight);
+}
+
+body.dark .today-card:hover,
+body.dark .post-card:hover,
+body.dark .archive-card:hover,
+body.dark .moment-item:hover,
+html[data-theme="dark"] .today-card:hover,
+html[data-theme="dark"] .post-card:hover,
+html[data-theme="dark"] .archive-card:hover,
+html[data-theme="dark"] .moment-item:hover {
+  border-color: var(--night-line-strong);
+  background: var(--night-card-hover);
+  box-shadow: inset 0 1px 0 var(--night-highlight);
+}
+
+body.dark .progress-track,
+html[data-theme="dark"] .progress-track {
+  border-color: var(--night-line);
+  background: var(--night-inset);
+}
+
+body.dark .progress-track > span,
+html[data-theme="dark"] .progress-track > span {
+  background: linear-gradient(90deg, var(--night-accent), var(--night-violet));
+}
+
+body.dark .progress-number,
+html[data-theme="dark"] .progress-number {
+  color: var(--night-heading);
+}
+
+/* Photo treatment */
+body.dark .random-photo-stage,
+body.dark .post-image,
+body.dark .moment-image,
+html[data-theme="dark"] .random-photo-stage,
+html[data-theme="dark"] .post-image,
+html[data-theme="dark"] .moment-image {
+  border-color: var(--night-line);
+  background: var(--night-inset);
+  box-shadow: inset 0 1px 0 var(--night-highlight);
+}
+
+body.dark .random-photo-stage::after,
+html[data-theme="dark"] .random-photo-stage::after {
+  background: linear-gradient(180deg, transparent 52%, rgba(5, 9, 15, 0.48));
+}
+
+/* Posts index */
+body.dark .post-row,
+html[data-theme="dark"] .post-row {
+  border-color: var(--night-line);
+}
+
+body.dark .post-row:hover,
+html[data-theme="dark"] .post-row:hover {
+  background: rgba(122, 162, 247, 0.055);
+}
+
+/* Complete long-form article dark mode */
+body.dark .article,
+html[data-theme="dark"] .article {
+  color: var(--night-text-soft);
+}
+
+body.dark .article > h1,
+html[data-theme="dark"] .article > h1 {
+  color: var(--night-heading);
+}
+
+body.dark .article-body,
+html[data-theme="dark"] .article-body {
+  color: var(--night-text-soft);
+}
+
+body.dark .article-body p,
+body.dark .article-body li,
+body.dark .article-body dd,
+html[data-theme="dark"] .article-body p,
+html[data-theme="dark"] .article-body li,
+html[data-theme="dark"] .article-body dd {
+  color: var(--night-text-soft);
+}
+
+body.dark .article-body strong,
+body.dark .article-body b,
+html[data-theme="dark"] .article-body strong,
+html[data-theme="dark"] .article-body b {
+  color: var(--night-heading);
+}
+
+body.dark .article-body h1,
+body.dark .article-body h2,
+body.dark .article-body h3,
+body.dark .article-body h4,
+body.dark .article-body h5,
+body.dark .article-body h6,
+html[data-theme="dark"] .article-body h1,
+html[data-theme="dark"] .article-body h2,
+html[data-theme="dark"] .article-body h3,
+html[data-theme="dark"] .article-body h4,
+html[data-theme="dark"] .article-body h5,
+html[data-theme="dark"] .article-body h6 {
+  color: var(--night-heading);
+}
+
+body.dark .article-body h2,
+html[data-theme="dark"] .article-body h2 {
+  border-bottom-color: var(--night-line);
+}
+
+body.dark .article-body a,
+html[data-theme="dark"] .article-body a {
+  color: var(--night-accent);
+  text-decoration-color: rgba(122, 162, 247, 0.52);
+}
+
+body.dark .article-body a:hover,
+html[data-theme="dark"] .article-body a:hover {
+  color: var(--night-accent-hover);
+  text-decoration-color: currentColor;
+}
+
+body.dark .article-body blockquote,
+html[data-theme="dark"] .article-body blockquote {
+  color: var(--night-text-secondary);
+  border-color: var(--night-accent-line);
+  background: linear-gradient(90deg, rgba(122, 162, 247, 0.11), rgba(122, 162, 247, 0.025));
+  box-shadow: none;
+}
+
+body.dark .article-body blockquote p,
+html[data-theme="dark"] .article-body blockquote p {
+  color: inherit;
+}
+
+body.dark .article-body code,
+html[data-theme="dark"] .article-body code {
+  color: #d8e6ff;
+  border: 1px solid rgba(122, 162, 247, 0.18);
+  background: rgba(74, 99, 145, 0.23);
+}
+
+body.dark .article-body pre,
+html[data-theme="dark"] .article-body pre {
+  color: #d6e2f0;
+  border-color: var(--night-line);
+  background: #070b12;
+  box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.42);
+}
+
+body.dark .article-body pre code,
+html[data-theme="dark"] .article-body pre code {
+  color: inherit;
+  border: 0;
+  background: transparent;
+}
+
+body.dark .article-body table,
+html[data-theme="dark"] .article-body table {
+  color: var(--night-text-soft);
+  border-color: var(--night-line);
+  background: var(--night-section);
+  box-shadow: none;
+}
+
+body.dark .article-body th,
+html[data-theme="dark"] .article-body th {
+  color: var(--night-heading);
+  border-color: var(--night-line);
+  background: var(--night-control);
+}
+
+body.dark .article-body td,
+html[data-theme="dark"] .article-body td {
+  border-color: var(--night-line);
+}
+
+body.dark .article-body tr:nth-child(even) td,
+html[data-theme="dark"] .article-body tr:nth-child(even) td {
+  background: rgba(122, 162, 247, 0.035);
+}
+
+body.dark .article-body img,
+html[data-theme="dark"] .article-body img {
+  border-color: var(--night-line);
+  background: var(--night-inset);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.2);
+}
+
+body.dark .article-body figcaption,
+body.dark .article-body .wp-element-caption,
+html[data-theme="dark"] .article-body figcaption,
+html[data-theme="dark"] .article-body .wp-element-caption {
+  color: var(--night-text-muted);
+}
+
+body.dark .article-body hr,
+html[data-theme="dark"] .article-body hr {
+  border-color: var(--night-line);
+}
+
+body.dark .article-body mark,
+html[data-theme="dark"] .article-body mark {
+  color: var(--night-heading);
+  background: rgba(183, 167, 255, 0.22);
+}
+
+body.dark .article-body del,
+html[data-theme="dark"] .article-body del {
+  color: var(--night-text-muted);
+}
+
+body.dark .article-body kbd,
+html[data-theme="dark"] .article-body kbd {
+  color: var(--night-heading);
+  border: 1px solid var(--night-line-strong);
+  border-bottom-width: 2px;
+  background: var(--night-control);
+}
+
+/* Changelog */
+body.dark .changelog-site-header,
+body.dark .changelog-footer,
+html[data-theme="dark"] .changelog-site-header,
+html[data-theme="dark"] .changelog-footer {
+  border-color: var(--night-line);
+}
+
+body.dark .release-current,
+html[data-theme="dark"] .release-current {
+  color: var(--night-success);
+  border-color: rgba(126, 226, 168, 0.28);
+  background: rgba(126, 226, 168, 0.09);
+}
+
+body.dark .release-tone-label,
+html[data-theme="dark"] .release-tone-label {
+  color: var(--night-violet);
+}
+
+body.dark .changelog-footer a,
+body.dark .changelog-back-link,
+html[data-theme="dark"] .changelog-footer a,
+html[data-theme="dark"] .changelog-back-link {
+  color: var(--night-text-soft);
+  border-color: var(--night-line);
+  background: var(--night-control);
+}
+
+body.dark .changelog-footer a:hover,
+body.dark .changelog-back-link:hover,
+html[data-theme="dark"] .changelog-footer a:hover,
+html[data-theme="dark"] .changelog-back-link:hover {
+  color: var(--night-heading);
+  border-color: var(--night-line-strong);
+  background: var(--night-control-hover);
+}
+
+/* Moment bubble and floating navigation */
+body.dark .moment-bubble,
+html[data-theme="dark"] .moment-bubble {
+  color: var(--night-text-soft);
+  border-color: var(--night-line-strong);
+  background: color-mix(in srgb, var(--night-floating) 94%, transparent);
+  box-shadow: 0 16px 44px rgba(0, 0, 0, 0.36), inset 0 1px 0 var(--night-highlight);
+  backdrop-filter: blur(18px) saturate(125%);
+  -webkit-backdrop-filter: blur(18px) saturate(125%);
+}
+
+body.dark .moment-bubble:hover,
+html[data-theme="dark"] .moment-bubble:hover {
+  border-color: var(--night-accent-line);
+  background: var(--night-control-hover);
+}
+
+/* Form details */
+body.dark input::placeholder,
+body.dark textarea::placeholder,
+html[data-theme="dark"] input::placeholder,
+html[data-theme="dark"] textarea::placeholder {
+  color: var(--night-text-muted);
+}
+
+body.dark input:focus,
+body.dark textarea:focus,
+body.dark select:focus,
+html[data-theme="dark"] input:focus,
+html[data-theme="dark"] textarea:focus,
+html[data-theme="dark"] select:focus {
+  border-color: var(--night-accent-line);
+  box-shadow: 0 0 0 3px rgba(122, 162, 247, 0.13);
+}
+
+body.dark,
+html[data-theme="dark"] {
+  scrollbar-color: rgba(135, 154, 180, 0.36) transparent;
+}
+
+body.dark::-webkit-scrollbar-thumb,
+html[data-theme="dark"]::-webkit-scrollbar-thumb {
+  border: 3px solid transparent;
+  background: linear-gradient(rgba(135, 154, 180, 0.36), rgba(135, 154, 180, 0.36)) padding-box;
+}
+
+@media (max-width: 760px) {
+  body.dark .nav,
+  html[data-theme="dark"] .nav {
+    border-color: var(--night-line);
+    background: color-mix(in srgb, var(--night-floating) 95%, transparent);
+    box-shadow: 0 12px 34px rgba(0, 0, 0, 0.34), inset 0 1px 0 var(--night-highlight);
+    backdrop-filter: blur(18px) saturate(125%);
+    -webkit-backdrop-filter: blur(18px) saturate(125%);
+  }
+}
+
+@media (prefers-contrast: more) {
+  body.dark,
+  html[data-theme="dark"] body {
+    --night-text-secondary: #b5c2d1;
+    --night-text-muted: #93a3b7;
+    --night-line: rgba(180, 198, 220, 0.28);
+    --night-line-strong: rgba(195, 211, 231, 0.46);
+  }
+}
+

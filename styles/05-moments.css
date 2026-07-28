@@ -1,0 +1,1277 @@
+/* ==========================
+   13. 碎碎念页面与悬浮气泡
+========================== */
+
+.moments-intro {
+  max-width: 620px;
+  margin: -6px 0 52px;
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1.8;
+}
+
+.moments-list { max-width: 760px; }
+
+.moment-item {
+  position: relative;
+  padding: 30px 0 32px 28px;
+  border-top: 1px solid var(--line);
+}
+
+.moment-item:last-child { border-bottom: 1px solid var(--line); }
+
+.moment-item::before {
+  content: "";
+  position: absolute;
+  top: 39px;
+  left: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.moment-content {
+  font-size: 18px;
+  line-height: 1.9;
+}
+
+.moment-content p { margin: 0 0 1em; }
+.moment-content p:last-child { margin-bottom: 0; }
+
+.moment-image {
+  width: min(100%, 560px);
+  height: auto;
+  margin-top: 20px;
+  display: block;
+  border-radius: 16px;
+}
+
+.moment-date {
+  margin-top: 18px;
+  display: block;
+  color: var(--muted);
+  font-family: Inter, sans-serif;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+}
+
+.moments-empty {
+  padding: 30px 0;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+}
+
+.hero-moment {
+  max-width: 760px;
+  margin: 0;
+  font-size: clamp(28px, 4vw, 38px);
+  font-weight: 600;
+  line-height: 1.5;
+  letter-spacing: -0.02em;
+}
+
+.hero-moment p { margin: 0; }
+
+.moment-bubble {
+  position: fixed;
+  right: 32px;
+  bottom: 32px;
+  z-index: 20;
+  width: 210px;
+  min-height: 112px;
+  padding: 24px 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  appearance: none;
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  border-radius: 34px 46px 38px 42px;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.78), rgba(239, 242, 235, 0.48));
+  color: var(--text);
+  text-align: center;
+  cursor: pointer;
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8), 0 16px 42px rgba(32, 36, 31, 0.1);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+}
+
+.moment-bubble-content {
+  position: relative;
+  z-index: 2;
+  display: block;
+  max-width: 170px;
+}
+
+.moment-bubble-content,
+.moment-bubble-content p {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.55;
+}
+
+.moment-bubble-time {
+  display: block;
+  width: 100%;
+  max-width: 170px;
+  margin-top: 8px;
+
+  color: var(--muted);
+  font-family: Inter, sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: 0.02em;
+
+  text-align: right;
+  opacity: 0.8;
+}
+
+.moment-bubble-shine {
+  position: absolute;
+  top: 14px;
+  left: 24px;
+  width: 48px;
+  height: 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.55);
+  filter: blur(4px);
+  transform: rotate(-12deg);
+  pointer-events: none;
+}
+
+.moment-bubble:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9), 0 22px 52px rgba(32, 36, 31, 0.14);
+}
+
+.moment-bubble:active { transform: translateY(0) scale(0.97); }
+
+.moment-bubble:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 5px;
+}
+
+.moment-bubble-active { animation: moment-tap 0.45s ease; }
+
+@keyframes moment-tap {
+  0%, 100% { transform: scale(1); }
+  45% { transform: scale(0.95); }
+  75% { transform: scale(1.025); }
+}
+
+/* ==========================
+   14. 深色模式
+========================== */
+
+body.dark,
+html[data-theme="dark"] body {
+  color-scheme: dark;
+  --color-bg: #171a18;
+  --color-surface: rgba(38, 43, 39, 0.68);
+  --color-surface-strong: rgba(48, 54, 49, 0.82);
+  --color-text: #ebeae3;
+  --color-text-muted: #a4aaa2;
+  --color-accent: #92bdb5;
+  --color-accent-soft: rgba(76, 113, 105, 0.28);
+  --color-border: rgba(235, 234, 227, 0.12);
+  --color-border-strong: rgba(235, 234, 227, 0.2);
+  --color-selection: rgba(146, 189, 181, 0.28);
+  --shadow-sm: 0 8px 24px rgba(0, 0, 0, 0.18);
+  --shadow-md: 0 20px 60px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 28px 80px rgba(0, 0, 0, 0.38);
+  --card-bg: linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.022));
+  --card-bg-subtle: rgba(255, 255, 255, 0.026);
+  --card-bg-hover: linear-gradient(145deg, rgba(255, 255, 255, 0.072), rgba(255, 255, 255, 0.032));
+  --card-border: rgba(235, 234, 227, 0.12);
+  --card-border-hover: rgba(146, 189, 181, 0.3);
+  --card-shadow: 0 16px 46px rgba(0, 0, 0, 0.2);
+  --card-shadow-hover: 0 24px 72px rgba(0, 0, 0, 0.32);
+
+  --bg: var(--color-bg);
+  --paper: var(--color-surface);
+  --text: var(--color-text);
+  --muted: var(--color-text-muted);
+  --line: var(--color-border);
+  --accent: var(--color-accent);
+  --accent-soft: var(--color-accent-soft);
+  --shadow: var(--shadow-md);
+  background:
+    radial-gradient(circle at 15% 10%, rgba(92, 126, 117, 0.08), transparent 34%),
+    radial-gradient(circle at 85% 75%, rgba(80, 95, 86, 0.06), transparent 38%),
+    var(--bg);
+}
+
+body.dark .paper-noise,
+html[data-theme="dark"] .paper-noise {
+  opacity: 0.07;
+  filter: invert(1);
+  mix-blend-mode: screen;
+}
+
+body.dark .site-header,
+html[data-theme="dark"] .site-header {
+  background: rgba(23, 26, 24, 0.72);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+}
+
+body.dark .theme-toggle,
+html[data-theme="dark"] .theme-toggle {
+  background: rgba(255, 255, 255, 0.035);
+}
+
+body.dark .theme-toggle:hover,
+html[data-theme="dark"] .theme-toggle:hover {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+}
+
+body.dark .button.primary:hover,
+html[data-theme="dark"] .button.primary:hover {
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.35);
+}
+
+body.dark .button.ghost,
+html[data-theme="dark"] .button.ghost {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+body.dark .today-card,
+html[data-theme="dark"] .today-card {
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.025));
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+body.dark .progress-panel,
+html[data-theme="dark"] .progress-panel,
+body.dark .post-card,
+html[data-theme="dark"] .post-card {
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.02));
+}
+
+body.dark .progress-track,
+html[data-theme="dark"] .progress-track {
+  background: rgba(146, 189, 181, 0.12);
+}
+
+body.dark .post-card:hover,
+html[data-theme="dark"] .post-card:hover {
+  border-color: rgba(146, 189, 181, 0.3);
+  box-shadow: 0 22px 70px rgba(0, 0, 0, 0.32), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+body.dark .archive-card,
+html[data-theme="dark"] .archive-card {
+  background: rgba(255, 255, 255, 0.025);
+}
+
+body.dark .archive-card:hover,
+html[data-theme="dark"] .archive-card:hover {
+  background: var(--accent-soft);
+  border-color: rgba(146, 189, 181, 0.26);
+}
+
+body.dark .article-body code,
+html[data-theme="dark"] .article-body code {
+  background: rgba(146, 189, 181, 0.11);
+}
+
+body.dark .article-body pre,
+html[data-theme="dark"] .article-body pre {
+  background: rgba(255, 255, 255, 0.035);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03), 0 12px 40px rgba(0, 0, 0, 0.16);
+}
+
+body.dark .article-body th,
+html[data-theme="dark"] .article-body th {
+  background: rgba(255, 255, 255, 0.045);
+}
+
+body.dark .article-body blockquote,
+html[data-theme="dark"] .article-body blockquote {
+  background: rgba(146, 189, 181, 0.035);
+}
+
+body.dark .article-body img,
+html[data-theme="dark"] .article-body img {
+  filter: brightness(0.9) contrast(0.97);
+  box-shadow: 0 16px 50px rgba(0, 0, 0, 0.16);
+  transition: filter 0.25s ease, box-shadow 0.25s ease;
+}
+
+body.dark .article-body img:hover,
+html[data-theme="dark"] .article-body img:hover {
+  filter: brightness(1) contrast(1);
+}
+
+body.dark .post-visual,
+html[data-theme="dark"] .post-visual {
+  filter: brightness(0.86) saturate(0.88);
+}
+
+body.dark input,
+body.dark textarea,
+body.dark select,
+html[data-theme="dark"] input,
+html[data-theme="dark"] textarea,
+html[data-theme="dark"] select {
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--line);
+}
+
+body.dark input::placeholder,
+body.dark textarea::placeholder,
+html[data-theme="dark"] input::placeholder,
+html[data-theme="dark"] textarea::placeholder {
+  color: var(--muted);
+}
+
+body.dark ::selection,
+html[data-theme="dark"] ::selection {
+  color: var(--text);
+  background: rgba(146, 189, 181, 0.28);
+}
+
+body.dark input:-webkit-autofill,
+body.dark textarea:-webkit-autofill,
+html[data-theme="dark"] input:-webkit-autofill,
+html[data-theme="dark"] textarea:-webkit-autofill {
+  -webkit-text-fill-color: var(--text);
+  box-shadow: 0 0 0 1000px #202522 inset;
+}
+
+body.dark,
+html[data-theme="dark"] {
+  scrollbar-color: rgba(146, 189, 181, 0.34) transparent;
+}
+
+body.dark::-webkit-scrollbar,
+html[data-theme="dark"]::-webkit-scrollbar {
+  width: 10px;
+}
+
+body.dark::-webkit-scrollbar-track,
+html[data-theme="dark"]::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+body.dark::-webkit-scrollbar-thumb,
+html[data-theme="dark"]::-webkit-scrollbar-thumb {
+  border: 3px solid transparent;
+  border-radius: 999px;
+  background: linear-gradient(rgba(146, 189, 181, 0.34), rgba(146, 189, 181, 0.34)) padding-box;
+}
+
+body.dark .moment-bubble,
+html[data-theme="dark"] .moment-bubble {
+  border-color: rgba(255, 255, 255, 0.1);
+  background: linear-gradient(145deg, rgba(55, 62, 57, 0.9), rgba(34, 39, 35, 0.78));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 18px 48px rgba(0, 0, 0, 0.28);
+}
+
+body.dark .random-photo-stage,
+html[data-theme="dark"] .random-photo-stage {
+  border-color: rgba(235, 234, 227, 0.1);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.3);
+}
+
+body.dark .random-photo-image,
+html[data-theme="dark"] .random-photo-image {
+  filter: brightness(0.9) saturate(0.92);
+}
+
+/* ==========================
+   15. 响应式
+========================== */
+
+@media (max-width: 960px) {
+  .shell { width: min(calc(100% - 28px), 1160px); }
+
+  .site-header {
+    min-height: 0;
+    padding-block: 16px 14px;
+    flex-wrap: wrap;
+    row-gap: 14px;
+  }
+
+  .brand {
+    order: 1;
+    font-size: 25px;
+  }
+
+  .theme-toggle {
+    order: 2;
+    margin-left: auto;
+  }
+
+  .nav {
+    order: 3;
+    width: 100%;
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 2px;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .nav::-webkit-scrollbar { display: none; }
+
+  .nav a {
+    flex: 0 0 auto;
+    padding: 7px 13px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--paper);
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.2;
+    white-space: nowrap;
+  }
+
+  .nav a:active {
+    color: var(--text);
+    border-color: var(--accent);
+  }
+
+  .hero { padding-block: 56px; }
+
+  .project,
+  .featured-post,
+  .about-grid {
+    grid-template-columns: 1fr;
+    gap: 34px;
+  }
+
+  .post-grid { grid-template-columns: 1fr; }
+  .archive-grid { grid-template-columns: 1fr 1fr; }
+  .section-space { padding-block: 72px; }
+  .featured-post .post-content { padding: 32px; }
+
+  .site-footer {
+    align-items: flex-start;
+    justify-content: center;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .hero-photo-heading { align-items: flex-start; }
+
+  .random-photo-stage {
+    height: clamp(360px, 70vw, 520px);
+    border-radius: 22px;
+  }
+
+  .today-card {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+
+  .today-card dl { grid-template-columns: repeat(3, 1fr); }
+  .today-card dl div { padding-left: 14px; }
+}
+
+@media (max-width: 720px) {
+  .posts-page { padding: 36px 0 80px; }
+
+  .posts-header,
+  .posts-list {
+    padding-inline: 18px;
+  }
+
+  .posts-header { padding-bottom: 42px; }
+
+  .hero h1 {
+    margin-bottom: 24px;
+    font-size: clamp(34px, 9vw, 42px);
+    line-height: 1.2;
+    letter-spacing: -0.035em;
+  }
+
+  .posts-header h1 {
+    font-size: 34px;
+    line-height: 1.25;
+    letter-spacing: -0.025em;
+  }
+
+  .post-row {
+    padding: 26px 0;
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .post-row h2 { font-size: 23px; }
+  .post-row div > p:last-child { font-size: 14px; }
+  .post-row .text-link { justify-self: start; }
+
+  .page,
+  .subpage {
+    padding-bottom: 80px;
+  }
+
+  .page { padding-top: 34px; }
+  .subpage { padding-top: 32px; }
+  .back { margin-bottom: 30px; }
+  .subpage .text-link { margin-bottom: 24px; }
+
+  .article h1 {
+    margin-bottom: 28px;
+    font-size: clamp(27px, 7.5vw, 32px);
+    line-height: 1.32;
+    letter-spacing: -0.018em;
+  }
+
+  .subpage h1 {
+    margin-bottom: 22px;
+    font-size: clamp(28px, 8vw, 34px);
+    line-height: 1.3;
+    letter-spacing: -0.018em;
+  }
+
+  .subpage > p:last-child { font-size: 16px; }
+
+  .article-body {
+    font-size: 17px;
+    line-height: 1.95;
+  }
+
+  .article-body h2 {
+    font-size: 24px;
+    line-height: 1.42;
+  }
+
+  .article-body h3 {
+    font-size: 20px;
+    line-height: 1.5;
+  }
+
+  .article-body img,
+  .article-body figure,
+  .article-body .wp-block-image,
+  .article-body iframe,
+  .article-body video,
+  .article-body .wp-block-embed {
+    margin: 32px 0;
+  }
+
+  .article-body table {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+  }
+
+  .moments-intro {
+    margin-bottom: 36px;
+    font-size: 15px;
+  }
+
+  .moment-item { padding: 24px 0 26px 22px; }
+
+  .moment-item::before {
+    top: 34px;
+    width: 7px;
+    height: 7px;
+  }
+
+  .moment-content {
+    font-size: 17px;
+    line-height: 1.85;
+  }
+
+  .moment-date { margin-top: 14px; }
+
+  .hero-moment {
+    font-size: clamp(36px, 12vw, 54px);
+    line-height: 1.2;
+  }
+
+  .moment-bubble {
+    right: 16px;
+    bottom: 18px;
+    width: 176px;
+    min-height: 92px;
+    padding: 18px 20px;
+    border-radius: 28px 38px 30px 36px;
+  }
+
+  .moment-bubble-content { max-width: 140px; }
+
+  .moment-bubble-content,
+  .moment-bubble-content p {
+    font-size: 16px;
+    line-height: 1.5;
+  }
+.moment-bubble-time {
+  width: 100%;
+  max-width: 140px;
+  margin-top: 6px;
+  font-size: 11px;
+  line-height: 1.35;
+  text-align: right;
+}
+}
+
+@media (max-width: 520px) {
+  .hero-photo-area { gap: 18px; }
+
+  .hero-photo-heading {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .hero-photo-heading h1 {
+    font-size: clamp(30px, 9vw, 40px);
+  }
+
+  .random-photo-stage {
+    height: 62vh;
+    min-height: 380px;
+    max-height: 560px;
+    border-radius: 18px;
+  }
+
+  .random-photo-info {
+    right: 18px;
+    bottom: 18px;
+    left: 18px;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .random-photo-info > span { font-size: 17px; }
+
+  .random-photo-hint {
+    top: 14px;
+    right: 14px;
+  }
+
+  .today-card dl {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .today-card dl div {
+    padding: 12px 0;
+    flex-direction: row;
+    justify-content: space-between;
+    border-left: 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .today-card dd { text-align: right; }
+}
+
+@media (max-width: 520px) {
+  .archive-grid { grid-template-columns: 1fr; }
+
+  .hero-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .hero-actions .button { width: 100%; }
+  .today-card { padding: 24px; }
+  .date-block strong { font-size: 52px; }
+
+  .section-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .progress-number strong { font-size: 46px; }
+  .hero h1 { font-size: clamp(32px, 9vw, 38px); }
+  .posts-header h1 { font-size: 32px; }
+  .article h1 { font-size: clamp(26px, 7.2vw, 30px); }
+  .subpage h1 { font-size: clamp(27px, 7.5vw, 32px); }
+
+  .post-content,
+  .featured-post .post-content {
+    padding: 26px;
+  }
+
+  .post-content h3 { font-size: 26px; }
+  .post-visual { font-size: 38px; }
+  .about-links { gap: 14px 20px; }
+
+  .article-body blockquote {
+    padding-left: 16px;
+    font-size: 17px;
+  }
+
+  .article-body pre {
+    margin-inline: -4px;
+    padding: 18px;
+  }
+}
+
+/* ==========================
+   16. 减少动态效果
+========================== */
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .moment-bubble,
+  .moment-bubble-active {
+    animation: none;
+    transition: none;
+  }
+}
+/* =========================================================
+   17. 碎碎念气泡流光升级
+   直接放在整个 CSS 文件最底部
+========================================================= */
+
+/* 注册可动画的渐变角度 */
+@property --bubble-glow-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+/* 气泡主体 */
+.moment-bubble {
+  --bubble-glow-angle: 0deg;
+
+  position: fixed;
+  right: 32px;
+  bottom: 32px;
+  z-index: 20;
+
+  width: 210px;
+  min-height: 112px;
+  padding: 24px 28px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  overflow: visible;
+  isolation: isolate;
+  appearance: none;
+
+  border: 1px solid transparent;
+  border-radius: 34px 46px 38px 42px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.82),
+      rgba(239, 242, 235, 0.56)
+    ) padding-box,
+    conic-gradient(
+      from var(--bubble-glow-angle),
+      rgba(178, 232, 218, 0.22) 0deg,
+      rgba(119, 213, 197, 0.94) 55deg,
+      rgba(238, 248, 242, 0.98) 100deg,
+      rgba(172, 218, 145, 0.9) 150deg,
+      rgba(101, 205, 196, 0.96) 215deg,
+      rgba(239, 243, 206, 0.9) 270deg,
+      rgba(178, 232, 218, 0.22) 360deg
+    ) border-box;
+
+  color: var(--text);
+  text-align: center;
+  cursor: pointer;
+
+  -webkit-backdrop-filter: blur(18px) saturate(1.12);
+  backdrop-filter: blur(18px) saturate(1.12);
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.84),
+    inset 0 -1px 0 rgba(47, 94, 89, 0.05),
+    0 14px 42px rgba(32, 36, 31, 0.11),
+    0 0 18px rgba(111, 211, 191, 0.1);
+
+  animation:
+    moment-border-flow 11s linear infinite,
+    moment-bubble-breathe 4.8s ease-in-out infinite;
+
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    filter 0.3s ease,
+    background 0.3s ease;
+}
+
+/* 外围柔和光晕 */
+.moment-bubble::before {
+  content: "";
+  position: absolute;
+  inset: -9px;
+  z-index: -2;
+
+  border-radius: inherit;
+
+  background:
+    conic-gradient(
+      from var(--bubble-glow-angle),
+      rgba(115, 218, 200, 0.08),
+      rgba(112, 211, 255, 0.32),
+      rgba(205, 232, 145, 0.28),
+      rgba(250, 244, 212, 0.24),
+      rgba(115, 218, 200, 0.08)
+    );
+
+  opacity: 0.42;
+  filter: blur(15px);
+  transform: scale(0.99);
+
+  pointer-events: none;
+
+  animation: moment-outer-glow 4.8s ease-in-out infinite;
+}
+
+/* 沿边缘移动的局部高光 */
+.moment-bubble::after {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  z-index: -1;
+
+  border-radius: inherit;
+  padding: 2px;
+
+  background:
+    conic-gradient(
+      from var(--bubble-glow-angle),
+      transparent 0deg,
+      transparent 38deg,
+      rgba(255, 255, 255, 0.94) 57deg,
+      rgba(132, 235, 218, 0.98) 78deg,
+      transparent 112deg,
+      transparent 218deg,
+      rgba(214, 235, 151, 0.86) 250deg,
+      rgba(255, 255, 255, 0.9) 270deg,
+      transparent 302deg,
+      transparent 360deg
+    );
+
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+
+  opacity: 0.78;
+  filter: blur(0.35px);
+
+  pointer-events: none;
+}
+
+/* 原本的玻璃高光 */
+.moment-bubble-shine {
+  position: absolute;
+  top: 14px;
+  left: 24px;
+  z-index: 1;
+
+  width: 48px;
+  height: 12px;
+
+  border-radius: 999px;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.16),
+      rgba(255, 255, 255, 0.72),
+      rgba(255, 255, 255, 0.1)
+    );
+
+  opacity: 0.72;
+  filter: blur(4px);
+  transform: rotate(-12deg);
+
+  pointer-events: none;
+
+  animation: moment-shine-breathe 4.8s ease-in-out infinite;
+}
+
+/* 正文 */
+.moment-bubble-content {
+  position: relative;
+  z-index: 2;
+
+  display: block;
+  max-width: 170px;
+}
+
+/* 正文文字 */
+.moment-bubble-content,
+.moment-bubble-content p {
+  margin: 0;
+
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.55;
+}
+
+/* 时间 */
+.moment-bubble-time {
+  position: relative;
+  z-index: 2;
+
+  display: block;
+  width: 100%;
+  max-width: 170px;
+  margin-top: 8px;
+
+  color: var(--muted);
+
+  font-family: Inter, sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: 0.02em;
+
+  text-align: right;
+  opacity: 0.8;
+}
+
+/* 鼠标悬停 */
+.moment-bubble:hover {
+  transform: translateY(-3px) scale(1.018);
+  filter: saturate(1.08);
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.94),
+    inset 0 -1px 0 rgba(47, 94, 89, 0.06),
+    0 20px 54px rgba(32, 36, 31, 0.15),
+    0 0 24px rgba(103, 213, 194, 0.22);
+}
+
+.moment-bubble:hover::before {
+  opacity: 0.58;
+  filter: blur(17px);
+}
+
+/* 点击 */
+.moment-bubble:active {
+  transform: translateY(0) scale(0.97);
+}
+
+/* 键盘焦点 */
+.moment-bubble:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 6px;
+}
+
+/* 组件已有的点击动画 */
+.moment-bubble-active {
+  animation:
+    moment-tap 0.45s ease,
+    moment-border-flow 11s linear infinite,
+    moment-bubble-breathe 4.8s ease-in-out infinite;
+}
+
+/* 边缘流动 */
+@keyframes moment-border-flow {
+  from {
+    --bubble-glow-angle: 0deg;
+  }
+
+  to {
+    --bubble-glow-angle: 360deg;
+  }
+}
+
+/* 主体轻微呼吸 */
+@keyframes moment-bubble-breathe {
+  0%,
+  100% {
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.84),
+      inset 0 -1px 0 rgba(47, 94, 89, 0.05),
+      0 14px 42px rgba(32, 36, 31, 0.11),
+      0 0 14px rgba(111, 211, 191, 0.08);
+  }
+
+  50% {
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.9),
+      inset 0 -1px 0 rgba(47, 94, 89, 0.06),
+      0 17px 48px rgba(32, 36, 31, 0.13),
+      0 0 23px rgba(111, 211, 191, 0.18);
+  }
+}
+
+/* 外部光晕呼吸 */
+@keyframes moment-outer-glow {
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scale(0.985);
+  }
+
+  50% {
+    opacity: 0.5;
+    transform: scale(1.02);
+  }
+}
+
+/* 顶部高光呼吸 */
+@keyframes moment-shine-breathe {
+  0%,
+  100% {
+    opacity: 0.5;
+    transform: rotate(-12deg) scaleX(0.92);
+  }
+
+  50% {
+    opacity: 0.78;
+    transform: rotate(-12deg) scaleX(1.08);
+  }
+}
+
+/* 点击弹性 */
+@keyframes moment-tap {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  45% {
+    transform: scale(0.95);
+  }
+
+  75% {
+    transform: scale(1.025);
+  }
+}
+
+/* =========================================================
+   深色模式下的流光气泡
+========================================================= */
+
+body.dark .moment-bubble,
+html[data-theme="dark"] .moment-bubble {
+  border-color: transparent;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(55, 62, 57, 0.92),
+      rgba(31, 37, 33, 0.84)
+    ) padding-box,
+    conic-gradient(
+      from var(--bubble-glow-angle),
+      rgba(112, 212, 196, 0.18) 0deg,
+      rgba(98, 225, 211, 0.98) 58deg,
+      rgba(226, 249, 241, 0.98) 105deg,
+      rgba(179, 222, 126, 0.92) 162deg,
+      rgba(90, 204, 217, 0.98) 225deg,
+      rgba(237, 229, 164, 0.9) 280deg,
+      rgba(112, 212, 196, 0.18) 360deg
+    ) border-box;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.18),
+    0 18px 48px rgba(0, 0, 0, 0.3),
+    0 0 20px rgba(96, 220, 202, 0.13);
+}
+
+body.dark .moment-bubble::before,
+html[data-theme="dark"] .moment-bubble::before {
+  opacity: 0.5;
+
+  background:
+    conic-gradient(
+      from var(--bubble-glow-angle),
+      rgba(75, 217, 197, 0.1),
+      rgba(91, 210, 255, 0.4),
+      rgba(183, 226, 116, 0.36),
+      rgba(236, 218, 154, 0.28),
+      rgba(75, 217, 197, 0.1)
+    );
+}
+
+body.dark .moment-bubble:hover,
+html[data-theme="dark"] .moment-bubble:hover {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.2),
+    0 22px 58px rgba(0, 0, 0, 0.38),
+    0 0 28px rgba(99, 224, 204, 0.25);
+}
+
+/* =========================================================
+   手机端
+========================================================= */
+
+@media (max-width: 720px) {
+  .moment-bubble {
+    right: 16px;
+    bottom: calc(18px + env(safe-area-inset-bottom));
+
+    width: 176px;
+    min-height: 92px;
+    padding: 18px 20px;
+
+    border-radius: 28px 38px 30px 36px;
+
+    animation:
+      moment-border-flow 14s linear infinite,
+      moment-bubble-breathe 6s ease-in-out infinite;
+  }
+
+  .moment-bubble::before {
+    inset: -6px;
+    opacity: 0.3;
+    filter: blur(11px);
+
+    animation-duration: 6s;
+  }
+
+  .moment-bubble::after {
+    opacity: 0.62;
+  }
+
+  .moment-bubble-shine {
+    top: 11px;
+    left: 20px;
+
+    width: 38px;
+    height: 9px;
+
+    opacity: 0.58;
+  }
+
+  .moment-bubble-content {
+    max-width: 140px;
+  }
+
+  .moment-bubble-content,
+  .moment-bubble-content p {
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  .moment-bubble-time {
+    width: 100%;
+    max-width: 140px;
+    margin-top: 6px;
+
+    font-size: 11px;
+    line-height: 1.35;
+
+    text-align: right;
+  }
+
+  /* 手机没有真正的 hover，避免触摸后状态滞留 */
+  .moment-bubble:hover {
+    transform: none;
+    filter: none;
+  }
+
+  .moment-bubble:active {
+    transform: scale(0.97);
+  }
+}
+
+/* =========================================================
+   用户选择减少动态效果
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .moment-bubble,
+  .moment-bubble::before,
+  .moment-bubble::after,
+  .moment-bubble-shine,
+  .moment-bubble-active {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .moment-bubble {
+    --bubble-glow-angle: 45deg;
+  }
+
+  .moment-bubble::before {
+    opacity: 0.25;
+    transform: none;
+  }
+}
+
+/* ===========================
+   页面切换动画
+   只保留离场效果
+=========================== */
+
+body {
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease,
+    opacity 0.36s ease,
+    transform 0.36s ease,
+    filter 0.36s ease;
+}
+
+/* 点击气泡后，当前页面离场 */
+html.page-leaving body {
+  opacity: 0;
+  transform: scale(0.985);
+  filter: blur(2px);
+  pointer-events: none;
+}
+
+/* 点击时气泡轻微放大 */
+.moment-bubble-leaving {
+  transform: scale(1.06);
+  opacity: 0.75;
+
+  transition:
+    transform 0.36s ease,
+    opacity 0.36s ease;
+}
+
+/* 不再播放新页面进入动画 */
+html.page-entering body {
+  animation: none;
+  opacity: 1;
+  transform: none;
+  filter: none;
+}
+
+/* 用户选择减少动画时 */
+@media (prefers-reduced-motion: reduce) {
+  body,
+  .moment-bubble-leaving {
+    transition: none;
+  }
+
+  html.page-leaving body {
+    opacity: 0;
+    transform: none;
+    filter: none;
+  }
+
+  html.page-entering body {
+    animation: none;
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}

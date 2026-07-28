@@ -1,0 +1,289 @@
+/* ==========================
+   19. UI Design System v1.0
+   Phase 2: Spacing system
+   This layer standardizes page rhythm while preserving component structure.
+========================== */
+
+/* Global page and section rhythm */
+.shell {
+  width: min(1160px, calc(100% - (var(--page-gutter) * 2)));
+}
+
+.section-space {
+  padding-block: var(--section-space);
+}
+
+.eyebrow {
+  margin-bottom: var(--space-4);
+}
+
+h2 {
+  margin-bottom: var(--space-5);
+}
+
+/* Header and hero */
+.site-header {
+  min-height: var(--space-10);
+}
+
+.nav {
+  gap: var(--space-6);
+}
+
+.hero {
+  padding-block: var(--space-7) var(--space-8);
+  gap: var(--space-6);
+}
+
+.hero h1 {
+  margin-bottom: var(--space-6);
+}
+
+.hero-actions {
+  gap: var(--space-3);
+  margin-top: var(--space-6);
+}
+
+/* Homepage sections and cards */
+.section-heading {
+  margin-bottom: var(--section-heading-gap);
+}
+
+.post-content {
+  padding: var(--card-padding);
+}
+
+.featured-post .post-content {
+  padding: var(--card-padding-lg);
+}
+
+.post-content h3 {
+  margin-bottom: var(--space-4);
+}
+
+.post-grid {
+  margin-top: var(--space-5);
+  gap: var(--grid-gap);
+}
+
+.archive-grid {
+  gap: var(--space-4);
+}
+
+.archive-card {
+  padding: var(--space-5);
+}
+
+.about-grid {
+  gap: var(--space-9);
+}
+
+.about-links {
+  margin-top: var(--space-6);
+  gap: var(--space-5);
+}
+
+/* Archive/list pages */
+.posts-page {
+  padding-block: var(--page-space-top) var(--page-space-bottom);
+}
+
+.posts-header,
+.posts-list {
+  padding-inline: var(--space-5);
+}
+
+.posts-header {
+  padding-bottom: var(--space-8);
+}
+
+.posts-header h1 {
+  margin-block: var(--space-3) var(--space-5);
+}
+
+.post-row {
+  padding-block: var(--space-6);
+  gap: var(--space-6);
+}
+
+.post-row div > p:last-child {
+  margin-top: var(--space-3);
+}
+
+/* Article and subpages */
+.page,
+.subpage {
+  padding-bottom: var(--page-space-bottom);
+}
+
+.page {
+  padding-top: var(--space-7);
+}
+
+.subpage {
+  padding-top: var(--space-7);
+}
+
+.back {
+  margin-bottom: var(--space-7);
+}
+
+.subpage .text-link {
+  margin-bottom: var(--space-6);
+}
+
+.article .eyebrow {
+  margin-bottom: var(--space-3);
+}
+
+.article h1 {
+  margin-bottom: var(--space-7);
+}
+
+.subpage h1 {
+  margin-bottom: var(--space-5);
+}
+
+.article-body p {
+  margin-bottom: var(--space-5);
+}
+
+.article-body h2 {
+  margin-block: var(--space-7) var(--space-3);
+}
+
+.article-body h3 {
+  margin-block: var(--space-6) var(--space-3);
+}
+
+.article-body figure,
+.article-body .wp-block-image,
+.article-body .wp-block-embed,
+.article-body blockquote {
+  margin-block: var(--space-7);
+}
+
+.article-body hr {
+  margin-block: var(--space-8);
+}
+
+/* Footer */
+.site-footer {
+  min-height: calc(var(--space-8) * 2);
+}
+
+/* Responsive spacing roles */
+@media (max-width: 720px) {
+  :root {
+    --page-gutter: 18px;
+    --page-space-top: var(--space-6);
+    --page-space-bottom: var(--space-9);
+    --section-space: var(--space-8);
+    --section-heading-gap: var(--space-5);
+    --card-padding: var(--space-5);
+    --card-padding-lg: var(--space-5);
+    --grid-gap: var(--space-4);
+  }
+
+  .site-header {
+    min-height: 72px;
+  }
+
+  .hero {
+    padding-block: var(--space-6) var(--space-7);
+    gap: var(--space-5);
+  }
+
+  .hero h1 {
+    margin-bottom: var(--space-5);
+  }
+
+  .section-heading {
+    margin-bottom: var(--space-5);
+  }
+
+  .post-grid {
+    margin-top: var(--space-4);
+  }
+
+  .about-grid {
+    gap: var(--space-6);
+  }
+
+  .posts-header,
+  .posts-list {
+    padding-inline: 0;
+  }
+
+  .posts-header {
+    padding-bottom: var(--space-7);
+  }
+
+  .post-row {
+    padding-block: var(--space-5);
+    gap: var(--space-4);
+  }
+
+  .page,
+  .subpage {
+    padding-bottom: var(--space-9);
+  }
+
+  .page,
+  .subpage {
+    padding-top: var(--space-6);
+  }
+
+  .back {
+    margin-bottom: var(--space-6);
+  }
+
+  .article h1 {
+    margin-bottom: var(--space-6);
+  }
+
+  .article-body h2 {
+    margin-top: var(--space-6);
+  }
+
+  .article-body figure,
+  .article-body .wp-block-image,
+  .article-body .wp-block-embed,
+  .article-body blockquote {
+    margin-block: var(--space-6);
+  }
+}
+
+@media (max-width: 520px) {
+  :root {
+    --page-gutter: 16px;
+    --page-space-bottom: var(--space-8);
+    --section-space: var(--space-7);
+    --card-padding: var(--space-4);
+    --card-padding-lg: var(--space-5);
+    --grid-gap: var(--space-3);
+  }
+
+  .hero {
+    padding-block: var(--space-5) var(--space-6);
+  }
+
+  .section-heading {
+    margin-bottom: var(--space-5);
+  }
+
+  .archive-card {
+    padding: var(--space-4);
+  }
+
+  .post-row {
+    padding-block: var(--space-5);
+  }
+
+  .site-footer {
+    min-height: var(--space-10);
+  }
+}
+
+
+

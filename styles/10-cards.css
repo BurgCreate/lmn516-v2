@@ -1,0 +1,187 @@
+/* ==========================
+   21. UI Design System v1.0
+   Phase 4: Card System
+   Shared surfaces, radius, border, shadow and interaction rhythm.
+========================== */
+
+/* Shared card surface roles */
+.today-card,
+.progress-panel,
+.post-card,
+.archive-card,
+.moments-empty {
+  border: 1px solid var(--card-border);
+  background: var(--card-bg);
+  box-shadow: var(--card-shadow);
+}
+
+.today-card,
+.post-card {
+  border-radius: var(--radius-lg);
+}
+
+.progress-panel,
+.archive-card,
+.moments-empty {
+  border-radius: var(--radius-md);
+}
+
+.today-card,
+.post-card,
+.archive-card {
+  transition:
+    transform var(--card-transition),
+    border-color var(--card-transition),
+    background var(--card-transition),
+    box-shadow var(--card-transition);
+}
+
+.today-card:hover,
+.post-card:hover,
+.archive-card:hover {
+  transform: translateY(var(--card-lift));
+  border-color: var(--card-border-hover);
+  box-shadow: var(--card-shadow-hover);
+}
+
+.today-card:hover,
+.post-card:hover {
+  background: var(--card-bg-hover);
+}
+
+/* Component-specific card roles */
+.today-card {
+  padding: var(--card-padding);
+}
+
+.progress-panel {
+  padding: var(--card-padding);
+}
+
+.post-card {
+  overflow: hidden;
+}
+
+.post-content {
+  padding: var(--card-padding);
+}
+
+.featured-post .post-content {
+  padding: var(--card-padding-lg);
+}
+
+.archive-card {
+  padding: var(--card-padding);
+  background: var(--card-bg-subtle);
+}
+
+.archive-card:hover {
+  background: color-mix(in srgb, var(--color-accent-soft) 72%, var(--card-bg));
+}
+
+.moments-empty {
+  padding: var(--card-padding);
+  background: var(--card-bg-subtle);
+}
+
+/* Keyboard access mirrors hover without forcing motion. */
+a.post-card:focus-visible,
+a.archive-card:focus-visible,
+.today-card:focus-within {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+  border-color: var(--card-border-hover);
+}
+
+/* Dark theme is token-driven; component-specific overrides are neutralized here. */
+body.dark .today-card,
+html[data-theme="dark"] .today-card,
+body.dark .progress-panel,
+html[data-theme="dark"] .progress-panel,
+body.dark .post-card,
+html[data-theme="dark"] .post-card,
+body.dark .archive-card,
+html[data-theme="dark"] .archive-card,
+body.dark .moments-empty,
+html[data-theme="dark"] .moments-empty {
+  border-color: var(--card-border);
+  background: var(--card-bg);
+  box-shadow: var(--card-shadow);
+}
+
+body.dark .archive-card,
+html[data-theme="dark"] .archive-card,
+body.dark .moments-empty,
+html[data-theme="dark"] .moments-empty {
+  background: var(--card-bg-subtle);
+}
+
+body.dark .today-card:hover,
+html[data-theme="dark"] .today-card:hover,
+body.dark .post-card:hover,
+html[data-theme="dark"] .post-card:hover,
+body.dark .archive-card:hover,
+html[data-theme="dark"] .archive-card:hover {
+  border-color: var(--card-border-hover);
+  box-shadow: var(--card-shadow-hover);
+}
+
+body.dark .today-card:hover,
+html[data-theme="dark"] .today-card:hover,
+body.dark .post-card:hover,
+html[data-theme="dark"] .post-card:hover {
+  background: var(--card-bg-hover);
+}
+
+body.dark .archive-card:hover,
+html[data-theme="dark"] .archive-card:hover {
+  background: color-mix(in srgb, var(--color-accent-soft) 74%, var(--card-bg-subtle));
+}
+
+@media (max-width: 720px) {
+  :root {
+    --radius-md: 18px;
+    --radius-lg: 22px;
+    --radius-xl: 26px;
+    --card-lift: -2px;
+  }
+
+  .today-card,
+  .progress-panel,
+  .post-content,
+  .archive-card,
+  .moments-empty {
+    padding: var(--card-padding);
+  }
+}
+
+@media (max-width: 520px) {
+  :root {
+    --radius-sm: 12px;
+    --radius-md: 16px;
+    --radius-lg: 20px;
+    --radius-xl: 22px;
+  }
+
+  /* Touch devices should not depend on a dramatic hover lift. */
+  .today-card:hover,
+  .post-card:hover,
+  .archive-card:hover {
+    transform: translateY(-1px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .today-card,
+  .post-card,
+  .archive-card {
+    transition: none;
+  }
+
+  .today-card:hover,
+  .post-card:hover,
+  .archive-card:hover {
+    transform: none;
+  }
+}
+

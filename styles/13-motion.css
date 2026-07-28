@@ -1,0 +1,147 @@
+/* ==========================
+   Phase 7: Motion System
+   Shared timing, easing, movement and reduced-motion behavior.
+========================== */
+
+/* Global color changes use a quiet, consistent rhythm. */
+body {
+  transition:
+    background-color var(--motion-base) var(--ease-standard),
+    color var(--motion-base) var(--ease-standard);
+}
+
+/* Large visual surfaces move more slowly than controls. */
+.random-photo-stage {
+  transition:
+    transform var(--motion-base) var(--ease-emphasized),
+    border-color var(--motion-base) var(--ease-standard),
+    box-shadow var(--motion-base) var(--ease-standard);
+}
+
+.random-photo-stage:hover {
+  transform: translateY(var(--motion-lift-card));
+}
+
+.random-photo-stage:active {
+  transform: scale(0.995);
+}
+
+.random-photo-image {
+  animation: random-photo-in var(--motion-photo) var(--ease-enter);
+}
+
+@keyframes random-photo-in {
+  from {
+    opacity: 0;
+    transform: scale(var(--motion-photo-scale));
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Cards, controls and navigation inherit the shared motion scale. */
+.today-card,
+.post-card,
+.archive-card {
+  transition-duration: var(--motion-base);
+  transition-timing-function: var(--ease-emphasized);
+}
+
+.button,
+.theme-toggle,
+.text-link,
+.about-links a,
+.changelog-footer a,
+.back,
+.subpage .text-link,
+.changelog-back-link,
+.nav .nav-link,
+.nav .nav-link::after {
+  transition-duration: var(--motion-fast);
+  transition-timing-function: var(--ease-emphasized);
+}
+
+/* The bubble remains expressive, but its timings now belong to the system. */
+.moment-bubble {
+  transition-duration: var(--motion-base);
+  transition-timing-function: var(--ease-emphasized);
+}
+
+.moment-bubble-active {
+  animation-duration: var(--motion-slow);
+  animation-timing-function: var(--ease-emphasized);
+}
+
+html.page-leaving body {
+  transition-duration: var(--motion-slow);
+  transition-timing-function: var(--ease-exit);
+}
+
+.moment-bubble-leaving {
+  transition-duration: var(--motion-slow);
+  transition-timing-function: var(--ease-exit);
+}
+
+/* Touch screens use restrained feedback instead of desktop hover theatrics. */
+@media (hover: none) {
+  .random-photo-stage:hover,
+  .today-card:hover,
+  .post-card:hover,
+  .archive-card:hover,
+  .button:hover,
+  .theme-toggle:hover {
+    transform: none;
+  }
+}
+
+/* Motion is optional. Meaning and navigation must never depend on it. */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --motion-instant: 1ms;
+    --motion-fast: 1ms;
+    --motion-base: 1ms;
+    --motion-slow: 1ms;
+    --motion-photo: 1ms;
+    --motion-lift-subtle: 0px;
+    --motion-lift-control: 0px;
+    --motion-lift-card: 0px;
+    --motion-press-scale: 1;
+    --motion-photo-scale: 1;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 1ms !important;
+    transition-delay: 0ms !important;
+  }
+
+  .random-photo-stage:hover,
+  .today-card:hover,
+  .post-card:hover,
+  .archive-card:hover,
+  .button:hover,
+  .button:active,
+  .theme-toggle:hover,
+  .theme-toggle:active,
+  .back:hover,
+  .subpage .text-link:hover,
+  .changelog-back-link:hover,
+  .moment-bubble:hover,
+  .moment-bubble:active,
+  .moment-bubble-active,
+  .moment-bubble-leaving {
+    transform: none !important;
+  }
+}
+
