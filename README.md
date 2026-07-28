@@ -123,3 +123,24 @@ Phase 8 was rebuilt as **LMN516 Night Language** rather than a conventional dark
 - Unified navigation, buttons, cards, article content, forms, changelog, photo presentation, and the moment bubble.
 - Preserved existing layout, typography sizing, component dimensions, and motion behavior.
 - Borrowed the restraint of modern reading interfaces without copying ChatGPT's layout or component identity.
+
+## UI Design System v1.0 - Phase 9
+
+### Night Surface System
+
+- Added semantic Night surface roles: canvas, section, card, interactive, floating, and inset.
+- Replaced ad-hoc dark backgrounds with a consistent elevation hierarchy.
+- Kept ordinary content cards close to the page canvas and reserved stronger contrast for controls and floating UI.
+- Reduced reliance on shadows; most hierarchy now comes from restrained neutral-gray steps and subtle separators.
+- Preserved the existing layout, typography, component dimensions, motion, and application logic.
+
+## LMN516 Night Final
+
+This release completes the site's dark-mode system in one pass.
+
+- Replaced the charcoal-only night palette with a calm developer-tool-inspired dark navy system.
+- Added complete dark-mode coverage for the homepage, archive, posts index, moments, music, movies, walks, room, about, and changelog pages.
+- Added dedicated long-form WordPress article styling for headings, paragraphs, links, lists, quotes, inline code, code blocks, tables, images, captions, marks, keyboard keys, and dividers.
+- Unified navigation, controls, forms, cards, floating UI, mobile navigation, focus states, scrollbars, and photo presentation.
+- Preserved all layouts, type sizes, component dimensions, application logic, WordPress data access, and existing motion behavior.
+- Added a higher-contrast preference override for users who request stronger contrast.
