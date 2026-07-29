@@ -404,3 +404,21 @@
     animation: none;
   }
 }
+
+/* Mobile header action alignment
+   GardenNotification and ThemeToggle now share one wrapper. */
+@media (max-width: 960px) {
+  .site-header-actions {
+    order: 2;
+    flex: 0 0 auto;
+    margin-left: auto;
+  }
+
+  .site-header-actions .theme-toggle {
+    margin-left: 0;
+  }
+
+  .site-header > .nav {
+    order: 3;
+  }
+}
