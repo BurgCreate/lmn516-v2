@@ -1,253 +1,179 @@
 import { NextResponse } from "next/server";
-import * as webpush from "web-push";
+import webpush from "web-push";
 
-export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+export const maxDuration = 15;
 
-const VAPID_PUBLIC_KEY =
-  "BGjxlcfPMgoW-k0VNhMbQml2UP4tkyHFAQhbI2qPnj-H32zqhJIUH_yVC_ibKMoJKcBzl6PHa3xLU9hNi8q0dV0";
-
-type PushRequestBody = {
-  subscription?: {
-    endpoint?: string;
-    expirationTime?: number | null;
-    keys?: {
-      p256dh?: string;
-      auth?: string;
-    };
-  };
+type PushRequest = {
+  subscription?: webpush.PushSubscription;
   delaySeconds?: number;
 };
 
-type WebPushError = Error & {
-  statusCode?: number;
-  headers?: Record<string, string | string[] | undefined>;
-  body?: string;
-  endpoint?: string;
-};
-
-function cleanValue(value: string | undefined) {
-  return value
-    ?.trim()
-    .replace(/^['"]|['"]$/g, "")
-    .replace(/\s+/g, "");
+function sleep(milliseconds: number) {
+  return new Promise((resolve) => setTimeout(resolve, milliseconds));
 }
 
-function safeEndpoint(endpoint: string | undefined) {
-  if (!endpoint) return null;
+function getEnvironmentDiagnostics() {
+  const rawPublicKey = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY;
+  const rawPrivateKey = process.env.VAPID_PRIVATE_KEY;
+  const rawSubject = process.env.VAPID_SUBJECT;
 
-  try {
-    const url = new URL(endpoint);
-    return `${url.protocol}//${url.host}${url.pathname.slice(0, 24)}…`;
-  } catch {
-    return "invalid-endpoint";
-  }
+  const publicKey = rawPublicKey?.trim();
+  const privateKey = rawPrivateKey?.trim();
+  const subject = rawSubject?.trim() || "mailto:hello@lmn516.com";
+
+  return {
+    values: {
+      publicKey,
+      privateKey,
+      subject,
+    },
+    debug: {
+      publicKeyExists: Object.prototype.hasOwnProperty.call(
+        process.env,
+        "NEXT_PUBLIC_VAPID_PUBLIC_KEY"
+      ),
+      privateKeyExists: Object.prototype.hasOwnProperty.call(
+        process.env,
+        "VAPID_PRIVATE_KEY"
+      ),
+      subjectExists: Object.prototype.hasOwnProperty.call(
+        process.env,
+        "VAPID_SUBJECT"
+      ),
+      rawPublicKeyType: typeof rawPublicKey,
+      rawPrivateKeyType: typeof rawPrivateKey,
+      rawSubjectType: typeof rawSubject,
+      rawPublicKeyLength: rawPublicKey?.length ?? 0,
+      rawPrivateKeyLength: rawPrivateKey?.length ?? 0,
+      rawSubjectLength: rawSubject?.length ?? 0,
+      trimmedPublicKeyLength: publicKey?.length ?? 0,
+      trimmedPrivateKeyLength: privateKey?.length ?? 0,
+      trimmedSubjectLength: subject.length,
+      publicKeyHasOuterWhitespace:
+        typeof rawPublicKey === "string" && rawPublicKey !== publicKey,
+      privateKeyHasOuterWhitespace:
+        typeof rawPrivateKey === "string" && rawPrivateKey !== privateKey,
+      subjectHasOuterWhitespace:
+        typeof rawSubject === "string" && rawSubject !== rawSubject.trim(),
+      nodeEnv: process.env.NODE_ENV,
+      vercelEnv: process.env.VERCEL_ENV ?? null,
+      vercelRegion: process.env.VERCEL_REGION ?? null,
+    },
+  };
 }
 
 export async function POST(request: Request) {
-  let stage = "开始处理请求";
+  const { values, debug } = getEnvironmentDiagnostics();
+  const { publicKey, privateKey, subject } = values;
 
-  try {
-    stage = "读取 VAPID 环境变量";
-
-    const privateKey = cleanValue(process.env.VAPID_PRIVATE_KEY);
-    const subject =
-      process.env.VAPID_SUBJECT?.trim().replace(/^['"]|['"]$/g, "") ||
-      "mailto:hello@lmn516.com";
-
-    if (!privateKey) {
-      return NextResponse.json(
-        {
-          ok: false,
-          stage,
-          error: "服务器没有读取到 VAPID_PRIVATE_KEY。",
-          debug: {
-            hasPrivateKey: false,
-            hasSubject: Boolean(subject),
-            nodeEnv: process.env.NODE_ENV
-          }
-        },
-        { status: 503 }
-      );
-    }
-
-    if (
-      !subject.startsWith("mailto:") &&
-      !subject.startsWith("https://")
-    ) {
-      return NextResponse.json(
-        {
-          ok: false,
-          stage,
-          error: "VAPID_SUBJECT 格式错误。",
-          debug: {
-            subjectPrefix: subject.split(":")[0] || null
-          }
-        },
-        { status: 500 }
-      );
-    }
-
-    stage = "解析浏览器订阅信息";
-
-    const body = (await request.json()) as PushRequestBody;
-    const subscription = body.subscription;
-
-    if (
-      !subscription?.endpoint ||
-      !subscription.keys?.p256dh ||
-      !subscription.keys?.auth
-    ) {
-      return NextResponse.json(
-        {
-          ok: false,
-          stage,
-          error: "浏览器推送订阅信息不完整，请重新开启通知。",
-          debug: {
-            hasEndpoint: Boolean(subscription?.endpoint),
-            hasP256dh: Boolean(subscription?.keys?.p256dh),
-            hasAuth: Boolean(subscription?.keys?.auth)
-          }
-        },
-        { status: 400 }
-      );
-    }
-
-    stage = "校验订阅 endpoint";
-
-    try {
-      const endpointUrl = new URL(subscription.endpoint);
-
-      if (endpointUrl.protocol !== "https:") {
-        throw new Error("endpoint 不是 HTTPS 地址。");
-      }
-    } catch (error) {
-      return NextResponse.json(
-        {
-          ok: false,
-          stage,
-          error:
-            error instanceof Error
-              ? error.message
-              : "订阅 endpoint 格式无效。",
-          debug: {
-            endpoint: safeEndpoint(subscription.endpoint)
-          }
-        },
-        { status: 400 }
-      );
-    }
-
-    stage = "配置 VAPID 密钥";
-
-    try {
-      webpush.setVapidDetails(
-        subject,
-        VAPID_PUBLIC_KEY,
-        privateKey
-      );
-    } catch (error) {
-      const detail =
-        error instanceof Error ? error.message : String(error);
-
-      return NextResponse.json(
-        {
-          ok: false,
-          stage,
-          error: `VAPID 配置失败：${detail}`,
-          debug: {
-            errorName:
-              error instanceof Error ? error.name : "UnknownError",
-            publicKeyLength: VAPID_PUBLIC_KEY.length,
-            privateKeyLength: privateKey.length,
-            subject
-          }
-        },
-        { status: 500 }
-      );
-    }
-
-    const delaySeconds = Math.min(
-      Math.max(Number(body.delaySeconds) || 0, 0),
-      10
-    );
-
-    if (delaySeconds > 0) {
-      stage = "等待测试延迟";
-
-      await new Promise((resolve) =>
-        setTimeout(resolve, delaySeconds * 1000)
-      );
-    }
-
-    stage = "调用 Web Push 服务";
-
-    const payload = JSON.stringify({
-      title: "LMN516",
-      body: "测试通知发送成功。",
-      url: "/pwa-test",
-      icon: "/icons/icon-192.png",
-      badge: "/icons/icon-192.png"
-    });
-
-    const response = await webpush.sendNotification(
-      {
-        endpoint: subscription.endpoint,
-        expirationTime: subscription.expirationTime ?? null,
-        keys: {
-          p256dh: subscription.keys.p256dh,
-          auth: subscription.keys.auth
-        }
-      },
-      payload,
-      {
-        TTL: 60
-      }
-    );
-
+  if (!publicKey || !privateKey) {
     return NextResponse.json(
       {
-        ok: true,
-        stage: "发送完成",
-        debug: {
-          statusCode: response.statusCode,
-          endpoint: safeEndpoint(subscription.endpoint)
-        }
+        ok: false,
+        stage: "读取 VAPID 环境变量",
+        error: !privateKey
+          ? "服务器没有读取到可用的 VAPID_PRIVATE_KEY。"
+          : "服务器没有读取到可用的 NEXT_PUBLIC_VAPID_PUBLIC_KEY。",
+        debug,
       },
-      {
-        headers: {
-          "Cache-Control": "no-store"
-        }
-      }
+      { status: 503 }
     );
-  } catch (error) {
-    const pushError = error as WebPushError;
+  }
 
-    console.error("Push test failed:", {
-      stage,
-      name: pushError?.name,
-      message: pushError?.message,
-      statusCode: pushError?.statusCode,
-      body: pushError?.body,
-      endpoint: safeEndpoint(pushError?.endpoint),
-      stack: pushError?.stack
-    });
+  let body: PushRequest;
+
+  try {
+    body = (await request.json()) as PushRequest;
+  } catch {
+    return NextResponse.json(
+      {
+        ok: false,
+        stage: "解析请求内容",
+        error: "请求内容无效。",
+        debug,
+      },
+      { status: 400 }
+    );
+  }
+
+  if (!body.subscription?.endpoint || !body.subscription.keys) {
+    return NextResponse.json(
+      {
+        ok: false,
+        stage: "检查推送订阅",
+        error: "缺少有效的推送订阅。",
+        debug,
+      },
+      { status: 400 }
+    );
+  }
+
+  try {
+    webpush.setVapidDetails(subject, publicKey, privateKey);
+  } catch (error) {
+    console.error("VAPID configuration failed:", error);
 
     return NextResponse.json(
       {
         ok: false,
-        stage,
-        error: `发送通知失败 [${pushError?.name || "UnknownError"}]：${
-          pushError?.message || String(error)
-        }`,
-        debug: {
-          statusCode: pushError?.statusCode ?? null,
-          responseBody: pushError?.body ?? null,
-          endpoint: safeEndpoint(pushError?.endpoint),
-          hasHeaders: Boolean(pushError?.headers)
-        }
+        stage: "验证 VAPID 密钥",
+        error:
+          error instanceof Error
+            ? error.message
+            : "VAPID 密钥格式无效。",
+        debug,
       },
       { status: 500 }
+    );
+  }
+
+  const delaySeconds = Math.min(Math.max(Number(body.delaySeconds) || 5, 0), 8);
+
+  try {
+    if (delaySeconds > 0) {
+      await sleep(delaySeconds * 1000);
+    }
+
+    await webpush.sendNotification(
+      body.subscription,
+      JSON.stringify({
+        title: "LMN516 · PWA 测试成功",
+        body: "这是一条由服务器发送到 iPhone 的真实推送通知。",
+        url: "/pwa-test",
+        icon: "/icons/icon-192.png",
+        badge: "/icons/badge-96.png",
+        tag: `lmn516-test-${Date.now()}`,
+      })
+    );
+
+    return NextResponse.json({
+      ok: true,
+      stage: "推送发送完成",
+      debug,
+    });
+  } catch (error) {
+    const statusCode =
+      typeof error === "object" && error && "statusCode" in error
+        ? Number(error.statusCode)
+        : 500;
+
+    console.error("Web Push test failed:", error);
+
+    return NextResponse.json(
+      {
+        ok: false,
+        stage: "发送 Web Push",
+        error:
+          statusCode === 404 || statusCode === 410
+            ? "这条订阅已失效，请重新开启通知。"
+            : error instanceof Error
+              ? error.message
+              : "推送发送失败，请检查 VAPID 配置或设备订阅。",
+        debug,
+      },
+      { status: statusCode >= 400 && statusCode < 600 ? statusCode : 500 }
     );
   }
 }
