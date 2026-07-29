@@ -1,5 +1,4 @@
 import SiteHeader from "@/components/SiteHeader";
-import GardenNotification from "@/components/GardenNotification";
 import MomentBubble from "@/components/MomentBubble";
 import HeroSection from "@/components/home/HeroSection";
 import CurrentProject from "@/components/home/CurrentProject";
@@ -75,8 +74,6 @@ export default async function HomePage() {
       <div className="paper-noise" aria-hidden="true" />
 
       <SiteHeader />
-
-      <GardenNotification />
 
       <HeroSection
         mediaImages={mediaImages}
