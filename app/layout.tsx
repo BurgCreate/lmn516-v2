@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import PageTransitionReset from "@/components/PageTransitionReset";
-import DaisyCursorPhysics from "@/components/DaisyCursorPhysics";
 
 export const metadata: Metadata = {
   title: {
@@ -30,7 +29,6 @@ export default function RootLayout({
     <html lang="zh-CN">
       <body>
         <PageTransitionReset />
-        <DaisyCursorPhysics />
         {children}
         <Analytics />
       </body>
