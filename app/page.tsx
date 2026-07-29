@@ -1,4 +1,5 @@
 import SiteHeader from "@/components/SiteHeader";
+import GardenNotification from "@/components/GardenNotification";
 import MomentBubble from "@/components/MomentBubble";
 import HeroSection from "@/components/home/HeroSection";
 import CurrentProject from "@/components/home/CurrentProject";
@@ -75,6 +76,8 @@ export default async function HomePage() {
 
       <SiteHeader />
 
+      <GardenNotification />
+
       <HeroSection
         mediaImages={mediaImages}
         today={today}
@@ -97,7 +100,10 @@ export default async function HomePage() {
       <AboutSection />
 
       {latestMoment && (
-        <MomentBubble content={latestMoment.content} date={latestMoment.date} />
+        <MomentBubble
+          content={latestMoment.content}
+          date={latestMoment.date}
+        />
       )}
 
       <SiteFooter />
