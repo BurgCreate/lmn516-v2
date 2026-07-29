@@ -1,6 +1,6 @@
 /* ==========================
    18. Interactive desktop daisy cursor
-   Animated cursor + lightweight gravity pile.
+   Brand cursor in open space; native cursors keep interaction clear.
 ========================== */
 
 .daisy-cursor,
@@ -10,21 +10,87 @@
 
 @media (hover: hover) and (pointer: fine) {
   html.has-daisy-cursor,
-  html.has-daisy-cursor body,
-  html.has-daisy-cursor body * {
-    cursor: none !important;
+  html.has-daisy-cursor body {
+    cursor: none;
   }
 
-  html.has-daisy-cursor input[type="text"],
-  html.has-daisy-cursor input[type="email"],
-  html.has-daisy-cursor input[type="search"],
-  html.has-daisy-cursor input[type="password"],
-  html.has-daisy-cursor input[type="url"],
-  html.has-daisy-cursor input[type="tel"],
-  html.has-daisy-cursor input[type="number"],
-  html.has-daisy-cursor textarea,
-  html.has-daisy-cursor [contenteditable="true"] {
+  /* Links and controls keep the familiar native hand cursor. */
+  html.has-daisy-cursor :where(
+    a,
+    button,
+    label[for],
+    select,
+    summary,
+    [role="button"],
+    [role="link"],
+    [data-native-cursor="pointer"]
+  ),
+  html.has-daisy-cursor :where(
+    a,
+    button,
+    label[for],
+    select,
+    summary,
+    [role="button"],
+    [role="link"],
+    [data-native-cursor="pointer"]
+  ) * {
+    cursor: pointer !important;
+  }
+
+  /* Reading and editing areas keep the native text-selection cursor. */
+  html.has-daisy-cursor :where(
+    p,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    li,
+    blockquote,
+    pre,
+    code,
+    input[type="text"],
+    input[type="email"],
+    input[type="search"],
+    input[type="password"],
+    input[type="url"],
+    input[type="tel"],
+    input[type="number"],
+    textarea,
+    [contenteditable="true"],
+    [data-native-cursor="text"]
+  ) {
     cursor: text !important;
+  }
+
+  html.has-daisy-cursor :where(
+    input[type="checkbox"],
+    input[type="radio"],
+    input[type="range"],
+    input[type="file"],
+    input[type="color"],
+    input[type="button"],
+    input[type="submit"],
+    input[type="reset"]
+  ) {
+    cursor: pointer !important;
+  }
+
+  html.has-daisy-cursor :where(
+    button:disabled,
+    input:disabled,
+    select:disabled,
+    [aria-disabled="true"]
+  ),
+  html.has-daisy-cursor :where(
+    button:disabled,
+    input:disabled,
+    select:disabled,
+    [aria-disabled="true"]
+  ) * {
+    cursor: not-allowed !important;
   }
 
   .daisy-physics-canvas {
@@ -58,8 +124,12 @@
     will-change: transform;
   }
 
-  .daisy-cursor.is-visible {
+  .daisy-cursor.is-visible:not(.is-native-zone) {
     opacity: 1;
+  }
+
+  .daisy-cursor.is-native-zone {
+    opacity: 0;
   }
 
   .daisy-cursor img {

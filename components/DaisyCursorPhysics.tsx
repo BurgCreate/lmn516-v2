@@ -93,6 +93,39 @@ export default function DaisyCursorPhysics() {
       pointerY = event.clientY;
       cursorElement.style.setProperty("--daisy-x", `${pointerX}px`);
       cursorElement.style.setProperty("--daisy-y", `${pointerY}px`);
+
+      const target = event.target;
+      const targetElement = target instanceof Element ? target : null;
+      const usesNativeCursor = Boolean(
+        targetElement?.closest(
+          [
+            "a",
+            "button",
+            "input",
+            "textarea",
+            "select",
+            "option",
+            "label[for]",
+            "[role='button']",
+            "[role='link']",
+            "[contenteditable='true']",
+            "[data-native-cursor]",
+            "p",
+            "h1",
+            "h2",
+            "h3",
+            "h4",
+            "h5",
+            "h6",
+            "li",
+            "blockquote",
+            "pre",
+            "code"
+          ].join(",")
+        )
+      );
+
+      cursorElement.classList.toggle("is-native-zone", usesNativeCursor);
       cursorElement.classList.add("is-visible");
     }
 

@@ -56,14 +56,15 @@ button:focus-visible,
 }
 
 .button.ghost {
-  border-color: var(--button-border);
+  border-color: var(--color-accent);
   background: var(--button-secondary-bg);
-  color: var(--color-text);
+  color: var(--color-accent);
 }
 
 .button.ghost:hover {
-  border-color: var(--button-border-hover);
-  background: var(--button-secondary-hover-bg);
+  border-color: var(--color-accent);
+  background: var(--color-accent);
+  color: var(--color-bg);
   box-shadow: var(--button-shadow-hover);
 }
 
