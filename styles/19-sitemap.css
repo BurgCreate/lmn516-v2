@@ -1,0 +1,166 @@
+/* ==========================
+   Website sitemap
+   Inspired by Apple's plain, highly scannable directory layout.
+========================== */
+
+.sitemap-page {
+  min-height: 70vh;
+  padding-top: 64px;
+  padding-bottom: 120px;
+}
+
+.sitemap-hero {
+  max-width: 760px;
+  padding-bottom: 64px;
+}
+
+.sitemap-hero .eyebrow {
+  margin: 0 0 14px;
+}
+
+.sitemap-hero h1 {
+  margin: 0 0 22px;
+  font-size: var(--text-page-title);
+  font-weight: 600;
+  line-height: var(--leading-title);
+  letter-spacing: var(--tracking-title);
+}
+
+.sitemap-hero > p:last-child {
+  max-width: 680px;
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: 17px;
+  line-height: 1.9;
+}
+
+.sitemap-sections {
+  border-top: 1px solid var(--color-border);
+}
+
+.sitemap-section {
+  display: grid;
+  grid-template-columns: minmax(180px, 0.7fr) minmax(0, 2.3fr);
+  gap: 56px;
+  padding: 52px 0 58px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.sitemap-section > h2 {
+  margin: 0;
+  font-size: clamp(21px, 2vw, 26px);
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: -0.02em;
+}
+
+.sitemap-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 48px 36px;
+}
+
+.sitemap-group h3 {
+  margin: 0 0 18px;
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 650;
+  line-height: 1.5;
+}
+
+.sitemap-group ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sitemap-group li + li {
+  margin-top: 11px;
+}
+
+.sitemap-group a {
+  display: inline-block;
+  color: var(--color-text-muted);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.65;
+  text-decoration: none;
+  transition:
+    color var(--motion-fast) var(--ease-standard),
+    transform var(--motion-fast) var(--ease-standard);
+}
+
+.sitemap-group a:hover {
+  color: var(--color-accent);
+  transform: translateX(2px);
+}
+
+.sitemap-group a:focus-visible {
+  outline: 2px solid var(--focus-ring-color);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+body.dark .sitemap-sections,
+body.dark .sitemap-section,
+html[data-theme="dark"] .sitemap-sections,
+html[data-theme="dark"] .sitemap-section {
+  border-color: var(--night-line);
+}
+
+body.dark .sitemap-hero > p:last-child,
+body.dark .sitemap-group a,
+html[data-theme="dark"] .sitemap-hero > p:last-child,
+html[data-theme="dark"] .sitemap-group a {
+  color: var(--night-text-muted);
+}
+
+body.dark .sitemap-section > h2,
+body.dark .sitemap-group h3,
+html[data-theme="dark"] .sitemap-section > h2,
+html[data-theme="dark"] .sitemap-group h3 {
+  color: var(--night-heading);
+}
+
+body.dark .sitemap-group a:hover,
+html[data-theme="dark"] .sitemap-group a:hover {
+  color: var(--night-accent);
+}
+
+@media (max-width: 960px) {
+  .sitemap-section {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+}
+
+@media (max-width: 720px) {
+  .sitemap-page {
+    padding: 40px var(--page-gutter) 88px;
+  }
+
+  .sitemap-hero {
+    padding-bottom: 44px;
+  }
+
+  .sitemap-hero > p:last-child {
+    font-size: 16px;
+  }
+
+  .sitemap-section {
+    padding: 40px 0 44px;
+  }
+
+  .sitemap-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 38px 28px;
+  }
+}
+
+@media (max-width: 460px) {
+  .sitemap-grid {
+    grid-template-columns: 1fr;
+    gap: 34px;
+  }
+}
