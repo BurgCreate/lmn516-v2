@@ -405,42 +405,176 @@
   }
 }
 
-/* Mobile header action alignment
-   GardenNotification and ThemeToggle now share one wrapper. */
-@media (max-width: 960px) {
-  .site-header-actions {
-    order: 2;
-    flex: 0 0 auto;
-    margin-left: auto;
+/* ==========================
+   Add to home screen
+========================== */
+
+.install-prompt {
+  display: inline-flex;
+}
+
+.install-prompt-trigger {
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  transition: transform .2s ease, border-color .2s ease, background-color .2s ease;
+}
+
+.install-prompt-trigger:hover {
+  transform: translateY(-1px);
+  border-color: var(--accent);
+  background: var(--paper);
+}
+
+.install-prompt-trigger svg {
+  width: 19px;
+  height: 19px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.install-prompt-backdrop {
+  position: fixed;
+  z-index: 120;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgba(22, 25, 22, .28);
+  backdrop-filter: blur(7px);
+  animation: garden-backdrop-in .22s ease both;
+}
+
+.install-prompt-card {
+  position: relative;
+  width: min(420px, 100%);
+  padding: 34px;
+  border: 1px solid color-mix(in srgb, var(--line) 72%, transparent);
+  border-radius: 28px;
+  background: color-mix(in srgb, var(--bg) 94%, transparent);
+  box-shadow: 0 30px 90px rgba(23, 28, 24, .22);
+  backdrop-filter: blur(24px);
+  animation: garden-card-in .34s var(--ease-enter) both;
+}
+
+.install-prompt-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 34px;
+  height: 34px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--paper);
+  color: var(--muted);
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.install-prompt-kicker {
+  margin: 0 0 10px;
+  color: var(--accent);
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .12em;
+}
+
+.install-prompt-card h2 {
+  margin: 0;
+  font-size: clamp(28px, 7vw, 36px);
+  line-height: 1.2;
+}
+
+.install-prompt-copy {
+  margin: 12px 0 0;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.install-prompt-steps {
+  display: grid;
+  gap: 12px;
+  margin: 24px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.install-prompt-steps li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: var(--paper);
+  color: var(--text);
+  line-height: 1.5;
+}
+
+.install-prompt-steps span {
+  flex: 0 0 auto;
+  width: 25px;
+  height: 25px;
+  display: inline-grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.install-prompt-note {
+  margin: 24px 0 0;
+  padding: 14px 16px;
+  border-radius: 18px;
+  background: var(--accent-soft);
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.install-prompt-done {
+  width: 100%;
+  min-height: 48px;
+  margin-top: 24px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #fff;
+  font: inherit;
+  font-weight: 650;
+  cursor: pointer;
+}
+
+@media (max-width: 640px) {
+  .install-prompt-backdrop {
+    place-items: end center;
+    padding: 12px;
   }
 
-  .site-header-actions .theme-toggle {
-    margin-left: 0;
-  }
-
-  .site-header > .nav {
-    order: 3;
+  .install-prompt-card {
+    width: 100%;
+    padding: 30px 22px 22px;
+    border-radius: 26px;
   }
 }
 
-/* Keep the notification welcome card clear of the fixed moment bubble. */
-@media (max-width: 1024px) {
-  .garden-welcome-backdrop {
-    align-items: end;
-    padding-bottom: calc(156px + env(safe-area-inset-bottom));
-  }
-
-  .garden-welcome-card {
-    max-height: calc(100dvh - 180px - env(safe-area-inset-bottom));
-  }
-}
-
-@media (max-width: 720px) {
-  .garden-welcome-backdrop {
-    padding: 12px 12px calc(144px + env(safe-area-inset-bottom));
-  }
-
-  .garden-welcome-card {
-    max-height: calc(100dvh - 168px - env(safe-area-inset-bottom));
+@media (prefers-reduced-motion: reduce) {
+  .install-prompt-backdrop,
+  .install-prompt-card {
+    animation: none;
   }
 }

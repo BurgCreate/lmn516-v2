@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import ThemeToggle from "@/components/ThemeToggle";
 import GardenNotification from "@/components/GardenNotification";
+import InstallPrompt from "@/components/InstallPrompt";
 
 type SiteHeaderProps = {
   className?: string;
@@ -140,6 +141,7 @@ export default function SiteHeader({
       </nav>
 
       <div className="site-header-actions">
+        <InstallPrompt />
         <GardenNotification />
         <ThemeToggle />
       </div>
