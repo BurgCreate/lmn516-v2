@@ -4,6 +4,18 @@ import { useEffect, useRef, useState } from "react";
 
 type PermissionState = NotificationPermission | "unsupported";
 type NoticeState = "idle" | "working" | "success" | "error";
+type PlatformType = "ios" | "android" | "desktop";
+type BrowserType =
+  | "safari"
+  | "chrome"
+  | "edge"
+  | "samsung"
+  | "huawei"
+  | "quark"
+  | "wechat"
+  | "tiktok"
+  | "instagram"
+  | "other";
 
 type BeforeInstallPromptEvent = Event & {
   prompt: () => Promise<void>;
@@ -13,7 +25,14 @@ type BeforeInstallPromptEvent = Event & {
   }>;
 };
 
-const DISMISS_KEY = "lmn516-garden-notice-dismissed-until-v3";
+type ClientEnvironment = {
+  platform: PlatformType;
+  browser: BrowserType;
+  browserName: string;
+  isInAppBrowser: boolean;
+};
+
+const DISMISS_KEY = "lmn516-garden-notice-dismissed-until-v4";
 const SEVEN_DAYS = 7 * 24 * 60 * 60 * 1000;
 
 function urlBase64ToUint8Array(base64String: string) {
@@ -39,8 +58,74 @@ function isStandaloneMode() {
   );
 }
 
-function isAppleMobile() {
-  return /iPhone|iPad|iPod/i.test(navigator.userAgent);
+function detectEnvironment(): ClientEnvironment {
+  const userAgent = navigator.userAgent;
+  const isIOS = /iPhone|iPad|iPod/i.test(userAgent);
+  const isAndroid = /Android/i.test(userAgent);
+
+  if (/MicroMessenger/i.test(userAgent)) {
+    return {
+      platform: isIOS ? "ios" : isAndroid ? "android" : "desktop",
+      browser: "wechat",
+      browserName: "微信内置浏览器",
+      isInAppBrowser: true,
+    };
+  }
+
+  if (/musical_ly|TikTok/i.test(userAgent)) {
+    return {
+      platform: isIOS ? "ios" : isAndroid ? "android" : "desktop",
+      browser: "tiktok",
+      browserName: "TikTok 内置浏览器",
+      isInAppBrowser: true,
+    };
+  }
+
+  if (/Instagram/i.test(userAgent)) {
+    return {
+      platform: isIOS ? "ios" : isAndroid ? "android" : "desktop",
+      browser: "instagram",
+      browserName: "Instagram 内置浏览器",
+      isInAppBrowser: true,
+    };
+  }
+
+  let browser: BrowserType = "other";
+  let browserName = "当前浏览器";
+
+  if (/Quark/i.test(userAgent)) {
+    browser = "quark";
+    browserName = "夸克浏览器";
+  } else if (/HuaweiBrowser/i.test(userAgent)) {
+    browser = "huawei";
+    browserName = "华为浏览器";
+  } else if (/SamsungBrowser/i.test(userAgent)) {
+    browser = "samsung";
+    browserName = "三星浏览器";
+  } else if (/EdgA|EdgiOS|Edg\//i.test(userAgent)) {
+    browser = "edge";
+    browserName = "Microsoft Edge";
+  } else if (/CriOS|Chrome/i.test(userAgent)) {
+    browser = "chrome";
+    browserName = "Chrome";
+  } else if (
+    isIOS &&
+    /Safari/i.test(userAgent) &&
+    !/CriOS|FxiOS|EdgiOS|OPiOS/i.test(userAgent)
+  ) {
+    browser = "safari";
+    browserName = "Safari";
+  } else if (/Safari/i.test(userAgent) && !/Chrome|Chromium/i.test(userAgent)) {
+    browser = "safari";
+    browserName = "Safari";
+  }
+
+  return {
+    platform: isIOS ? "ios" : isAndroid ? "android" : "desktop",
+    browser,
+    browserName,
+    isInAppBrowser: false,
+  };
 }
 
 export default function GardenNotification() {
@@ -52,6 +137,12 @@ export default function GardenNotification() {
     useState<PushSubscription | null>(null);
   const [installPrompt, setInstallPrompt] =
     useState<BeforeInstallPromptEvent | null>(null);
+  const [environment, setEnvironment] = useState<ClientEnvironment>({
+    platform: "desktop",
+    browser: "other",
+    browserName: "当前浏览器",
+    isInAppBrowser: false,
+  });
   const [panelOpen, setPanelOpen] = useState(false);
   const [welcomeOpen, setWelcomeOpen] = useState(false);
   const [status, setStatus] = useState<NoticeState>("idle");
@@ -87,6 +178,7 @@ export default function GardenNotification() {
       "PushManager" in window &&
       "Notification" in window;
 
+    setEnvironment(detectEnvironment());
     setStandalone(appMode);
     setSupported(browserSupported);
 
@@ -178,12 +270,81 @@ export default function GardenNotification() {
     }
   }
 
+  async function copyCurrentUrl() {
+    try {
+      await navigator.clipboard.writeText(window.location.href);
+      setStatus("success");
+      setMessage("网址已经复制。请粘贴到 Safari 或 Chrome 中打开。");
+    } catch {
+      setStatus("error");
+      setMessage("没有成功复制，请手动复制浏览器地址栏中的网址。");
+    }
+  }
+
+  function showManualInstallGuide() {
+    setStatus("idle");
+
+    if (environment.isInAppBrowser) {
+      setMessage(
+        `请点击右上角菜单，选择“在浏览器中打开”。打开 Safari 或 Chrome 后，再点一次小铃铛。`
+      );
+      return;
+    }
+
+    if (environment.platform === "ios") {
+      if (environment.browser === "safari") {
+        setMessage(
+          "只需两步：点击 Safari 底部的分享按钮，再点“添加到主屏幕”。添加后从桌面图标打开 LMN516。"
+        );
+      } else {
+        setMessage(
+          "为了获得通知，请先用 Safari 打开本页，再点击分享按钮 → 添加到主屏幕。"
+        );
+      }
+      return;
+    }
+
+    if (environment.browser === "huawei") {
+      setMessage(
+        "请点击华为浏览器右下角或底部菜单，选择“添加至桌面”。添加后请从桌面图标重新打开，再点小铃铛。"
+      );
+      return;
+    }
+
+    if (environment.browser === "quark") {
+      setMessage(
+        "请打开夸克菜单，进入工具箱或更多功能，选择“添加到桌面”。如果桌面版仍不支持通知，建议改用 Chrome。"
+      );
+      return;
+    }
+
+    if (
+      environment.browser === "chrome" ||
+      environment.browser === "edge" ||
+      environment.browser === "samsung"
+    ) {
+      setMessage(
+        "请打开浏览器菜单，选择“安装应用”或“添加到主屏幕”。安装后从桌面图标打开，再点小铃铛。"
+      );
+      return;
+    }
+
+    setMessage(
+      "请打开浏览器菜单，选择“添加到主屏幕”或“安装应用”。安装后从桌面图标打开，再开启通知。"
+    );
+  }
+
   async function requestInstall() {
     setStatus("idle");
 
     if (standalone || isStandaloneMode()) {
       setStandalone(true);
       await enableNotifications();
+      return;
+    }
+
+    if (environment.isInAppBrowser) {
+      showManualInstallGuide();
       return;
     }
 
@@ -194,7 +355,9 @@ export default function GardenNotification() {
 
       if (choice.outcome === "accepted") {
         setStatus("success");
-        setMessage("正在添加到主屏幕。安装完成后，请从桌面图标打开 LMN516，再点一次小铃铛开启通知。");
+        setMessage(
+          "正在添加到主屏幕。完成后请从桌面图标打开 LMN516，再点一次小铃铛开启通知。"
+        );
       } else {
         setStatus("idle");
         setMessage("没有关系，之后仍然可以从小铃铛再次添加。");
@@ -202,14 +365,7 @@ export default function GardenNotification() {
       return;
     }
 
-    if (isAppleMobile()) {
-      setStatus("idle");
-      setMessage("请点击 Safari 底部的分享按钮，再选择“添加到主屏幕”。安装后从桌面图标打开，才可以开启通知。");
-      return;
-    }
-
-    setStatus("idle");
-    setMessage("请打开浏览器菜单，选择“添加到主屏幕”或“安装应用”。安装后从桌面图标打开，再开启通知。");
+    showManualInstallGuide();
   }
 
   async function enableNotifications() {
@@ -223,7 +379,7 @@ export default function GardenNotification() {
     if (!supported) {
       setStatus("error");
       setMessage(
-        "这台设备已经成功打开 LMN516 App，但当前浏览器暂未提供 Web Push。你仍然可以正常浏览花园。"
+        `${environment.browserName} 已经从桌面打开 LMN516，但当前环境没有提供完整的 Web Push。建议使用 Chrome；iPhone 请使用添加到主屏幕后的 Safari Web App。`
       );
       return;
     }
@@ -298,6 +454,10 @@ export default function GardenNotification() {
 
   const isSubscribed = permission === "granted" && Boolean(subscription);
   const needsInstall = !standalone;
+  const shouldOfferCopy =
+    needsInstall &&
+    (environment.isInAppBrowser ||
+      (environment.platform === "ios" && environment.browser !== "safari"));
 
   return (
     <div className="garden-notification" ref={panelRef}>
@@ -332,23 +492,40 @@ export default function GardenNotification() {
             </>
           ) : needsInstall ? (
             <>
-              <h2>把花园带到主屏幕</h2>
+              <h2>
+                {environment.isInAppBrowser
+                  ? "先在系统浏览器中打开"
+                  : "把花园带到主屏幕"}
+              </h2>
               <p>
-                先把 LMN516 添加到主屏幕，再从桌面图标打开，就可以接收新的照片、文章和碎碎念提醒。
+                当前环境：{environment.browserName}。{installPrompt
+                  ? "点击下面的按钮即可调出系统安装窗口。"
+                  : environment.platform === "ios"
+                    ? "完成添加后，从桌面图标打开，才能开启通知。"
+                    : "添加后从桌面图标重新打开，再开启通知。"}
               </p>
               <button
                 type="button"
                 className="garden-notice-primary"
                 onClick={requestInstall}
               >
-                📱 添加到主屏幕
+                {installPrompt
+                  ? "📱 立即安装 LMN516"
+                  : environment.isInAppBrowser
+                    ? "🌐 查看打开方法"
+                    : "📱 查看添加方法"}
               </button>
+              {shouldOfferCopy && (
+                <button type="button" onClick={copyCurrentUrl}>
+                  复制网址
+                </button>
+              )}
             </>
           ) : (
             <>
               <h2>听见花园的新消息</h2>
               <p>
-                当这里有新的照片、文章或碎碎念时，我会轻轻告诉你，不会频繁打扰。
+                当前环境：{environment.browserName}。点击一次即可请求系统通知权限。
               </p>
               <button
                 type="button"
