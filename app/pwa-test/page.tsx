@@ -17,8 +17,8 @@ export default function PwaTestPage() {
         <p className="pwa-test-eyebrow">LMN516 LAB</p>
         <h1>PWA 通知测试</h1>
         <p className="pwa-test-intro">
-          先让这台 iPhone 成为 LMN516 的第一台测试设备。这里发送的是服务器 Web Push，
-          不是页面自己弹出来哄人的通知。
+          先让这台 iPhone 成为 LMN516 的第一台测试设备。发布一条碎碎念后，
+          点击“推送最新碎碎念”，手机就会收到真实的服务器 Web Push。
         </p>
         <PwaTestPanel />
       </div>

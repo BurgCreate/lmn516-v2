@@ -25,6 +25,7 @@ export default async function MomentsPage() {
           moments.map((moment) => (
             <article
               key={moment.id}
+              id={`moment-${moment.id}`}
               className="moment-item"
             >
               <div

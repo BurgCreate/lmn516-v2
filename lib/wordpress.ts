@@ -363,6 +363,42 @@ export async function getMoments(
 
 
 /**
+ * 获取最新一条碎碎念。
+ *
+ * 这个方法专门给推送接口使用，因此不走缓存。
+ * 发布后立即点击“推送最新碎碎念”时，可以拿到刚发布的内容。
+ */
+export async function getLatestMomentFresh(): Promise<Moment | null> {
+  try {
+    const momentsCategoryId = await getCategoryId(MOMENTS_CATEGORY_SLUG);
+
+    if (!momentsCategoryId) {
+      return null;
+    }
+
+    const response = await fetch(
+      `${WP_URL}/index.php?rest_route=/wp/v2/posts&categories=${momentsCategoryId}&per_page=1&_embed=1&_=${Date.now()}`,
+      {
+        cache: "no-store",
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("WordPress latest moment API unavailable");
+    }
+
+    const data = await response.json();
+    const item = data[0];
+
+    return item ? formatMoment(item) : null;
+  } catch (error) {
+    console.error("WordPress 最新碎碎念获取失败:", error);
+    return null;
+  }
+}
+
+
+/**
  * 根据 slug 获取单篇正式文章。
  */
 export async function getPostBySlug(
