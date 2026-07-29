@@ -7,7 +7,7 @@ self.addEventListener("push", (event) => {
     data = { body: event.data ? event.data.text() : "LMN516 有一条新消息。" };
   }
 
-  const title = data.title || "";
+  const title = data.title || "新碎碎念";
   const options = {
     body: data.body || "LMN516 有一条新消息。",
     icon: data.icon || "/icons/icon-192.png",
