@@ -38,6 +38,7 @@ export default function DaisyCursorPhysics() {
     if (!context) return;
 
     // Preserve non-null references inside nested animation callbacks.
+    const cursorElement: HTMLDivElement = cursor;
     const canvasElement: HTMLCanvasElement = canvas;
     const drawingContext: CanvasRenderingContext2D = context;
 
@@ -71,13 +72,13 @@ export default function DaisyCursorPhysics() {
     function moveCursor(event: PointerEvent) {
       pointerX = event.clientX;
       pointerY = event.clientY;
-      cursor.style.setProperty("--daisy-x", `${pointerX}px`);
-      cursor.style.setProperty("--daisy-y", `${pointerY}px`);
-      cursor.classList.add("is-visible");
+      cursorElement.style.setProperty("--daisy-x", `${pointerX}px`);
+      cursorElement.style.setProperty("--daisy-y", `${pointerY}px`);
+      cursorElement.classList.add("is-visible");
     }
 
     function hideCursor() {
-      cursor.classList.remove("is-visible");
+      cursorElement.classList.remove("is-visible");
     }
 
     function spawnDaisy(x: number, y: number, burst = false) {
@@ -109,10 +110,10 @@ export default function DaisyCursorPhysics() {
       if (event.button !== 0) return;
 
       spinCount += 1;
-      cursor.style.setProperty("--daisy-spin", `${spinCount * 360}deg`);
-      cursor.classList.remove("is-clicking");
-      void cursor.offsetWidth;
-      cursor.classList.add("is-clicking");
+      cursorElement.style.setProperty("--daisy-spin", `${spinCount * 360}deg`);
+      cursorElement.classList.remove("is-clicking");
+      void cursorElement.offsetWidth;
+      cursorElement.classList.add("is-clicking");
 
       const now = performance.now();
       recentClicks = recentClicks.filter((time) => now - time < 900);
@@ -253,8 +254,8 @@ export default function DaisyCursorPhysics() {
     }
 
     resizeCanvas();
-    cursor.style.setProperty("--daisy-x", `${pointerX}px`);
-    cursor.style.setProperty("--daisy-y", `${pointerY}px`);
+    cursorElement.style.setProperty("--daisy-x", `${pointerX}px`);
+    cursorElement.style.setProperty("--daisy-y", `${pointerY}px`);
 
     window.addEventListener("resize", resizeCanvas);
     window.addEventListener("pointermove", moveCursor, { passive: true });
