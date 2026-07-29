@@ -43,6 +43,7 @@ export default function GardenNotification() {
   const [status, setStatus] = useState<NoticeState>("idle");
   const [message, setMessage] = useState("");
   const panelRef = useRef<HTMLDivElement>(null);
+  const successTimerRef = useRef<number | null>(null);
 
   useEffect(() => {
     const browserSupported =
@@ -83,6 +84,14 @@ export default function GardenNotification() {
       .catch((error) => {
         console.error("Garden notification initialization failed:", error);
       });
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      if (successTimerRef.current !== null) {
+        window.clearTimeout(successTimerRef.current);
+      }
+    };
   }, []);
 
   useEffect(() => {
@@ -176,6 +185,16 @@ export default function GardenNotification() {
       setWelcomeOpen(false);
       setPanelOpen(true);
       window.localStorage.removeItem(DISMISS_KEY);
+
+      if (successTimerRef.current !== null) {
+        window.clearTimeout(successTimerRef.current);
+      }
+
+      successTimerRef.current = window.setTimeout(() => {
+        setStatus("idle");
+        setMessage("");
+        successTimerRef.current = null;
+      }, 4500);
     } catch (error) {
       console.error("Enable garden notification failed:", error);
       setStatus("error");
@@ -198,8 +217,11 @@ export default function GardenNotification() {
 
   function togglePanel() {
     setPanelOpen((current) => !current);
-    setStatus("idle");
-    setMessage("");
+
+    if (status !== "success") {
+      setStatus("idle");
+      setMessage("");
+    }
   }
 
   const isSubscribed = permission === "granted" && Boolean(subscription);
@@ -223,7 +245,14 @@ export default function GardenNotification() {
         <div className="garden-bell-panel" role="dialog" aria-label="花园信使">
           <p className="garden-notice-kicker">🌿 花园信使</p>
 
-          {isSubscribed ? (
+          {status === "success" ? (
+            <>
+              <h2>通知已经开启</h2>
+              <p>
+                设置成功。这个提示会停留片刻，然后再回到花园信使的日常状态。
+              </p>
+            </>
+          ) : isSubscribed ? (
             <>
               <h2>已经保持联系</h2>
               <p>

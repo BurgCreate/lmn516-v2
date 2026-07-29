@@ -422,3 +422,25 @@
     order: 3;
   }
 }
+
+/* Keep the notification welcome card clear of the fixed moment bubble. */
+@media (max-width: 1024px) {
+  .garden-welcome-backdrop {
+    align-items: end;
+    padding-bottom: calc(156px + env(safe-area-inset-bottom));
+  }
+
+  .garden-welcome-card {
+    max-height: calc(100dvh - 180px - env(safe-area-inset-bottom));
+  }
+}
+
+@media (max-width: 720px) {
+  .garden-welcome-backdrop {
+    padding: 12px 12px calc(144px + env(safe-area-inset-bottom));
+  }
+
+  .garden-welcome-card {
+    max-height: calc(100dvh - 168px - env(safe-area-inset-bottom));
+  }
+}
