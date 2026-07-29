@@ -5,7 +5,7 @@ const footerGroups = [
     title: "浏览",
     links: [
       { label: "首页", href: "/" },
-      { label: "全部文章", href: "/archive" },
+      { label: "全部文章", href: "/posts" },
       { label: "碎碎念", href: "/moments" },
       { label: "照片墙", href: "/photos" },
     ],
@@ -13,7 +13,7 @@ const footerGroups = [
   {
     title: "花园",
     links: [
-      { label: "音乐墙", href: "/music" },
+      { label: "音乐清单", href: "/music" },
       { label: "城市散步", href: "/walks" },
       { label: "房间物品", href: "/room" },
       { label: "观影档案", href: "/movies" },
@@ -24,6 +24,7 @@ const footerGroups = [
     links: [
       { label: "关于本站", href: "/about" },
       { label: "生长记录", href: "/changelog" },
+      { label: "网站地图", href: "/sitemap" },
       { label: "RSS", href: "https://lmn516.com/feed/" },
       { label: "写信", href: "mailto:hello@lmn516.com" },
     ],

@@ -1,6 +1,8 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 import ThemeToggle from "@/components/ThemeToggle";
 import GardenNotification from "@/components/GardenNotification";
 
@@ -8,21 +10,91 @@ type SiteHeaderProps = {
   className?: string;
 };
 
-const navigationItems = [
-  { label: "文章", href: "/archive" },
-  { label: "碎碎念", href: "/moments" },
-  { label: "音乐墙", href: "/music" },
+type HashNavigationItem = {
+  label: string;
+  hash: string;
+  href?: never;
+};
+
+type PageNavigationItem = {
+  label: string;
+  href: string;
+  hash?: never;
+};
+
+type NavigationItem =
+  | HashNavigationItem
+  | PageNavigationItem;
+
+const navigationItems: NavigationItem[] = [
+  { label: "本期", hash: "notes" },
+  { label: "专题", hash: "project" },
+  { label: "收藏", hash: "archive" },
   { label: "照片墙", href: "/photos" },
+  { label: "关于", hash: "about" },
 ];
 
 export default function SiteHeader({
   className = "",
 }: SiteHeaderProps) {
+  const pathname = usePathname();
+  const [activeHash, setActiveHash] = useState("");
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  const isHome = pathname === "/";
+
+  useEffect(() => {
+    function syncHash() {
+      setActiveHash(
+        window.location.hash.replace("#", "")
+      );
+    }
+
+    syncHash();
+
+    window.addEventListener(
+      "hashchange",
+      syncHash
+    );
+
+    return () => {
+      window.removeEventListener(
+        "hashchange",
+        syncHash
+      );
+    };
+  }, [pathname]);
+
+  useEffect(() => {
+    if (!isHome) {
+      setIsScrolled(false);
+      return;
+    }
+
+    function syncScrollState() {
+      setIsScrolled(window.scrollY > 8);
+    }
+
+    syncScrollState();
+    window.addEventListener("scroll", syncScrollState, {
+      passive: true,
+    });
+
+    return () => {
+      window.removeEventListener(
+        "scroll",
+        syncScrollState
+      );
+    };
+  }, [isHome]);
+
   return (
     <header
       className={`site-header shell${
-        className ? ` ${className}` : ""
-      }`}
+        isHome ? " site-header-sticky" : ""
+      }${
+        isScrolled ? " is-scrolled" : ""
+      }${className ? ` ${className}` : ""}`}
     >
       <Link
         href="/"
@@ -36,15 +108,61 @@ export default function SiteHeader({
         className="nav"
         aria-label="网站导航"
       >
-        {navigationItems.map((item) => (
-          <Link
-            key={item.href}
-            href={item.href}
-            className="nav-link"
-          >
-            {item.label}
-          </Link>
-        ))}
+        {navigationItems.map((item) => {
+          const href =
+            item.href !== undefined
+              ? item.href
+              : isHome
+                ? `#${item.hash}`
+                : `/#${item.hash}`;
+
+          const isCurrent =
+            item.href !== undefined
+              ? pathname === item.href
+              : isHome &&
+                activeHash === item.hash;
+
+          return (
+            <Link
+              key={
+                item.href !== undefined
+                  ? item.href
+                  : item.hash
+              }
+              href={href}
+              className={
+                isCurrent
+                  ? "nav-link is-current"
+                  : "nav-link"
+              }
+              aria-current={
+                isCurrent
+                  ? item.href !== undefined
+                    ? "page"
+                    : "location"
+                  : undefined
+              }
+            >
+              {item.label}
+            </Link>
+          );
+        })}
+
+        <Link
+          href="/changelog"
+          className={
+            pathname === "/changelog"
+              ? "nav-link is-current"
+              : "nav-link"
+          }
+          aria-current={
+            pathname === "/changelog"
+              ? "page"
+              : undefined
+          }
+        >
+          生长记录
+        </Link>
       </nav>
 
       <div className="site-header-actions">
