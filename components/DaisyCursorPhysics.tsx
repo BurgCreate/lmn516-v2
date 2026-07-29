@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 
 type Daisy = {
+  id: number;
   x: number;
   y: number;
   vx: number;
@@ -11,16 +12,25 @@ type Daisy = {
   angle: number;
   angularVelocity: number;
   settledFrames: number;
+  sleeping: boolean;
 };
 
-const MAX_DAISIES = 42;
+const MAX_DAISIES = 100;
+const MAX_ACTIVE_DAISIES = 45;
 const GRAVITY = 0.2;
 const AIR_DRAG = 0.996;
 const FLOOR_FRICTION = 0.94;
-const BOUNCE = 0.38;
-const ANGULAR_DRAG = 0.985;
-const MAX_ANGULAR_SPEED = 0.075;
-const SETTLED_ANGULAR_SPEED = 0.004;
+const BOUNCE = 0.34;
+const ANGULAR_DRAG = 0.982;
+const MAX_ANGULAR_SPEED = 0.07;
+const SETTLED_ANGULAR_SPEED = 0.0035;
+const SLEEP_AFTER_FRAMES = 50;
+const SLEEP_LINEAR_SPEED = 0.16;
+const WAKE_IMPACT_SPEED = 1.35;
+
+function clamp(value: number, minimum: number, maximum: number) {
+  return Math.max(minimum, Math.min(maximum, value));
+}
 
 export default function DaisyCursorPhysics() {
   const cursorRef = useRef<HTMLDivElement>(null);
@@ -40,7 +50,6 @@ export default function DaisyCursorPhysics() {
     const context = canvas.getContext("2d");
     if (!context) return;
 
-    // Preserve non-null references inside nested animation callbacks.
     const cursorElement: HTMLDivElement = cursor;
     const canvasElement: HTMLCanvasElement = canvas;
     const drawingContext: CanvasRenderingContext2D = context;
@@ -55,6 +64,7 @@ export default function DaisyCursorPhysics() {
     let animationFrame = 0;
     let lastTime = performance.now();
     let spinCount = 0;
+    let nextDaisyId = 1;
     let recentClicks: number[] = [];
     const daisies: Daisy[] = [];
 
@@ -70,6 +80,12 @@ export default function DaisyCursorPhysics() {
       canvasElement.style.width = `${width}px`;
       canvasElement.style.height = `${height}px`;
       drawingContext.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+
+      const floor = height - 5;
+      for (const daisy of daisies) {
+        daisy.x = clamp(daisy.x, daisy.radius, width - daisy.radius);
+        daisy.y = Math.min(daisy.y, floor - daisy.radius);
+      }
     }
 
     function moveCursor(event: PointerEvent) {
@@ -84,6 +100,56 @@ export default function DaisyCursorPhysics() {
       cursorElement.classList.remove("is-visible");
     }
 
+    function sleepDaisy(daisy: Daisy) {
+      daisy.sleeping = true;
+      daisy.vx = 0;
+      daisy.vy = 0;
+      daisy.angularVelocity = 0;
+      daisy.settledFrames = SLEEP_AFTER_FRAMES;
+    }
+
+    function wakeDaisy(daisy: Daisy, impulseX = 0, impulseY = 0) {
+      daisy.sleeping = false;
+      daisy.settledFrames = 0;
+      daisy.vx += impulseX;
+      daisy.vy += impulseY;
+    }
+
+    function limitActiveDaisies() {
+      let activeCount = daisies.reduce(
+        (count, daisy) => count + (daisy.sleeping ? 0 : 1),
+        0
+      );
+
+      if (activeCount <= MAX_ACTIVE_DAISIES) return;
+
+      const candidates = daisies
+        .filter((daisy) => !daisy.sleeping)
+        .sort((first, second) => {
+          const firstSpeed = Math.hypot(first.vx, first.vy);
+          const secondSpeed = Math.hypot(second.vx, second.vy);
+
+          if (second.settledFrames !== first.settledFrames) {
+            return second.settledFrames - first.settledFrames;
+          }
+
+          return firstSpeed - secondSpeed;
+        });
+
+      for (const daisy of candidates) {
+        if (activeCount <= MAX_ACTIVE_DAISIES) break;
+
+        const speed = Math.hypot(daisy.vx, daisy.vy);
+        const calmEnough =
+          speed < 0.55 && Math.abs(daisy.angularVelocity) < 0.02;
+
+        if (calmEnough || daisy.settledFrames > 12) {
+          sleepDaisy(daisy);
+          activeCount -= 1;
+        }
+      }
+    }
+
     function spawnDaisy(x: number, y: number, burst = false) {
       const radius = burst
         ? 11 + Math.random() * 13
@@ -92,6 +158,7 @@ export default function DaisyCursorPhysics() {
       const spread = burst ? 3.8 : 1.8;
 
       daisies.push({
+        id: nextDaisyId,
         x,
         y,
         vx:
@@ -100,13 +167,32 @@ export default function DaisyCursorPhysics() {
         vy: -(burst ? 3.5 + Math.random() * 4.5 : 1.8 + Math.random() * 2.8),
         radius,
         angle: Math.random() * Math.PI * 2,
-        angularVelocity: (Math.random() - 0.5) * 0.07,
-        settledFrames: 0
+        angularVelocity: (Math.random() - 0.5) * 0.055,
+        settledFrames: 0,
+        sleeping: false
       });
 
+      nextDaisyId += 1;
+
       if (daisies.length > MAX_DAISIES) {
-        daisies.splice(0, daisies.length - MAX_DAISIES);
+        const excess = daisies.length - MAX_DAISIES;
+        const sleepingIndexes: number[] = [];
+
+        for (let index = 0; index < daisies.length; index += 1) {
+          if (daisies[index].sleeping) sleepingIndexes.push(index);
+          if (sleepingIndexes.length >= excess) break;
+        }
+
+        for (let index = sleepingIndexes.length - 1; index >= 0; index -= 1) {
+          daisies.splice(sleepingIndexes[index], 1);
+        }
+
+        if (daisies.length > MAX_DAISIES) {
+          daisies.splice(0, daisies.length - MAX_DAISIES);
+        }
       }
+
+      limitActiveDaisies();
     }
 
     function handleClick(event: MouseEvent) {
@@ -138,12 +224,18 @@ export default function DaisyCursorPhysics() {
         for (let j = i + 1; j < daisies.length; j += 1) {
           const first = daisies[i];
           const second = daisies[j];
+
+          if (first.sleeping && second.sleeping) continue;
+
           const dx = second.x - first.x;
           const dy = second.y - first.y;
           const minDistance = first.radius + second.radius;
           const distanceSquared = dx * dx + dy * dy;
 
-          if (distanceSquared === 0 || distanceSquared >= minDistance * minDistance) {
+          if (
+            distanceSquared === 0 ||
+            distanceSquared >= minDistance * minDistance
+          ) {
             continue;
           }
 
@@ -151,44 +243,82 @@ export default function DaisyCursorPhysics() {
           const nx = dx / distance;
           const ny = dy / distance;
           const overlap = minDistance - distance;
-          const totalRadius = first.radius + second.radius;
-          const firstShare = second.radius / totalRadius;
-          const secondShare = first.radius / totalRadius;
-
-          first.x -= nx * overlap * firstShare;
-          first.y -= ny * overlap * firstShare;
-          second.x += nx * overlap * secondShare;
-          second.y += ny * overlap * secondShare;
-
           const relativeVelocityX = second.vx - first.vx;
           const relativeVelocityY = second.vy - first.vy;
           const speedAlongNormal =
             relativeVelocityX * nx + relativeVelocityY * ny;
+          const impactSpeed = Math.abs(speedAlongNormal);
 
-          if (speedAlongNormal < 0) {
-            const impulse = -(1 + BOUNCE) * speedAlongNormal * 0.5;
-            first.vx -= impulse * nx;
-            first.vy -= impulse * ny;
-            second.vx += impulse * nx;
-            second.vy += impulse * ny;
+          if (first.sleeping && !second.sleeping) {
+            second.x += nx * overlap;
+            second.y += ny * overlap;
+
+            if (impactSpeed > WAKE_IMPACT_SPEED) {
+              wakeDaisy(
+                first,
+                -nx * impactSpeed * 0.16,
+                -ny * impactSpeed * 0.16
+              );
+            }
+          } else if (!first.sleeping && second.sleeping) {
+            first.x -= nx * overlap;
+            first.y -= ny * overlap;
+
+            if (impactSpeed > WAKE_IMPACT_SPEED) {
+              wakeDaisy(
+                second,
+                nx * impactSpeed * 0.16,
+                ny * impactSpeed * 0.16
+              );
+            }
+          } else {
+            const totalRadius = first.radius + second.radius;
+            const firstShare = second.radius / totalRadius;
+            const secondShare = first.radius / totalRadius;
+
+            first.x -= nx * overlap * firstShare;
+            first.y -= ny * overlap * firstShare;
+            second.x += nx * overlap * secondShare;
+            second.y += ny * overlap * secondShare;
           }
 
-          const tangentialImpact = relativeVelocityX * -ny + relativeVelocityY * nx;
-          const collisionSpin = Math.max(
-            -0.006,
-            Math.min(0.006, tangentialImpact * 0.0015)
-          );
+          if (speedAlongNormal < 0) {
+            if (first.sleeping && !second.sleeping) {
+              second.vx -= (1 + BOUNCE) * speedAlongNormal * nx;
+              second.vy -= (1 + BOUNCE) * speedAlongNormal * ny;
+            } else if (!first.sleeping && second.sleeping) {
+              first.vx += (1 + BOUNCE) * speedAlongNormal * nx;
+              first.vy += (1 + BOUNCE) * speedAlongNormal * ny;
+            } else {
+              const impulse = -(1 + BOUNCE) * speedAlongNormal * 0.5;
+              first.vx -= impulse * nx;
+              first.vy -= impulse * ny;
+              second.vx += impulse * nx;
+              second.vy += impulse * ny;
+            }
+          }
 
-          first.angularVelocity -= collisionSpin;
-          second.angularVelocity += collisionSpin;
-          first.angularVelocity = Math.max(
-            -MAX_ANGULAR_SPEED,
-            Math.min(MAX_ANGULAR_SPEED, first.angularVelocity)
-          );
-          second.angularVelocity = Math.max(
-            -MAX_ANGULAR_SPEED,
-            Math.min(MAX_ANGULAR_SPEED, second.angularVelocity)
-          );
+          const tangentialImpact =
+            relativeVelocityX * -ny + relativeVelocityY * nx;
+          const collisionSpin = clamp(tangentialImpact * 0.0012, -0.005, 0.005);
+
+          if (!first.sleeping) {
+            first.angularVelocity = clamp(
+              first.angularVelocity - collisionSpin,
+              -MAX_ANGULAR_SPEED,
+              MAX_ANGULAR_SPEED
+            );
+            first.settledFrames = 0;
+          }
+
+          if (!second.sleeping) {
+            second.angularVelocity = clamp(
+              second.angularVelocity + collisionSpin,
+              -MAX_ANGULAR_SPEED,
+              MAX_ANGULAR_SPEED
+            );
+            second.settledFrames = 0;
+          }
         }
       }
     }
@@ -197,15 +327,18 @@ export default function DaisyCursorPhysics() {
       const floor = height - 5;
 
       for (const daisy of daisies) {
+        if (daisy.sleeping) continue;
+
         daisy.vy += GRAVITY * step;
         daisy.vx *= Math.pow(AIR_DRAG, step);
         daisy.vy *= Math.pow(AIR_DRAG, step);
         daisy.x += daisy.vx * step;
         daisy.y += daisy.vy * step;
         daisy.angularVelocity *= Math.pow(ANGULAR_DRAG, step);
-        daisy.angularVelocity = Math.max(
+        daisy.angularVelocity = clamp(
+          daisy.angularVelocity,
           -MAX_ANGULAR_SPEED,
-          Math.min(MAX_ANGULAR_SPEED, daisy.angularVelocity)
+          MAX_ANGULAR_SPEED
         );
         daisy.angle += daisy.angularVelocity * step;
 
@@ -221,23 +354,37 @@ export default function DaisyCursorPhysics() {
           daisy.y = floor - daisy.radius;
           daisy.vy = -Math.abs(daisy.vy) * BOUNCE;
           daisy.vx *= FLOOR_FRICTION;
-          daisy.angularVelocity *= 0.9;
-
-          if (Math.abs(daisy.vy) < 0.3 && Math.abs(daisy.vx) < 0.12) {
-            daisy.vy = 0;
-            daisy.vx = 0;
-            daisy.angularVelocity *= 0.72;
-            if (Math.abs(daisy.angularVelocity) < SETTLED_ANGULAR_SPEED) {
-              daisy.angularVelocity = 0;
-            }
-            daisy.settledFrames += 1;
-          }
+          daisy.angularVelocity *= 0.86;
         }
       }
 
       for (let pass = 0; pass < 4; pass += 1) {
         resolveCollisions();
       }
+
+      for (const daisy of daisies) {
+        if (daisy.sleeping) continue;
+
+        const linearSpeed = Math.hypot(daisy.vx, daisy.vy);
+        const calm =
+          linearSpeed < SLEEP_LINEAR_SPEED &&
+          Math.abs(daisy.angularVelocity) < SETTLED_ANGULAR_SPEED;
+
+        if (calm) {
+          daisy.settledFrames += 1;
+          daisy.vx *= 0.72;
+          daisy.vy *= 0.72;
+          daisy.angularVelocity *= 0.65;
+        } else {
+          daisy.settledFrames = 0;
+        }
+
+        if (daisy.settledFrames >= SLEEP_AFTER_FRAMES) {
+          sleepDaisy(daisy);
+        }
+      }
+
+      limitActiveDaisies();
     }
 
     function drawDaisies() {
