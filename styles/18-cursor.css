@@ -1,0 +1,39 @@
+/* ==========================
+   18. Desktop daisy cursor
+   Only applies to precise mouse-like pointers.
+========================== */
+
+@media (hover: hover) and (pointer: fine) {
+  html,
+  body,
+  body * {
+    cursor: url("/cursors/daisy-cursor.svg") 16 16, auto;
+  }
+
+  a,
+  button,
+  summary,
+  label[for],
+  select,
+  [role="button"],
+  [tabindex]:not([tabindex="-1"]),
+  input[type="button"],
+  input[type="submit"],
+  input[type="reset"],
+  input[type="checkbox"],
+  input[type="radio"] {
+    cursor: url("/cursors/daisy-cursor-hover.svg") 18 18, pointer;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="search"],
+  input[type="password"],
+  input[type="url"],
+  input[type="tel"],
+  input[type="number"],
+  textarea,
+  [contenteditable="true"] {
+    cursor: text;
+  }
+}
