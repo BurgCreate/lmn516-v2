@@ -204,16 +204,56 @@ export default function PwaTestPanel() {
         })
       });
 
-      const result = (await response.json()) as { ok?: boolean; error?: string };
+      const contentType = response.headers.get("content-type") || "";
+
+      if (!contentType.includes("application/json")) {
+        const responseText = await response.text();
+        throw new Error(
+          `推送接口返回了非 JSON 内容，HTTP ${response.status}。` +
+            (responseText ? `\n返回内容：${responseText.slice(0, 300)}` : "")
+        );
+      }
+
+      const result = (await response.json()) as {
+        ok?: boolean;
+        stage?: string;
+        error?: string;
+        debug?: Record<string, unknown>;
+      };
+
       if (!response.ok || !result.ok) {
-        throw new Error(result.error || "推送发送失败。 ");
+        const details = [
+          `HTTP 状态：${response.status}`,
+          result.stage ? `失败阶段：${result.stage}` : null,
+          result.error ? `错误信息：${result.error}` : "错误信息：推送发送失败。",
+          result.debug
+            ? `调试信息：${JSON.stringify(result.debug, null, 2)}`
+            : null
+        ].filter(Boolean);
+
+        throw new Error(details.join("\n"));
       }
 
       setStatus("success");
-      setMessage("服务器已发送。请退出到主屏幕或锁定 iPhone 查看通知。 ");
+      setMessage(
+        [
+          "服务器已发送。请退出到主屏幕或锁定 iPhone 查看通知。",
+          result.stage ? `服务器阶段：${result.stage}` : null,
+          result.debug
+            ? `调试信息：${JSON.stringify(result.debug, null, 2)}`
+            : null
+        ]
+          .filter(Boolean)
+          .join("\n")
+      );
     } catch (error) {
+      console.error(error);
       setStatus("error");
-      setMessage(error instanceof Error ? error.message : "推送发送失败。 ");
+      setMessage(
+        error instanceof Error
+          ? `发送测试通知失败：\n${error.message}`
+          : "推送发送失败。"
+      );
     }
   }
 
@@ -242,7 +282,12 @@ export default function PwaTestPanel() {
         </div>
       </div>
 
-      <p className={`pwa-test-message pwa-test-message-${status}`}>{message}</p>
+      <p
+        className={`pwa-test-message pwa-test-message-${status}`}
+        style={{ whiteSpace: "pre-wrap" }}
+      >
+        {message}
+      </p>
 
       <div className="pwa-test-actions">
         <button type="button" onClick={enableNotifications} disabled={status === "working"}>
