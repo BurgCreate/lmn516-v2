@@ -37,6 +37,10 @@ export default function DaisyCursorPhysics() {
     const context = canvas.getContext("2d");
     if (!context) return;
 
+    // Preserve non-null references inside nested animation callbacks.
+    const canvasElement: HTMLCanvasElement = canvas;
+    const drawingContext: CanvasRenderingContext2D = context;
+
     document.documentElement.classList.add("has-daisy-cursor");
 
     let width = window.innerWidth;
@@ -57,11 +61,11 @@ export default function DaisyCursorPhysics() {
       width = window.innerWidth;
       height = window.innerHeight;
       pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
-      canvas.width = Math.round(width * pixelRatio);
-      canvas.height = Math.round(height * pixelRatio);
-      canvas.style.width = `${width}px`;
-      canvas.style.height = `${height}px`;
-      context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+      canvasElement.width = Math.round(width * pixelRatio);
+      canvasElement.height = Math.round(height * pixelRatio);
+      canvasElement.style.width = `${width}px`;
+      canvasElement.style.height = `${height}px`;
+      drawingContext.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
     }
 
     function moveCursor(event: PointerEvent) {
@@ -211,16 +215,16 @@ export default function DaisyCursorPhysics() {
     }
 
     function drawDaisies() {
-      context.clearRect(0, 0, width, height);
+      drawingContext.clearRect(0, 0, width, height);
 
       for (const daisy of daisies) {
-        context.save();
-        context.translate(daisy.x, daisy.y);
-        context.rotate(daisy.angle);
+        drawingContext.save();
+        drawingContext.translate(daisy.x, daisy.y);
+        drawingContext.rotate(daisy.angle);
         const size = daisy.radius * 2;
 
         if (daisyImage.complete && daisyImage.naturalWidth > 0) {
-          context.drawImage(
+          drawingContext.drawImage(
             daisyImage,
             -daisy.radius,
             -daisy.radius,
@@ -228,13 +232,13 @@ export default function DaisyCursorPhysics() {
             size
           );
         } else {
-          context.fillStyle = "#f4c95d";
-          context.beginPath();
-          context.arc(0, 0, daisy.radius * 0.28, 0, Math.PI * 2);
-          context.fill();
+          drawingContext.fillStyle = "#f4c95d";
+          drawingContext.beginPath();
+          drawingContext.arc(0, 0, daisy.radius * 0.28, 0, Math.PI * 2);
+          drawingContext.fill();
         }
 
-        context.restore();
+        drawingContext.restore();
       }
     }
 
