@@ -116,6 +116,18 @@ export default function RandomPhotoWall({
     <div
       className="random-photo-stage"
       aria-label="首页照片浏览器"
+      tabIndex={canChangeImage ? 0 : undefined}
+      onKeyDown={(event) => {
+        if (event.key === "ArrowLeft" && hasPreviousImage) {
+          event.preventDefault();
+          showPreviousImage();
+        }
+
+        if (event.key === "ArrowRight" && canChangeImage) {
+          event.preventDefault();
+          showNextImage();
+        }
+      }}
     >
       <img
         key={currentImage.id}
@@ -147,9 +159,11 @@ export default function RandomPhotoWall({
             aria-label="查看上一张照片"
             title="上一张"
           >
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path d="m14.5 5-7 7 7 7" />
-            </svg>
+            <span className="random-photo-control-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <path d="m14.5 5-7 7 7 7" />
+              </svg>
+            </span>
           </button>
 
           <button
@@ -159,9 +173,11 @@ export default function RandomPhotoWall({
             aria-label="随机查看下一张照片"
             title="下一张"
           >
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path d="m9.5 5 7 7-7 7" />
-            </svg>
+            <span className="random-photo-control-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <path d="m9.5 5 7 7-7 7" />
+              </svg>
+            </span>
           </button>
         </div>
       )}

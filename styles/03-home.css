@@ -137,44 +137,81 @@
 }
 
 
+
 .random-photo-controls {
   position: absolute;
   inset: 0;
   z-index: 3;
-  pointer-events: none;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 }
 
 .random-photo-control {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  border: 0;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.92);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.random-photo-control::before {
+  content: "";
   position: absolute;
-  top: 50%;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.random-photo-control-previous {
+  justify-content: flex-start;
+}
+
+.random-photo-control-previous::before {
+  background: linear-gradient(
+    to right,
+    rgba(8, 12, 10, 0.18),
+    transparent 52%
+  );
+}
+
+.random-photo-control-next {
+  justify-content: flex-end;
+}
+
+.random-photo-control-next::before {
+  background: linear-gradient(
+    to left,
+    rgba(8, 12, 10, 0.18),
+    transparent 52%
+  );
+}
+
+.random-photo-control-icon {
+  position: relative;
+  z-index: 1;
   width: 46px;
   height: 46px;
-  padding: 0;
+  margin-inline: 20px;
   display: grid;
   place-items: center;
   border: 1px solid rgba(255, 255, 255, 0.28);
   border-radius: 50%;
   background: rgba(20, 24, 21, 0.24);
-  color: rgba(255, 255, 255, 0.92);
   opacity: 0;
-  pointer-events: auto;
-  cursor: pointer;
   -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
-  transform: translateY(-50%) scale(0.94);
+  transform: scale(0.94);
   transition:
     opacity 0.2s ease,
     transform 0.2s ease,
     background-color 0.2s ease,
     border-color 0.2s ease;
-}
-
-.random-photo-control-previous {
-  left: 20px;
-}
-
-.random-photo-control-next {
-  right: 20px;
 }
 
 .random-photo-control svg {
@@ -187,44 +224,54 @@
   stroke-linejoin: round;
 }
 
-.random-photo-stage:hover .random-photo-control,
-.random-photo-stage:focus-within .random-photo-control {
+.random-photo-control:hover::before,
+.random-photo-control:focus-visible::before {
   opacity: 1;
-  transform: translateY(-50%) scale(1);
 }
 
-.random-photo-control:hover {
+.random-photo-control:hover .random-photo-control-icon,
+.random-photo-control:focus-visible .random-photo-control-icon {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.random-photo-control:hover .random-photo-control-icon {
   background: rgba(20, 24, 21, 0.48);
   border-color: rgba(255, 255, 255, 0.48);
-  transform: translateY(-50%) scale(1.06);
+  transform: scale(1.06);
 }
 
 .random-photo-control:focus-visible {
-  opacity: 1;
   outline: 2px solid rgba(255, 255, 255, 0.9);
-  outline-offset: 3px;
+  outline-offset: -4px;
 }
 
 .random-photo-control:disabled {
-  opacity: 0 !important;
-  pointer-events: none;
   cursor: default;
+  pointer-events: none;
+}
+
+.random-photo-control:disabled::before,
+.random-photo-control:disabled .random-photo-control-icon {
+  opacity: 0 !important;
+}
+
+.random-photo-stage:focus-visible {
+  outline: 2px solid rgba(47, 94, 89, 0.5);
+  outline-offset: 4px;
 }
 
 @media (hover: none), (pointer: coarse) {
-  .random-photo-control {
+  .random-photo-control-icon {
     width: 42px;
     height: 42px;
-    opacity: 0.72;
-    transform: translateY(-50%) scale(1);
+    margin-inline: 12px;
+    opacity: 0.68;
+    transform: scale(1);
   }
 
-  .random-photo-control-previous {
-    left: 12px;
-  }
-
-  .random-photo-control-next {
-    right: 12px;
+  .random-photo-control::before {
+    display: none;
   }
 }
 
