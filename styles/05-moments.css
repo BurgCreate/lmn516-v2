@@ -472,7 +472,7 @@ html[data-theme="dark"] .random-photo-image {
 
   .moments-intro {
     margin-bottom: 36px;
-    font-size: 15px;
+    font-size: 14px;
   }
 
   .moment-item { padding: 24px 0 26px 22px; }
@@ -701,8 +701,15 @@ html.page-entering body {
 }
 
 /* =========================================================
-   Bubble V2 · Digital Garden 流光气泡
+   Bubble V2.1 · Digital Garden 流光气泡
+   修复：流光不再旋转整个异形矩形，而只改变渐变角度。
 ========================================================= */
+
+@property --moment-ring-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
 
 .moment-bubble {
   position: fixed;
@@ -710,15 +717,15 @@ html.page-entering body {
   bottom: 32px;
   z-index: 20;
 
-  width: 210px;
-  min-height: 112px;
-  padding: 24px 28px 38px;
+  width: 196px;
+  min-height: 102px;
+  padding: 22px 24px 34px;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  overflow: visible;
+  overflow: hidden;
   isolation: isolate;
   appearance: none;
 
@@ -776,27 +783,28 @@ html.page-entering body {
   pointer-events: none;
 }
 
-/* 真正沿边缘运行的局部流光。 */
+/* 局部流光固定贴着边框，仅渐变角度变化。
+   不能旋转整个异形矩形，否则圆角轮廓会甩到气泡外面。 */
 .moment-bubble-ring {
+  --moment-ring-angle: 0deg;
   position: absolute;
-  inset: -3px;
+  inset: 0;
   z-index: 1;
   border-radius: inherit;
-  padding: 2.5px;
+  padding: 1.8px;
 
-  background:
-    conic-gradient(
-      from 0deg,
-      transparent 0deg,
-      transparent 246deg,
-      rgba(154, 221, 205, 0.08) 258deg,
-      rgba(105, 214, 198, 0.72) 270deg,
-      rgba(232, 249, 242, 1) 282deg,
-      rgba(187, 220, 137, 0.9) 294deg,
-      rgba(108, 190, 216, 0.7) 306deg,
-      transparent 322deg,
-      transparent 360deg
-    );
+  background: conic-gradient(
+    from var(--moment-ring-angle),
+    transparent 0deg,
+    transparent 278deg,
+    rgba(111, 209, 193, 0.08) 286deg,
+    rgba(101, 206, 190, 0.72) 296deg,
+    rgba(245, 252, 248, 0.98) 306deg,
+    rgba(184, 220, 145, 0.82) 316deg,
+    rgba(111, 192, 213, 0.54) 326deg,
+    transparent 338deg,
+    transparent 360deg
+  );
 
   -webkit-mask:
     linear-gradient(#fff 0 0) content-box,
@@ -807,29 +815,25 @@ html.page-entering body {
     linear-gradient(#fff 0 0);
   mask-composite: exclude;
 
-  opacity: 0.94;
-  filter:
-    drop-shadow(0 0 5px rgba(105, 214, 198, 0.38))
-    drop-shadow(0 0 12px rgba(161, 207, 152, 0.18));
-  transform-origin: center;
+  opacity: 0.82;
+  filter: drop-shadow(0 0 4px rgba(105, 214, 198, 0.25));
   pointer-events: none;
-  will-change: transform;
-
-  animation: moment-ring-orbit 10.5s linear infinite;
+  will-change: --moment-ring-angle;
+  animation: moment-ring-orbit 9.6s linear infinite;
 }
 
 .moment-bubble-content {
   position: relative;
   z-index: 2;
   display: block;
-  max-width: 168px;
+  max-width: 154px;
 }
 
 .moment-bubble-content,
 .moment-bubble-content p {
   margin: 0;
-  font-size: 18px;
-  font-weight: 620;
+  font-size: 16px;
+  font-weight: 600;
   line-height: 1.48;
   letter-spacing: -0.025em;
   text-wrap: balance;
@@ -841,8 +845,8 @@ html.page-entering body {
 
 .moment-bubble-time {
   position: absolute;
-  right: 24px;
-  bottom: 16px;
+  right: 20px;
+  bottom: 13px;
   z-index: 2;
 
   display: block;
@@ -905,7 +909,8 @@ html.page-entering body {
 }
 
 @keyframes moment-ring-orbit {
-  to { transform: rotate(1turn); }
+  from { --moment-ring-angle: 0deg; }
+  to { --moment-ring-angle: 360deg; }
 }
 
 @keyframes moment-bubble-tap {
@@ -952,15 +957,15 @@ html[data-theme="dark"] .moment-bubble-content p {
   .moment-bubble {
     right: 16px;
     bottom: calc(18px + env(safe-area-inset-bottom));
-    width: 176px;
-    min-height: 94px;
-    padding: 18px 20px 32px;
+    width: 168px;
+    min-height: 88px;
+    padding: 17px 18px 30px;
     border-radius: 28px 38px 30px 36px;
   }
 
   .moment-bubble-ring {
-    inset: -2px;
-    padding: 2px;
+    inset: 0;
+    padding: 1.6px;
     animation-duration: 12.5s;
   }
 
@@ -975,8 +980,8 @@ html[data-theme="dark"] .moment-bubble-content p {
   }
 
   .moment-bubble-time {
-    right: 19px;
-    bottom: 13px;
+    right: 17px;
+    bottom: 11px;
     font-size: 10px;
   }
 }
@@ -1006,7 +1011,7 @@ html[data-theme="dark"] .moment-bubble-content p {
   }
 
   .moment-bubble-ring {
-    transform: rotate(18deg);
+    --moment-ring-angle: 18deg;
   }
 }
 
