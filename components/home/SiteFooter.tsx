@@ -24,6 +24,7 @@ const footerGroups = [
     links: [
       { label: "关于本站", href: "/about" },
       { label: "生长记录", href: "/changelog" },
+      { label: "网站地图", href: "/sitemap" },
       { label: "RSS", href: "https://lmn516.com/feed/" },
       { label: "写信", href: "mailto:hello@lmn516.com" },
     ],
