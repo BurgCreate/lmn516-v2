@@ -18,6 +18,9 @@ const GRAVITY = 0.2;
 const AIR_DRAG = 0.996;
 const FLOOR_FRICTION = 0.94;
 const BOUNCE = 0.38;
+const ANGULAR_DRAG = 0.985;
+const MAX_ANGULAR_SPEED = 0.075;
+const SETTLED_ANGULAR_SPEED = 0.004;
 
 export default function DaisyCursorPhysics() {
   const cursorRef = useRef<HTMLDivElement>(null);
@@ -97,7 +100,7 @@ export default function DaisyCursorPhysics() {
         vy: -(burst ? 3.5 + Math.random() * 4.5 : 1.8 + Math.random() * 2.8),
         radius,
         angle: Math.random() * Math.PI * 2,
-        angularVelocity: (Math.random() - 0.5) * 0.22,
+        angularVelocity: (Math.random() - 0.5) * 0.07,
         settledFrames: 0
       });
 
@@ -170,8 +173,22 @@ export default function DaisyCursorPhysics() {
             second.vy += impulse * ny;
           }
 
-          first.angularVelocity += (Math.random() - 0.5) * 0.015;
-          second.angularVelocity += (Math.random() - 0.5) * 0.015;
+          const tangentialImpact = relativeVelocityX * -ny + relativeVelocityY * nx;
+          const collisionSpin = Math.max(
+            -0.006,
+            Math.min(0.006, tangentialImpact * 0.0015)
+          );
+
+          first.angularVelocity -= collisionSpin;
+          second.angularVelocity += collisionSpin;
+          first.angularVelocity = Math.max(
+            -MAX_ANGULAR_SPEED,
+            Math.min(MAX_ANGULAR_SPEED, first.angularVelocity)
+          );
+          second.angularVelocity = Math.max(
+            -MAX_ANGULAR_SPEED,
+            Math.min(MAX_ANGULAR_SPEED, second.angularVelocity)
+          );
         }
       }
     }
@@ -185,6 +202,11 @@ export default function DaisyCursorPhysics() {
         daisy.vy *= Math.pow(AIR_DRAG, step);
         daisy.x += daisy.vx * step;
         daisy.y += daisy.vy * step;
+        daisy.angularVelocity *= Math.pow(ANGULAR_DRAG, step);
+        daisy.angularVelocity = Math.max(
+          -MAX_ANGULAR_SPEED,
+          Math.min(MAX_ANGULAR_SPEED, daisy.angularVelocity)
+        );
         daisy.angle += daisy.angularVelocity * step;
 
         if (daisy.x - daisy.radius < 0) {
@@ -204,7 +226,10 @@ export default function DaisyCursorPhysics() {
           if (Math.abs(daisy.vy) < 0.3 && Math.abs(daisy.vx) < 0.12) {
             daisy.vy = 0;
             daisy.vx = 0;
-            daisy.angularVelocity *= 0.82;
+            daisy.angularVelocity *= 0.72;
+            if (Math.abs(daisy.angularVelocity) < SETTLED_ANGULAR_SPEED) {
+              daisy.angularVelocity = 0;
+            }
             daisy.settledFrames += 1;
           }
         }
