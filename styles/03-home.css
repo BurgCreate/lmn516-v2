@@ -75,17 +75,16 @@
   cursor: pointer;
   box-shadow: 0 20px 60px rgba(32, 36, 31, 0.1);
   isolation: isolate;
-  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .random-photo-stage:hover {
-  transform: translateY(-3px);
   border-color: rgba(47, 94, 89, 0.28);
   box-shadow: 0 28px 72px rgba(32, 36, 31, 0.15);
 }
 
 .random-photo-stage:active {
-  transform: scale(0.995);
+  transform: none;
 }
 
 .random-photo-image {
@@ -888,15 +887,15 @@
    12. V3.0 信息密度二次校准
 ========================== */
 
-/* Hero 保留尺寸，并进一步上移，减少首屏顶部空白。 */
+/* Hero 再向上收紧，让照片更靠近顶部导航。 */
 .hero {
   padding-top: 0;
-  margin-top: -12px;
+  margin-top: -30px;
 }
 
-/* 每张图片停留 12 秒，期间做非常轻微的镜头推进。 */
+/* 只保留持续、明显的镜头推进，不叠加悬停或点击缩放。 */
 .random-photo-image {
-  animation: random-photo-ken-burns 12s linear both;
+  animation: random-photo-ken-burns 8s cubic-bezier(0.22, 0.61, 0.36, 1) both;
   transform-origin: center center;
   will-change: transform, opacity;
 }
@@ -904,16 +903,17 @@
 @keyframes random-photo-ken-burns {
   0% {
     opacity: 0;
-    transform: scale(1);
+    transform: translate3d(0, 0, 0) scale(1);
   }
 
-  7% {
+  6% {
     opacity: 1;
+    transform: translate3d(0, -0.2%, 0) scale(1.015);
   }
 
   100% {
     opacity: 1;
-    transform: scale(1.12);
+    transform: translate3d(0, -1.8%, 0) scale(1.22);
   }
 }
 
