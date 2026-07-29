@@ -1,7 +1,6 @@
 import SiteHeader from "@/components/SiteHeader";
 import MomentBubble from "@/components/MomentBubble";
 import HeroSection from "@/components/home/HeroSection";
-import CurrentProject from "@/components/home/CurrentProject";
 import LatestPosts from "@/components/home/LatestPosts";
 import LifeArchive from "@/components/home/LifeArchive";
 import AboutSection from "@/components/home/AboutSection";
@@ -80,11 +79,6 @@ export default async function HomePage() {
         today={today}
         yearProgress={yearProgress}
         featured={featured}
-        pushups={pushups}
-        target={target}
-      />
-
-      <CurrentProject
         pushupPost={pushupPost}
         pushups={pushups}
         target={target}

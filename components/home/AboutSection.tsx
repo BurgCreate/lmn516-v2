@@ -1,31 +1,23 @@
+import Link from "next/link";
+
 export default function AboutSection() {
   return (
     <section id="about" className="about shell section-space">
-      <p className="eyebrow">关于本站</p>
-
-      <div className="about-grid">
-        <h2>
-          一个人的网站，
-          <br />
-          应该像他的房间。
-        </h2>
-
+      <div className="about-card">
         <div>
-          <p>
-            不必每件东西都有用，
-            也不必每篇文章都得出结论。
-            这里保存一些生活留下的痕迹，
-            让时间不至于全部悄无声息地消失。
-          </p>
+          <p className="eyebrow">关于本站</p>
+          <h2>一个人的网站，应该像他的房间。</h2>
+        </div>
 
+        <div className="about-copy">
           <p>
-            LMN516 建立于 2025 年，
-            持续更新于深圳。
+            LMN516 是一个持续生长的个人数字花园。
+            这里保存文章、照片、音乐、碎碎念，以及一些需要很多时间才能完成的事情。
           </p>
 
           <div className="about-links">
+            <Link href="/about">了解本站 →</Link>
             <a href="mailto:hello@lmn516.com">写信</a>
-            <a href="https://lmn516.com/feed/">RSS</a>
           </div>
         </div>
       </div>
