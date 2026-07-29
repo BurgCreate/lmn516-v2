@@ -95,18 +95,8 @@
   display: block;
   object-fit: cover;
   object-position: center;
-  animation: random-photo-in 0.8s ease;
-}
-
-@keyframes random-photo-in {
-  from {
-    opacity: 0;
-    transform: scale(1.025);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
+  animation: none;
+  transform: none;
 }
 
 .random-photo-overlay {
@@ -893,28 +883,11 @@
   margin-top: -30px;
 }
 
-/* 只保留持续、明显的镜头推进，不叠加悬停或点击缩放。 */
+/* 首页主图保持完全静止，不再进行淡入缩放或持续推进。 */
 .random-photo-image {
-  animation: random-photo-ken-burns 8s cubic-bezier(0.22, 0.61, 0.36, 1) both;
-  transform-origin: center center;
-  will-change: transform, opacity;
-}
-
-@keyframes random-photo-ken-burns {
-  0% {
-    opacity: 0;
-    transform: translate3d(0, 0, 0) scale(1);
-  }
-
-  6% {
-    opacity: 1;
-    transform: translate3d(0, -0.2%, 0) scale(1.015);
-  }
-
-  100% {
-    opacity: 1;
-    transform: translate3d(0, -1.8%, 0) scale(1.22);
-  }
+  animation: none;
+  transform: none;
+  will-change: auto;
 }
 
 /* 收藏目录以“本期文章”的信息密度为基准，不再把四个入口做成四张海报。 */

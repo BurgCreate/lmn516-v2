@@ -10,7 +10,7 @@ body {
     color var(--motion-base) var(--ease-standard);
 }
 
-/* Hero 主图只保留镜头推进，不叠加悬停或点击位移。 */
+/* Hero 主图保持静止，只保留边框与阴影的轻微反馈。 */
 .random-photo-stage {
   transition:
     border-color var(--motion-base) var(--ease-standard),
@@ -23,26 +23,10 @@ body {
 }
 
 .random-photo-image {
-  animation: random-photo-ken-burns 8s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+  animation: none;
+  transform: none;
   transform-origin: center center;
-  will-change: transform, opacity;
-}
-
-@keyframes random-photo-ken-burns {
-  0% {
-    opacity: 0;
-    transform: translate3d(0, 0, 0) scale(1);
-  }
-
-  6% {
-    opacity: 1;
-    transform: translate3d(0, -0.2%, 0) scale(1.02);
-  }
-
-  100% {
-    opacity: 1;
-    transform: translate3d(0, -2%, 0) scale(1.24);
-  }
+  will-change: auto;
 }
 
 /* Cards, controls and navigation inherit the shared motion scale. */
@@ -147,4 +131,3 @@ html.page-leaving body {
     transform: none !important;
   }
 }
-
