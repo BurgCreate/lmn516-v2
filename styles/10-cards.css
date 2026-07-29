@@ -185,3 +185,27 @@ html[data-theme="dark"] .archive-card:hover {
   }
 }
 
+
+/* Entire article cards are links: image, copy and empty card space are clickable. */
+.post-card-link {
+  display: grid;
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.post-card-link h3,
+.post-card-link p,
+.post-card-link span {
+  color: inherit;
+}
+
+.post-card-link .text-link {
+  color: var(--color-accent);
+}
+
+.post-card-link:hover .text-link,
+.post-card-link:focus-visible .text-link {
+  text-decoration: underline;
+  text-underline-offset: 0.22em;
+}

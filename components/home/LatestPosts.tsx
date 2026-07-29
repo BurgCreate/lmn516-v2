@@ -49,7 +49,11 @@ export default function LatestPosts({ featured, cards }: LatestPostsProps) {
       </div>
 
       {featured && (
-        <article className="featured-post post-card">
+        <Link
+          className="featured-post post-card post-card-link"
+          href={`/posts/${featured.slug}`}
+          aria-label={`阅读文章：${featured.title}`}
+        >
           <div className="post-visual visual-summer">
             {featured.image ? (
               <img
@@ -71,22 +75,23 @@ export default function LatestPosts({ featured, cards }: LatestPostsProps) {
               {formatPostDate(featured.date)} · 头版
             </p>
 
-            <h3>
-              <Link href={`/posts/${featured.slug}`}>{featured.title}</Link>
-            </h3>
+            <h3>{featured.title}</h3>
 
             <p>{cleanExcerpt(featured.excerpt)}</p>
 
-            <Link className="text-link" href={`/posts/${featured.slug}`}>
-              继续阅读 →
-            </Link>
+            <span className="text-link">继续阅读 →</span>
           </div>
-        </article>
+        </Link>
       )}
 
       <div className="post-grid">
         {cards.map((post, index) => (
-          <article className="post-card small" key={post.id}>
+          <Link
+            className="post-card small post-card-link"
+            href={`/posts/${post.slug}`}
+            aria-label={`阅读文章：${post.title}`}
+            key={post.id}
+          >
             <div
               className={`post-visual ${
                 index === 0
@@ -114,17 +119,13 @@ export default function LatestPosts({ featured, cards }: LatestPostsProps) {
                 {formatPostDate(post.date)} · 周记
               </p>
 
-              <h3>
-                <Link href={`/posts/${post.slug}`}>{post.title}</Link>
-              </h3>
+              <h3>{post.title}</h3>
 
               <p>{cleanExcerpt(post.excerpt)}</p>
 
-              <Link className="text-link" href={`/posts/${post.slug}`}>
-                继续阅读 →
-              </Link>
+              <span className="text-link">继续阅读 →</span>
             </div>
-          </article>
+          </Link>
         ))}
       </div>
     </section>
