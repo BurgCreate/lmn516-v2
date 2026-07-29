@@ -888,9 +888,10 @@
    12. V3.0 信息密度二次校准
 ========================== */
 
-/* Hero 保留尺寸，只缩短顶部空白，让首屏更快进入内容。 */
+/* Hero 保留尺寸，并进一步上移，减少首屏顶部空白。 */
 .hero {
-  padding-top: 14px;
+  padding-top: 0;
+  margin-top: -12px;
 }
 
 /* 每张图片停留 12 秒，期间做非常轻微的镜头推进。 */
@@ -903,7 +904,7 @@
 @keyframes random-photo-ken-burns {
   0% {
     opacity: 0;
-    transform: scale(1.01);
+    transform: scale(1);
   }
 
   7% {
@@ -912,7 +913,7 @@
 
   100% {
     opacity: 1;
-    transform: scale(1.075);
+    transform: scale(1.12);
   }
 }
 
