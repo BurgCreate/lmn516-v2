@@ -10,35 +10,38 @@ body {
     color var(--motion-base) var(--ease-standard);
 }
 
-/* Large visual surfaces move more slowly than controls. */
+/* Hero 主图只保留镜头推进，不叠加悬停或点击位移。 */
 .random-photo-stage {
   transition:
-    transform var(--motion-base) var(--ease-emphasized),
     border-color var(--motion-base) var(--ease-standard),
     box-shadow var(--motion-base) var(--ease-standard);
 }
 
-.random-photo-stage:hover {
-  transform: translateY(var(--motion-lift-card));
-}
-
+.random-photo-stage:hover,
 .random-photo-stage:active {
-  transform: scale(0.995);
+  transform: none;
 }
 
 .random-photo-image {
-  animation: random-photo-in var(--motion-photo) var(--ease-enter);
+  animation: random-photo-ken-burns 8s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+  transform-origin: center center;
+  will-change: transform, opacity;
 }
 
-@keyframes random-photo-in {
-  from {
+@keyframes random-photo-ken-burns {
+  0% {
     opacity: 0;
-    transform: scale(var(--motion-photo-scale));
+    transform: translate3d(0, 0, 0) scale(1);
   }
 
-  to {
+  6% {
     opacity: 1;
-    transform: scale(1);
+    transform: translate3d(0, -0.2%, 0) scale(1.02);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate3d(0, -2%, 0) scale(1.24);
   }
 }
 
