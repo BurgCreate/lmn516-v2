@@ -96,6 +96,31 @@ export default function PwaTestPanel() {
       });
   }, []);
 
+  async function saveSubscription(
+    nextSubscription: PushSubscription
+  ) {
+    const response = await fetch("/api/push/subscribe", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        subscription: nextSubscription.toJSON()
+      })
+    });
+
+    const result = (await response.json()) as {
+      ok?: boolean;
+      error?: string;
+    };
+
+    if (!response.ok || !result.ok) {
+      throw new Error(
+        result.error || "保存推送订阅失败。"
+      );
+    }
+  }
+
   async function enableNotifications() {
     if (!supported) {
       setStatus("error");
@@ -157,9 +182,13 @@ export default function PwaTestPanel() {
         }));
 
       setSubscription(nextSubscription);
+      setMessage("通知已经开启，正在保存这台设备……");
+
+      await saveSubscription(nextSubscription);
+
       setStatus("success");
       setMessage(
-        "通知已经开启。现在可以发送一条 5 秒后到达的真实服务器推送。"
+        "通知已经开启，并且这台设备已经保存到服务器。"
       );
     } catch (error) {
       console.error(error);
