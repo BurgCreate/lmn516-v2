@@ -73,96 +73,6 @@
 
 .hero-moment p { margin: 0; }
 
-.moment-bubble {
-  position: fixed;
-  right: 32px;
-  bottom: 32px;
-  z-index: 20;
-  width: 210px;
-  min-height: 112px;
-  padding: 24px 28px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  appearance: none;
-  border: 1px solid rgba(255, 255, 255, 0.72);
-  border-radius: 34px 46px 38px 42px;
-  background: linear-gradient(145deg, rgba(255, 255, 255, 0.78), rgba(239, 242, 235, 0.48));
-  color: var(--text);
-  text-align: center;
-  cursor: pointer;
-  -webkit-backdrop-filter: blur(16px);
-  backdrop-filter: blur(16px);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8), 0 16px 42px rgba(32, 36, 31, 0.1);
-  transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
-}
-
-.moment-bubble-content {
-  position: relative;
-  z-index: 2;
-  display: block;
-  max-width: 170px;
-}
-
-.moment-bubble-content,
-.moment-bubble-content p {
-  margin: 0;
-  font-size: 18px;
-  font-weight: 500;
-  line-height: 1.55;
-}
-
-.moment-bubble-time {
-  display: block;
-  width: 100%;
-  max-width: 170px;
-  margin-top: 8px;
-
-  color: var(--muted);
-  font-family: Inter, sans-serif;
-  font-size: 12px;
-  font-weight: 400;
-  line-height: 1.4;
-  letter-spacing: 0.02em;
-
-  text-align: right;
-  opacity: 0.8;
-}
-
-.moment-bubble-shine {
-  position: absolute;
-  top: 14px;
-  left: 24px;
-  width: 48px;
-  height: 12px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.55);
-  filter: blur(4px);
-  transform: rotate(-12deg);
-  pointer-events: none;
-}
-
-.moment-bubble:hover {
-  transform: translateY(-3px) scale(1.02);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9), 0 22px 52px rgba(32, 36, 31, 0.14);
-}
-
-.moment-bubble:active { transform: translateY(0) scale(0.97); }
-
-.moment-bubble:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 5px;
-}
-
-.moment-bubble-active { animation: moment-tap 0.45s ease; }
-
-@keyframes moment-tap {
-  0%, 100% { transform: scale(1); }
-  45% { transform: scale(0.95); }
-  75% { transform: scale(1.025); }
-}
-
 /* ==========================
    14. 深色模式
 ========================== */
@@ -367,12 +277,6 @@ html[data-theme="dark"]::-webkit-scrollbar-thumb {
   background: linear-gradient(rgba(146, 189, 181, 0.34), rgba(146, 189, 181, 0.34)) padding-box;
 }
 
-body.dark .moment-bubble,
-html[data-theme="dark"] .moment-bubble {
-  border-color: rgba(255, 255, 255, 0.1);
-  background: linear-gradient(145deg, rgba(55, 62, 57, 0.9), rgba(34, 39, 35, 0.78));
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 18px 48px rgba(0, 0, 0, 0.28);
-}
 
 body.dark .random-photo-stage,
 html[data-theme="dark"] .random-photo-stage {
@@ -735,488 +639,6 @@ html[data-theme="dark"] .random-photo-image {
     transition: none;
   }
 }
-/* =========================================================
-   17. 碎碎念气泡流光升级
-   直接放在整个 CSS 文件最底部
-========================================================= */
-
-/* 注册可动画的渐变角度 */
-@property --bubble-glow-angle {
-  syntax: "<angle>";
-  inherits: false;
-  initial-value: 0deg;
-}
-
-/* 气泡主体 */
-.moment-bubble {
-  --bubble-glow-angle: 0deg;
-
-  position: fixed;
-  right: 32px;
-  bottom: 32px;
-  z-index: 20;
-
-  width: 210px;
-  min-height: 112px;
-  padding: 24px 28px;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
-  overflow: visible;
-  isolation: isolate;
-  appearance: none;
-
-  border: 1px solid transparent;
-  border-radius: 34px 46px 38px 42px;
-
-  background:
-    linear-gradient(
-      145deg,
-      rgba(255, 255, 255, 0.82),
-      rgba(239, 242, 235, 0.56)
-    ) padding-box,
-    conic-gradient(
-      from var(--bubble-glow-angle),
-      rgba(178, 232, 218, 0.22) 0deg,
-      rgba(119, 213, 197, 0.94) 55deg,
-      rgba(238, 248, 242, 0.98) 100deg,
-      rgba(172, 218, 145, 0.9) 150deg,
-      rgba(101, 205, 196, 0.96) 215deg,
-      rgba(239, 243, 206, 0.9) 270deg,
-      rgba(178, 232, 218, 0.22) 360deg
-    ) border-box;
-
-  color: var(--text);
-  text-align: center;
-  cursor: pointer;
-
-  -webkit-backdrop-filter: blur(18px) saturate(1.12);
-  backdrop-filter: blur(18px) saturate(1.12);
-
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.84),
-    inset 0 -1px 0 rgba(47, 94, 89, 0.05),
-    0 14px 42px rgba(32, 36, 31, 0.11),
-    0 0 18px rgba(111, 211, 191, 0.1);
-
-  animation:
-    moment-border-flow 11s linear infinite,
-    moment-bubble-breathe 4.8s ease-in-out infinite;
-
-  transition:
-    transform 0.3s ease,
-    box-shadow 0.3s ease,
-    filter 0.3s ease,
-    background 0.3s ease;
-}
-
-/* 外围柔和光晕 */
-.moment-bubble::before {
-  content: "";
-  position: absolute;
-  inset: -9px;
-  z-index: -2;
-
-  border-radius: inherit;
-
-  background:
-    conic-gradient(
-      from var(--bubble-glow-angle),
-      rgba(115, 218, 200, 0.08),
-      rgba(112, 211, 255, 0.32),
-      rgba(205, 232, 145, 0.28),
-      rgba(250, 244, 212, 0.24),
-      rgba(115, 218, 200, 0.08)
-    );
-
-  opacity: 0.42;
-  filter: blur(15px);
-  transform: scale(0.99);
-
-  pointer-events: none;
-
-  animation: moment-outer-glow 4.8s ease-in-out infinite;
-}
-
-/* 沿边缘移动的局部高光 */
-.moment-bubble::after {
-  content: "";
-  position: absolute;
-  inset: -2px;
-  z-index: -1;
-
-  border-radius: inherit;
-  padding: 2px;
-
-  background:
-    conic-gradient(
-      from var(--bubble-glow-angle),
-      transparent 0deg,
-      transparent 38deg,
-      rgba(255, 255, 255, 0.94) 57deg,
-      rgba(132, 235, 218, 0.98) 78deg,
-      transparent 112deg,
-      transparent 218deg,
-      rgba(214, 235, 151, 0.86) 250deg,
-      rgba(255, 255, 255, 0.9) 270deg,
-      transparent 302deg,
-      transparent 360deg
-    );
-
-  -webkit-mask:
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-
-  mask:
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0);
-  mask-composite: exclude;
-
-  opacity: 0.78;
-  filter: blur(0.35px);
-
-  pointer-events: none;
-}
-
-/* 原本的玻璃高光 */
-.moment-bubble-shine {
-  position: absolute;
-  top: 14px;
-  left: 24px;
-  z-index: 1;
-
-  width: 48px;
-  height: 12px;
-
-  border-radius: 999px;
-
-  background:
-    linear-gradient(
-      90deg,
-      rgba(255, 255, 255, 0.16),
-      rgba(255, 255, 255, 0.72),
-      rgba(255, 255, 255, 0.1)
-    );
-
-  opacity: 0.72;
-  filter: blur(4px);
-  transform: rotate(-12deg);
-
-  pointer-events: none;
-
-  animation: moment-shine-breathe 4.8s ease-in-out infinite;
-}
-
-/* 正文 */
-.moment-bubble-content {
-  position: relative;
-  z-index: 2;
-
-  display: block;
-  max-width: 170px;
-}
-
-/* 正文文字 */
-.moment-bubble-content,
-.moment-bubble-content p {
-  margin: 0;
-
-  font-size: 18px;
-  font-weight: 500;
-  line-height: 1.55;
-}
-
-/* 时间 */
-.moment-bubble-time {
-  position: relative;
-  z-index: 2;
-
-  display: block;
-  width: 100%;
-  max-width: 170px;
-  margin-top: 8px;
-
-  color: var(--muted);
-
-  font-family: Inter, sans-serif;
-  font-size: 12px;
-  font-weight: 400;
-  line-height: 1.4;
-  letter-spacing: 0.02em;
-
-  text-align: right;
-  opacity: 0.8;
-}
-
-/* 鼠标悬停 */
-.moment-bubble:hover {
-  transform: translateY(-3px) scale(1.018);
-  filter: saturate(1.08);
-
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.94),
-    inset 0 -1px 0 rgba(47, 94, 89, 0.06),
-    0 20px 54px rgba(32, 36, 31, 0.15),
-    0 0 24px rgba(103, 213, 194, 0.22);
-}
-
-.moment-bubble:hover::before {
-  opacity: 0.58;
-  filter: blur(17px);
-}
-
-/* 点击 */
-.moment-bubble:active {
-  transform: translateY(0) scale(0.97);
-}
-
-/* 键盘焦点 */
-.moment-bubble:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 6px;
-}
-
-/* 组件已有的点击动画 */
-.moment-bubble-active {
-  animation:
-    moment-tap 0.45s ease,
-    moment-border-flow 11s linear infinite,
-    moment-bubble-breathe 4.8s ease-in-out infinite;
-}
-
-/* 边缘流动 */
-@keyframes moment-border-flow {
-  from {
-    --bubble-glow-angle: 0deg;
-  }
-
-  to {
-    --bubble-glow-angle: 360deg;
-  }
-}
-
-/* 主体轻微呼吸 */
-@keyframes moment-bubble-breathe {
-  0%,
-  100% {
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.84),
-      inset 0 -1px 0 rgba(47, 94, 89, 0.05),
-      0 14px 42px rgba(32, 36, 31, 0.11),
-      0 0 14px rgba(111, 211, 191, 0.08);
-  }
-
-  50% {
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.9),
-      inset 0 -1px 0 rgba(47, 94, 89, 0.06),
-      0 17px 48px rgba(32, 36, 31, 0.13),
-      0 0 23px rgba(111, 211, 191, 0.18);
-  }
-}
-
-/* 外部光晕呼吸 */
-@keyframes moment-outer-glow {
-  0%,
-  100% {
-    opacity: 0.3;
-    transform: scale(0.985);
-  }
-
-  50% {
-    opacity: 0.5;
-    transform: scale(1.02);
-  }
-}
-
-/* 顶部高光呼吸 */
-@keyframes moment-shine-breathe {
-  0%,
-  100% {
-    opacity: 0.5;
-    transform: rotate(-12deg) scaleX(0.92);
-  }
-
-  50% {
-    opacity: 0.78;
-    transform: rotate(-12deg) scaleX(1.08);
-  }
-}
-
-/* 点击弹性 */
-@keyframes moment-tap {
-  0%,
-  100% {
-    transform: scale(1);
-  }
-
-  45% {
-    transform: scale(0.95);
-  }
-
-  75% {
-    transform: scale(1.025);
-  }
-}
-
-/* =========================================================
-   深色模式下的流光气泡
-========================================================= */
-
-body.dark .moment-bubble,
-html[data-theme="dark"] .moment-bubble {
-  border-color: transparent;
-
-  background:
-    linear-gradient(
-      145deg,
-      rgba(55, 62, 57, 0.92),
-      rgba(31, 37, 33, 0.84)
-    ) padding-box,
-    conic-gradient(
-      from var(--bubble-glow-angle),
-      rgba(112, 212, 196, 0.18) 0deg,
-      rgba(98, 225, 211, 0.98) 58deg,
-      rgba(226, 249, 241, 0.98) 105deg,
-      rgba(179, 222, 126, 0.92) 162deg,
-      rgba(90, 204, 217, 0.98) 225deg,
-      rgba(237, 229, 164, 0.9) 280deg,
-      rgba(112, 212, 196, 0.18) 360deg
-    ) border-box;
-
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.08),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.18),
-    0 18px 48px rgba(0, 0, 0, 0.3),
-    0 0 20px rgba(96, 220, 202, 0.13);
-}
-
-body.dark .moment-bubble::before,
-html[data-theme="dark"] .moment-bubble::before {
-  opacity: 0.5;
-
-  background:
-    conic-gradient(
-      from var(--bubble-glow-angle),
-      rgba(75, 217, 197, 0.1),
-      rgba(91, 210, 255, 0.4),
-      rgba(183, 226, 116, 0.36),
-      rgba(236, 218, 154, 0.28),
-      rgba(75, 217, 197, 0.1)
-    );
-}
-
-body.dark .moment-bubble:hover,
-html[data-theme="dark"] .moment-bubble:hover {
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.1),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.2),
-    0 22px 58px rgba(0, 0, 0, 0.38),
-    0 0 28px rgba(99, 224, 204, 0.25);
-}
-
-/* =========================================================
-   手机端
-========================================================= */
-
-@media (max-width: 720px) {
-  .moment-bubble {
-    right: 16px;
-    bottom: calc(18px + env(safe-area-inset-bottom));
-
-    width: 176px;
-    min-height: 92px;
-    padding: 18px 20px;
-
-    border-radius: 28px 38px 30px 36px;
-
-    animation:
-      moment-border-flow 14s linear infinite,
-      moment-bubble-breathe 6s ease-in-out infinite;
-  }
-
-  .moment-bubble::before {
-    inset: -6px;
-    opacity: 0.3;
-    filter: blur(11px);
-
-    animation-duration: 6s;
-  }
-
-  .moment-bubble::after {
-    opacity: 0.62;
-  }
-
-  .moment-bubble-shine {
-    top: 11px;
-    left: 20px;
-
-    width: 38px;
-    height: 9px;
-
-    opacity: 0.58;
-  }
-
-  .moment-bubble-content {
-    max-width: 140px;
-  }
-
-  .moment-bubble-content,
-  .moment-bubble-content p {
-    font-size: 16px;
-    line-height: 1.5;
-  }
-
-  .moment-bubble-time {
-    width: 100%;
-    max-width: 140px;
-    margin-top: 6px;
-
-    font-size: 11px;
-    line-height: 1.35;
-
-    text-align: right;
-  }
-
-  /* 手机没有真正的 hover，避免触摸后状态滞留 */
-  .moment-bubble:hover {
-    transform: none;
-    filter: none;
-  }
-
-  .moment-bubble:active {
-    transform: scale(0.97);
-  }
-}
-
-/* =========================================================
-   用户选择减少动态效果
-========================================================= */
-
-@media (prefers-reduced-motion: reduce) {
-  .moment-bubble,
-  .moment-bubble::before,
-  .moment-bubble::after,
-  .moment-bubble-shine,
-  .moment-bubble-active {
-    animation: none !important;
-    transition: none !important;
-  }
-
-  .moment-bubble {
-    --bubble-glow-angle: 45deg;
-  }
-
-  .moment-bubble::before {
-    opacity: 0.25;
-    transform: none;
-  }
-}
-
 /* ===========================
    页面切换动画
    只保留离场效果
@@ -1277,3 +699,314 @@ html.page-entering body {
     filter: none;
   }
 }
+
+/* =========================================================
+   Bubble V2 · Digital Garden 流光气泡
+========================================================= */
+
+.moment-bubble {
+  position: fixed;
+  right: 32px;
+  bottom: 32px;
+  z-index: 20;
+
+  width: 210px;
+  min-height: 112px;
+  padding: 24px 28px 38px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: visible;
+  isolation: isolate;
+  appearance: none;
+
+  border: 1px solid rgba(255, 255, 255, 0.62);
+  border-radius: 34px 46px 38px 42px;
+
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.76), rgba(237, 242, 235, 0.46));
+  color: var(--text);
+  text-align: center;
+  cursor: pointer;
+
+  -webkit-backdrop-filter: blur(20px) saturate(1.12);
+  backdrop-filter: blur(20px) saturate(1.12);
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.86),
+    inset 0 -1px 0 rgba(47, 94, 89, 0.05),
+    0 16px 44px rgba(32, 36, 31, 0.11),
+    0 2px 8px rgba(32, 36, 31, 0.05);
+
+  transition:
+    transform 0.3s var(--ease-emphasized, ease),
+    box-shadow 0.3s ease,
+    filter 0.3s ease,
+    opacity 0.3s ease;
+}
+
+/* 玻璃内部的柔和反射，不再从中心向外爆开。 */
+.moment-bubble::before {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  z-index: 0;
+  border-radius: inherit;
+  background:
+    radial-gradient(circle at 28% 18%, rgba(255, 255, 255, 0.7), transparent 28%),
+    linear-gradient(160deg, rgba(255, 255, 255, 0.2), transparent 48%);
+  opacity: 0.68;
+  pointer-events: none;
+}
+
+/* 气泡底部的一点玻璃厚度。 */
+.moment-bubble::after {
+  content: "";
+  position: absolute;
+  right: 18px;
+  bottom: 10px;
+  left: 18px;
+  z-index: 0;
+  height: 24px;
+  border-radius: 50%;
+  background: rgba(84, 131, 120, 0.08);
+  filter: blur(15px);
+  pointer-events: none;
+}
+
+/* 真正沿边缘运行的局部流光。 */
+.moment-bubble-ring {
+  position: absolute;
+  inset: -3px;
+  z-index: 1;
+  border-radius: inherit;
+  padding: 2.5px;
+
+  background:
+    conic-gradient(
+      from 0deg,
+      transparent 0deg,
+      transparent 246deg,
+      rgba(154, 221, 205, 0.08) 258deg,
+      rgba(105, 214, 198, 0.72) 270deg,
+      rgba(232, 249, 242, 1) 282deg,
+      rgba(187, 220, 137, 0.9) 294deg,
+      rgba(108, 190, 216, 0.7) 306deg,
+      transparent 322deg,
+      transparent 360deg
+    );
+
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+
+  opacity: 0.94;
+  filter:
+    drop-shadow(0 0 5px rgba(105, 214, 198, 0.38))
+    drop-shadow(0 0 12px rgba(161, 207, 152, 0.18));
+  transform-origin: center;
+  pointer-events: none;
+  will-change: transform;
+
+  animation: moment-ring-orbit 10.5s linear infinite;
+}
+
+.moment-bubble-content {
+  position: relative;
+  z-index: 2;
+  display: block;
+  max-width: 168px;
+}
+
+.moment-bubble-content,
+.moment-bubble-content p {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 620;
+  line-height: 1.48;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+  text-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.78),
+    0 2px 2px rgba(31, 49, 43, 0.08),
+    0 7px 16px rgba(31, 49, 43, 0.13);
+}
+
+.moment-bubble-time {
+  position: absolute;
+  right: 24px;
+  bottom: 16px;
+  z-index: 2;
+
+  display: block;
+  margin: 0;
+
+  color: var(--muted);
+  font-family: Inter, sans-serif;
+  font-size: 11px;
+  font-weight: 450;
+  line-height: 1.2;
+  letter-spacing: 0.025em;
+  white-space: nowrap;
+  text-align: right;
+  opacity: 0.72;
+}
+
+.moment-bubble:hover {
+  transform: translateY(-3px) scale(1.015);
+  filter: saturate(1.06);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.94),
+    inset 0 -1px 0 rgba(47, 94, 89, 0.06),
+    0 22px 56px rgba(32, 36, 31, 0.15),
+    0 0 20px rgba(105, 214, 198, 0.09);
+}
+
+.moment-bubble:hover .moment-bubble-ring {
+  opacity: 1;
+  animation-duration: 6.8s;
+  filter:
+    drop-shadow(0 0 6px rgba(105, 214, 198, 0.5))
+    drop-shadow(0 0 16px rgba(161, 207, 152, 0.24));
+}
+
+.moment-bubble:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.moment-bubble:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 6px;
+}
+
+.moment-bubble:disabled {
+  cursor: default;
+}
+
+/* 点击后，边缘流光明显加速并提亮。 */
+.moment-bubble-active .moment-bubble-ring,
+.moment-bubble-leaving .moment-bubble-ring {
+  opacity: 1;
+  animation-duration: 0.78s;
+  filter:
+    drop-shadow(0 0 8px rgba(105, 214, 198, 0.68))
+    drop-shadow(0 0 20px rgba(229, 247, 238, 0.5));
+}
+
+.moment-bubble-active {
+  animation: moment-bubble-tap 0.42s var(--ease-emphasized, ease);
+}
+
+@keyframes moment-ring-orbit {
+  to { transform: rotate(1turn); }
+}
+
+@keyframes moment-bubble-tap {
+  0% { transform: scale(1); }
+  42% { transform: scale(0.975); }
+  100% { transform: scale(1.035); }
+}
+
+body.dark .moment-bubble,
+html[data-theme="dark"] .moment-bubble {
+  border-color: rgba(255, 255, 255, 0.09);
+  background:
+    linear-gradient(145deg, rgba(53, 62, 56, 0.88), rgba(29, 35, 31, 0.78));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.2),
+    0 18px 50px rgba(0, 0, 0, 0.32),
+    0 2px 10px rgba(0, 0, 0, 0.18);
+}
+
+body.dark .moment-bubble::before,
+html[data-theme="dark"] .moment-bubble::before {
+  background:
+    radial-gradient(circle at 28% 18%, rgba(255, 255, 255, 0.1), transparent 30%),
+    linear-gradient(160deg, rgba(255, 255, 255, 0.045), transparent 50%);
+}
+
+body.dark .moment-bubble::after,
+html[data-theme="dark"] .moment-bubble::after {
+  background: rgba(89, 210, 190, 0.09);
+}
+
+body.dark .moment-bubble-content,
+body.dark .moment-bubble-content p,
+html[data-theme="dark"] .moment-bubble-content,
+html[data-theme="dark"] .moment-bubble-content p {
+  text-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.06),
+    0 2px 3px rgba(0, 0, 0, 0.3),
+    0 8px 18px rgba(0, 0, 0, 0.28);
+}
+
+@media (max-width: 720px) {
+  .moment-bubble {
+    right: 16px;
+    bottom: calc(18px + env(safe-area-inset-bottom));
+    width: 176px;
+    min-height: 94px;
+    padding: 18px 20px 32px;
+    border-radius: 28px 38px 30px 36px;
+  }
+
+  .moment-bubble-ring {
+    inset: -2px;
+    padding: 2px;
+    animation-duration: 12.5s;
+  }
+
+  .moment-bubble-content {
+    max-width: 140px;
+  }
+
+  .moment-bubble-content,
+  .moment-bubble-content p {
+    font-size: 15px;
+    line-height: 1.42;
+  }
+
+  .moment-bubble-time {
+    right: 19px;
+    bottom: 13px;
+    font-size: 10px;
+  }
+}
+
+@media (hover: none) {
+  .moment-bubble:hover {
+    transform: none;
+    filter: none;
+  }
+
+  .moment-bubble:hover .moment-bubble-ring {
+    animation-duration: 12.5s;
+  }
+
+  .moment-bubble:active {
+    transform: scale(0.98);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .moment-bubble,
+  .moment-bubble-ring,
+  .moment-bubble-active,
+  .moment-bubble-leaving {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .moment-bubble-ring {
+    transform: rotate(18deg);
+  }
+}
+

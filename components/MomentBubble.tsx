@@ -55,6 +55,11 @@ export default function MomentBubble({
       disabled={isLeaving}
     >
       <span
+        className="moment-bubble-ring"
+        aria-hidden="true"
+      />
+
+      <span
         className="moment-bubble-content"
         dangerouslySetInnerHTML={{
           __html: content,

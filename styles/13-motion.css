@@ -57,10 +57,6 @@ body {
   transition-timing-function: var(--ease-emphasized);
 }
 
-.moment-bubble-active {
-  animation-duration: var(--motion-slow);
-  animation-timing-function: var(--ease-emphasized);
-}
 
 html.page-leaving body {
   transition-duration: var(--motion-slow);

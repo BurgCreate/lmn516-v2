@@ -179,16 +179,6 @@
     font-size: 11px;
   }
 
-  /* 右下角碎碎念气泡 */
-  .moment-bubble-content,
-  .moment-bubble-content p {
-    font-size: 14px;
-    line-height: 1.45;
-  }
-
-  .moment-bubble-time {
-    font-size: 10px;
-  }
 }
 
 @media (max-width: 520px) {
