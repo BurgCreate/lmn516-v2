@@ -33,18 +33,23 @@ function notificationBody(content: string) {
   }
 
   const shortText =
-    text.length > 88
-      ? `${text.slice(0, 88)}…`
+    text.length > 60
+      ? `${text.slice(0, 60)}…`
       : text;
 
   return `🫧 ${shortText}`;
 }
 
 export async function POST(request: Request) {
-  const publicKey = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY;
-  const privateKey = process.env.VAPID_PRIVATE_KEY;
+  const publicKey =
+    process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY;
+
+  const privateKey =
+    process.env.VAPID_PRIVATE_KEY;
+
   const subject =
-    process.env.VAPID_SUBJECT || "mailto:hello@lmn516.com";
+    process.env.VAPID_SUBJECT ||
+    "mailto:hello@lmn516.com";
 
   if (!publicKey || !privateKey) {
     return NextResponse.json(
@@ -72,7 +77,10 @@ export async function POST(request: Request) {
     );
   }
 
-  if (!body.subscription?.endpoint || !body.subscription.keys) {
+  if (
+    !body.subscription?.endpoint ||
+    !body.subscription.keys
+  ) {
     return NextResponse.json(
       {
         error: "缺少有效的推送订阅。",
@@ -107,7 +115,6 @@ export async function POST(request: Request) {
     await webpush.sendNotification(
       body.subscription,
       JSON.stringify({
-        title: "LMN516 · 新的小泡泡",
         body: notificationBody(moment.content),
         url: `/moments#moment-${moment.id}`,
         icon: "/icons/icon-192.png",
@@ -136,13 +143,15 @@ export async function POST(request: Request) {
     return NextResponse.json(
       {
         error:
-          statusCode === 404 || statusCode === 410
+          statusCode === 404 ||
+          statusCode === 410
             ? "这条订阅已失效，请重新开启通知。"
             : "碎碎念推送失败，请检查 VAPID 配置或设备订阅。",
       },
       {
         status:
-          statusCode >= 400 && statusCode < 600
+          statusCode >= 400 &&
+          statusCode < 600
             ? statusCode
             : 500,
       }
