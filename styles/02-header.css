@@ -68,37 +68,89 @@
 
 .site-header-sticky {
   position: sticky;
-  top: 0;
+  top: 10px;
   z-index: 100;
   isolation: isolate;
-  border-bottom-color: transparent;
+  width: min(900px, calc(100% - 32px));
+  min-height: 56px;
+  padding-inline: 18px;
+  border: 1px solid transparent;
+  border-radius: 18px;
+  background: color-mix(in srgb, var(--bg) 84%, transparent);
+  -webkit-backdrop-filter: blur(18px) saturate(1.12);
+  backdrop-filter: blur(18px) saturate(1.12);
   transition:
     border-color 0.24s ease,
-    box-shadow 0.24s ease;
+    box-shadow 0.24s ease,
+    background-color 0.24s ease;
 }
 
-.site-header-sticky::before {
-  content: "";
-  position: absolute;
-  z-index: -1;
-  top: 0;
-  bottom: 0;
-  left: 50%;
-  width: 100vw;
-  transform: translateX(-50%);
-  background: color-mix(in srgb, var(--bg) 82%, transparent);
-  -webkit-backdrop-filter: blur(18px) saturate(1.15);
-  backdrop-filter: blur(18px) saturate(1.15);
+.site-header-sticky .brand {
+  font-size: 23px;
+}
+
+.site-header-sticky .nav {
+  gap: 18px;
+  font-size: 13px;
+}
+
+.site-header-sticky .nav .nav-link {
+  min-height: 34px;
+}
+
+.site-header-sticky .theme-toggle,
+.site-header-sticky .garden-bell {
+  width: 34px;
+  height: 34px;
 }
 
 .site-header-sticky.is-scrolled {
-  border-bottom-color: var(--line);
-  box-shadow: 0 10px 28px rgba(32, 36, 31, 0.07);
+  border-color: var(--line);
+  background: color-mix(in srgb, var(--bg) 90%, transparent);
+  box-shadow: 0 8px 24px rgba(32, 36, 31, 0.08);
 }
 
 @supports not (background: color-mix(in srgb, white 50%, transparent)) {
-  .site-header-sticky::before {
+  .site-header-sticky {
     background: rgba(242, 239, 231, 0.88);
+  }
+}
+
+@media (max-width: 960px) {
+  .site-header-sticky {
+    top: 8px;
+    width: min(700px, calc(100% - 20px));
+    padding: 10px 12px 9px;
+    border-radius: 16px;
+  }
+
+  .site-header-sticky .brand {
+    font-size: 22px;
+  }
+}
+
+@media (max-width: 520px) {
+  .site-header-sticky {
+    top: 6px;
+    width: calc(100% - 16px);
+    padding: 8px 10px;
+    border-radius: 15px;
+  }
+
+  .site-header-sticky .nav {
+    gap: 7px;
+  }
+
+  .site-header-sticky .nav .nav-link {
+    min-height: 31px;
+    padding-inline: 10px;
+    font-size: 11px;
+  }
+
+  .site-header-sticky .theme-toggle,
+  .site-header-sticky .garden-bell {
+    width: 32px;
+    height: 32px;
   }
 }
 
