@@ -56,44 +56,47 @@ button:focus-visible,
 }
 
 .button.ghost {
-  border-color: var(--color-accent);
+  border-color: var(--button-border);
   background: var(--button-secondary-bg);
-  color: var(--color-accent);
+  color: var(--color-text);
 }
 
 .button.ghost:hover {
-  border-color: var(--color-accent);
-  background: var(--color-accent);
-  color: var(--color-bg);
+  border-color: var(--button-border-hover);
+  background: var(--button-secondary-hover-bg);
   box-shadow: var(--button-shadow-hover);
 }
 
 /* Text links keep a quieter hierarchy than buttons. */
 .text-link,
 .about-links a,
-.changelog-footer a {
+.changelog-footer a,
+.footer-links a,
+.footer-bottom a {
   color: var(--link-color);
-  text-decoration-line: underline;
-  text-decoration-color: var(--link-underline);
+  cursor: pointer;
+  text-decoration: none;
   text-decoration-thickness: 1px;
-  text-underline-offset: 0.28em;
+  text-underline-offset: 0.18em;
   border-bottom: 0;
-  transition:
-    color var(--control-transition),
-    text-decoration-color var(--control-transition),
-    opacity var(--control-transition);
 }
 
 .text-link:hover,
 .about-links a:hover,
-.changelog-footer a:hover {
+.changelog-footer a:hover,
+.footer-links a:hover,
+.footer-bottom a:hover {
+  color: var(--link-color);
   border-color: transparent;
-  text-decoration-color: var(--link-underline-hover);
+  text-decoration-line: underline;
+  text-decoration-color: currentColor;
 }
 
 .text-link:active,
 .about-links a:active,
-.changelog-footer a:active {
+.changelog-footer a:active,
+.footer-links a:active,
+.footer-bottom a:active {
   opacity: 0.7;
 }
 

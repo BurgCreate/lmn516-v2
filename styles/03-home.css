@@ -853,13 +853,18 @@
 }
 
 .footer-links a {
-  color: var(--muted);
+  color: var(--link-color);
   font-size: 13px;
-  transition: color 0.2s ease;
+  cursor: pointer;
+  text-decoration: none;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
 }
 
 .footer-links a:hover {
-  color: var(--accent);
+  color: var(--link-color);
+  text-decoration-line: underline;
+  text-decoration-color: currentColor;
 }
 
 .footer-bottom {
