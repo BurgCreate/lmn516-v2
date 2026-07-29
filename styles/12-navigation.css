@@ -162,3 +162,57 @@
 }
 
 
+
+/* Header navigation: one row with equal spacing between every item. */
+.site-header {
+  justify-content: flex-start;
+  gap: var(--nav-gap);
+  flex-wrap: nowrap;
+}
+
+.nav {
+  width: auto;
+  margin-left: 0;
+  justify-content: flex-start;
+  gap: var(--nav-gap);
+  overflow: visible;
+}
+
+.site-header-actions {
+  margin-left: 0;
+  gap: var(--nav-gap);
+}
+
+@media (max-width: 960px) {
+  .site-header {
+    column-gap: var(--space-3);
+    row-gap: 0;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .site-header::-webkit-scrollbar {
+    display: none;
+  }
+
+  .site-header > .brand,
+  .site-header > .nav,
+  .site-header > .site-header-actions {
+    order: initial;
+  }
+
+  .nav {
+    width: auto;
+    flex: 0 0 auto;
+    gap: var(--space-3);
+    padding-bottom: 0;
+    overflow: visible;
+  }
+
+  .site-header-actions {
+    flex: 0 0 auto;
+    margin-left: 0;
+    gap: var(--space-3);
+  }
+}
