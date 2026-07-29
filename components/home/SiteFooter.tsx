@@ -30,24 +30,43 @@ const footerGroups = [
   },
 ];
 
+function FooterLinks({ links }: { links: (typeof footerGroups)[number]["links"] }) {
+  return (
+    <div className="footer-links">
+      {links.map((link) => (
+        <Link href={link.href} key={link.href}>
+          {link.label}
+        </Link>
+      ))}
+    </div>
+  );
+}
+
 export default function SiteFooter() {
   return (
     <footer className="site-footer">
       <div className="site-footer-inner shell">
         <div className="footer-brand">
-          <Link href="/" className="footer-logo">LMN516</Link>
+          <Link href="/" className="footer-logo">
+            LMN516
+          </Link>
           <p>一本持续更新的个人生活杂志，也是一座慢慢生长的数字花园。</p>
         </div>
 
-        <div className="footer-map">
+        <div className="footer-map footer-map-desktop" aria-label="网站地图">
+          {footerGroups.map((group) => (
+            <section className="footer-group" key={group.title}>
+              <h3>{group.title}</h3>
+              <FooterLinks links={group.links} />
+            </section>
+          ))}
+        </div>
+
+        <div className="footer-map footer-map-mobile" aria-label="手机端网站地图">
           {footerGroups.map((group) => (
             <details className="footer-group" key={group.title}>
               <summary>{group.title}</summary>
-              <div className="footer-links">
-                {group.links.map((link) => (
-                  <Link href={link.href} key={link.href}>{link.label}</Link>
-                ))}
-              </div>
+              <FooterLinks links={group.links} />
             </details>
           ))}
         </div>

@@ -883,3 +883,108 @@
   color: var(--muted);
   font-size: 12px;
 }
+
+/* ==========================
+   12. V3.0 信息密度二次校准
+========================== */
+
+/* Hero 保留尺寸，只缩短顶部空白，让首屏更快进入内容。 */
+.hero {
+  padding-top: 14px;
+}
+
+/* 每张图片停留 12 秒，期间做非常轻微的镜头推进。 */
+.random-photo-image {
+  animation: random-photo-ken-burns 12s linear both;
+  transform-origin: center center;
+  will-change: transform, opacity;
+}
+
+@keyframes random-photo-ken-burns {
+  0% {
+    opacity: 0;
+    transform: scale(1.01);
+  }
+
+  7% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1.075);
+  }
+}
+
+/* 收藏目录以“本期文章”的信息密度为基准，不再把四个入口做成四张海报。 */
+.archive-intro {
+  min-height: 190px;
+  margin-bottom: 18px;
+  padding: 26px 32px;
+  grid-template-columns: minmax(0, 1fr) 168px;
+  gap: 28px;
+  border-radius: 22px;
+}
+
+.archive-intro-copy {
+  max-width: 700px;
+}
+
+.archive-intro-copy h2 {
+  margin-bottom: 10px;
+}
+
+.archive-intro-copy > p:last-child {
+  max-width: 700px;
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.archive-girl {
+  width: 158px;
+}
+
+.archive-grid {
+  gap: 16px;
+}
+
+.archive-card {
+  min-height: 156px;
+  padding: 22px 24px;
+  border-radius: 20px;
+}
+
+.archive-card-copy {
+  margin-top: 18px;
+  gap: 5px;
+}
+
+.archive-card strong {
+  font-size: 20px;
+}
+
+.archive-card small {
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.archive-card-footer {
+  padding-top: 14px;
+}
+
+/* 电脑端直接展示完整站点地图，不要求访客逐列点开。 */
+.footer-map-desktop {
+  display: grid;
+}
+
+.footer-map-mobile {
+  display: none;
+}
+
+.footer-group h3 {
+  margin: 0 0 16px;
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 650;
+}

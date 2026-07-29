@@ -458,3 +458,65 @@
     font-size: 12px;
   }
 }
+
+/* ==========================
+   V3.0 信息密度二次校准 · 手机端
+========================== */
+@media (max-width: 720px) {
+  .hero {
+    padding-top: 12px;
+  }
+
+  .archive-intro {
+    min-height: 0;
+    margin-bottom: 14px;
+    padding: 20px;
+    grid-template-columns: minmax(0, 1fr) 82px;
+    gap: 14px;
+  }
+
+  .archive-intro-copy h2 {
+    margin-bottom: 8px;
+    font-size: 23px;
+  }
+
+  .archive-intro-copy > p:last-child {
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  .archive-girl {
+    width: 78px;
+  }
+
+  .archive-grid {
+    gap: 12px;
+  }
+
+  .archive-card {
+    min-height: 142px;
+    padding: 20px;
+  }
+
+  .archive-card-copy {
+    margin-top: 16px;
+  }
+
+  .archive-card-footer {
+    padding-top: 12px;
+  }
+
+  .footer-map-desktop {
+    display: none;
+  }
+
+  .footer-map-mobile {
+    display: grid;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .random-photo-image {
+    animation: none;
+  }
+}
