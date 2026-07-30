@@ -1,0 +1,93 @@
+/* =========================================================
+   LMN516 layout guard
+   Keeps the garden atmosphere visual-only. It must not change
+   card dimensions, grid density, image crop, or content flow.
+========================================================= */
+
+/* Recent post cards: restore the compact three-card layout. */
+.garden-post-grid {
+  align-items: stretch;
+}
+
+.garden-post-grid .post-card {
+  min-width: 0;
+  min-height: 0;
+}
+
+.garden-post-grid .post-visual {
+  position: relative;
+  width: 100%;
+  min-height: 0;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+}
+
+.garden-post-grid .post-image,
+.featured-post .post-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Archive entries return to the compact dimensions defined before
+   the atmosphere pass. Decorative SVGs remain absolutely positioned
+   and never participate in card sizing. */
+.archive-grid {
+  align-items: stretch;
+}
+
+.garden-archive-card {
+  min-height: 156px;
+  padding: 22px 24px;
+}
+
+.garden-archive-card .garden-card-ornament,
+.garden-post-card .garden-card-ornament,
+.garden-about-card .garden-about-vine {
+  position: absolute;
+  pointer-events: none;
+}
+
+.garden-archive-card .archive-card-copy {
+  margin-top: 18px;
+}
+
+.garden-archive-card .archive-card-footer {
+  padding-top: 14px;
+}
+
+/* About stays a content card, not a poster. */
+.garden-about-card {
+  min-height: 0;
+  padding: 38px 42px;
+}
+
+/* Watercolor layers are decorative only and may not create stacking
+   or sizing side effects around media. */
+.post-card::after,
+.archive-card::after,
+.about-card::after,
+.today-card::after,
+.garden-page-hero::after {
+  box-sizing: border-box;
+}
+
+@media (max-width: 720px) {
+  .garden-post-grid .post-visual {
+    aspect-ratio: 4 / 3;
+  }
+
+  .garden-archive-card {
+    min-height: 142px;
+    padding: 20px;
+  }
+
+  .garden-about-card {
+    padding: 28px 24px;
+  }
+}
