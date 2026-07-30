@@ -1,0 +1,232 @@
+/* =========================================================
+   LMN516 Garden Surface System
+   A single visual grammar derived from the master garden artwork.
+   The world layer supplies atmosphere; surfaces provide readable pauses.
+========================================================= */
+
+:root {
+  --garden-surface-base: rgba(255, 252, 243, 0.68);
+  --garden-surface-soft: rgba(255, 250, 239, 0.52);
+  --garden-surface-raised: rgba(255, 253, 247, 0.82);
+  --garden-line: color-mix(in srgb, var(--garden-ink) 13%, transparent);
+  --garden-line-hover: color-mix(in srgb, var(--garden-leaf) 30%, transparent);
+  --garden-shadow: 0 18px 48px rgba(47, 61, 46, 0.065);
+  --garden-shadow-hover: 0 24px 62px rgba(47, 61, 46, 0.095);
+  --garden-glass-blur: 11px;
+}
+
+/* One shared material. Cards no longer invent their own paper, border and shadow. */
+.today-card,
+.progress-panel,
+.post-card,
+.archive-card,
+.about-card,
+.garden-page-hero,
+.garden-section-frame,
+.moments-empty,
+.music-card,
+.photo-card,
+.note-card,
+.card {
+  border-color: var(--garden-line);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.34), transparent 42%),
+    var(--garden-surface-base);
+  box-shadow:
+    var(--garden-shadow),
+    inset 0 1px 0 rgba(255, 255, 255, 0.56);
+  -webkit-backdrop-filter: blur(var(--garden-glass-blur)) saturate(0.92);
+  backdrop-filter: blur(var(--garden-glass-blur)) saturate(0.92);
+}
+
+/* Section frames are landscape, not another card around the cards. */
+.garden-section-frame {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  transform: none;
+}
+
+.garden-section-frame::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  inset: clamp(14px, 2vw, 28px) 0;
+  border-top: 1px solid color-mix(in srgb, var(--garden-leaf) 12%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--garden-leaf) 9%, transparent);
+  background:
+    radial-gradient(circle at 8% 20%, color-mix(in srgb, var(--garden-sun) 13%, transparent), transparent 24%),
+    radial-gradient(circle at 92% 72%, color-mix(in srgb, var(--garden-blush) 16%, transparent), transparent 27%);
+  pointer-events: none;
+}
+
+.garden-section-frame-notes::before {
+  background:
+    radial-gradient(circle at 12% 18%, color-mix(in srgb, var(--garden-sun) 14%, transparent), transparent 25%),
+    linear-gradient(180deg, transparent, color-mix(in srgb, var(--garden-paper) 14%, transparent), transparent);
+}
+
+.garden-section-frame-archive::before {
+  background:
+    radial-gradient(circle at 88% 26%, color-mix(in srgb, var(--garden-blush) 18%, transparent), transparent 26%),
+    linear-gradient(180deg, transparent, color-mix(in srgb, var(--garden-leaf) 5%, transparent), transparent);
+}
+
+.garden-section-frame-about::before {
+  background:
+    radial-gradient(circle at 20% 74%, color-mix(in srgb, var(--garden-sun) 11%, transparent), transparent 28%),
+    radial-gradient(circle at 84% 18%, color-mix(in srgb, var(--garden-blush) 15%, transparent), transparent 24%);
+}
+
+/* Remove decorative wobble that made the system feel assembled rather than related. */
+.archive-card:nth-child(1),
+.archive-card:nth-child(2),
+.archive-card:nth-child(3),
+.archive-card:nth-child(4),
+.garden-section-frame-notes,
+.garden-section-frame-archive,
+.garden-section-frame-about {
+  transform: none;
+}
+
+/* Controlled variation comes from tint, not unrelated geometry. */
+.garden-content-section-notes .post-card {
+  --garden-surface-base: color-mix(in srgb, rgba(255, 252, 243, 0.72) 92%, var(--garden-sun));
+}
+
+.garden-content-section-archive .archive-card {
+  --garden-surface-base: color-mix(in srgb, rgba(255, 252, 243, 0.7) 94%, var(--garden-blush));
+}
+
+.garden-content-section-about .about-card {
+  --garden-surface-base: color-mix(in srgb, rgba(255, 252, 243, 0.76) 94%, var(--garden-leaf));
+}
+
+.today-card {
+  --garden-surface-base: color-mix(in srgb, rgba(255, 252, 243, 0.74) 95%, var(--garden-sun));
+  position: relative;
+  overflow: hidden;
+}
+
+.today-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 100% 0%, color-mix(in srgb, var(--garden-sun) 18%, transparent), transparent 34%),
+    linear-gradient(105deg, transparent 60%, color-mix(in srgb, var(--garden-blush) 9%, transparent));
+}
+
+.today-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.post-card,
+.archive-card,
+.about-card,
+.today-card {
+  transition:
+    transform var(--motion-base) var(--ease-emphasized),
+    border-color var(--motion-base) var(--ease-standard),
+    background var(--motion-base) var(--ease-standard),
+    box-shadow var(--motion-base) var(--ease-standard);
+}
+
+.post-card:hover,
+.archive-card:hover,
+.about-card:hover,
+.today-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--garden-line-hover);
+  box-shadow:
+    var(--garden-shadow-hover),
+    inset 0 1px 0 rgba(255, 255, 255, 0.64);
+}
+
+/* The same quiet label language appears throughout the garden. */
+.card-label,
+.eyebrow,
+.garden-section-marker {
+  color: var(--garden-leaf);
+}
+
+.garden-section-marker {
+  border-color: color-mix(in srgb, var(--garden-leaf) 22%, transparent);
+  background: color-mix(in srgb, var(--garden-cream) 88%, transparent);
+  box-shadow: 0 5px 18px rgba(47, 61, 46, 0.035);
+  transform: none;
+}
+
+.garden-section-marker::before,
+.garden-section-marker::after {
+  display: none;
+}
+
+/* Local ornamentation becomes sparse foreground notation. */
+.garden-card-ornament,
+.garden-about-vine,
+.garden-content-flora,
+.garden-page-ornament,
+.garden-section-ornament,
+.garden-corner {
+  opacity: 0.1 !important;
+}
+
+.garden-content-flora-top {
+  opacity: 0.08 !important;
+}
+
+.garden-content-flora-bottom {
+  opacity: 0.12 !important;
+}
+
+@media (max-width: 720px) {
+  :root {
+    --garden-glass-blur: 8px;
+    --garden-shadow: 0 12px 34px rgba(47, 61, 46, 0.055);
+  }
+
+  .garden-section-frame::before {
+    inset-inline: 8px;
+  }
+
+  .garden-card-ornament,
+  .garden-about-vine,
+  .garden-corner {
+    opacity: 0.07 !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .post-card,
+  .archive-card,
+  .about-card,
+  .today-card {
+    transition: none;
+  }
+
+  .post-card:hover,
+  .archive-card:hover,
+  .about-card:hover,
+  .today-card:hover {
+    transform: none;
+  }
+}
+
+html[data-theme="dark"] .today-card,
+body.dark .today-card,
+html[data-theme="dark"] .post-card,
+body.dark .post-card,
+html[data-theme="dark"] .archive-card,
+body.dark .archive-card,
+html[data-theme="dark"] .about-card,
+body.dark .about-card {
+  --garden-surface-base: rgba(27, 34, 27, 0.7);
+  --garden-line: rgba(170, 190, 153, 0.14);
+  --garden-line-hover: rgba(170, 190, 153, 0.28);
+}
