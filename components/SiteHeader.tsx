@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import ThemeToggle from "@/components/ThemeToggle";
 import GardenNotification from "@/components/GardenNotification";
+import { GardenBrandSprig } from "@/components/garden";
 
 type SiteHeaderProps = {
   className?: string;
@@ -101,7 +102,9 @@ export default function SiteHeader({
         className="brand"
         aria-label="LMN516 首页"
       >
-        LMN516
+        <GardenBrandSprig className="brand-sprig" />
+        <span className="brand-wordmark">LMN516</span>
+        <span className="brand-subtitle">Digital Garden</span>
       </Link>
 
       <nav
