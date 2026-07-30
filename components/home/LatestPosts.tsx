@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Post } from "@/lib/wordpress";
+import { GardenFloraRibbon, GardenOrnament } from "@/components/garden";
 
 type LatestPostsProps = {
   featured?: Post;
@@ -36,7 +37,8 @@ ${String(parsedDate.getDate()).padStart(2, "0")}`;
 
 export default function LatestPosts({ featured, cards }: LatestPostsProps) {
   return (
-    <section id="notes" className="notes shell section-space">
+    <section id="notes" className="notes shell section-space garden-content-section garden-content-section-notes">
+      <GardenFloraRibbon className="garden-content-flora garden-content-flora-top" />
       <div className="section-heading">
         <div>
           <p className="eyebrow">最近更新</p>
@@ -84,14 +86,18 @@ export default function LatestPosts({ featured, cards }: LatestPostsProps) {
         </Link>
       )}
 
-      <div className="post-grid">
+      <div className="post-grid garden-post-grid">
         {cards.map((post, index) => (
           <Link
-            className="post-card small post-card-link"
+            className={`post-card small post-card-link garden-post-card garden-post-card-${index + 1}`}
             href={`/posts/${post.slug}`}
             aria-label={`阅读文章：${post.title}`}
             key={post.id}
           >
+            <GardenOrnament
+              variant={index === 0 ? "bellflower" : index === 1 ? "curlflower" : "wildflower"}
+              className="garden-card-ornament"
+            />
             <div
               className={`post-visual ${
                 index === 0
@@ -128,6 +134,7 @@ export default function LatestPosts({ featured, cards }: LatestPostsProps) {
           </Link>
         ))}
       </div>
+      <GardenFloraRibbon className="garden-content-flora garden-content-flora-bottom" density="light" />
     </section>
   );
 }

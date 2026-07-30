@@ -519,3 +519,195 @@
     opacity: .86;
   }
 }
+
+/* V3.4 · Botanical layout integration */
+.garden-content-section {
+  position: relative;
+  isolation: isolate;
+}
+
+.garden-content-flora {
+  position: absolute;
+  z-index: 0;
+  left: 50%;
+  width: min(1120px, 108vw);
+  height: clamp(88px, 11vw, 148px);
+  transform: translateX(-50%);
+  pointer-events: none;
+  overflow: visible;
+  opacity: .76;
+}
+
+.garden-content-flora-top { top: -58px; }
+.garden-content-flora-bottom {
+  bottom: -68px;
+  transform: translateX(-50%) scaleY(-1);
+  opacity: .42;
+}
+
+.garden-content-section > *:not(.garden-content-flora) {
+  position: relative;
+  z-index: 1;
+}
+
+.garden-flora-ribbon .flora-line,
+.garden-flora-ribbon .flora-stem {
+  fill: none;
+  stroke: color-mix(in srgb, var(--accent) 54%, #64744d);
+  stroke-width: 1.55;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.garden-flora-ribbon .flora-line-soft,
+.garden-flora-ribbon .flora-stem-soft {
+  stroke-width: 1.05;
+  opacity: .55;
+}
+
+.garden-flora-ribbon .flora-leaf {
+  fill: rgba(119, 139, 92, .14);
+  stroke: rgba(83, 107, 68, .48);
+  stroke-width: 1.15;
+}
+
+.garden-flora-ribbon .flora-leaf-alt {
+  fill: rgba(163, 178, 116, .13);
+  stroke: rgba(107, 124, 74, .43);
+}
+
+.garden-flora-ribbon .flora-bloom circle,
+.garden-flora-ribbon .flora-bell {
+  stroke-width: .9;
+}
+
+.garden-flora-ribbon .flora-bloom-pink circle {
+  fill: rgba(226, 173, 181, .24);
+  stroke: rgba(170, 111, 123, .52);
+}
+.garden-flora-ribbon .flora-bloom-blue circle,
+.garden-flora-ribbon .flora-bell-blue {
+  fill: rgba(151, 185, 205, .23);
+  stroke: rgba(92, 132, 157, .5);
+}
+.garden-flora-ribbon .flora-bloom-gold circle,
+.garden-flora-ribbon .flora-bell-gold {
+  fill: rgba(228, 197, 112, .24);
+  stroke: rgba(170, 139, 62, .5);
+}
+.garden-flora-ribbon .flora-bloom-white circle {
+  fill: rgba(255, 252, 232, .42);
+  stroke: rgba(151, 137, 97, .45);
+}
+.garden-flora-ribbon .flora-center {
+  fill: rgba(111, 92, 44, .46) !important;
+  stroke: none !important;
+}
+.garden-flora-ribbon .flora-berry { stroke: rgba(78, 91, 66, .26); stroke-width: .8; }
+.garden-flora-ribbon .flora-berry-pink { fill: rgba(221, 154, 168, .46); }
+.garden-flora-ribbon .flora-berry-blue { fill: rgba(130, 170, 194, .46); }
+.garden-flora-ribbon .flora-berry-gold { fill: rgba(218, 178, 79, .48); }
+
+.garden-post-card,
+.garden-archive-card,
+.garden-about-card {
+  position: relative;
+  isolation: isolate;
+}
+
+.garden-card-ornament {
+  position: absolute;
+  z-index: 2;
+  top: -22px;
+  right: -20px;
+  width: 112px;
+  opacity: .28;
+  pointer-events: none;
+  transform: rotate(7deg);
+}
+
+.garden-post-card-2 .garden-card-ornament {
+  top: auto;
+  right: -24px;
+  bottom: -28px;
+  transform: rotate(-9deg);
+}
+
+.garden-post-card-3 .garden-card-ornament {
+  top: -28px;
+  right: auto;
+  left: -24px;
+  transform: rotate(-8deg) scaleX(-1);
+}
+
+.garden-archive-card {
+  overflow: hidden;
+}
+
+.garden-archive-card-ornament {
+  top: auto;
+  right: -30px;
+  bottom: -34px;
+  width: 126px;
+  opacity: .2;
+}
+
+.garden-archive-card:nth-child(even) .garden-archive-card-ornament {
+  right: auto;
+  left: -34px;
+  transform: rotate(-8deg) scaleX(-1);
+}
+
+.garden-about-card {
+  overflow: hidden;
+  border-radius: 28px 46px 30px 52px / 42px 28px 48px 30px;
+}
+
+.garden-about-vine {
+  position: absolute;
+  z-index: 0;
+  width: 210px;
+  opacity: .2;
+  pointer-events: none;
+}
+.garden-about-vine-left {
+  left: -64px;
+  bottom: -54px;
+  transform: rotate(-6deg);
+}
+.garden-about-vine-right {
+  top: -52px;
+  right: -42px;
+  transform: rotate(11deg);
+}
+.garden-about-card > *:not(.garden-about-vine) { position: relative; z-index: 1; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .garden-content-flora .flora-sprig { animation: garden-ribbon-sway 8s ease-in-out infinite; transform-box: fill-box; transform-origin: 50% 100%; }
+  .garden-content-flora .flora-sprig-mid { animation-delay: -2.7s; }
+  .garden-content-flora .flora-sprig-right { animation-delay: -5.2s; }
+}
+
+@keyframes garden-ribbon-sway {
+  0%, 100% { rotate: -1deg; }
+  50% { rotate: 1.4deg; }
+}
+
+@media (max-width: 760px) {
+  .garden-content-flora {
+    width: 150vw;
+    height: 92px;
+    opacity: .58;
+  }
+  .garden-content-flora-top { top: -40px; }
+  .garden-content-flora-bottom { bottom: -46px; opacity: .3; }
+  .garden-card-ornament { width: 88px; opacity: .2; }
+  .garden-about-vine { width: 150px; opacity: .14; }
+}
+
+@media (prefers-color-scheme: dark) {
+  .garden-content-flora { opacity: .48; }
+  .garden-flora-ribbon .flora-line,
+  .garden-flora-ribbon .flora-stem { stroke: rgba(165, 184, 139, .5); }
+  .garden-flora-ribbon .flora-leaf { fill: rgba(129, 153, 102, .11); }
+}

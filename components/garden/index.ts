@@ -6,3 +6,5 @@ export { default as GardenCorner } from "./GardenCorner";
 
 export { default as GardenOrnament } from "./GardenOrnament";
 export type { GardenOrnamentVariant } from "./GardenOrnament";
+
+export { default as GardenFloraRibbon } from "./GardenFloraRibbon";

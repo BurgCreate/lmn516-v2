@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { GardenGirl } from "@/components/garden";
+import { GardenFloraRibbon, GardenGirl, GardenOrnament } from "@/components/garden";
 
 const archiveItems = [
   {
@@ -34,7 +34,8 @@ const archiveItems = [
 
 export default function LifeArchive() {
   return (
-    <section id="archive" className="archive shell section-space">
+    <section id="archive" className="archive shell section-space garden-content-section garden-content-section-archive">
+      <GardenFloraRibbon className="garden-content-flora garden-content-flora-top" density="light" />
       <div className="archive-intro">
         <div className="archive-intro-copy">
           <p className="eyebrow">生活档案 · Digital Garden</p>
@@ -53,7 +54,11 @@ export default function LifeArchive() {
 
       <div className="archive-grid">
         {archiveItems.map((item) => (
-          <Link href={item.href} className="archive-card" key={item.href}>
+          <Link href={item.href} className="archive-card garden-archive-card" key={item.href}>
+            <GardenOrnament
+              variant={item.href === "/music" ? "bellflower" : item.href === "/walks" ? "vine" : item.href === "/room" ? "curlflower" : "wildflower"}
+              className="garden-card-ornament garden-archive-card-ornament"
+            />
             <span className="archive-icon" aria-hidden="true">{item.icon}</span>
             <span className="archive-card-copy">
               <strong>{item.title}</strong>
@@ -66,6 +71,7 @@ export default function LifeArchive() {
           </Link>
         ))}
       </div>
+      <GardenFloraRibbon className="garden-content-flora garden-content-flora-bottom" />
     </section>
   );
 }
