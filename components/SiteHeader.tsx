@@ -31,6 +31,7 @@ const navigationItems: NavigationItem[] = [
   { label: "本期", hash: "notes" },
   { label: "专题", hash: "project" },
   { label: "收藏", hash: "archive" },
+  { label: "文章墙", href: "/wall" },
   { label: "照片墙", href: "/photos" },
   { label: "关于", hash: "about" },
 ];

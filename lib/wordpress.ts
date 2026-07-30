@@ -595,3 +595,48 @@ export async function getMediaImages(
     return [];
   }
 }
+/**
+ * 获取全部正式文章。
+ *
+ * WordPress REST API 单次最多返回 100 篇，因此这里按页读取，
+ * 直到最后一页。文章墙使用这个方法，首页仍继续使用 getPosts。
+ */
+export async function getAllPosts(): Promise<Post[]> {
+  try {
+    const momentsCategoryId = await getCategoryId(MOMENTS_CATEGORY_SLUG);
+    const excludeMoments = momentsCategoryId
+      ? `&categories_exclude=${momentsCategoryId}`
+      : "";
+
+    const allPosts: Post[] = [];
+    const perPage = 100;
+    let page = 1;
+    let totalPages = 1;
+
+    do {
+      const response = await fetch(
+        `${WP_URL}/index.php?rest_route=/wp/v2/posts&per_page=${perPage}&page=${page}&_embed=1${excludeMoments}`,
+        {
+          next: {
+            revalidate: 300,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("WordPress all posts API unavailable");
+      }
+
+      const data = await response.json();
+      allPosts.push(...data.map(formatPost));
+
+      totalPages = Number(response.headers.get("X-WP-TotalPages") || "1");
+      page += 1;
+    } while (page <= totalPages);
+
+    return allPosts;
+  } catch (error) {
+    console.error("WordPress 全部文章获取失败:", error);
+    return fallbackPosts;
+  }
+}

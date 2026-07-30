@@ -6,6 +6,7 @@ const footerGroups = [
     title: "浏览",
     links: [
       { label: "首页", href: "/" },
+      { label: "文章墙", href: "/wall" },
       { label: "全部文章", href: "/posts" },
       { label: "碎碎念", href: "/moments" },
       { label: "照片墙", href: "/photos" },
