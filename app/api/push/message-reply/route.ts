@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import webpush from "web-push";
+import { getGardenMessengerTitle } from "@/lib/garden-messenger";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -47,9 +48,9 @@ export async function POST(request: Request) {
     await webpush.sendNotification(
       subscription,
       JSON.stringify({
-        title: "🌿 LMN516 回复了你",
-        body: preview || "你在花园信箱里收到了一封新回信。",
-        url: "/",
+        title: getGardenMessengerTitle(),
+        body: preview || "你收到一封新的回信 🌿",
+        url: "/?gardenMailbox=open",
         icon: "/icons/icon-192.png",
         badge: "/icons/badge-96.png",
         tag: `lmn516-message-reply-${body.conversationId || Date.now()}`,
