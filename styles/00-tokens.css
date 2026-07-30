@@ -5,16 +5,24 @@
 
 :root {
   /* Color tokens */
-  --color-bg: #f2efe7;
-  --color-surface: rgba(255, 255, 255, 0.48);
-  --color-surface-strong: rgba(255, 255, 255, 0.72);
-  --color-text: #20241f;
-  --color-text-muted: #6f746c;
-  --color-accent: #2f5e59;
-  --color-accent-soft: #dfe9e5;
-  --color-border: rgba(32, 36, 31, 0.14);
-  --color-border-strong: rgba(32, 36, 31, 0.22);
-  --color-selection: rgba(47, 94, 89, 0.18);
+  --color-bg: #f7f2e6;
+  --color-surface: rgba(255, 252, 243, 0.56);
+  --color-surface-strong: rgba(255, 253, 247, 0.82);
+  --color-text: #2f3d2e;
+  --color-text-muted: #687a5a;
+  --color-accent: #2f3d2e;
+  --color-accent-soft: #e5eadc;
+  --color-border: rgba(47, 61, 46, 0.13);
+  --color-border-strong: rgba(47, 61, 46, 0.22);
+  --color-selection: rgba(104, 122, 90, 0.22);
+
+  /* Brand palette derived from the LMN516 master illustration */
+  --garden-cream: #f7f2e6;
+  --garden-ink: #2f3d2e;
+  --garden-leaf: #687a5a;
+  --garden-sun: #f1c971;
+  --garden-blush: #f8d9c7;
+  --garden-paper: rgba(255, 252, 243, 0.72);
 
   /* Shadow tokens */
   --shadow-sm: 0 8px 24px rgba(44, 50, 43, 0.06);

@@ -1,0 +1,215 @@
+/* =========================================================
+   LMN516 Garden World Layer
+   The master illustration becomes the visual source of the whole site.
+   One global layer replaces scattered decorative thinking.
+========================================================= */
+
+body {
+  background:
+    linear-gradient(180deg, rgba(255, 253, 247, .26), transparent 18%),
+    var(--garden-cream);
+}
+
+.garden-world {
+  position: fixed;
+  z-index: 0;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  isolation: isolate;
+}
+
+.garden-world-drawing {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  min-height: 100vh;
+  color: var(--garden-leaf);
+  opacity: .34;
+}
+
+.garden-world-ink,
+.garden-world-grass,
+.garden-world-daisy,
+.garden-world-bells,
+.garden-world-butterfly {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.25;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.garden-world-daisy ellipse {
+  fill: rgba(255, 252, 238, .58);
+}
+
+.garden-world-gold {
+  fill: color-mix(in srgb, var(--garden-sun) 72%, transparent);
+  stroke: color-mix(in srgb, var(--garden-ink) 42%, transparent);
+}
+
+.garden-world-bells path:not(:first-child):not(:nth-child(2)):not(:nth-child(3)) {
+  fill: color-mix(in srgb, var(--garden-blush) 58%, transparent);
+}
+
+.garden-world-butterfly {
+  color: color-mix(in srgb, var(--garden-ink) 74%, var(--garden-leaf));
+  opacity: .62;
+}
+
+.garden-world-butterfly-small {
+  transform-box: fill-box;
+  transform-origin: center;
+  opacity: .42;
+}
+
+.garden-world-sun {
+  position: absolute;
+  z-index: -2;
+  top: -9rem;
+  left: -7rem;
+  width: min(48rem, 70vw);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  opacity: .34;
+  filter: blur(2px);
+  background:
+    repeating-conic-gradient(from 204deg at 50% 50%, rgba(241, 201, 113, .22) 0 5deg, transparent 5deg 12deg),
+    radial-gradient(circle, rgba(241, 201, 113, .32), rgba(241, 201, 113, .08) 36%, transparent 68%);
+  mask-image: radial-gradient(circle, #000 0 42%, transparent 72%);
+}
+
+.garden-world-paper {
+  position: absolute;
+  inset: 0;
+  opacity: .16;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.18'/%3E%3C/svg%3E");
+}
+
+.garden-world-wash {
+  position: absolute;
+  z-index: -1;
+  border-radius: 50%;
+  filter: blur(70px);
+  opacity: .2;
+}
+
+.garden-world-wash-a {
+  top: 24%;
+  right: -16rem;
+  width: 38rem;
+  height: 42rem;
+  background: var(--garden-blush);
+}
+
+.garden-world-wash-b {
+  bottom: 8%;
+  left: -18rem;
+  width: 42rem;
+  height: 34rem;
+  background: var(--garden-sun);
+}
+
+.site-header,
+main,
+.site-footer,
+.moment-bubble-wrap,
+.moment-bubble-shell {
+  position: relative;
+  z-index: 1;
+}
+
+/* Cards are translucent paper placed inside the same illustrated world. */
+.card,
+.note-card,
+.archive-card,
+.about-card,
+.post-card,
+.music-card,
+.photo-card,
+.garden-page-hero,
+.garden-section-frame {
+  background: color-mix(in srgb, var(--garden-paper) 82%, transparent);
+  border-color: color-mix(in srgb, var(--garden-ink) 13%, transparent);
+  box-shadow:
+    0 18px 46px rgba(47, 61, 46, .055),
+    inset 0 1px 0 rgba(255, 255, 255, .52);
+  backdrop-filter: blur(10px) saturate(.92);
+}
+
+/* Existing local flora becomes punctuation, not the whole sentence. */
+.garden-card-ornament,
+.garden-about-vine,
+.garden-content-flora,
+.garden-page-ornament,
+.garden-section-ornament {
+  opacity: .14 !important;
+}
+
+.moment-bubble {
+  background:
+    radial-gradient(circle at 28% 18%, rgba(255, 255, 255, .72), transparent 32%),
+    color-mix(in srgb, var(--garden-paper) 88%, var(--garden-blush));
+  border-color: color-mix(in srgb, var(--garden-leaf) 24%, transparent);
+  box-shadow:
+    0 18px 42px rgba(47, 61, 46, .12),
+    inset 0 1px 0 rgba(255, 255, 255, .68);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .garden-world-butterfly {
+    animation: garden-world-float 10s ease-in-out infinite;
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+
+  .garden-world-butterfly-small {
+    animation-delay: -4s;
+    animation-duration: 13s;
+  }
+}
+
+@keyframes garden-world-float {
+  0%, 100% { translate: 0 0; rotate: -1deg; }
+  50% { translate: 7px -10px; rotate: 2deg; }
+}
+
+@media (max-width: 760px) {
+  .garden-world-drawing {
+    width: 148%;
+    margin-left: -24%;
+    opacity: .25;
+  }
+
+  .garden-world-sun {
+    top: -5rem;
+    left: -10rem;
+    width: 32rem;
+    opacity: .26;
+  }
+
+  .garden-world-wash {
+    opacity: .14;
+  }
+}
+
+html[data-theme="dark"] .garden-world,
+body.dark .garden-world {
+  opacity: .72;
+}
+
+html[data-theme="dark"] .garden-world-drawing,
+body.dark .garden-world-drawing {
+  color: #9aac87;
+  opacity: .2;
+}
+
+html[data-theme="dark"] .garden-world-paper,
+body.dark .garden-world-paper {
+  opacity: .06;
+  mix-blend-mode: screen;
+}

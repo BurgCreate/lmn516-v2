@@ -8,3 +8,5 @@ export { default as GardenOrnament } from "./GardenOrnament";
 export type { GardenOrnamentVariant } from "./GardenOrnament";
 
 export { default as GardenFloraRibbon } from "./GardenFloraRibbon";
+
+export { default as GardenWorldLayer } from "./GardenWorldLayer";
