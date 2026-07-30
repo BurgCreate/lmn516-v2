@@ -1,5 +1,5 @@
-import Image from "next/image";
 import Link from "next/link";
+import { GardenGirl } from "@/components/garden";
 
 const archiveItems = [
   {
@@ -46,13 +46,8 @@ export default function LifeArchive() {
         </div>
 
         <div className="archive-girl" aria-hidden="true">
-          <Image
-            src="/images/garden/garden-girl.jpeg"
-            alt=""
-            width={360}
-            height={360}
-            sizes="(max-width: 720px) 180px, 260px"
-          />
+          <GardenGirl scene="reading" sizes="(max-width: 720px) 180px, 260px" />
+          <img className="archive-girl-flowers" src="/garden-assets/botanical/daisy-cluster.svg" alt="" />
         </div>
       </div>
 

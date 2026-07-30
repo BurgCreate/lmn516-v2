@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 180" fill="none">
+  <g stroke="#66704b" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity=".9">
+    <path d="M117 174c-4-51 0-91 7-129M81 174c2-34-4-60-21-86M154 174c-1-37 9-67 31-94"/>
+    <path d="M112 101c-22-11-37-7-46 11 19-1 34 4 45 16M128 79c22-13 39-10 50 8-20 0-35 7-47 20M153 121c19-12 34-10 45 7-17 0-31 6-41 18M83 132c-18-11-32-8-41 8 17-1 29 4 38 16"/>
+  </g>
+  <g stroke="#596344" stroke-width="3" fill="#fffaf0">
+    <g transform="translate(123 38)"><ellipse rx="12" ry="28"/><ellipse rx="12" ry="28" transform="rotate(60)"/><ellipse rx="12" ry="28" transform="rotate(120)"/><circle r="11" fill="#d6a62f" stroke="none"/></g>
+    <g transform="translate(57 78) scale(.72)"><ellipse rx="12" ry="28"/><ellipse rx="12" ry="28" transform="rotate(60)"/><ellipse rx="12" ry="28" transform="rotate(120)"/><circle r="11" fill="#d6a62f" stroke="none"/></g>
+    <g transform="translate(190 70) scale(.62)"><ellipse rx="12" ry="28"/><ellipse rx="12" ry="28" transform="rotate(60)"/><ellipse rx="12" ry="28" transform="rotate(120)"/><circle r="11" fill="#d6a62f" stroke="none"/></g>
+  </g>
+</svg>

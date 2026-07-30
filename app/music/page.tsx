@@ -1,6 +1,7 @@
 import Link from "next/link";
 import MusicCoverGrid from "@/components/MusicCoverGrid";
 import { music2026 } from "@/lib/music";
+import { GardenCorner, GardenPageHero } from "@/components/garden";
 
 const playlistUrl =
   "https://music.apple.com/cn/playlist/2026-%E9%9F%B3%E4%B9%90%E5%9B%9E%E5%BF%86/pl.rp-Yb77hn90p9yd";
@@ -15,35 +16,28 @@ export default function MusicPage() {
         ← 返回首页
       </Link>
 
-      <header className="music-hero">
-        <div className="music-hero-copy">
-          <p className="eyebrow">生活档案 · 音乐</p>
-          <h1>2026 音乐回忆</h1>
+      <GardenPageHero
+        scene="music"
+        place="音乐小屋"
+        eyebrow="生活档案 · 音乐"
+        title="2026 音乐回忆"
+        intro="收藏这一年反复播放的声音。歌单会继续更新，留下旋律，也留下它们经过生活时的痕迹。"
+      />
 
-          <p className="music-intro">
-            收藏这一年反复播放的声音。歌单会继续更新，留下旋律，也留下它们经过生活时的痕迹。
-          </p>
-
-          <a
-            className="music-open-link"
-            href={playlistUrl}
-            target="_blank"
-            rel="noreferrer"
-          >
-            在 Apple Music 中打开
-            <span aria-hidden="true">↗</span>
-          </a>
-        </div>
-
-        <div className="music-mark" aria-hidden="true">
-          <span>2026</span>
-          <strong>♫</strong>
-          <small>LMN516</small>
-        </div>
-      </header>
+      <div className="music-garden-action">
+        <a
+          className="music-open-link"
+          href={playlistUrl}
+          target="_blank"
+          rel="noreferrer"
+        >
+          在 Apple Music 中打开
+          <span aria-hidden="true">↗</span>
+        </a>
+      </div>
 
       <section
-        className="music-section"
+        className="music-section garden-music-section"
         aria-labelledby="featured-music-title"
       >
         <div className="music-section-heading">
@@ -55,6 +49,7 @@ export default function MusicPage() {
           <p>{music2026.length} 首正在收藏的声音</p>
         </div>
 
+        <GardenCorner side="right" variant="leaves" />
         <MusicCoverGrid tracks={music2026} />
       </section>
 
