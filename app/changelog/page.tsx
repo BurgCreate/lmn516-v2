@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import SiteHeader from "@/components/SiteHeader";
 
 type ReleaseTone = "new" | "improved" | "fixed" | "rebuilt";
@@ -500,6 +501,8 @@ const toneLabels: Record<ReleaseTone, string> = {
 };
 
 export default function ChangelogPage() {
+  notFound();
+
   return (
     <main className="changelog-page">
       <SiteHeader className="changelog-site-header" />
