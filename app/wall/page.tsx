@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { Post } from "@/lib/wordpress";
-import { getAllPosts } from "@/lib/wordpress";
+import { getPosts } from "@/lib/wordpress";
 
 export const revalidate = 300;
 
@@ -32,9 +32,15 @@ function ArticleCard({
     >
       <div className="article-wall-visual post-visual">
         {post.image ? (
-          <img src={post.image} alt={post.title} className="post-image" />
+          <img
+            src={post.image}
+            alt={post.title}
+            className="post-image"
+          />
         ) : (
-          <span className="article-wall-image-placeholder">LMN516</span>
+          <span className="article-wall-image-placeholder">
+            LMN516
+          </span>
         )}
       </div>
 
@@ -45,16 +51,20 @@ function ArticleCard({
 
         <h2>{post.title}</h2>
 
-        <p className="article-wall-excerpt">{cleanExcerpt(post.excerpt)}</p>
+        <p className="article-wall-excerpt">
+          {cleanExcerpt(post.excerpt)}
+        </p>
 
-        <span className="text-link">继续阅读 →</span>
+        <span className="text-link">
+          继续阅读 →
+        </span>
       </div>
     </Link>
   );
 }
 
 export default async function ArticleWallPage() {
-  const posts = await getAllPosts();
+  const posts = await getPosts(100);
 
   return (
     <main className="article-wall-page shell">
@@ -63,12 +73,21 @@ export default async function ArticleWallPage() {
       </Link>
 
       <header className="article-wall-header">
-        <p className="eyebrow">ARTICLE WALL</p>
+        <p className="eyebrow">
+          ARTICLE WALL
+        </p>
+
         <h1>文章墙</h1>
-        <p>{posts.length} 篇文章，沿着时间慢慢铺开。</p>
+
+        <p>
+          {posts.length} 篇文章，沿着时间慢慢铺开。
+        </p>
       </header>
 
-      <section className="article-wall-grid" aria-label="全部文章">
+      <section
+        className="article-wall-grid"
+        aria-label="全部文章"
+      >
         {posts.map((post, index) => (
           <ArticleCard
             post={post}
