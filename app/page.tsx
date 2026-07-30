@@ -1,5 +1,6 @@
 import SiteHeader from "@/components/SiteHeader";
 import MomentBubble from "@/components/MomentBubble";
+import GardenEntrance from "@/components/home/GardenEntrance";
 import HeroSection from "@/components/home/HeroSection";
 import LatestPosts from "@/components/home/LatestPosts";
 import LifeArchive from "@/components/home/LifeArchive";
@@ -73,6 +74,8 @@ export default async function HomePage() {
       <div className="paper-noise" aria-hidden="true" />
 
       <SiteHeader />
+
+      <GardenEntrance />
 
       <HeroSection
         mediaImages={mediaImages}

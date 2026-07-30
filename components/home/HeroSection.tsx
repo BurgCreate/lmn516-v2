@@ -32,7 +32,7 @@ export default function HeroSection({
   remaining,
 }: HeroSectionProps) {
   return (
-    <section className="hero shell">
+    <section id="garden-today" className="hero shell">
       <div className="hero-photo-area">
         <RandomPhotoWall images={mediaImages} />
       </div>
