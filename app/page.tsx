@@ -1,7 +1,6 @@
 import SiteHeader from "@/components/SiteHeader";
 import MomentBubble from "@/components/MomentBubble";
-import GardenEntrance from "@/components/home/GardenEntrance";
-import HeroSection from "@/components/home/HeroSection";
+import HomeWorldHero from "@/components/home/HomeWorldHero";
 import LatestPosts from "@/components/home/LatestPosts";
 import LifeArchive from "@/components/home/LifeArchive";
 import AboutSection from "@/components/home/AboutSection";
@@ -17,23 +16,6 @@ import {
 } from "@/lib/wordpress";
 
 export const revalidate = 300;
-
-function getTodayInfo() {
-  const now = new Date();
-
-  return {
-    date: `${String(now.getMonth() + 1).padStart(2, "0")}.${String(
-      now.getDate()
-    ).padStart(2, "0")}`,
-    fullDate: `${now.getFullYear()}.${String(now.getMonth() + 1).padStart(
-      2,
-      "0"
-    )}.${String(now.getDate()).padStart(2, "0")}`,
-    weekday: now.toLocaleDateString("zh-CN", {
-      weekday: "long",
-    }),
-  };
-}
 
 function getYearProgress() {
   const now = new Date();
@@ -66,10 +48,6 @@ export default async function HomePage() {
     : 0;
 
   const target = 10000;
-  const pushupProgress =
-    target > 0 ? ((pushups / target) * 100).toFixed(2) : "0.00";
-  const remaining = Math.max(target - pushups, 0);
-  const today = getTodayInfo();
   const yearProgress = getYearProgress();
 
   return (
@@ -79,18 +57,12 @@ export default async function HomePage() {
 
       <SiteHeader />
 
-      <GardenEntrance />
-
-      <HeroSection
+      <HomeWorldHero
         mediaImages={mediaImages}
-        today={today}
-        yearProgress={yearProgress}
         featured={featured}
-        pushupPost={pushupPost}
         pushups={pushups}
         target={target}
-        pushupProgress={pushupProgress}
-        remaining={remaining}
+        yearProgress={yearProgress}
       />
 
       <GardenTrail variant="bird" label="沿着小路，看看最近长出了什么" />
