@@ -1946,3 +1946,76 @@ main#top {
     transform: none;
   }
 }
+
+/* ==========================
+   Garden asset system · V3.0
+========================== */
+
+.garden-girl {
+  position: relative;
+  display: block;
+  width: 100%;
+  margin: 0;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.garden-girl-square {
+  aspect-ratio: 1;
+}
+
+.garden-girl-landscape {
+  aspect-ratio: 1.12 / 1;
+}
+
+.garden-girl-media {
+  object-fit: cover;
+  object-position: center;
+}
+
+.garden-entrance-girl {
+  height: 100%;
+}
+
+.garden-entrance-girl .garden-girl-media {
+  object-fit: cover;
+}
+
+.garden-motif {
+  position: absolute;
+  z-index: 3;
+  display: block;
+  pointer-events: none;
+  opacity: 0.88;
+  mix-blend-mode: multiply;
+}
+
+.garden-motif-media {
+  object-fit: contain;
+}
+
+.garden-entrance-butterfly {
+  top: 9%;
+  left: 3%;
+  width: clamp(72px, 12vw, 126px);
+  aspect-ratio: 1.3;
+  transform: rotate(-8deg);
+}
+
+.garden-entrance-grass {
+  right: -4%;
+  bottom: -3%;
+  width: clamp(150px, 27vw, 290px);
+  aspect-ratio: 1.45;
+  opacity: 0.72;
+}
+
+@media (max-width: 760px) {
+  .garden-entrance-butterfly {
+    width: 76px;
+  }
+
+  .garden-entrance-grass {
+    width: 170px;
+  }
+}

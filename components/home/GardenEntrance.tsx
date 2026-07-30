@@ -1,5 +1,5 @@
-import Image from "next/image";
 import Link from "next/link";
+import { GardenGirl, GardenMotif } from "@/components/garden";
 
 export default function GardenEntrance() {
   return (
@@ -48,14 +48,9 @@ export default function GardenEntrance() {
         <span className="garden-cloud garden-cloud-two" aria-hidden="true" />
 
         <div className="garden-illustration-frame">
-          <Image
-            src="/images/garden/garden-girl.jpeg"
-            alt="戴草帽的女孩正在花园里照看一朵小雏菊"
-            fill
-            priority
-            sizes="(max-width: 760px) 88vw, 46vw"
-            className="garden-girl-image"
-          />
+          <GardenGirl scene="welcome" priority className="garden-entrance-girl" />
+          <GardenMotif name="butterfly" className="garden-entrance-butterfly" />
+          <GardenMotif name="grass" className="garden-entrance-grass" />
         </div>
 
         <div className="garden-sign" aria-hidden="true">
