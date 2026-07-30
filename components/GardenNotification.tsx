@@ -553,7 +553,7 @@ export default function GardenNotification() {
             aria-labelledby="garden-welcome-title"
           >
             <div className="garden-welcome-art" aria-hidden="true">
-              <img src="/images/garden/garden-girl.jpeg" alt="" />
+              <img src="/garden-assets/characters/garden-girl-welcome.jpeg" alt="" />
             </div>
 
             <div className="garden-welcome-copy">

@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-type GardenGirlScene =
+export type GardenGirlScene =
   | "welcome"
   | "about"
   | "reading"

@@ -317,3 +317,18 @@
   .garden-story-card,
   .garden-archive-sheet { background: rgba(31, 36, 29, .74); }
 }
+
+.garden-lost-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  flex-wrap: wrap;
+  margin-top: -28px;
+}
+
+@media (max-width: 760px) {
+  .garden-lost-actions {
+    margin-top: -14px;
+  }
+}
