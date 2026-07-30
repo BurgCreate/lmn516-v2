@@ -194,7 +194,9 @@ export default function PwaTestPanel() {
       console.error(error);
       setStatus("error");
       setMessage(
-        "开启通知失败。请确认通过 HTTPS 打开，并从主屏幕 App 运行。"
+        /iPhone|iPad|iPod/i.test(navigator.userAgent)
+          ? "开启通知失败。请确认通过 HTTPS 打开，并从主屏幕 App 运行。"
+          : "开启通知失败。请确认通过 HTTPS 打开，并检查浏览器的网站通知权限。"
       );
     }
   }
@@ -372,25 +374,13 @@ export default function PwaTestPanel() {
       </div>
 
       <details className="pwa-test-help">
-        <summary>iPhone 安装步骤</summary>
+        <summary>不同设备的开启方式</summary>
 
         <ol>
-          <li>
-            使用 Safari 打开
-            lmn516.com/pwa-test。
-          </li>
-          <li>
-            点击分享按钮，再选择“添加到主屏幕”。
-          </li>
-          <li>
-            退出 Safari，从桌面的 LMN516 图标重新打开。
-          </li>
-          <li>
-            点击“开启通知”，并允许系统通知。
-          </li>
-          <li>
-            点击测试按钮后退出到主屏幕，约 5 秒后查看通知。
-          </li>
+          <li>电脑 Chrome、Edge 与支持 Web Push 的 Android 浏览器，可以直接点击“开启通知”。</li>
+          <li>iPhone 或 iPad 请使用 Safari 打开本站，点击分享按钮并选择“添加到主屏幕”。</li>
+          <li>从桌面的 LMN516 图标重新打开，再点击“开启通知”。</li>
+          <li>点击测试按钮后切换到其他页面或退出到主屏幕，约 5 秒后查看通知。</li>
         </ol>
       </details>
     </section>

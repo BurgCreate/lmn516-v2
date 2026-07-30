@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { createPortal } from "react-dom";
 
 type PermissionState = NotificationPermission | "unsupported";
 type NoticeState = "idle" | "working" | "success" | "error";
@@ -34,7 +33,6 @@ type ClientEnvironment = {
 };
 
 const DISMISS_KEY = "lmn516-garden-notice-dismissed-until-v4";
-const SUBSCRIBED_KEY = "lmn516-garden-notifications-enabled-v1";
 const SEVEN_DAYS = 7 * 24 * 60 * 60 * 1000;
 
 function urlBase64ToUint8Array(base64String: string) {
@@ -174,106 +172,68 @@ export default function GardenNotification() {
   }, []);
 
   useEffect(() => {
-    let cancelled = false;
+    const appMode = isStandaloneMode();
+    const browserSupported =
+      "serviceWorker" in navigator &&
+      "PushManager" in window &&
+      "Notification" in window;
 
-    async function initializeNotifications() {
-      const appMode = isStandaloneMode();
-      const browserSupported =
-        "serviceWorker" in navigator &&
-        "PushManager" in window &&
-        "Notification" in window;
+    setEnvironment(detectEnvironment());
+    setStandalone(appMode);
+    setSupported(browserSupported);
 
-      const nextEnvironment = detectEnvironment();
-      setEnvironment(nextEnvironment);
-      setStandalone(appMode);
-      setSupported(browserSupported);
+    const dismissedUntil = Number(
+      window.localStorage.getItem(DISMISS_KEY) || "0"
+    );
+
+    if (appMode && Date.now() > dismissedUntil) {
+      const welcomeTimer = window.setTimeout(() => {
+        setWelcomeOpen(true);
+      }, 500);
 
       if (!browserSupported) {
         setPermission("unsupported");
-        return;
+        return () => window.clearTimeout(welcomeTimer);
       }
 
-      const currentPermission = Notification.permission;
-      setPermission(currentPermission);
+      setPermission(Notification.permission);
 
-      try {
-        const registration = await navigator.serviceWorker.register("/sw.js", {
-          scope: "/",
+      navigator.serviceWorker
+        .register("/sw.js", { scope: "/" })
+        .then((registration) => registration.pushManager.getSubscription())
+        .then((existingSubscription) => {
+          setSubscription(existingSubscription);
+
+          if (
+            existingSubscription ||
+            Notification.permission !== "default"
+          ) {
+            setWelcomeOpen(false);
+          }
+        })
+        .catch((error) => {
+          console.error("Garden notification initialization failed:", error);
         });
 
-        let existingSubscription =
-          await registration.pushManager.getSubscription();
-
-        // iOS Web App returning from another page can remount this component
-        // before PushManager finishes restoring the subscription. If permission
-        // is already granted, recover the subscription silently instead of
-        // showing the welcome dialog again.
-        if (!existingSubscription && currentPermission === "granted") {
-          const publicKey = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY;
-
-          if (publicKey) {
-            existingSubscription =
-              await registration.pushManager.subscribe({
-                userVisibleOnly: true,
-                applicationServerKey: urlBase64ToUint8Array(publicKey),
-              });
-
-            const response = await fetch("/api/push/subscribe", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                subscription: existingSubscription.toJSON(),
-              }),
-            });
-
-            if (!response.ok) {
-              throw new Error("恢复推送订阅失败。");
-            }
-          }
-        }
-
-        if (cancelled) return;
-
-        setSubscription(existingSubscription);
-
-        if (existingSubscription && currentPermission === "granted") {
-          window.localStorage.setItem(SUBSCRIBED_KEY, "1");
-          setWelcomeOpen(false);
-          return;
-        }
-
-        const dismissedUntil = Number(
-          window.localStorage.getItem(DISMISS_KEY) || "0"
-        );
-        const wasSubscribed =
-          window.localStorage.getItem(SUBSCRIBED_KEY) === "1";
-
-        // Only first-time visitors with undecided permission should see this.
-        // Do not reopen it on every route remount or browser back navigation.
-        if (
-          appMode &&
-          currentPermission === "default" &&
-          !wasSubscribed &&
-          Date.now() > dismissedUntil
-        ) {
-          setWelcomeOpen(true);
-        } else {
-          setWelcomeOpen(false);
-        }
-      } catch (error) {
-        console.error("Garden notification initialization failed:", error);
-
-        if (!cancelled) {
-          setWelcomeOpen(false);
-        }
-      }
+      return () => window.clearTimeout(welcomeTimer);
     }
 
-    void initializeNotifications();
+    if (!browserSupported) {
+      setPermission("unsupported");
+      return;
+    }
 
-    return () => {
-      cancelled = true;
-    };
+    setPermission(Notification.permission);
+
+    navigator.serviceWorker
+      .register("/sw.js", { scope: "/" })
+      .then((registration) => registration.pushManager.getSubscription())
+      .then((existingSubscription) => {
+        setSubscription(existingSubscription);
+      })
+      .catch((error) => {
+        console.error("Garden notification initialization failed:", error);
+      });
   }, []);
 
   useEffect(() => {
@@ -409,17 +369,20 @@ export default function GardenNotification() {
   }
 
   async function enableNotifications() {
-    if (!isStandaloneMode()) {
+    const appMode = isStandaloneMode();
+    const requiresInstall = environment.platform === "ios" && !appMode;
+
+    if (requiresInstall) {
       await requestInstall();
       return;
     }
 
-    setStandalone(true);
+    setStandalone(appMode);
 
     if (!supported) {
       setStatus("error");
       setMessage(
-        `${environment.browserName} 已经从桌面打开 LMN516，但当前环境没有提供完整的 Web Push。建议使用 Chrome；iPhone 请使用添加到主屏幕后的 Safari Web App。`
+        `${environment.browserName} 当前没有提供完整的 Web Push。桌面端和 Android 建议使用最新版 Chrome 或 Edge；iPhone 请先添加到主屏幕后再开启。`
       );
       return;
     }
@@ -466,7 +429,6 @@ export default function GardenNotification() {
       setWelcomeOpen(false);
       setPanelOpen(true);
       window.localStorage.removeItem(DISMISS_KEY);
-      window.localStorage.setItem(SUBSCRIBED_KEY, "1");
     } catch (error) {
       console.error("Enable garden notification failed:", error);
       setStatus("error");
@@ -494,7 +456,9 @@ export default function GardenNotification() {
   }
 
   const isSubscribed = permission === "granted" && Boolean(subscription);
-  const needsInstall = !standalone;
+  const needsInstall =
+    environment.isInAppBrowser ||
+    (environment.platform === "ios" && !standalone);
   const shouldOfferCopy =
     needsInstall &&
     (environment.isInAppBrowser ||
@@ -515,44 +479,106 @@ export default function GardenNotification() {
         {isSubscribed && <span className="garden-bell-dot" />}
       </button>
 
-      {typeof document !== "undefined" && panelOpen &&
-        createPortal(
-          <div className="garden-bell-panel" role="dialog" aria-label="花园信使">
-            <p className="garden-notice-kicker">🌿 花园信使</p>
+      {panelOpen && (
+        <div className="garden-bell-panel" role="dialog" aria-label="花园信使">
+          <p className="garden-notice-kicker">🌿 花园信使</p>
 
-            {isSubscribed ? (
-              <>
-                <h2>已经保持联系</h2>
-                <p>这里更新得很慢。只有当花园有新的变化时，我才会轻轻提醒你。</p>
-              </>
-            ) : permission === "denied" && standalone ? (
-              <>
-                <h2>通知暂时关闭</h2>
-                <p>请在手机系统设置中允许 LMN516 发送通知。</p>
-              </>
-            ) : needsInstall ? (
-              <>
-                <h2>{environment.isInAppBrowser ? "先在系统浏览器中打开" : "把花园带到主屏幕"}</h2>
-                <p>
-                  当前环境：{environment.browserName}。{installPrompt
-                    ? "点击下面的按钮即可调出系统安装窗口。"
-                    : environment.platform === "ios"
-                      ? "完成添加后，从桌面图标打开，才能开启通知。"
-                      : "添加后从桌面图标重新打开，再开启通知。"}
-                </p>
-                <button type="button" className="garden-notice-primary" onClick={requestInstall}>
-                  {installPrompt
-                    ? "📱 立即安装 LMN516"
-                    : environment.isInAppBrowser
-                      ? "🌐 查看打开方法"
-                      : "📱 查看添加方法"}
+          {isSubscribed ? (
+            <>
+              <h2>已经保持联系</h2>
+              <p>
+                这里更新得很慢。只有当花园有新的变化时，我才会轻轻提醒你。
+              </p>
+            </>
+          ) : permission === "denied" ? (
+            <>
+              <h2>通知暂时关闭</h2>
+              <p>请在浏览器或系统设置中重新允许 LMN516 发送通知。</p>
+            </>
+          ) : needsInstall ? (
+            <>
+              <h2>
+                {environment.isInAppBrowser
+                  ? "先在系统浏览器中打开"
+                  : "把花园带到主屏幕"}
+              </h2>
+              <p>
+                当前环境：{environment.browserName}。{installPrompt
+                  ? "点击下面的按钮即可调出系统安装窗口。"
+                  : environment.platform === "ios"
+                    ? "完成添加后，从桌面图标打开，才能开启通知。"
+                    : "添加后从桌面图标重新打开，再开启通知。"}
+              </p>
+              <button
+                type="button"
+                className="garden-notice-primary"
+                onClick={requestInstall}
+              >
+                {installPrompt
+                  ? "📱 立即安装 LMN516"
+                  : environment.isInAppBrowser
+                    ? "🌐 查看打开方法"
+                    : "📱 查看添加方法"}
+              </button>
+              {shouldOfferCopy && (
+                <button type="button" onClick={copyCurrentUrl}>
+                  复制网址
                 </button>
-                {shouldOfferCopy && <button type="button" onClick={copyCurrentUrl}>复制网址</button>}
-              </>
-            ) : (
-              <>
-                <h2>听见花园的新消息</h2>
-                <p>当前环境：{environment.browserName}。点击一次即可请求系统通知权限。</p>
+              )}
+            </>
+          ) : (
+            <>
+              <h2>听见花园的新消息</h2>
+              <p>
+                当前环境：{environment.browserName}。点击一次即可请求系统通知权限。
+              </p>
+              <button
+                type="button"
+                className="garden-notice-primary"
+                onClick={enableNotifications}
+                disabled={status === "working"}
+              >
+                {status === "working" ? "正在开启……" : "🌿 开启通知"}
+              </button>
+            </>
+          )}
+
+          {message && (
+            <p className={`garden-notice-message is-${status}`}>{message}</p>
+          )}
+        </div>
+      )}
+
+      {welcomeOpen && (
+        <div className="garden-welcome-backdrop" role="presentation">
+          <section
+            className="garden-welcome-card"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="garden-welcome-title"
+          >
+            <div className="garden-welcome-art" aria-hidden="true">
+              <img src="/garden-assets/characters/garden-girl-welcome.jpeg" alt="" />
+            </div>
+
+            <div className="garden-welcome-copy">
+              <p className="garden-notice-kicker">🌿 花园来信</p>
+              <h2 id="garden-welcome-title">欢迎来到 LMN516</h2>
+              <p>
+                我会一直照顾这座小花园。如果这里有新的照片、故事或碎碎念，我会轻轻告诉你。
+              </p>
+              <p className="garden-welcome-note">
+                这里更新得很慢，也不会频繁打扰你。
+              </p>
+
+              {message && (
+                <p className={`garden-notice-message is-${status}`}>{message}</p>
+              )}
+
+              <div className="garden-welcome-actions">
+                <button type="button" onClick={dismissWelcome}>
+                  以后再说
+                </button>
                 <button
                   type="button"
                   className="garden-notice-primary"
@@ -561,51 +587,11 @@ export default function GardenNotification() {
                 >
                   {status === "working" ? "正在开启……" : "🌿 开启通知"}
                 </button>
-              </>
-            )}
-
-            {message && <p className={`garden-notice-message is-${status}`}>{message}</p>}
-          </div>,
-          document.body
-        )}
-
-      {typeof document !== "undefined" && welcomeOpen &&
-        createPortal(
-          <div className="garden-welcome-backdrop" role="presentation">
-            <section
-              className="garden-welcome-card"
-              role="dialog"
-              aria-modal="true"
-              aria-labelledby="garden-welcome-title"
-            >
-              <div className="garden-welcome-art" aria-hidden="true">
-                <img src="/garden-assets/characters/garden-girl-welcome.jpeg" alt="" />
               </div>
-
-              <div className="garden-welcome-copy">
-                <p className="garden-notice-kicker">🌿 花园来信</p>
-                <h2 id="garden-welcome-title">欢迎来到 LMN516</h2>
-                <p>我会一直照顾这座小花园。如果这里有新的照片、故事或碎碎念，我会轻轻告诉你。</p>
-                <p className="garden-welcome-note">这里更新得很慢，也不会频繁打扰你。</p>
-
-                {message && <p className={`garden-notice-message is-${status}`}>{message}</p>}
-
-                <div className="garden-welcome-actions">
-                  <button type="button" onClick={dismissWelcome}>以后再说</button>
-                  <button
-                    type="button"
-                    className="garden-notice-primary"
-                    onClick={enableNotifications}
-                    disabled={status === "working"}
-                  >
-                    {status === "working" ? "正在开启……" : "🌿 开启通知"}
-                  </button>
-                </div>
-              </div>
-            </section>
-          </div>,
-          document.body
-        )}
+            </div>
+          </section>
+        </div>
+      )}
     </div>
   );
 }
