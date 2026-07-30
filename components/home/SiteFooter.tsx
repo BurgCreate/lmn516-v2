@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { GardenBrandSprig } from "@/components/garden";
 
 const footerGroups = [
   {
@@ -46,12 +47,20 @@ function FooterLinks({ links }: { links: (typeof footerGroups)[number]["links"] 
 export default function SiteFooter() {
   return (
     <footer className="site-footer">
+      <div className="site-footer-landscape" aria-hidden="true">
+        <span className="site-footer-sun" />
+        <span className="site-footer-grass site-footer-grass-left" />
+        <span className="site-footer-grass site-footer-grass-right" />
+      </div>
+
       <div className="site-footer-inner shell">
         <div className="footer-brand">
-          <Link href="/" className="footer-logo">
-            LMN516
+          <Link href="/" className="footer-logo" aria-label="LMN516 首页">
+            <GardenBrandSprig className="footer-logo-sprig" />
+            <span>LMN516</span>
           </Link>
-          <p>一本持续更新的个人生活杂志，也是一座慢慢生长的数字花园。</p>
+          <span className="footer-brand-kicker">Digital Garden</span>
+          <p>记录生活，培育成长。一本持续更新的个人生活杂志，也是一座慢慢生长的数字花园。</p>
         </div>
 
         <div className="footer-map footer-map-desktop" aria-label="网站地图">
