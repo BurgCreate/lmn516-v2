@@ -258,7 +258,6 @@ export default function GardenNotification() {
       setStandalone(appMode);
       setSupported(browserSupported);
       setServerConfirmed(false);
-      setTestAccepted(false);
 
       const dismissedUntil = Number(
         window.localStorage.getItem(DISMISS_KEY) || "0"
@@ -499,7 +498,6 @@ export default function GardenNotification() {
     setStatus("working");
     setMessage("正在连接花园信使……");
     setServerConfirmed(false);
-    setTestAccepted(false);
 
     try {
       const nextPermission = await Notification.requestPermission();
