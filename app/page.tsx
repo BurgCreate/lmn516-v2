@@ -7,6 +7,8 @@ import LifeArchive from "@/components/home/LifeArchive";
 import AboutSection from "@/components/home/AboutSection";
 import SiteFooter from "@/components/home/SiteFooter";
 import GardenTrail from "@/components/home/GardenTrail";
+import GardenAtmosphere from "@/components/home/GardenAtmosphere";
+import GardenSectionFrame from "@/components/home/GardenSectionFrame";
 import {
   getPosts,
   getPostById,
@@ -73,6 +75,7 @@ export default async function HomePage() {
   return (
     <main id="top">
       <div className="paper-noise" aria-hidden="true" />
+      <GardenAtmosphere />
 
       <SiteHeader />
 
@@ -91,11 +94,17 @@ export default async function HomePage() {
       />
 
       <GardenTrail variant="bird" label="沿着小路，看看最近长出了什么" />
-      <LatestPosts featured={featured} cards={cards} />
+      <GardenSectionFrame variant="notes" marker="01 · 新芽">
+        <LatestPosts featured={featured} cards={cards} />
+      </GardenSectionFrame>
       <GardenTrail variant="bench" label="在长椅旁，翻一翻生活收藏" />
-      <LifeArchive />
+      <GardenSectionFrame variant="archive" marker="02 · 收藏">
+        <LifeArchive />
+      </GardenSectionFrame>
       <GardenTrail variant="mailbox" label="花园尽头，也欢迎留下你的痕迹" />
-      <AboutSection />
+      <GardenSectionFrame variant="about" marker="03 · 树下">
+        <AboutSection />
+      </GardenSectionFrame>
 
       {latestMoment && (
         <MomentBubble
