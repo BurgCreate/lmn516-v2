@@ -1,6 +1,6 @@
 /* ==========================
    Article Wall
-   Independent all-post visual grid.
+   Uses the same complete article cards as the homepage.
 ========================== */
 
 .article-wall-page {
@@ -24,134 +24,116 @@
 
 .article-wall-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  grid-auto-flow: dense;
-  grid-auto-rows: 92px;
-  gap: 18px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+  align-items: stretch;
 }
 
 .article-wall-card {
-  position: relative;
-  display: grid;
   min-width: 0;
-  overflow: hidden;
-  border: 1px solid var(--card-border);
-  border-radius: var(--radius-lg);
-  background: var(--card-bg);
-  box-shadow: var(--card-shadow);
   color: inherit;
   text-decoration: none;
-  transition:
-    transform var(--card-transition),
-    border-color var(--card-transition),
-    box-shadow var(--card-transition);
 }
 
-.article-wall-card:hover {
-  transform: translateY(var(--card-lift));
-  border-color: var(--card-border-hover);
-  box-shadow: var(--card-shadow-hover);
-}
-
+/* Standard card: image above, complete article information below. */
 .article-wall-card-portrait {
-  grid-column: span 1;
-  grid-row: span 5;
-}
-
-.article-wall-card-wide {
-  grid-column: span 2;
-  grid-row: span 3;
-  grid-template-columns: 1.25fr 1fr;
-}
-
-.article-wall-card-tall {
-  grid-column: span 1;
-  grid-row: span 6;
-}
-
-.article-wall-image {
-  position: relative;
-  min-height: 0;
-  overflow: hidden;
-  background: var(--color-accent-soft);
-}
-
-.article-wall-card-portrait .article-wall-image,
-.article-wall-card-tall .article-wall-image {
-  aspect-ratio: 3 / 4;
-}
-
-.article-wall-card-wide .article-wall-image {
-  height: 100%;
-}
-
-.article-wall-image img {
-  width: 100%;
-  height: 100%;
-  display: block;
-  object-fit: cover;
-  transition: transform 0.35s ease;
-}
-
-.article-wall-card:hover .article-wall-image img {
-  transform: scale(1.025);
-}
-
-.article-wall-placeholder {
-  position: absolute;
-  inset: 0;
-  display: grid;
-  place-items: center;
-  color: color-mix(in srgb, var(--color-accent) 72%, var(--text));
-  font-family: Inter, sans-serif;
-  font-size: clamp(18px, 2vw, 30px);
-  letter-spacing: 0.08em;
-}
-
-.article-wall-copy {
-  min-width: 0;
-  padding: 22px;
   display: flex;
   flex-direction: column;
 }
 
-.article-wall-copy time {
-  color: var(--muted);
-  font-family: Inter, sans-serif;
-  font-size: 12px;
-  letter-spacing: 0.06em;
+.article-wall-card-portrait .article-wall-visual {
+  min-height: 0;
+  aspect-ratio: 4 / 3;
 }
 
-.article-wall-copy h2 {
-  margin: 12px 0 18px;
-  font-size: 21px;
-  line-height: 1.38;
+.article-wall-card-portrait .article-wall-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
 }
 
-.article-wall-copy span {
-  margin-top: auto;
-  color: var(--color-accent);
-  font-size: 14px;
+/* Occasional homepage-style feature card. */
+.article-wall-card-wide {
+  grid-column: 1 / -1;
+  min-height: 430px;
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
 }
 
-.article-wall-card-wide .article-wall-copy {
+.article-wall-card-wide .article-wall-visual {
+  min-height: 430px;
+}
+
+.article-wall-card-wide .article-wall-content {
+  padding: 52px;
+  display: flex;
+  flex-direction: column;
   justify-content: center;
-  padding: 28px;
 }
 
-.article-wall-card-wide .article-wall-copy h2 {
+.article-wall-visual {
+  position: relative;
+  overflow: hidden;
+  background: var(--color-accent-soft);
+}
+
+.article-wall-image-placeholder {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 28px;
+  color: var(--color-accent);
+  font-family: Inter, sans-serif;
+  font-size: clamp(24px, 4vw, 48px);
+  letter-spacing: 0.08em;
+}
+
+.article-wall-content h2 {
+  margin: 14px 0 16px;
   font-size: 26px;
+  line-height: 1.35;
+}
+
+.article-wall-card-wide .article-wall-content h2 {
+  font-size: 32px;
+}
+
+.article-wall-excerpt {
+  margin: 0 0 26px;
+  color: var(--muted);
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+.article-wall-card-portrait .text-link {
+  margin-top: auto;
 }
 
 .article-wall-card:focus-visible {
   outline: 2px solid var(--color-accent);
-  outline-offset: 3px;
+  outline-offset: 4px;
 }
 
 @media (max-width: 980px) {
   .article-wall-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    grid-auto-rows: 88px;
+  }
+
+  .article-wall-card-wide {
+    min-height: 390px;
+    grid-template-columns: 1.1fr 1fr;
+  }
+
+  .article-wall-card-wide .article-wall-visual {
+    min-height: 390px;
+  }
+
+  .article-wall-card-wide .article-wall-content {
+    padding: 42px;
   }
 }
 
@@ -167,44 +149,37 @@
 
   .article-wall-grid {
     grid-template-columns: 1fr;
-    grid-auto-rows: auto;
-    gap: 16px;
+    gap: 18px;
   }
 
-  .article-wall-card-portrait,
-  .article-wall-card-wide,
-  .article-wall-card-tall {
+  .article-wall-card-wide {
     grid-column: auto;
-    grid-row: auto;
-    grid-template-columns: 1fr;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
   }
 
-  .article-wall-card-portrait .article-wall-image,
-  .article-wall-card-tall .article-wall-image,
-  .article-wall-card-wide .article-wall-image {
-    height: auto;
+  .article-wall-card-wide .article-wall-visual,
+  .article-wall-card-portrait .article-wall-visual {
+    min-height: 0;
     aspect-ratio: 4 / 3;
   }
 
-  .article-wall-copy,
-  .article-wall-card-wide .article-wall-copy {
-    padding: 20px;
+  .article-wall-card-portrait .article-wall-content,
+  .article-wall-card-wide .article-wall-content {
+    flex: 1;
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
   }
 
-  .article-wall-copy h2,
-  .article-wall-card-wide .article-wall-copy h2 {
-    font-size: 21px;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .article-wall-card,
-  .article-wall-image img {
-    transition: none;
+  .article-wall-content h2,
+  .article-wall-card-wide .article-wall-content h2 {
+    font-size: 25px;
   }
 
-  .article-wall-card:hover,
-  .article-wall-card:hover .article-wall-image img {
-    transform: none;
+  .article-wall-card-wide .text-link {
+    margin-top: auto;
   }
 }
