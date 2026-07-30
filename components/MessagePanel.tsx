@@ -24,6 +24,20 @@ function createVisitorToken() {
   return Array.from(bytes, (byte) => byte.toString(16).padStart(2, "0")).join("");
 }
 
+
+async function getCurrentPushSubscription() {
+  if (!("serviceWorker" in navigator) || !("PushManager" in window)) return null;
+
+  try {
+    const registration = await navigator.serviceWorker.ready;
+    const subscription = await registration.pushManager.getSubscription();
+    return subscription ? subscription.toJSON() : null;
+  } catch (error) {
+    console.error("Reading push subscription failed:", error);
+    return null;
+  }
+}
+
 function getVisitorToken() {
   const saved = window.localStorage.getItem(VISITOR_KEY);
   if (saved) return saved;
@@ -95,10 +109,11 @@ export default function MessagePanel({ open, onClose }: MessagePanelProps) {
     try {
       const visitorToken = getVisitorToken();
       const conversationId = window.localStorage.getItem(CONVERSATION_KEY);
+      const pushSubscription = await getCurrentPushSubscription();
       const response = await fetch("/api/messages", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ visitorToken, conversationId, content: message }),
+        body: JSON.stringify({ visitorToken, conversationId, content: message, pushSubscription }),
       });
       const result = await response.json();
 

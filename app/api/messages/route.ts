@@ -9,6 +9,11 @@ type MessageRequest = {
   visitorToken?: string;
   conversationId?: string | null;
   content?: string;
+  pushSubscription?: {
+    endpoint?: string;
+    expirationTime?: number | null;
+    keys?: { p256dh?: string; auth?: string };
+  } | null;
 };
 
 export async function POST(request: Request) {
@@ -45,7 +50,12 @@ export async function POST(request: Request) {
         "Content-Type": "application/json",
         "X-LMN516-Push-Secret": secret,
       },
-      body: JSON.stringify({ visitorToken, conversationId, content }),
+      body: JSON.stringify({
+        visitorToken,
+        conversationId,
+        content,
+        pushSubscription: body.pushSubscription || null,
+      }),
       cache: "no-store",
     });
     const result = await response.json().catch(() => null);
