@@ -150,7 +150,6 @@ export default function GardenNotification() {
   const [subscription, setSubscription] =
     useState<PushSubscription | null>(null);
   const [serverConfirmed, setServerConfirmed] = useState(false);
-  const [testAccepted, setTestAccepted] = useState(false);
   const [installPrompt, setInstallPrompt] =
     useState<BeforeInstallPromptEvent | null>(null);
   const [environment, setEnvironment] = useState<ClientEnvironment>({
@@ -213,7 +212,7 @@ export default function GardenNotification() {
         applicationServerKey: expectedKey,
       }));
 
-    // 每次都重新提交给服务器。只有服务器明确返回 ok，才显示“已经保持联系”。
+    // 每次都重新提交给服务器。只有服务器明确确认后，才显示已连接。
     await saveSubscription(nextSubscription);
 
     setSubscription(nextSubscription);
@@ -367,8 +366,19 @@ export default function GardenNotification() {
       }
     }
 
+    function handleScroll() {
+      if (panelOpen) {
+        setPanelOpen(false);
+      }
+    }
+
     document.addEventListener("pointerdown", handlePointerDown);
-    return () => document.removeEventListener("pointerdown", handlePointerDown);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => {
+      document.removeEventListener("pointerdown", handlePointerDown);
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, [panelOpen]);
 
   async function copyCurrentUrl() {
@@ -530,54 +540,6 @@ export default function GardenNotification() {
     }
   }
 
-  async function sendTestNotification() {
-    if (!subscription || permission !== "granted" || !serverConfirmed) {
-      setStatus("error");
-      setMessage("当前订阅还没有准备好，请先完成通知连接。");
-      return;
-    }
-
-    setStatus("working");
-    setMessage("正在让服务器向这台设备发送一条真实测试通知……");
-    setTestAccepted(false);
-
-    try {
-      const response = await fetch("/api/push/test", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          subscription: subscription.toJSON(),
-          delaySeconds: 0,
-        }),
-        cache: "no-store",
-      });
-
-      const result = (await response.json().catch(() => null)) as
-        | { ok?: boolean; stage?: string; error?: string }
-        | null;
-
-      if (!response.ok || !result?.ok) {
-        const stage = result?.stage ? `（${result.stage}）` : "";
-        throw new Error(`${result?.error || "服务器没有完成测试推送。"}${stage}`);
-      }
-
-      setTestAccepted(true);
-      setStatus("success");
-      setMessage(
-        "服务器已经接受并提交这条测试推送。请查看 Mac 右上角通知中心；若仍未出现，问题就在 Safari / macOS 的通知投递环节，而不是订阅按钮。"
-      );
-    } catch (error) {
-      console.error("Garden notification test failed:", error);
-      setTestAccepted(false);
-      setStatus("error");
-      setMessage(
-        error instanceof Error
-          ? `真实测试失败：${error.message}`
-          : "真实测试失败，请稍后再试。"
-      );
-    }
-  }
-
   function dismissWelcome() {
     window.localStorage.setItem(
       DISMISS_KEY,
@@ -625,18 +587,10 @@ export default function GardenNotification() {
 
           {isSubscribed ? (
             <>
-              <h2>{testAccepted ? "测试推送已提交" : "通知已配置"}</h2>
+              <h2>已经保持联系</h2>
               <p>
-                浏览器权限、当前订阅和服务器记录都已确认。为了确认 Safari 真的能收到，请发送一次真实测试通知。
+                这台设备已经连接到花园信使。以后有新的回复或重要更新时，LMN516 会通过系统通知告诉你。
               </p>
-              <button
-                type="button"
-                className="garden-notice-primary"
-                onClick={sendTestNotification}
-                disabled={status === "working"}
-              >
-                {status === "working" ? "正在发送……" : "🔔 发送测试通知"}
-              </button>
             </>
           ) : permission === "denied" ? (
             <>
