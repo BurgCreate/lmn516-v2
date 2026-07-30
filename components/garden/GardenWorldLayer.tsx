@@ -85,6 +85,8 @@ export default function GardenWorldLayer() {
         </g>
       </svg>
 
+      <div className="garden-world-veil garden-world-veil-a" />
+      <div className="garden-world-veil garden-world-veil-b" />
       <div className="garden-world-paper" />
       <div className="garden-world-wash garden-world-wash-a" />
       <div className="garden-world-wash garden-world-wash-b" />
