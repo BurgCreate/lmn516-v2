@@ -32,7 +32,7 @@ type ClientEnvironment = {
   isInAppBrowser: boolean;
 };
 
-const DISMISS_KEY = "lmn516-garden-notice-dismissed-until-v4";
+const DISMISS_KEY = "lmn516-garden-notice-dismissed-until-v5";
 const SEVEN_DAYS = 7 * 24 * 60 * 60 * 1000;
 
 function urlBase64ToUint8Array(base64String: string) {
@@ -45,6 +45,18 @@ function urlBase64ToUint8Array(base64String: string) {
   return Uint8Array.from(
     [...rawData].map((character) => character.charCodeAt(0))
   );
+}
+
+function arrayBuffersEqual(
+  first: ArrayBuffer | null,
+  second: Uint8Array
+) {
+  if (!first) return false;
+
+  const firstBytes = new Uint8Array(first);
+  if (firstBytes.length !== second.length) return false;
+
+  return firstBytes.every((value, index) => value === second[index]);
 }
 
 function isStandaloneMode() {
@@ -60,7 +72,9 @@ function isStandaloneMode() {
 
 function detectEnvironment(): ClientEnvironment {
   const userAgent = navigator.userAgent;
-  const isIOS = /iPhone|iPad|iPod/i.test(userAgent);
+  const isIPadOS =
+    navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1;
+  const isIOS = /iPhone|iPad|iPod/i.test(userAgent) || isIPadOS;
   const isAndroid = /Android/i.test(userAgent);
 
   if (/MicroMessenger/i.test(userAgent)) {
@@ -135,6 +149,7 @@ export default function GardenNotification() {
     useState<PermissionState>("default");
   const [subscription, setSubscription] =
     useState<PushSubscription | null>(null);
+  const [serverConfirmed, setServerConfirmed] = useState(false);
   const [installPrompt, setInstallPrompt] =
     useState<BeforeInstallPromptEvent | null>(null);
   const [environment, setEnvironment] = useState<ClientEnvironment>({
@@ -148,6 +163,62 @@ export default function GardenNotification() {
   const [status, setStatus] = useState<NoticeState>("idle");
   const [message, setMessage] = useState("");
   const panelRef = useRef<HTMLDivElement>(null);
+
+  async function saveSubscription(nextSubscription: PushSubscription) {
+    const response = await fetch("/api/push/subscribe", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        subscription: nextSubscription.toJSON(),
+      }),
+      cache: "no-store",
+    });
+
+    const result = (await response.json().catch(() => null)) as
+      | {
+          ok?: boolean;
+          error?: string;
+        }
+      | null;
+
+    if (!response.ok || !result?.ok) {
+      throw new Error(result?.error || "服务器没有确认这台设备的推送订阅。");
+    }
+  }
+
+  async function createAndConfirmSubscription(
+    registration: ServiceWorkerRegistration,
+    publicKey: string
+  ) {
+    const expectedKey = urlBase64ToUint8Array(publicKey.trim());
+    let currentSubscription =
+      await registration.pushManager.getSubscription();
+
+    if (
+      currentSubscription &&
+      !arrayBuffersEqual(
+        currentSubscription.options.applicationServerKey,
+        expectedKey
+      )
+    ) {
+      await currentSubscription.unsubscribe();
+      currentSubscription = null;
+    }
+
+    const nextSubscription =
+      currentSubscription ||
+      (await registration.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey: expectedKey,
+      }));
+
+    // 每次都重新提交给服务器。只有服务器明确返回 ok，才显示“已经保持联系”。
+    await saveSubscription(nextSubscription);
+
+    setSubscription(nextSubscription);
+    setServerConfirmed(true);
+    return nextSubscription;
+  }
 
   useEffect(() => {
     function handleBeforeInstallPrompt(event: Event) {
@@ -172,68 +243,115 @@ export default function GardenNotification() {
   }, []);
 
   useEffect(() => {
-    const appMode = isStandaloneMode();
-    const browserSupported =
-      "serviceWorker" in navigator &&
-      "PushManager" in window &&
-      "Notification" in window;
+    let cancelled = false;
+    let welcomeTimer: number | undefined;
 
-    setEnvironment(detectEnvironment());
-    setStandalone(appMode);
-    setSupported(browserSupported);
+    async function initializeNotifications() {
+      const appMode = isStandaloneMode();
+      const detectedEnvironment = detectEnvironment();
+      const browserSupported =
+        "serviceWorker" in navigator &&
+        "PushManager" in window &&
+        "Notification" in window;
 
-    const dismissedUntil = Number(
-      window.localStorage.getItem(DISMISS_KEY) || "0"
-    );
+      setEnvironment(detectedEnvironment);
+      setStandalone(appMode);
+      setSupported(browserSupported);
+      setServerConfirmed(false);
 
-    if (appMode && Date.now() > dismissedUntil) {
-      const welcomeTimer = window.setTimeout(() => {
-        setWelcomeOpen(true);
-      }, 500);
+      const dismissedUntil = Number(
+        window.localStorage.getItem(DISMISS_KEY) || "0"
+      );
 
-      if (!browserSupported) {
-        setPermission("unsupported");
-        return () => window.clearTimeout(welcomeTimer);
+      if (appMode && Date.now() > dismissedUntil) {
+        welcomeTimer = window.setTimeout(() => {
+          if (!cancelled) setWelcomeOpen(true);
+        }, 500);
       }
 
-      setPermission(Notification.permission);
+      if (!browserSupported) {
+        if (!cancelled) setPermission("unsupported");
+        return;
+      }
 
-      navigator.serviceWorker
-        .register("/sw.js", { scope: "/" })
-        .then((registration) => registration.pushManager.getSubscription())
-        .then((existingSubscription) => {
-          setSubscription(existingSubscription);
+      const currentPermission = Notification.permission;
+      if (!cancelled) setPermission(currentPermission);
 
-          if (
-            existingSubscription ||
-            Notification.permission !== "default"
-          ) {
-            setWelcomeOpen(false);
-          }
-        })
-        .catch((error) => {
-          console.error("Garden notification initialization failed:", error);
+      try {
+        const registration = await navigator.serviceWorker.register("/sw.js", {
+          scope: "/",
         });
 
-      return () => window.clearTimeout(welcomeTimer);
-    }
+        if (currentPermission !== "granted") {
+          const existingSubscription =
+            await registration.pushManager.getSubscription();
 
-    if (!browserSupported) {
-      setPermission("unsupported");
-      return;
-    }
+          if (!cancelled) {
+            setSubscription(existingSubscription);
+            setServerConfirmed(false);
 
-    setPermission(Notification.permission);
+            if (currentPermission !== "default") {
+              setWelcomeOpen(false);
+            }
+          }
+          return;
+        }
 
-    navigator.serviceWorker
-      .register("/sw.js", { scope: "/" })
-      .then((registration) => registration.pushManager.getSubscription())
-      .then((existingSubscription) => {
-        setSubscription(existingSubscription);
-      })
-      .catch((error) => {
+        const publicKey = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY;
+        if (!publicKey) {
+          throw new Error("网站暂时没有读取到通知公钥。");
+        }
+
+        await createAndConfirmSubscription(registration, publicKey);
+
+        if (!cancelled) {
+          setWelcomeOpen(false);
+          setStatus("success");
+          setMessage("");
+        }
+      } catch (error) {
         console.error("Garden notification initialization failed:", error);
-      });
+
+        if (!cancelled) {
+          setSubscription(null);
+          setServerConfirmed(false);
+          setStatus("error");
+          setMessage(
+            error instanceof Error
+              ? `通知订阅尚未连通：${error.message}`
+              : "通知订阅尚未连通，请重新开启。"
+          );
+        }
+      }
+    }
+
+    void initializeNotifications();
+
+    return () => {
+      cancelled = true;
+      if (welcomeTimer) window.clearTimeout(welcomeTimer);
+    };
+  }, []);
+
+  useEffect(() => {
+    function syncPermission() {
+      if (!("Notification" in window)) return;
+
+      const nextPermission = Notification.permission;
+      setPermission(nextPermission);
+
+      if (nextPermission !== "granted") {
+        setServerConfirmed(false);
+      }
+    }
+
+    window.addEventListener("focus", syncPermission);
+    document.addEventListener("visibilitychange", syncPermission);
+
+    return () => {
+      window.removeEventListener("focus", syncPermission);
+      document.removeEventListener("visibilitychange", syncPermission);
+    };
   }, []);
 
   useEffect(() => {
@@ -251,25 +369,6 @@ export default function GardenNotification() {
     return () => document.removeEventListener("pointerdown", handlePointerDown);
   }, [panelOpen]);
 
-  async function saveSubscription(nextSubscription: PushSubscription) {
-    const response = await fetch("/api/push/subscribe", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        subscription: nextSubscription.toJSON(),
-      }),
-    });
-
-    const result = (await response.json()) as {
-      ok?: boolean;
-      error?: string;
-    };
-
-    if (!response.ok || !result.ok) {
-      throw new Error(result.error || "保存推送订阅失败。");
-    }
-  }
-
   async function copyCurrentUrl() {
     try {
       await navigator.clipboard.writeText(window.location.href);
@@ -286,7 +385,7 @@ export default function GardenNotification() {
 
     if (environment.isInAppBrowser) {
       setMessage(
-        `请点击右上角菜单，选择“在浏览器中打开”。打开 Safari 或 Chrome 后，再点一次小铃铛。`
+        "请点击右上角菜单，选择“在浏览器中打开”。打开 Safari 或 Chrome 后，再点一次小铃铛。"
       );
       return;
     }
@@ -306,31 +405,20 @@ export default function GardenNotification() {
 
     if (environment.browser === "huawei") {
       setMessage(
-        "请点击华为浏览器右下角或底部菜单，选择“添加至桌面”。添加后请从桌面图标重新打开，再点小铃铛。"
+        "请点击华为浏览器右下角或底部菜单，选择“添加至桌面”。如果仍不支持推送，建议改用最新版 Chrome。"
       );
       return;
     }
 
     if (environment.browser === "quark") {
       setMessage(
-        "请打开夸克菜单，进入工具箱或更多功能，选择“添加到桌面”。如果桌面版仍不支持通知，建议改用 Chrome。"
-      );
-      return;
-    }
-
-    if (
-      environment.browser === "chrome" ||
-      environment.browser === "edge" ||
-      environment.browser === "samsung"
-    ) {
-      setMessage(
-        "请打开浏览器菜单，选择“安装应用”或“添加到主屏幕”。安装后从桌面图标打开，再点小铃铛。"
+        "请打开夸克菜单，进入工具箱或更多功能，选择“添加到桌面”。如果仍不支持通知，建议改用 Chrome。"
       );
       return;
     }
 
     setMessage(
-      "请打开浏览器菜单，选择“添加到主屏幕”或“安装应用”。安装后从桌面图标打开，再开启通知。"
+      "请打开浏览器菜单，选择“添加到主屏幕”或“安装应用”。"
     );
   }
 
@@ -397,44 +485,42 @@ export default function GardenNotification() {
     }
 
     setStatus("working");
-    setMessage("正在打开花园信使……");
+    setMessage("正在连接花园信使……");
+    setServerConfirmed(false);
 
     try {
       const nextPermission = await Notification.requestPermission();
       setPermission(nextPermission);
 
       if (nextPermission !== "granted") {
+        setSubscription(null);
+        setServerConfirmed(false);
         setStatus("error");
-        setMessage("通知没有开启。你可以稍后从小铃铛再次查看。");
+        setMessage("通知没有开启。请在浏览器或系统设置中允许 LMN516 发送通知。");
         setWelcomeOpen(false);
         setPanelOpen(true);
         return;
       }
 
-      const registration = await navigator.serviceWorker.ready;
-      const currentSubscription =
-        await registration.pushManager.getSubscription();
-      const nextSubscription =
-        currentSubscription ||
-        (await registration.pushManager.subscribe({
-          userVisibleOnly: true,
-          applicationServerKey: urlBase64ToUint8Array(publicKey),
-        }));
+      const registration = await navigator.serviceWorker.register("/sw.js", {
+        scope: "/",
+      });
+      await navigator.serviceWorker.ready;
+      await createAndConfirmSubscription(registration, publicKey);
 
-      await saveSubscription(nextSubscription);
-
-      setSubscription(nextSubscription);
       setStatus("success");
-      setMessage("花园信使已经开启。有新的故事时，我会轻轻告诉你。");
+      setMessage("花园信使已经真正连通。新的故事会通过这台设备提醒你。");
       setWelcomeOpen(false);
       setPanelOpen(true);
       window.localStorage.removeItem(DISMISS_KEY);
     } catch (error) {
       console.error("Enable garden notification failed:", error);
+      setSubscription(null);
+      setServerConfirmed(false);
       setStatus("error");
       setMessage(
         error instanceof Error
-          ? error.message
+          ? `开启失败：${error.message}`
           : "开启通知失败，请稍后再试。"
       );
       setPanelOpen(true);
@@ -455,7 +541,10 @@ export default function GardenNotification() {
     setMessage("");
   }
 
-  const isSubscribed = permission === "granted" && Boolean(subscription);
+  const isSubscribed =
+    permission === "granted" &&
+    Boolean(subscription) &&
+    serverConfirmed;
   const needsInstall =
     environment.isInAppBrowser ||
     (environment.platform === "ios" && !standalone);
@@ -487,13 +576,13 @@ export default function GardenNotification() {
             <>
               <h2>已经保持联系</h2>
               <p>
-                这里更新得很慢。只有当花园有新的变化时，我才会轻轻提醒你。
+                浏览器订阅和服务器记录都已确认。这里有新变化时，我会轻轻提醒你。
               </p>
             </>
           ) : permission === "denied" ? (
             <>
               <h2>通知暂时关闭</h2>
-              <p>请在浏览器或系统设置中重新允许 LMN516 发送通知。</p>
+              <p>请在当前浏览器或系统设置中重新允许 LMN516 发送通知。</p>
             </>
           ) : needsInstall ? (
             <>
@@ -528,9 +617,15 @@ export default function GardenNotification() {
             </>
           ) : (
             <>
-              <h2>听见花园的新消息</h2>
+              <h2>
+                {permission === "granted"
+                  ? "完成花园信使连接"
+                  : "听见花园的新消息"}
+              </h2>
               <p>
-                当前环境：{environment.browserName}。点击一次即可请求系统通知权限。
+                {permission === "granted"
+                  ? "系统权限已经允许，但浏览器订阅或服务器记录尚未确认。点击一次完成连接。"
+                  : `当前环境：${environment.browserName}。点击一次即可请求系统通知权限。`}
               </p>
               <button
                 type="button"
@@ -538,7 +633,7 @@ export default function GardenNotification() {
                 onClick={enableNotifications}
                 disabled={status === "working"}
               >
-                {status === "working" ? "正在开启……" : "🌿 开启通知"}
+                {status === "working" ? "正在连接……" : "🌿 开启通知"}
               </button>
             </>
           )}
@@ -585,7 +680,7 @@ export default function GardenNotification() {
                   onClick={enableNotifications}
                   disabled={status === "working"}
                 >
-                  {status === "working" ? "正在开启……" : "🌿 开启通知"}
+                  {status === "working" ? "正在连接……" : "🌿 开启通知"}
                 </button>
               </div>
             </div>
