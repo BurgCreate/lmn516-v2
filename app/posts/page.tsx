@@ -31,7 +31,8 @@ export default async function PostsPage() {
 
           <article
             key={post.id}
-            className="post-row"
+            className={`post-row post-format-${post.format}`}
+            data-post-format={post.format}
           >
 
             <div>

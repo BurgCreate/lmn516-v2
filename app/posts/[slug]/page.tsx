@@ -16,7 +16,10 @@ export default async function PostPage({
   return (
     <main className="shell narrow page">
       <Link href="/" className="back">← 返回首页</Link>
-      <article className="article">
+      <article
+        className={`article post-format-${post.format}`}
+        data-post-format={post.format}
+      >
         <p className="eyebrow">{post.date}</p>
         <h1>{post.title}</h1>
         <div

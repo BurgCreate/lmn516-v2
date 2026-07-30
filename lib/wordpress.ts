@@ -1,3 +1,15 @@
+export type PostFormat =
+  | "standard"
+  | "aside"
+  | "chat"
+  | "gallery"
+  | "link"
+  | "image"
+  | "quote"
+  | "status"
+  | "video"
+  | "audio";
+
 export type Post = {
   id: number;
   slug: string;
@@ -6,6 +18,7 @@ export type Post = {
   content: string;
   date: string;
   image: string | null;
+  format: PostFormat;
 };
 
 export type Moment = {
@@ -13,6 +26,7 @@ export type Moment = {
   content: string;
   date: string;
   image: string | null;
+  format: PostFormat;
 };
 
 const WP_URL =
@@ -33,6 +47,7 @@ const fallbackPosts: Post[] = [
       "<p>这是一篇来自 WordPress 的示例文章。连接成功后，这里会自动显示你的真实正文。</p>",
     date: "2026.07.13",
     image: null,
+    format: "standard",
   },
   {
     id: 1537,
@@ -44,6 +59,7 @@ const fallbackPosts: Post[] = [
       "<p>连接成功后，这里会自动显示你的真实正文。</p>",
     date: "2026.06.29",
     image: null,
+    format: "standard",
   },
   {
     id: 347,
@@ -55,6 +71,7 @@ const fallbackPosts: Post[] = [
       "<p>连接成功后，这里会自动显示你的真实正文。</p>",
     date: "2026.02.16",
     image: null,
+    format: "standard",
   },
 ];
 
@@ -171,6 +188,33 @@ function getPostImage(item: any): string | null {
 
 
 /**
+ * 规范化 WordPress 文章形式。
+ *
+ * WordPress 普通文章通常返回 standard；
+ * 未知值也安全回退为 standard。
+ */
+function normalizePostFormat(input: unknown): PostFormat {
+  const formats: PostFormat[] = [
+    "standard",
+    "aside",
+    "chat",
+    "gallery",
+    "link",
+    "image",
+    "quote",
+    "status",
+    "video",
+    "audio",
+  ];
+
+  return typeof input === "string" &&
+    formats.includes(input as PostFormat)
+    ? (input as PostFormat)
+    : "standard";
+}
+
+
+/**
  * 将 WordPress 返回的数据格式化为正式文章。
  */
 function formatPost(item: any): Post {
@@ -193,6 +237,8 @@ function formatPost(item: any): Post {
     date: formatDate(item.date),
 
     image: getPostImage(item),
+
+    format: normalizePostFormat(item.format),
   };
 }
 
@@ -212,6 +258,8 @@ function formatMoment(item: any): Moment {
     date: formatMomentDate(item.date),
 
     image: getPostImage(item),
+
+    format: normalizePostFormat(item.format),
   };
 }
 
