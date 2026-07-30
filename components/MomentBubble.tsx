@@ -1,74 +1,42 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useCallback, useState } from "react";
+import MessagePanel from "@/components/MessagePanel";
 
 type MomentBubbleProps = {
   content: string;
   date: string;
 };
 
-export default function MomentBubble({
-  content,
-  date,
-}: MomentBubbleProps) {
-  const router = useRouter();
-
+export default function MomentBubble({ content, date }: MomentBubbleProps) {
   const [isMoving, setIsMoving] = useState(false);
-  const [isLeaving, setIsLeaving] = useState(false);
+  const [panelOpen, setPanelOpen] = useState(false);
+
+  const closePanel = useCallback(() => setPanelOpen(false), []);
 
   function handleClick() {
-    if (isLeaving) return;
-
     setIsMoving(false);
-    setIsLeaving(true);
-
-    requestAnimationFrame(() => {
-      setIsMoving(true);
-    });
-
-    document.documentElement.classList.add(
-      "page-leaving"
-    );
-
-    const prefersReducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches;
-
-    window.setTimeout(() => {
-      router.push("/moments");
-    }, prefersReducedMotion ? 0 : 420);
+    requestAnimationFrame(() => setIsMoving(true));
+    window.setTimeout(() => setIsMoving(false), 500);
+    setPanelOpen(true);
   }
 
   return (
-    <button
-      type="button"
-      className={`moment-bubble ${
-        isMoving ? "moment-bubble-active" : ""
-      } ${
-        isLeaving
-          ? "moment-bubble-leaving"
-          : ""
-      }`}
-      onClick={handleClick}
-      aria-label="进入碎碎念页面"
-      disabled={isLeaving}
-    >
-      <span
-        className="moment-bubble-ring"
-        aria-hidden="true"
-      />
+    <>
+      <button
+        type="button"
+        className={`moment-bubble ${isMoving ? "moment-bubble-active" : ""}`}
+        onClick={handleClick}
+        aria-label="打开花园信箱"
+        aria-expanded={panelOpen}
+      >
+        <span className="moment-bubble-ring" aria-hidden="true" />
+        <span className="moment-bubble-content" dangerouslySetInnerHTML={{ __html: content }} />
+        <small className="moment-bubble-time">{date}</small>
+        <span className="moment-bubble-message-hint" aria-hidden="true">点我留言</span>
+      </button>
 
-      <span
-        className="moment-bubble-content"
-        dangerouslySetInnerHTML={{
-          __html: content,
-        }}
-      />
-
-      <small className="moment-bubble-time">
-        {date}
-      </small>
-    </button>
+      <MessagePanel open={panelOpen} onClose={closePanel} />
+    </>
   );
 }

@@ -1,0 +1,182 @@
+"use client";
+
+import Link from "next/link";
+import { FormEvent, useEffect, useRef, useState } from "react";
+
+type Message = {
+  id: number;
+  sender: "visitor" | "owner";
+  content: string;
+  createdAt: string;
+};
+
+type MessagePanelProps = {
+  open: boolean;
+  onClose: () => void;
+};
+
+const VISITOR_KEY = "lmn516-message-visitor";
+const CONVERSATION_KEY = "lmn516-message-conversation";
+
+function createVisitorToken() {
+  const bytes = new Uint8Array(24);
+  crypto.getRandomValues(bytes);
+  return Array.from(bytes, (byte) => byte.toString(16).padStart(2, "0")).join("");
+}
+
+function getVisitorToken() {
+  const saved = window.localStorage.getItem(VISITOR_KEY);
+  if (saved) return saved;
+
+  const token = createVisitorToken();
+  window.localStorage.setItem(VISITOR_KEY, token);
+  return token;
+}
+
+export default function MessagePanel({ open, onClose }: MessagePanelProps) {
+  const panelRef = useRef<HTMLElement>(null);
+  const [content, setContent] = useState("");
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [status, setStatus] = useState<"idle" | "loading" | "sending" | "success" | "error">("idle");
+  const [notice, setNotice] = useState("");
+
+  useEffect(() => {
+    if (!open) return;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    panelRef.current?.focus();
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") onClose();
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    const conversationId = window.localStorage.getItem(CONVERSATION_KEY);
+    if (conversationId) {
+      setStatus("loading");
+      fetch(`/api/messages/${encodeURIComponent(conversationId)}?visitorToken=${encodeURIComponent(getVisitorToken())}`, {
+        cache: "no-store",
+      })
+        .then(async (response) => {
+          const result = await response.json();
+          if (!response.ok) throw new Error(result.error || "暂时无法读取之前的留言。");
+          setMessages(result.messages || []);
+          setStatus("idle");
+        })
+        .catch((error) => {
+          console.error(error);
+          setStatus("error");
+          setNotice(error instanceof Error ? error.message : "暂时无法读取之前的留言。");
+        });
+    }
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [open, onClose]);
+
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const message = content.trim();
+
+    if (!message || status === "sending") return;
+    if (message.length > 1000) {
+      setStatus("error");
+      setNotice("一封信最多 1000 个字。再长一点，就快变成连载小说了。");
+      return;
+    }
+
+    setStatus("sending");
+    setNotice("");
+
+    try {
+      const visitorToken = getVisitorToken();
+      const conversationId = window.localStorage.getItem(CONVERSATION_KEY);
+      const response = await fetch("/api/messages", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ visitorToken, conversationId, content: message }),
+      });
+      const result = await response.json();
+
+      if (!response.ok || !result.ok) {
+        throw new Error(result.error || "留言没有送达，请稍后再试。");
+      }
+
+      window.localStorage.setItem(CONVERSATION_KEY, result.conversationId);
+      setMessages(result.messages || []);
+      setContent("");
+      setStatus("success");
+      setNotice("已经送到啦。我看到后会从这里回复你。🫧");
+    } catch (error) {
+      console.error(error);
+      setStatus("error");
+      setNotice(error instanceof Error ? error.message : "留言没有送达，请稍后再试。");
+    }
+  }
+
+  if (!open) return null;
+
+  return (
+    <div className="message-panel-backdrop" role="presentation" onMouseDown={onClose}>
+      <section
+        ref={panelRef}
+        className="message-panel"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="message-panel-title"
+        tabIndex={-1}
+        onMouseDown={(event) => event.stopPropagation()}
+      >
+        <header className="message-panel-header">
+          <div>
+            <p className="message-panel-kicker">🫧 花园信箱</p>
+            <h2 id="message-panel-title">和我说点什么</h2>
+            <p>不用注册，也不用留下邮箱。你的回复会保存在这台设备里。</p>
+          </div>
+          <button type="button" className="message-panel-close" onClick={onClose} aria-label="关闭留言窗口">×</button>
+        </header>
+
+        {messages.length > 0 && (
+          <div className="message-thread" aria-label="留言记录">
+            {messages.map((message) => (
+              <article className={`message-item is-${message.sender}`} key={message.id}>
+                <p>{message.content}</p>
+                <time>{message.createdAt}</time>
+              </article>
+            ))}
+          </div>
+        )}
+
+        <form className="message-form" onSubmit={handleSubmit}>
+          <label htmlFor="garden-message">写一封小信</label>
+          <textarea
+            id="garden-message"
+            value={content}
+            onChange={(event) => setContent(event.target.value)}
+            placeholder="可以是问候、建议，也可以只是路过时留下的一句话……"
+            maxLength={1000}
+            rows={5}
+            disabled={status === "sending"}
+          />
+          <div className="message-form-footer">
+            <span>{content.length}/1000</span>
+            <button type="submit" disabled={!content.trim() || status === "sending"}>
+              {status === "sending" ? "正在送出……" : "送出留言"}
+            </button>
+          </div>
+        </form>
+
+        {notice && <p className={`message-panel-notice is-${status}`} role="status">{notice}</p>}
+
+        <footer className="message-panel-footer">
+          <Link href="/moments" onClick={onClose}>看看最近的碎碎念</Link>
+          <span>你的匿名编号只保存在当前浏览器中</span>
+        </footer>
+      </section>
+    </div>
+  );
+}
