@@ -263,11 +263,8 @@ export default function GardenNotification() {
         window.localStorage.getItem(DISMISS_KEY) || "0"
       );
 
-      if (appMode && Date.now() > dismissedUntil) {
-        welcomeTimer = window.setTimeout(() => {
-          if (!cancelled) setWelcomeOpen(true);
-        }, 500);
-      }
+      // 初始化完成前始终保持关闭，避免页面切换时欢迎层短暂闪现。
+      setWelcomeOpen(false);
 
       if (!browserSupported) {
         if (!cancelled) setPermission("unsupported");
@@ -290,7 +287,19 @@ export default function GardenNotification() {
             setSubscription(existingSubscription);
             setServerConfirmed(false);
 
-            if (currentPermission !== "default") {
+            // 只有在所有状态检查完成后，才决定是否展示首次通知引导。
+            // 已拒绝、已有订阅、非桌面应用模式或用户暂缓期间均不展示。
+            const shouldShowWelcome =
+              currentPermission === "default" &&
+              !existingSubscription &&
+              appMode &&
+              Date.now() > dismissedUntil;
+
+            if (shouldShowWelcome) {
+              welcomeTimer = window.setTimeout(() => {
+                if (!cancelled) setWelcomeOpen(true);
+              }, 500);
+            } else {
               setWelcomeOpen(false);
             }
           }
