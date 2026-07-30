@@ -6,6 +6,7 @@ import LatestPosts from "@/components/home/LatestPosts";
 import LifeArchive from "@/components/home/LifeArchive";
 import AboutSection from "@/components/home/AboutSection";
 import SiteFooter from "@/components/home/SiteFooter";
+import GardenTrail from "@/components/home/GardenTrail";
 import {
   getPosts,
   getPostById,
@@ -89,8 +90,11 @@ export default async function HomePage() {
         remaining={remaining}
       />
 
+      <GardenTrail variant="bird" label="沿着小路，看看最近长出了什么" />
       <LatestPosts featured={featured} cards={cards} />
+      <GardenTrail variant="bench" label="在长椅旁，翻一翻生活收藏" />
       <LifeArchive />
+      <GardenTrail variant="mailbox" label="花园尽头，也欢迎留下你的痕迹" />
       <AboutSection />
 
       {latestMoment && (

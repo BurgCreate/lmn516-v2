@@ -1491,3 +1491,216 @@
     animation: none;
   }
 }
+
+/* ==========================
+   13. V3.0 花园路径与场景插画
+========================== */
+
+.garden-trail {
+  position: relative;
+  width: min(calc(100% - 40px), 1180px);
+  height: 180px;
+  margin: 8px auto -28px;
+  overflow: hidden;
+  color: color-mix(in srgb, var(--accent) 74%, var(--text));
+  pointer-events: none;
+}
+
+.garden-trail svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.garden-trail-label {
+  position: absolute;
+  z-index: 2;
+  top: 26px;
+  left: clamp(24px, 7vw, 92px);
+  max-width: 330px;
+  padding: 7px 13px;
+  border: 1px solid color-mix(in srgb, var(--line) 80%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  color: var(--muted);
+  font-family: var(--font-sans);
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  transform: rotate(-1.2deg);
+  backdrop-filter: blur(8px);
+}
+
+.garden-trail-path,
+.garden-trail-grass,
+.garden-trail-scene path,
+.garden-trail-scene circle,
+.garden-trail-scene rect {
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.garden-trail-path {
+  stroke-width: 2.1;
+  stroke-dasharray: 1 8;
+  opacity: 0.42;
+}
+
+.garden-trail-grass {
+  stroke-width: 2;
+  opacity: 0.48;
+}
+
+.garden-trail-scene {
+  stroke-width: 2.2;
+  opacity: 0.72;
+}
+
+.garden-trail-birds {
+  animation: garden-bird-drift 7s ease-in-out infinite;
+  transform-origin: 92% 28%;
+}
+
+.garden-trail-bench,
+.garden-trail-mailbox {
+  transform: rotate(-1deg);
+  transform-origin: center;
+}
+
+.garden-trail::before,
+.garden-trail::after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  bottom: 34px;
+  width: 9px;
+  height: 9px;
+  border: 1.5px solid currentColor;
+  border-radius: 60% 40% 65% 35%;
+  opacity: 0.5;
+  transform: rotate(32deg);
+}
+
+.garden-trail::before {
+  left: 28%;
+}
+
+.garden-trail::after {
+  left: 61%;
+  width: 7px;
+  height: 7px;
+  transform: rotate(-18deg);
+}
+
+@keyframes garden-bird-drift {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(-7px, -4px); }
+}
+
+/* 让原本独立的首页区块更像同一片花园，而不是展览馆里的几间白屋子 */
+.notes,
+.archive,
+.about {
+  position: relative;
+}
+
+.notes::before,
+.archive::before,
+.about::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;
+  background: radial-gradient(circle, color-mix(in srgb, var(--accent-soft) 54%, transparent), transparent 68%);
+  filter: blur(2px);
+  opacity: 0.58;
+  pointer-events: none;
+}
+
+.notes::before {
+  top: 18%;
+  right: -110px;
+}
+
+.archive::before {
+  top: 8%;
+  left: -130px;
+}
+
+.about::before {
+  right: 8%;
+  bottom: -90px;
+}
+
+.section-heading .eyebrow,
+.archive-intro-copy .eyebrow,
+.about-card .eyebrow {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.section-heading .eyebrow::before,
+.archive-intro-copy .eyebrow::before,
+.about-card .eyebrow::before {
+  content: "";
+  width: 25px;
+  height: 12px;
+  border-top: 1.6px solid var(--accent);
+  border-radius: 50%;
+  transform: rotate(-12deg);
+  opacity: 0.72;
+}
+
+.archive-card:nth-child(1) { transform: rotate(-0.45deg); }
+.archive-card:nth-child(2) { transform: rotate(0.35deg); }
+.archive-card:nth-child(3) { transform: rotate(0.25deg); }
+.archive-card:nth-child(4) { transform: rotate(-0.35deg); }
+
+.archive-card:hover {
+  transform: translateY(-4px) rotate(0deg);
+}
+
+@media (max-width: 720px) {
+  .garden-trail {
+    width: calc(100% - 24px);
+    height: 138px;
+    margin-top: 0;
+    margin-bottom: -18px;
+  }
+
+  .garden-trail-label {
+    top: 12px;
+    left: 12px;
+    max-width: 245px;
+    font-size: 10px;
+  }
+
+  .garden-trail svg {
+    transform: scale(1.18);
+    transform-origin: center bottom;
+  }
+
+  .garden-trail-scene {
+    opacity: 0.62;
+  }
+
+  .notes::before,
+  .archive::before,
+  .about::before {
+    width: 190px;
+    height: 190px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .garden-trail-birds {
+    animation: none;
+  }
+}
