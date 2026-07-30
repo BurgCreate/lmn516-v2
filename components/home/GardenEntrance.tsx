@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { GardenGirl, GardenMotif } from "@/components/garden";
+import GardenCompanion from "@/components/garden/GardenCompanion";
 
 export default function GardenEntrance() {
   return (
@@ -33,6 +34,8 @@ export default function GardenEntrance() {
             认识花园主人
           </Link>
         </div>
+
+        <GardenCompanion />
 
         <div className="garden-visitor-note" aria-label="花园共建说明">
           <span className="garden-visitor-flower" aria-hidden="true">✿</span>
