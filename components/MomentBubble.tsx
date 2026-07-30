@@ -2,6 +2,7 @@
 
 import { useCallback, useState } from "react";
 import MessagePanel from "@/components/MessagePanel";
+import { GardenOrnament } from "@/components/garden";
 
 type MomentBubbleProps = {
   content: string;
@@ -31,6 +32,14 @@ export default function MomentBubble({ content, date }: MomentBubbleProps) {
         aria-expanded={panelOpen}
       >
         <span className="moment-bubble-ring" aria-hidden="true" />
+        <GardenOrnament
+          variant="curlflower"
+          className="moment-bubble-ornament moment-bubble-ornament-top"
+        />
+        <GardenOrnament
+          variant="bellflower"
+          className="moment-bubble-ornament moment-bubble-ornament-bottom"
+        />
         <span className="moment-bubble-content" dangerouslySetInnerHTML={{ __html: content }} />
         <small className="moment-bubble-time">{date}</small>
         <span className="moment-bubble-message-hint" aria-hidden="true">点我留言</span>

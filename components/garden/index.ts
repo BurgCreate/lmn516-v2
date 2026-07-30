@@ -3,3 +3,6 @@ export type { GardenGirlScene } from "./GardenGirl";
 export { default as GardenMotif } from "./GardenMotif";
 export { default as GardenPageHero } from "./GardenPageHero";
 export { default as GardenCorner } from "./GardenCorner";
+
+export { default as GardenOrnament } from "./GardenOrnament";
+export type { GardenOrnamentVariant } from "./GardenOrnament";

@@ -1,4 +1,5 @@
 import GardenGirl, { type GardenGirlScene } from "./GardenGirl";
+import GardenOrnament from "./GardenOrnament";
 
 type GardenPageHeroProps = {
   scene: GardenGirlScene;
@@ -39,10 +40,13 @@ export default function GardenPageHero({
           className="garden-page-girl"
           sizes="(max-width: 760px) 310px, 390px"
         />
-        <img
-          className="garden-page-flower"
-          src="/garden-assets/botanical/wildflower-corner.svg"
-          alt=""
+        <GardenOrnament
+          variant="wildflower"
+          className="garden-page-ornament garden-page-ornament-main"
+        />
+        <GardenOrnament
+          variant="curlflower"
+          className="garden-page-ornament garden-page-ornament-curl"
         />
       </div>
     </header>

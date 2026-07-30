@@ -332,3 +332,190 @@
     margin-top: -14px;
   }
 }
+
+/* V3.3 · Delicate botanical ornament system */
+.garden-ornament {
+  display: block;
+  overflow: visible;
+  pointer-events: none;
+  color: var(--accent);
+}
+
+.garden-ornament-stem {
+  fill: none;
+  stroke: color-mix(in srgb, var(--accent) 72%, #657952);
+  stroke-width: 1.35;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.garden-ornament-stem-soft {
+  stroke: color-mix(in srgb, var(--accent) 46%, #92a47d);
+  stroke-width: 1;
+}
+
+.garden-ornament-leaf {
+  fill: rgba(139, 164, 112, .17);
+  stroke: color-mix(in srgb, var(--accent) 56%, #81956e);
+  stroke-width: 1;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.garden-ornament-leaf-alt {
+  fill: rgba(178, 194, 146, .13);
+}
+
+.garden-ornament-flower,
+.garden-ornament-blossom circle {
+  stroke-width: .9;
+  vector-effect: non-scaling-stroke;
+}
+
+.garden-ornament-flower-blue,
+.garden-ornament-blossom-blue circle {
+  fill: rgba(142, 169, 205, .22);
+  stroke: rgba(93, 126, 166, .66);
+}
+
+.garden-ornament-flower-pink,
+.garden-ornament-blossom-pink circle {
+  fill: rgba(220, 157, 174, .2);
+  stroke: rgba(178, 108, 129, .64);
+}
+
+.garden-ornament-flower-gold,
+.garden-ornament-blossom-gold circle {
+  fill: rgba(232, 192, 104, .2);
+  stroke: rgba(184, 137, 54, .66);
+}
+
+.garden-ornament-center {
+  fill: rgba(110, 92, 52, .7) !important;
+  stroke: none !important;
+}
+
+.garden-ornament-dot,
+.garden-ornament-berry {
+  fill: rgba(103, 128, 79, .76);
+}
+
+.garden-ornament-dot-pink,
+.garden-ornament-berry-pink { fill: rgba(190, 115, 139, .7); }
+.garden-ornament-dot-gold,
+.garden-ornament-berry-gold { fill: rgba(190, 145, 64, .74); }
+.garden-ornament-berry-blue { fill: rgba(98, 135, 174, .72); }
+
+.garden-page-ornament {
+  position: absolute;
+  z-index: 1;
+  opacity: .68;
+  filter: saturate(.9);
+}
+
+.garden-page-ornament-main {
+  right: -4%;
+  bottom: -14%;
+  width: clamp(170px, 21vw, 275px);
+}
+
+.garden-page-ornament-curl {
+  left: -8%;
+  top: 4%;
+  width: clamp(180px, 24vw, 300px);
+  opacity: .34;
+  transform: rotate(-8deg);
+}
+
+.garden-section-ornament {
+  position: absolute;
+  z-index: 0;
+  width: clamp(150px, 19vw, 260px);
+  opacity: .42;
+}
+
+.garden-section-ornament-left {
+  left: -44px;
+  bottom: -42px;
+  transform: rotate(-7deg);
+}
+
+.garden-section-ornament-right {
+  right: -42px;
+  top: -34px;
+  transform: scaleX(-1) rotate(-5deg);
+}
+
+.garden-section-frame > *:not(.garden-section-ornament) {
+  position: relative;
+  z-index: 1;
+}
+
+.moment-bubble {
+  overflow: visible;
+}
+
+.moment-bubble-ornament {
+  position: absolute;
+  z-index: -1;
+  opacity: .78;
+  transition: transform .35s ease, opacity .35s ease;
+}
+
+.moment-bubble-ornament-top {
+  width: 118px;
+  right: -48px;
+  top: -50px;
+  transform: rotate(16deg);
+}
+
+.moment-bubble-ornament-bottom {
+  width: 94px;
+  left: -38px;
+  bottom: -54px;
+  transform: rotate(-18deg);
+}
+
+.moment-bubble:hover .moment-bubble-ornament-top {
+  transform: translateY(-3px) rotate(19deg);
+}
+
+.moment-bubble:hover .moment-bubble-ornament-bottom {
+  transform: translateY(3px) rotate(-21deg);
+}
+
+@media (max-width: 760px) {
+  .garden-page-ornament-main {
+    right: -14%;
+    bottom: -10%;
+    width: 165px;
+  }
+
+  .garden-page-ornament-curl {
+    left: -18%;
+    top: 0;
+    width: 190px;
+    opacity: .24;
+  }
+
+  .garden-section-ornament {
+    width: 150px;
+    opacity: .34;
+  }
+
+  .garden-section-ornament-left { left: -58px; bottom: -46px; }
+  .garden-section-ornament-right { right: -58px; top: -38px; }
+
+  .moment-bubble-ornament-top { width: 88px; right: -34px; top: -38px; }
+  .moment-bubble-ornament-bottom { width: 72px; left: -27px; bottom: -42px; }
+}
+
+@media (prefers-color-scheme: dark) {
+  .garden-ornament-stem,
+  .garden-ornament-leaf,
+  .garden-ornament-flower,
+  .garden-ornament-blossom circle {
+    opacity: .86;
+  }
+}
