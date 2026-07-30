@@ -34,6 +34,7 @@ type ClientEnvironment = {
 };
 
 const DISMISS_KEY = "lmn516-garden-notice-dismissed-until-v4";
+const SUBSCRIBED_KEY = "lmn516-garden-notifications-enabled-v1";
 const SEVEN_DAYS = 7 * 24 * 60 * 60 * 1000;
 
 function urlBase64ToUint8Array(base64String: string) {
@@ -173,68 +174,106 @@ export default function GardenNotification() {
   }, []);
 
   useEffect(() => {
-    const appMode = isStandaloneMode();
-    const browserSupported =
-      "serviceWorker" in navigator &&
-      "PushManager" in window &&
-      "Notification" in window;
+    let cancelled = false;
 
-    setEnvironment(detectEnvironment());
-    setStandalone(appMode);
-    setSupported(browserSupported);
+    async function initializeNotifications() {
+      const appMode = isStandaloneMode();
+      const browserSupported =
+        "serviceWorker" in navigator &&
+        "PushManager" in window &&
+        "Notification" in window;
 
-    const dismissedUntil = Number(
-      window.localStorage.getItem(DISMISS_KEY) || "0"
-    );
-
-    if (appMode && Date.now() > dismissedUntil) {
-      const welcomeTimer = window.setTimeout(() => {
-        setWelcomeOpen(true);
-      }, 500);
+      const nextEnvironment = detectEnvironment();
+      setEnvironment(nextEnvironment);
+      setStandalone(appMode);
+      setSupported(browserSupported);
 
       if (!browserSupported) {
         setPermission("unsupported");
-        return () => window.clearTimeout(welcomeTimer);
+        return;
       }
 
-      setPermission(Notification.permission);
+      const currentPermission = Notification.permission;
+      setPermission(currentPermission);
 
-      navigator.serviceWorker
-        .register("/sw.js", { scope: "/" })
-        .then((registration) => registration.pushManager.getSubscription())
-        .then((existingSubscription) => {
-          setSubscription(existingSubscription);
-
-          if (
-            existingSubscription ||
-            Notification.permission !== "default"
-          ) {
-            setWelcomeOpen(false);
-          }
-        })
-        .catch((error) => {
-          console.error("Garden notification initialization failed:", error);
+      try {
+        const registration = await navigator.serviceWorker.register("/sw.js", {
+          scope: "/",
         });
 
-      return () => window.clearTimeout(welcomeTimer);
-    }
+        let existingSubscription =
+          await registration.pushManager.getSubscription();
 
-    if (!browserSupported) {
-      setPermission("unsupported");
-      return;
-    }
+        // iOS Web App returning from another page can remount this component
+        // before PushManager finishes restoring the subscription. If permission
+        // is already granted, recover the subscription silently instead of
+        // showing the welcome dialog again.
+        if (!existingSubscription && currentPermission === "granted") {
+          const publicKey = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY;
 
-    setPermission(Notification.permission);
+          if (publicKey) {
+            existingSubscription =
+              await registration.pushManager.subscribe({
+                userVisibleOnly: true,
+                applicationServerKey: urlBase64ToUint8Array(publicKey),
+              });
 
-    navigator.serviceWorker
-      .register("/sw.js", { scope: "/" })
-      .then((registration) => registration.pushManager.getSubscription())
-      .then((existingSubscription) => {
+            const response = await fetch("/api/push/subscribe", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                subscription: existingSubscription.toJSON(),
+              }),
+            });
+
+            if (!response.ok) {
+              throw new Error("恢复推送订阅失败。");
+            }
+          }
+        }
+
+        if (cancelled) return;
+
         setSubscription(existingSubscription);
-      })
-      .catch((error) => {
+
+        if (existingSubscription && currentPermission === "granted") {
+          window.localStorage.setItem(SUBSCRIBED_KEY, "1");
+          setWelcomeOpen(false);
+          return;
+        }
+
+        const dismissedUntil = Number(
+          window.localStorage.getItem(DISMISS_KEY) || "0"
+        );
+        const wasSubscribed =
+          window.localStorage.getItem(SUBSCRIBED_KEY) === "1";
+
+        // Only first-time visitors with undecided permission should see this.
+        // Do not reopen it on every route remount or browser back navigation.
+        if (
+          appMode &&
+          currentPermission === "default" &&
+          !wasSubscribed &&
+          Date.now() > dismissedUntil
+        ) {
+          setWelcomeOpen(true);
+        } else {
+          setWelcomeOpen(false);
+        }
+      } catch (error) {
         console.error("Garden notification initialization failed:", error);
-      });
+
+        if (!cancelled) {
+          setWelcomeOpen(false);
+        }
+      }
+    }
+
+    void initializeNotifications();
+
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   useEffect(() => {
@@ -427,6 +466,7 @@ export default function GardenNotification() {
       setWelcomeOpen(false);
       setPanelOpen(true);
       window.localStorage.removeItem(DISMISS_KEY);
+      window.localStorage.setItem(SUBSCRIBED_KEY, "1");
     } catch (error) {
       console.error("Enable garden notification failed:", error);
       setStatus("error");
