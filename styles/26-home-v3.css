@@ -1,3 +1,13 @@
+
+/* V3 homepage unified cute handwritten typography */
+.home-v3-page,
+.home-v3-page *,
+.home-v3-header,
+.home-v3-header * {
+  font-family: "ZCOOL KuaiLe", "Kaiti SC", "STKaiti", "KaiTi", cursive !important;
+  font-synthesis: none;
+}
+
 /* LMN516 V3 homepage — 1920×1080 reference canvas */
 .home-v3-page {
   --v3-bg: #f5efe1;
