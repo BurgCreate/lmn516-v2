@@ -37,14 +37,14 @@ export default async function HomePage() {
           <div className="home-v3-right">
             <section className="v3-panel v3-today" aria-labelledby="today-title">
               <div className="v3-panel-title">
-                <span className="v3-title-icon" aria-hidden="true">▢</span>
+                <span className="v3-title-icon" aria-hidden="true">▣</span>
                 <h1 id="today-title">今日档案</h1>
-                <span className="v3-title-plant" aria-hidden="true">🪴</span>
+                <img className="v3-title-plant" src="/garden-assets/icons/plant.svg" alt="" aria-hidden="true" />
               </div>
 
               <div className="v3-today-body">
                 <div className="v3-pushup">
-                  <div className="v3-pushup-figure" aria-hidden="true">🏃🏻</div>
+                  <div className="v3-pushup-figure" aria-hidden="true"><img src="/garden-assets/icons/pushup.svg" alt="" /></div>
                   <div className="v3-pushup-copy">
                     <span>持续进行</span>
                     <strong>一万个俯卧撑</strong>

@@ -32,6 +32,9 @@ export default function SiteHeader({ className = "" }: { className?: string }) {
       </nav>
 
       <div className="site-header-actions">
+        <Link href="/pwa-test" className="v3-bell-button" aria-label="通知设置" title="通知设置">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4" /></svg>
+        </Link>
         <ThemeToggle />
         <button type="button" className="v3-menu-button" aria-label="打开菜单"><span /><span /><span /></button>
       </div>

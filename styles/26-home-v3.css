@@ -279,3 +279,209 @@
     transform: scale(.72);
   }
 }
+
+/* =========================================================
+   V3 visual fidelity pass — typography, artwork and alignment
+========================================================= */
+.home-v3-page {
+  font-family: "Kaiti SC", "STKaiti", "KaiTi", "Songti SC", serif;
+}
+
+/* The old global garden layer must not show through this presentation canvas. */
+body:has(.home-v3-page) > .garden-world {
+  display: none !important;
+}
+
+.home-v3-header.site-header {
+  grid-template-columns: minmax(240px, 1fr) auto minmax(240px, 1fr);
+  align-items: start;
+}
+
+.home-v3-header .nav {
+  grid-column: 2;
+  justify-self: center;
+  gap: clamp(30px, 2.75vw, 53px);
+}
+
+.home-v3-header .site-header-actions {
+  grid-column: 3;
+  justify-self: end;
+}
+
+.v3-bell-button,
+.home-v3-header .theme-toggle {
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(72, 78, 65, .18);
+  border-radius: 50%;
+  color: var(--v3-ink);
+  background: rgba(255, 252, 243, .48);
+  text-decoration: none;
+}
+
+.v3-bell-button svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.65;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.home-v3-header .theme-toggle {
+  transform: none;
+  padding: 0;
+  font-size: 21px;
+}
+
+.v3-section-heading h2,
+.v3-panel-title h1,
+.v3-archive-card strong,
+.v3-about-copy p,
+.home-v3-header .nav-link {
+  font-family: "Kaiti SC", "STKaiti", "KaiTi", serif;
+  font-weight: 500;
+}
+
+.v3-title-icon {
+  font-family: serif;
+  font-size: 25px;
+  transform: none;
+}
+
+.v3-title-plant {
+  width: 54px;
+  height: 54px;
+  object-fit: contain;
+  margin-left: auto;
+}
+
+.v3-pushup {
+  grid-template-columns: 34% 66%;
+}
+
+.v3-pushup-figure {
+  display: grid;
+  place-items: center;
+  transform: none;
+  font-size: 0;
+}
+
+.v3-pushup-figure img {
+  width: min(92%, 150px);
+  max-height: 118px;
+  object-fit: contain;
+}
+
+.v3-archive-card img {
+  width: clamp(58px, 5.4vw, 92px);
+  height: clamp(52px, 4.8vw, 82px);
+  object-fit: contain;
+}
+
+.v3-archive-card span {
+  display: none;
+}
+
+.v3-about-card {
+  grid-template-columns: 34% 1fr 18%;
+  overflow: visible;
+}
+
+.v3-about-girl {
+  width: 100%;
+  height: 95%;
+  object-fit: contain;
+  object-position: center bottom;
+}
+
+.v3-about-rabbit {
+  position: absolute;
+  left: 29%;
+  bottom: -5px;
+  width: clamp(48px, 4vw, 72px);
+  height: auto;
+  z-index: 2;
+}
+
+.v3-about-cat {
+  align-self: end;
+  justify-self: center;
+  width: clamp(82px, 7vw, 126px);
+  height: auto;
+  object-fit: contain;
+  margin-bottom: 3px;
+  font-size: 0;
+}
+
+.v3-hero .random-photo-controls {
+  position: absolute;
+  inset: 0;
+  display: block;
+  pointer-events: none;
+}
+
+.v3-hero .random-photo-control {
+  position: absolute;
+  top: 50%;
+  width: 68px;
+  height: 68px;
+  transform: translateY(-50%);
+  display: grid;
+  place-items: center;
+  pointer-events: auto;
+  background: transparent;
+  border: 0;
+}
+
+.v3-hero .random-photo-control-previous { left: 24px; }
+.v3-hero .random-photo-control-next { right: 24px; }
+
+.v3-hero .random-photo-control-icon {
+  width: 60px;
+  height: 60px;
+  margin: 0;
+  opacity: 1;
+  transform: none;
+  background: rgba(58, 62, 51, .48);
+  border: 1px solid rgba(255,255,255,.58);
+  backdrop-filter: blur(4px);
+}
+
+.v3-hero .random-photo-control::before {
+  display: none;
+}
+
+.v3-post-copy p {
+  line-height: 1.42;
+  -webkit-line-clamp: 1;
+}
+
+@media (min-width: 1181px) {
+  .v3-post-copy {
+    grid-template-rows: auto auto minmax(0, 1fr);
+    gap: 2px;
+  }
+
+  .v3-post-copy p {
+    margin-top: 0;
+    -webkit-line-clamp: 1;
+  }
+}
+
+@media (max-width: 1180px) {
+  .home-v3-header.site-header {
+    grid-template-columns: 1fr auto;
+  }
+
+  .home-v3-header .site-header-actions {
+    grid-column: 2;
+  }
+
+  .v3-about-rabbit {
+    display: none;
+  }
+}
