@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 
 type PermissionState = NotificationPermission | "unsupported";
 type NoticeState = "idle" | "working" | "success" | "error";
@@ -162,7 +163,9 @@ export default function GardenNotification() {
   const [welcomeOpen, setWelcomeOpen] = useState(false);
   const [status, setStatus] = useState<NoticeState>("idle");
   const [message, setMessage] = useState("");
+  const [portalReady, setPortalReady] = useState(false);
   const panelRef = useRef<HTMLDivElement>(null);
+  const floatingPanelRef = useRef<HTMLDivElement>(null);
 
   async function saveSubscription(nextSubscription: PushSubscription) {
     const response = await fetch("/api/push/subscribe", {
@@ -219,6 +222,10 @@ export default function GardenNotification() {
     setServerConfirmed(true);
     return nextSubscription;
   }
+
+  useEffect(() => {
+    setPortalReady(true);
+  }, []);
 
   useEffect(() => {
     function handleBeforeInstallPrompt(event: Event) {
@@ -368,7 +375,8 @@ export default function GardenNotification() {
       if (
         panelOpen &&
         panelRef.current &&
-        !panelRef.current.contains(event.target as Node)
+        !panelRef.current.contains(event.target as Node) &&
+        !floatingPanelRef.current?.contains(event.target as Node)
       ) {
         setPanelOpen(false);
       }
@@ -388,6 +396,17 @@ export default function GardenNotification() {
       window.removeEventListener("scroll", handleScroll);
     };
   }, [panelOpen]);
+
+  useEffect(() => {
+    if (!welcomeOpen) return;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [welcomeOpen]);
 
   async function copyCurrentUrl() {
     try {
@@ -573,23 +592,13 @@ export default function GardenNotification() {
     (environment.isInAppBrowser ||
       (environment.platform === "ios" && environment.browser !== "safari"));
 
-  return (
-    <div className="garden-notification" ref={panelRef}>
-      <button
-        type="button"
-        className={`garden-bell${isSubscribed ? " is-active" : ""}`}
-        onClick={togglePanel}
-        aria-label={isSubscribed ? "花园通知已开启" : "开启花园通知"}
-        aria-expanded={panelOpen}
-      >
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4" />
-        </svg>
-        {isSubscribed && <span className="garden-bell-dot" />}
-      </button>
-
-      {panelOpen && (
-        <div className="garden-bell-panel" role="dialog" aria-label="花园信使">
+  const floatingPanel = panelOpen ? (
+    <div
+      className="garden-bell-panel"
+      ref={floatingPanelRef}
+      role="dialog"
+      aria-label="花园信使"
+    >
           <p className="garden-notice-kicker">🌿 花园信使</p>
 
           {isSubscribed ? (
@@ -661,11 +670,12 @@ export default function GardenNotification() {
           {message && (
             <p className={`garden-notice-message is-${status}`}>{message}</p>
           )}
-        </div>
-      )}
 
-      {welcomeOpen && (
-        <div className="garden-welcome-backdrop" role="presentation">
+    </div>
+  ) : null;
+
+  const welcomeDialog = welcomeOpen ? (
+    <div className="garden-welcome-backdrop" role="presentation">
           <section
             className="garden-welcome-card"
             role="dialog"
@@ -705,8 +715,33 @@ export default function GardenNotification() {
               </div>
             </div>
           </section>
-        </div>
-      )}
+
     </div>
+  ) : null;
+
+  return (
+    <>
+      <div className="garden-notification" ref={panelRef}>
+        <button
+          type="button"
+          className={`garden-bell${isSubscribed ? " is-active" : ""}`}
+          onClick={togglePanel}
+          aria-label={isSubscribed ? "花园通知已开启" : "开启花园通知"}
+          aria-expanded={panelOpen}
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4" />
+          </svg>
+          {isSubscribed && <span className="garden-bell-dot" />}
+        </button>
+      </div>
+
+      {portalReady && floatingPanel
+        ? createPortal(floatingPanel, document.body)
+        : null}
+      {portalReady && welcomeDialog
+        ? createPortal(welcomeDialog, document.body)
+        : null}
+    </>
   );
 }
