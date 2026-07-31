@@ -1,37 +1,19 @@
 import SiteHeader from "@/components/SiteHeader";
 import MomentBubble from "@/components/MomentBubble";
-import GardenEntrance from "@/components/home/GardenEntrance";
 import HeroSection from "@/components/home/HeroSection";
 import LatestPosts from "@/components/home/LatestPosts";
 import LifeArchive from "@/components/home/LifeArchive";
 import AboutSection from "@/components/home/AboutSection";
-import SiteFooter from "@/components/home/SiteFooter";
-import GardenTrail from "@/components/home/GardenTrail";
-import GardenAtmosphere from "@/components/home/GardenAtmosphere";
-import GardenSectionFrame from "@/components/home/GardenSectionFrame";
-import {
-  getPosts,
-  getPostById,
-  getMediaImages,
-  getMoments,
-} from "@/lib/wordpress";
+import { getPosts, getPostById, getMediaImages, getMoments } from "@/lib/wordpress";
 
 export const revalidate = 300;
 
 function getTodayInfo() {
   const now = new Date();
-
   return {
-    date: `${String(now.getMonth() + 1).padStart(2, "0")}.${String(
-      now.getDate()
-    ).padStart(2, "0")}`,
-    fullDate: `${now.getFullYear()}.${String(now.getMonth() + 1).padStart(
-      2,
-      "0"
-    )}.${String(now.getDate()).padStart(2, "0")}`,
-    weekday: now.toLocaleDateString("zh-CN", {
-      weekday: "long",
-    }),
+    date: `${String(now.getMonth() + 1).padStart(2, "0")}.${String(now.getDate()).padStart(2, "0")}`,
+    fullDate: `${now.getFullYear()}.${String(now.getMonth() + 1).padStart(2, "0")}.${String(now.getDate()).padStart(2, "0")}`,
+    weekday: now.toLocaleDateString("zh-CN", { weekday: "long" }),
   };
 }
 
@@ -39,13 +21,7 @@ function getYearProgress() {
   const now = new Date();
   const start = new Date(now.getFullYear(), 0, 1);
   const end = new Date(now.getFullYear() + 1, 0, 1);
-
-  const progress =
-    ((now.getTime() - start.getTime()) /
-      (end.getTime() - start.getTime())) *
-    100;
-
-  return progress.toFixed(1);
+  return (((now.getTime() - start.getTime()) / (end.getTime() - start.getTime())) * 100).toFixed(1);
 }
 
 export default async function HomePage() {
@@ -59,61 +35,43 @@ export default async function HomePage() {
   const featured = posts[0];
   const cards = posts.slice(1, 4);
   const pushupPost = await getPostById(347);
-
   const pushupMatch = pushupPost?.title.match(/已完成\s*([\d,]+)\s*个/);
-  const pushups = pushupMatch
-    ? Number(pushupMatch[1].replace(/,/g, ""))
-    : 0;
-
+  const pushups = pushupMatch ? Number(pushupMatch[1].replace(/,/g, "")) : 0;
   const target = 10000;
-  const pushupProgress =
-    target > 0 ? ((pushups / target) * 100).toFixed(2) : "0.00";
-  const remaining = Math.max(target - pushups, 0);
-  const today = getTodayInfo();
-  const yearProgress = getYearProgress();
+  const pushupProgress = target > 0 ? ((pushups / target) * 100).toFixed(2) : "0.00";
 
   return (
-    <main id="top">
+    <main id="top" className="home-v3">
       <div className="paper-noise" aria-hidden="true" />
-      <GardenAtmosphere />
-
-      <SiteHeader />
-
-      <GardenEntrance />
-
-      <HeroSection
-        mediaImages={mediaImages}
-        today={today}
-        yearProgress={yearProgress}
-        featured={featured}
-        pushupPost={pushupPost}
-        pushups={pushups}
-        target={target}
-        pushupProgress={pushupProgress}
-        remaining={remaining}
-      />
-
-      <GardenTrail variant="bird" label="沿着小路，看看最近长出了什么" />
-      <GardenSectionFrame variant="notes" marker="01 · 新芽">
-        <LatestPosts featured={featured} cards={cards} />
-      </GardenSectionFrame>
-      <GardenTrail variant="bench" label="在长椅旁，翻一翻生活收藏" />
-      <GardenSectionFrame variant="archive" marker="02 · 收藏">
-        <LifeArchive />
-      </GardenSectionFrame>
-      <GardenTrail variant="mailbox" label="花园尽头，也欢迎留下你的痕迹" />
-      <GardenSectionFrame variant="about" marker="03 · 树下">
-        <AboutSection />
-      </GardenSectionFrame>
-
-      {latestMoment && (
-        <MomentBubble
-          content={latestMoment.content}
-          date={latestMoment.date}
-        />
-      )}
-
-      <SiteFooter />
+      <div className="v3-page-shell">
+        <SiteHeader className="v3-header" />
+        <div className="v3-home-grid">
+          <div className="v3-left-column">
+            <HeroSection
+              mediaImages={mediaImages}
+              today={getTodayInfo()}
+              yearProgress={getYearProgress()}
+              featured={featured}
+              pushupPost={pushupPost}
+              pushups={pushups}
+              target={target}
+              pushupProgress={pushupProgress}
+              remaining={Math.max(target - pushups, 0)}
+            />
+            <LatestPosts featured={featured} cards={cards} />
+          </div>
+          <div className="v3-right-column">
+            <LifeArchive />
+            <AboutSection />
+          </div>
+        </div>
+        <footer className="v3-footer">
+          <span aria-hidden="true">🌼</span>
+          <p>© 2026 LMN516. All rights reserved.</p>
+          <span aria-hidden="true">🐤</span>
+        </footer>
+      </div>
+      {latestMoment && <MomentBubble content={latestMoment.content} date={latestMoment.date} />}
     </main>
   );
 }

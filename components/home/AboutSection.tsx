@@ -1,31 +1,19 @@
 import Link from "next/link";
-import { GardenFloraRibbon, GardenOrnament } from "@/components/garden";
 
 export default function AboutSection() {
   return (
-    <section id="about" className="about shell section-space garden-content-section garden-content-section-about">
-      <GardenFloraRibbon className="garden-content-flora garden-content-flora-top" />
-      <div className="about-card garden-about-card">
-        <GardenOrnament variant="vine" className="garden-about-vine garden-about-vine-left" />
-        <GardenOrnament variant="bellflower" className="garden-about-vine garden-about-vine-right" />
-        <div>
-          <p className="eyebrow">关于本站</p>
-          <h2>一个人的网站，应该像他的房间。</h2>
-        </div>
-
-        <div className="about-copy">
-          <p>
-            LMN516 是一个持续生长的个人数字花园。
-            这里保存文章、照片、音乐、碎碎念，以及一些需要很多时间才能完成的事情。
-          </p>
-
-          <div className="about-links">
-            <Link href="/about">了解本站 →</Link>
-            <a href="mailto:hello@lmn516.com">写信</a>
-          </div>
-        </div>
+    <section id="about" className="v3-about">
+      <div className="v3-section-title v3-section-title-compact">
+        <h2><span aria-hidden="true">🌱</span> 关于我</h2>
       </div>
-      <GardenFloraRibbon className="garden-content-flora garden-content-flora-bottom" density="light" />
+      <div className="v3-about-card">
+        <img src="/garden-assets/characters/garden-girl-about.webp" alt="戴草帽、坐着读书的小女孩插画" />
+        <div className="v3-about-copy">
+          <p>一个安静的人，喜欢记录生活，<br />热爱自然，持续成长中。</p>
+          <Link href="/about">了解更多 →</Link>
+        </div>
+        <span className="v3-about-cat" aria-hidden="true">🐈</span>
+      </div>
     </section>
   );
 }

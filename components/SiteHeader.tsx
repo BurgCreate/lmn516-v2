@@ -28,12 +28,12 @@ type NavigationItem =
   | PageNavigationItem;
 
 const navigationItems: NavigationItem[] = [
-  { label: "本期", hash: "notes" },
-  { label: "专题", hash: "project" },
-  { label: "收藏", hash: "archive" },
-  { label: "文章墙", href: "/wall" },
-  { label: "照片墙", href: "/photos" },
-  { label: "关于", hash: "about" },
+  { label: "首页", href: "/" },
+  { label: "文章", href: "/posts" },
+  { label: "档案", href: "/archive" },
+  { label: "碎碎念", href: "/moments" },
+  { label: "音乐", href: "/music" },
+  { label: "关于", href: "/about" },
 ];
 
 export default function SiteHeader({
@@ -151,22 +151,6 @@ export default function SiteHeader({
             </Link>
           );
         })}
-
-        <Link
-          href="/changelog"
-          className={
-            pathname === "/changelog"
-              ? "nav-link is-current"
-              : "nav-link"
-          }
-          aria-current={
-            pathname === "/changelog"
-              ? "page"
-              : undefined
-          }
-        >
-          生长记录
-        </Link>
       </nav>
 
       <div className="site-header-actions">

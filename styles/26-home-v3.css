@@ -1,0 +1,240 @@
+/* LMN516 V3 homepage — faithful implementation of the approved watercolor mockup */
+.home-v3 {
+  min-height: 100vh;
+  color: #26352d;
+  background:
+    radial-gradient(circle at 9% 16%, rgba(223, 204, 151, 0.13), transparent 20%),
+    radial-gradient(circle at 90% 82%, rgba(115, 141, 102, 0.08), transparent 22%),
+    #f5f0e4;
+  font-family: "Noto Serif SC", "Songti SC", serif;
+}
+
+.home-v3::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: .24;
+  background-image: url("/garden-assets/atmosphere/paper-texture.webp");
+  background-size: 600px auto;
+  mix-blend-mode: multiply;
+}
+
+.v3-page-shell {
+  position: relative;
+  z-index: 1;
+  width: min(1460px, calc(100% - 64px));
+  margin-inline: auto;
+  padding: 22px 0 12px;
+}
+
+.home-v3 .site-header.v3-header {
+  width: 100%;
+  max-width: none;
+  min-height: 84px;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 280px 1fr auto;
+  align-items: center;
+  gap: 28px;
+  position: relative;
+  top: auto;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+
+.home-v3 .v3-header .brand {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  column-gap: 8px;
+}
+
+.home-v3 .v3-header .brand-wordmark {
+  font-family: "Comic Sans MS", "Bradley Hand", cursive;
+  font-size: clamp(30px, 3vw, 44px);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: .08em;
+  color: #314d3d;
+}
+
+.home-v3 .v3-header .brand-subtitle {
+  grid-column: 1 / -1;
+  margin: 5px 0 0 12px;
+  font-family: Inter, sans-serif;
+  font-size: 12px;
+  letter-spacing: .13em;
+  color: #7b7e71;
+  font-style: italic;
+}
+
+.home-v3 .v3-header .brand-sprig { width: 24px; order: 2; }
+.home-v3 .v3-header .nav { justify-content: center; gap: clamp(24px, 3.2vw, 54px); }
+.home-v3 .v3-header .nav-link {
+  position: relative;
+  padding: 20px 0;
+  font-size: 18px;
+  letter-spacing: .08em;
+  color: #28342c;
+}
+.home-v3 .v3-header .nav-link::after {
+  content: "";
+  position: absolute;
+  left: 8%; right: 8%; bottom: 9px;
+  height: 3px;
+  border-radius: 10px;
+  background: #5c7c5b;
+  transform: scaleX(0);
+  transition: transform .2s ease;
+}
+.home-v3 .v3-header .nav-link:hover::after,
+.home-v3 .v3-header .nav-link.is-current::after { transform: scaleX(1); }
+.home-v3 .v3-header .site-header-actions { gap: 12px; }
+.home-v3 .v3-header .site-header-actions > * { border-radius: 999px; }
+
+.v3-home-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(460px, 1.03fr);
+  gap: 30px;
+  align-items: start;
+  padding-top: 12px;
+}
+.v3-left-column,
+.v3-right-column { display: flex; flex-direction: column; gap: 28px; min-width: 0; }
+
+.v3-hero { display: contents; }
+.v3-photo-column { min-width: 0; }
+.home-v3 .random-photo-stage {
+  aspect-ratio: 1.72 / 1;
+  border-radius: 18px;
+  border-color: rgba(77, 86, 70, .25);
+  box-shadow: 0 9px 26px rgba(69, 64, 47, .09);
+}
+.home-v3 .random-photo-overlay,
+.home-v3 .random-photo-info { display: none; }
+.home-v3 .random-photo-control-icon {
+  width: 58px; height: 58px;
+  margin-inline: 28px;
+  opacity: .78;
+  background: rgba(53, 60, 52, .45);
+  border-color: rgba(255,255,255,.65);
+}
+.v3-photo-dots { display:flex; justify-content:center; gap:9px; padding-top:12px; }
+.v3-photo-dots span { width:18px; height:7px; border-radius:20px; background:#d5cfc0; }
+.v3-photo-dots .is-active { width:22px; background:#6e8a61; }
+
+.v3-today-card,
+.v3-post-card,
+.v3-life-card,
+.v3-about-card {
+  border: 1px solid rgba(91, 93, 77, .28);
+  background: rgba(250, 247, 238, .62);
+  box-shadow: 0 5px 15px rgba(91, 77, 51, .04);
+}
+.v3-today-card { border-radius: 18px; overflow:hidden; }
+.v3-card-heading {
+  height: 80px;
+  padding: 0 24px;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 14px;
+  border-bottom: 1px solid rgba(91, 93, 77, .22);
+}
+.v3-card-heading h1 { margin:0; font-size:26px; font-weight:600; letter-spacing:.08em; }
+.v3-heading-icon { font-size:33px; transform:rotate(90deg); }
+.v3-potted-plant { font-size:40px; filter:saturate(.65); }
+.v3-today-content { display:grid; grid-template-columns:1fr 1fr; min-height:220px; }
+.v3-project,
+.v3-clock { padding: 28px 26px; display:flex; align-items:center; gap:20px; }
+.v3-clock { border-left:1px dashed rgba(91, 93, 77, .26); justify-content:center; }
+.v3-pushup-figure { font-size:58px; filter:grayscale(.45); }
+.v3-small-label { display:block; font-size:15px; letter-spacing:.12em; margin-bottom:7px; }
+.v3-project h2 { margin:0 0 8px; font-size:18px; font-weight:500; }
+.v3-progress-number strong { font-family:Inter,sans-serif; font-size:38px; font-weight:500; color:#49684c; }
+.v3-progress-number span { font-family:Inter,sans-serif; font-size:14px; }
+.v3-progress-track { width:100%; height:9px; margin:9px 0 8px; border:1px solid #9a9a88; border-radius:99px; overflow:hidden; }
+.v3-progress-track span { display:block; height:100%; background:linear-gradient(90deg,#718f63,#b7c9a0); }
+.v3-project a { font-size:12px; color:#63735e; }
+.v3-clock-face { position:relative; width:58px; height:58px; flex:0 0 auto; border:3px solid #5e6257; border-radius:50%; background:#f7f1df; }
+.v3-clock-hand { position:absolute; left:50%; bottom:50%; width:2px; background:#555a50; transform-origin:bottom; }
+.v3-clock-hour { height:16px; transform:rotate(8deg); }
+.v3-clock-minute { height:21px; transform:rotate(120deg); }
+.v3-clock-dot { position:absolute; left:50%; top:50%; width:6px; height:6px; border-radius:50%; background:#555a50; transform:translate(-50%,-50%); }
+.v3-clock strong { display:block; margin:0 0 8px; font-family:Inter,sans-serif; font-size:42px; font-weight:400; letter-spacing:.06em; color:#425d49; }
+.v3-clock small { display:block; font-family:Inter,sans-serif; font-size:13px; white-space:nowrap; }
+
+.v3-section-title { display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; }
+.v3-section-title h2 { margin:0; font-size:24px; font-weight:600; letter-spacing:.08em; }
+.v3-section-title h2 span { font-size:22px; margin-right:8px; }
+.v3-section-title > a { color:#6c7469; font-size:14px; }
+.v3-section-title-compact { margin-bottom:12px; }
+.v3-post-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; }
+.v3-post-card { border-radius:14px; overflow:hidden; min-width:0; transition:transform .2s ease, box-shadow .2s ease; }
+.v3-post-card:hover { transform:translateY(-3px); box-shadow:0 12px 24px rgba(71,64,48,.1); }
+.v3-post-image { aspect-ratio:1.15/1; overflow:hidden; background:#e6e2d3; }
+.v3-post-image img { width:100%; height:100%; object-fit:cover; display:block; }
+.v3-post-image span { width:100%; height:100%; display:grid; place-items:center; color:#7b7c70; }
+.v3-post-body { padding:13px 12px 16px; }
+.v3-post-body h3 { margin:0 0 8px; min-height:2.7em; font-size:15px; line-height:1.35; }
+.v3-post-body time { font-family:Inter,sans-serif; font-size:10px; color:#77786e; }
+.v3-post-body p { margin:10px 0 0; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; font-size:12px; line-height:1.7; color:#555d55; }
+
+.v3-life-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
+.v3-life-card { min-height:150px; border-radius:14px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px; }
+.v3-life-card:hover { border-color:#6c8a68; background:rgba(248,246,236,.9); }
+.v3-life-icon { font-size:49px; filter:saturate(.65); }
+.v3-life-card strong { font-size:17px; letter-spacing:.12em; }
+
+.v3-about-card { min-height:226px; border-radius:16px; padding:18px 24px; display:grid; grid-template-columns:230px 1fr 90px; align-items:end; gap:18px; overflow:hidden; }
+.v3-about-card > img { width:220px; max-height:200px; object-fit:contain; object-position:center bottom; align-self:end; }
+.v3-about-copy { align-self:center; }
+.v3-about-copy p { margin:0 0 18px; font-size:17px; line-height:2; letter-spacing:.08em; }
+.v3-about-copy a { display:inline-flex; padding:9px 20px; border-radius:999px; background:#557654; color:#fff; font-size:14px; }
+.v3-about-cat { align-self:end; font-size:62px; filter:saturate(.55); }
+
+.v3-footer { height:62px; margin-top:18px; display:flex; align-items:center; justify-content:center; gap:24px; color:#8a887d; }
+.v3-footer p { margin:0; font-family:Inter,sans-serif; font-size:12px; letter-spacing:.08em; }
+
+@media (max-width: 1120px) {
+  .home-v3 .site-header.v3-header { grid-template-columns:220px 1fr auto; }
+  .home-v3 .v3-header .nav { gap:20px; }
+  .home-v3 .v3-header .nav-link { font-size:15px; }
+  .v3-home-grid { grid-template-columns:1fr; }
+  .v3-right-column { display:grid; grid-template-columns:1fr; }
+}
+
+@media (max-width: 760px) {
+  .v3-page-shell { width:min(100% - 28px, 680px); padding-top:8px; }
+  .home-v3 .site-header.v3-header { min-height:72px; grid-template-columns:1fr auto; }
+  .home-v3 .v3-header .nav { display:none; }
+  .home-v3 .v3-header .brand-wordmark { font-size:30px; }
+  .v3-home-grid { padding-top:4px; gap:20px; }
+  .v3-left-column,.v3-right-column { gap:22px; }
+  .home-v3 .random-photo-stage { aspect-ratio:4/3; border-radius:14px; }
+  .home-v3 .random-photo-control-icon { width:44px; height:44px; margin-inline:12px; }
+  .v3-today-content { grid-template-columns:1fr; }
+  .v3-clock { border-left:0; border-top:1px dashed rgba(91,93,77,.26); }
+  .v3-post-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .v3-life-grid { grid-template-columns:repeat(2,1fr); }
+  .v3-about-card { grid-template-columns:130px 1fr; padding:14px; min-height:190px; }
+  .v3-about-card > img { width:130px; }
+  .v3-about-cat { display:none; }
+  .v3-about-copy p { font-size:14px; line-height:1.85; }
+  .v3-card-heading h1,.v3-section-title h2 { font-size:21px; }
+}
+
+@media (max-width: 430px) {
+  .v3-project,.v3-clock { padding:22px 18px; }
+  .v3-pushup-figure { font-size:44px; }
+  .v3-clock strong { font-size:34px; }
+  .v3-post-grid { gap:9px; }
+  .v3-post-body { padding:10px; }
+  .v3-life-card { min-height:120px; }
+  .v3-life-icon { font-size:40px; }
+  .v3-about-card { grid-template-columns:100px 1fr; }
+  .v3-about-card > img { width:105px; }
+}
