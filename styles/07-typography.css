@@ -99,8 +99,13 @@ h2,
 }
 
 .article-body {
-  font-size: var(--text-body-lg);
-  line-height: var(--leading-reading);
+  /* 阅读正文需要比普通界面文字更清晰、更稳定。 */
+  color: #20261f;
+  font-size: 19px;
+  font-weight: 500;
+  line-height: 1.95;
+  letter-spacing: 0.012em;
+  text-rendering: optimizeLegibility;
 }
 
 .post-content p,
@@ -144,6 +149,13 @@ h2,
 
   .article h1 {
     font-size: clamp(25px, 6.8vw, 29px);
+  }
+
+  .article-body {
+    font-size: 17px;
+    font-weight: 500;
+    line-height: 1.9;
+    letter-spacing: 0.008em;
   }
 
   .section-heading h2 {
