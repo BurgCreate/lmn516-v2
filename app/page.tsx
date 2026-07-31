@@ -44,7 +44,7 @@ export default async function HomePage() {
 
               <div className="v3-today-body">
                 <div className="v3-pushup">
-                  <div className="v3-pushup-figure" aria-hidden="true"><img src="/garden-assets/icons/pushup.svg" alt="" /></div>
+                  <div className="v3-pushup-figure" aria-hidden="true"><img src="/garden-assets/characters/pushup-child.png" alt="" /></div>
                   <div className="v3-pushup-copy">
                     <span>持续进行</span>
                     <strong>一万个俯卧撑</strong>

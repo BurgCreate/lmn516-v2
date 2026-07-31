@@ -485,3 +485,119 @@ body:has(.home-v3-page) > .garden-world {
     display: none;
   }
 }
+
+/* =========================================================
+   V3 fidelity refinement 2 — reference artwork and readability
+========================================================= */
+.home-v3-page,
+.home-v3-page button,
+.home-v3-page input,
+.home-v3-page textarea,
+.home-v3-page select {
+  font-family: "STKaiti", "Kaiti SC", "KaiTi", "楷体", cursive !important;
+  font-weight: 400;
+}
+
+/* Keep the intended subtitle horizontal; remove the old vertical chrome remnant. */
+.home-v3-header .brand-subtitle {
+  writing-mode: horizontal-tb !important;
+  transform: none !important;
+  text-transform: none !important;
+  display: block !important;
+  margin: 7px 0 0 17px !important;
+  letter-spacing: .08em !important;
+  font-size: clamp(11px, .78vw, 15px) !important;
+}
+
+.home-v3-page .garden-world,
+.home-v3-page .garden-world-layer,
+.home-v3-page .garden-atmosphere,
+.home-v3-page .garden-side-label,
+.home-v3-page [class*="garden-world"] {
+  display: none !important;
+}
+
+/* Use the real notification component, while keeping the circular header treatment. */
+.home-v3-header .garden-notification,
+.home-v3-header .garden-bell-wrap,
+.home-v3-header .garden-bell-shell {
+  position: relative;
+}
+.home-v3-header .garden-bell {
+  width: 46px !important;
+  height: 46px !important;
+  min-width: 46px !important;
+  display: grid !important;
+  place-items: center !important;
+  border: 1px solid rgba(72, 78, 65, .18) !important;
+  border-radius: 50% !important;
+  background: rgba(255, 252, 243, .48) !important;
+  box-shadow: none !important;
+}
+.home-v3-header .garden-bell svg { width: 21px; height: 21px; }
+
+.v3-pushup-figure img {
+  width: min(95%, 150px) !important;
+  max-height: 118px !important;
+  object-fit: contain !important;
+  filter: none !important;
+}
+
+.v3-about-card {
+  grid-template-columns: 35% 1fr 15% !important;
+  overflow: hidden !important;
+}
+.v3-about-rabbit {
+  left: 31% !important;
+  bottom: 2px !important;
+  width: clamp(38px, 3.2vw, 58px) !important;
+}
+.v3-about-cat {
+  width: clamp(62px, 5.2vw, 94px) !important;
+  max-height: 82% !important;
+  margin: 0 3px 7px 0 !important;
+}
+
+/* Arrow hit area and visual circle stay centered independently. */
+.v3-hero .random-photo-controls { inset: 0 !important; }
+.v3-hero .random-photo-control {
+  top: 0 !important;
+  bottom: 0 !important;
+  width: 92px !important;
+  height: 100% !important;
+  transform: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+.v3-hero .random-photo-control-previous { left: 0 !important; }
+.v3-hero .random-photo-control-next { right: 0 !important; }
+.v3-hero .random-photo-control-icon {
+  width: 58px !important;
+  height: 58px !important;
+  margin: auto !important;
+  display: grid !important;
+  place-items: center !important;
+  border-radius: 50% !important;
+}
+.v3-hero .random-photo-control:disabled { opacity: .32 !important; }
+
+/* Four readable excerpt lines, with a larger type size. */
+.v3-post-copy { gap: 4px !important; }
+.v3-post-copy h3 {
+  font-size: clamp(15px, 1vw, 19px) !important;
+  line-height: 1.35 !important;
+}
+.v3-post-copy time {
+  font-size: clamp(11px, .72vw, 13px) !important;
+}
+.v3-post-copy p {
+  font-size: clamp(12px, .78vw, 14px) !important;
+  line-height: 1.45 !important;
+  -webkit-line-clamp: 4 !important;
+  margin-top: 2px !important;
+}
+
+@media (min-width: 1181px) {
+  .v3-post-card { grid-template-rows: 48% 52% !important; }
+  .v3-post-copy { padding: clamp(8px, .62vw, 12px) !important; }
+}
