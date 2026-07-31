@@ -1,38 +1,27 @@
 import Link from "next/link";
 import type { Post } from "@/lib/wordpress";
 
-type LatestPostsProps = { featured?: Post; cards: Post[] };
-
-function cleanExcerpt(excerpt?: string | null) {
-  return (excerpt ?? "").replace(/\[&hellip;\]/g, "").replace(/&hellip;/g, "…").trim();
+function cleanExcerpt(excerpt = "") {
+  return excerpt.replace(/\[&hellip;\]/g, "").replace(/&hellip;/g, "…").trim();
 }
 
-function formatPostDate(date?: string | null) {
-  if (!date) return "";
-  const parsed = new Date(date);
-  if (Number.isNaN(parsed.getTime())) return date;
-  return `${parsed.getFullYear()}-${String(parsed.getMonth() + 1).padStart(2, "0")}-${String(parsed.getDate()).padStart(2, "0")}`;
-}
-
-export default function LatestPosts({ featured, cards }: LatestPostsProps) {
-  const posts = [featured, ...cards].filter(Boolean).slice(0, 4) as Post[];
-
+export default function LatestPosts({ posts }: { posts: Post[] }) {
   return (
-    <section id="notes" className="v3-latest">
-      <div className="v3-section-title">
-        <h2><span aria-hidden="true">🌱</span> 最近更新</h2>
+    <section className="v3-latest" aria-labelledby="latest-title">
+      <div className="v3-section-heading">
+        <h2 id="latest-title"><span aria-hidden="true">🌱</span> 最近更新</h2>
         <Link href="/posts">查看全部 →</Link>
       </div>
       <div className="v3-post-grid">
         {posts.map((post) => (
-          <Link className="v3-post-card" href={`/posts/${post.slug}`} key={post.id}>
+          <Link href={`/posts/${post.slug}`} className="v3-post-card" key={post.id}>
             <div className="v3-post-image">
               {post.image ? <img src={post.image} alt="" /> : <span>LMN516</span>}
             </div>
-            <div className="v3-post-body">
+            <div className="v3-post-copy">
               <h3>{post.title}</h3>
-              <time>{formatPostDate(post.date)}</time>
-              <p>{cleanExcerpt(post.excerpt) || "把生活里的小事，好好记录下来。"}</p>
+              <time>{post.date.replaceAll(".", "-")}</time>
+              <p>{cleanExcerpt(post.excerpt)}</p>
             </div>
           </Link>
         ))}
