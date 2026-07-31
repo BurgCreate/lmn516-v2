@@ -178,3 +178,104 @@
   .v3-about-cat { display:none; }
   .home-v3-footer { flex-wrap:wrap; gap:8px 18px; }
 }
+
+/* =========================================================
+   V3 desktop viewport lock
+   The homepage is treated as a single 16:9 presentation canvas.
+========================================================= */
+@media (min-width: 1181px) {
+  html:has(.home-v3-page),
+  body:has(.home-v3-page) {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .home-v3-page {
+    width: 100vw;
+    height: 100dvh;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .home-v3-canvas {
+    width: min(100vw, calc(100dvh * 16 / 9));
+    height: 100dvh;
+    min-height: 0;
+    padding: clamp(14px, 1.65dvh, 18px) clamp(30px, 2.4vw, 46px) clamp(7px, .8dvh, 10px);
+    grid-template-rows: clamp(78px, 8.9dvh, 96px) minmax(0, 1fr) clamp(28px, 3.25dvh, 35px);
+    gap: clamp(6px, .72dvh, 8px);
+    overflow: hidden;
+  }
+
+  .home-v3-header.site-header::after,
+  .home-v3-header .site-header-actions::before,
+  .home-v3-header .nav-link::before {
+    display: none;
+  }
+
+  .home-v3-grid {
+    height: 100%;
+    min-height: 0;
+    gap: clamp(22px, 1.65vw, 32px);
+    overflow: hidden;
+  }
+
+  .home-v3-left,
+  .home-v3-right,
+  .v3-hero,
+  .v3-latest,
+  .v3-today,
+  .v3-archive,
+  .v3-about {
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .home-v3-left {
+    grid-template-rows: minmax(0, 55.2%) minmax(0, 44.8%);
+    gap: clamp(8px, .85dvh, 10px);
+  }
+
+  .home-v3-right {
+    grid-template-rows: minmax(0, 40.6%) minmax(0, 23.8%) minmax(0, 35.6%);
+    gap: clamp(7px, .72dvh, 9px);
+  }
+
+  .v3-section-heading {
+    height: clamp(34px, 3.45dvh, 38px);
+  }
+
+  .v3-section-heading-tight {
+    height: clamp(31px, 3.1dvh, 34px);
+  }
+
+  .v3-today {
+    grid-template-rows: clamp(54px, 5.7dvh, 62px) minmax(0, 1fr);
+  }
+
+  .v3-today-body {
+    padding: clamp(12px, 1.15dvh, 15px) clamp(18px, 1.35vw, 26px);
+  }
+
+  .v3-post-copy {
+    padding: clamp(7px, .55vw, 11px);
+  }
+
+  .v3-post-copy p {
+    -webkit-line-clamp: 2;
+  }
+
+  .v3-about-card {
+    padding-inline: clamp(18px, 1.4vw, 27px);
+  }
+
+  .home-v3-footer {
+    min-height: 0;
+    line-height: 1;
+  }
+
+  .home-v3-page .moment-bubble {
+    transform: scale(.72);
+  }
+}
