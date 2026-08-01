@@ -41,6 +41,7 @@ export default function SiteHeader({
 }: SiteHeaderProps) {
   const pathname = usePathname();
   const [activeHash, setActiveHash] = useState("");
+  const [isScrolled, setIsScrolled] = useState(false);
 
   const isHome = pathname === "/";
 
@@ -66,10 +67,36 @@ export default function SiteHeader({
     };
   }, [pathname]);
 
+  useEffect(() => {
+    if (!isHome) {
+      setIsScrolled(false);
+      return;
+    }
+
+    function syncScrollState() {
+      setIsScrolled(window.scrollY > 8);
+    }
+
+    syncScrollState();
+    window.addEventListener("scroll", syncScrollState, {
+      passive: true,
+    });
+
+    return () => {
+      window.removeEventListener(
+        "scroll",
+        syncScrollState
+      );
+    };
+  }, [isHome]);
 
   return (
     <header
-      className={`site-header shell${className ? ` ${className}` : ""}`}
+      className={`site-header shell${
+        isHome ? " site-header-sticky" : ""
+      }${
+        isScrolled ? " is-scrolled" : ""
+      }${className ? ` ${className}` : ""}`}
     >
       <Link
         href="/"
