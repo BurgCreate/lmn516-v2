@@ -1,0 +1,246 @@
+/* LMN516 V2.2 - homepage density and color correction */
+:root {
+  --color-bg: #f4f3ef;
+  --color-surface: rgba(250, 249, 246, 0.72);
+  --color-surface-strong: rgba(255, 255, 255, 0.9);
+  --color-text: #303833;
+  --color-text-muted: #69716c;
+  --color-border: rgba(48, 56, 51, 0.12);
+  --garden-cream: #f4f3ef;
+  --garden-paper: rgba(250, 249, 246, 0.72);
+  --garden-paper-light: rgba(255, 255, 255, 0.82);
+  --garden-paper-deep: rgba(229, 230, 224, 0.42);
+  --garden-sun: #d8c783;
+  --garden-sun-wash: rgba(216, 199, 131, 0.09);
+  --garden-blush-wash: rgba(226, 205, 194, 0.1);
+}
+
+body {
+  background: var(--color-bg);
+}
+
+.paper-noise {
+  opacity: 0.16;
+}
+
+.site-header {
+  position: relative !important;
+  top: auto !important;
+  min-height: 72px;
+  background: transparent;
+  box-shadow: none !important;
+}
+
+.site-header::before {
+  display: none !important;
+}
+
+.brand {
+  font-size: 24px;
+}
+
+.nav {
+  gap: 24px;
+  font-size: 13px;
+}
+
+.garden-entrance {
+  min-height: 610px;
+  padding-block: 48px 68px;
+  grid-template-columns: minmax(0, 1fr) minmax(330px, 0.82fr);
+  gap: clamp(34px, 5vw, 72px);
+}
+
+.garden-entrance::before {
+  opacity: 0.45;
+}
+
+.garden-kicker {
+  margin-bottom: 16px;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+}
+
+.garden-entrance h1 {
+  max-width: 650px;
+  font-size: clamp(40px, 5vw, 66px);
+  line-height: 1.12;
+  letter-spacing: -0.045em;
+}
+
+.garden-intro {
+  margin-top: 22px;
+  font-size: clamp(15px, 1.25vw, 17px);
+  line-height: 1.8;
+}
+
+.garden-entrance-actions {
+  margin-top: 28px;
+}
+
+.garden-entrance-visual {
+  max-width: 440px;
+  justify-self: end;
+}
+
+.garden-illustration-frame {
+  transform: scale(0.9);
+  transform-origin: center;
+}
+
+.garden-scroll-cue {
+  bottom: 18px;
+}
+
+.hero {
+  margin-top: -12px;
+}
+
+.today-card {
+  min-height: 0;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+}
+
+.today-summary,
+.today-project {
+  padding: 24px 28px;
+}
+
+.today-summary {
+  gap: 16px 22px;
+}
+
+.today-summary .date-block strong {
+  font-size: 40px;
+}
+
+.today-summary dl div {
+  padding-left: 14px;
+}
+
+.today-project-heading h2 {
+  font-size: clamp(20px, 2vw, 26px);
+}
+
+.today-project .progress-number {
+  margin-top: 16px;
+}
+
+.today-project .progress-number strong {
+  font-size: 42px;
+}
+
+.today-project .progress-track {
+  margin-top: 12px;
+}
+
+.notes.section-space,
+.archive.section-space,
+.about.section-space {
+  padding-block: 58px;
+}
+
+.archive-intro {
+  min-height: 0;
+  padding: 22px 28px;
+  grid-template-columns: minmax(0, 1fr) 112px;
+  gap: 20px;
+}
+
+.archive-intro-copy h2 {
+  font-size: clamp(26px, 3vw, 34px);
+}
+
+.archive-intro-copy > p:last-child {
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+.archive-girl {
+  width: 104px;
+  border-radius: 22px;
+  opacity: 0.86;
+}
+
+.archive-grid {
+  gap: 14px;
+}
+
+.archive-card,
+.garden-archive-card {
+  min-height: 132px;
+  padding: 18px 20px;
+  border-radius: 18px;
+}
+
+.archive-card-copy,
+.garden-archive-card .archive-card-copy {
+  margin-top: 12px;
+  gap: 4px;
+}
+
+.archive-card strong {
+  font-size: 18px;
+}
+
+.archive-card small {
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.archive-card-footer,
+.garden-archive-card .archive-card-footer {
+  padding-top: 10px;
+  font-size: 11px;
+}
+
+@media (max-width: 720px) {
+  .site-header {
+    min-height: 64px;
+  }
+
+  .garden-entrance {
+    min-height: auto;
+    padding-block: 34px 52px;
+    grid-template-columns: 1fr;
+    gap: 26px;
+  }
+
+  .garden-entrance h1 {
+    font-size: clamp(36px, 11vw, 50px);
+  }
+
+  .garden-entrance-visual {
+    width: min(82vw, 340px);
+    justify-self: center;
+  }
+
+  .today-card {
+    grid-template-columns: 1fr;
+  }
+
+  .today-summary,
+  .today-project {
+    padding: 20px;
+  }
+
+  .today-project {
+    border-left: 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .archive-intro {
+    padding: 20px;
+    grid-template-columns: 1fr 84px;
+  }
+
+  .archive-girl {
+    width: 82px;
+  }
+
+  .archive-card,
+  .garden-archive-card {
+    min-height: 118px;
+    padding: 16px 18px;
+  }
+}

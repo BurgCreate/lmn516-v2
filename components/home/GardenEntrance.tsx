@@ -8,7 +8,7 @@ export default function GardenEntrance() {
       <div className="garden-entrance-copy">
         <p className="garden-kicker">
           <span aria-hidden="true">✦</span>
-          LMN516 · A LIVING DIGITAL GARDEN
+          LMN516 · 一座正在生长的数字花园
         </p>
 
         <h1 id="garden-title">

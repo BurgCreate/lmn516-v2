@@ -38,7 +38,7 @@ export default function LifeArchive() {
       <GardenFloraRibbon className="garden-content-flora garden-content-flora-top" density="light" />
       <div className="archive-intro">
         <div className="archive-intro-copy">
-          <p className="eyebrow">生活档案 · Digital Garden</p>
+          <p className="eyebrow">生活档案 · 数字花园</p>
           <h2>收藏目录</h2>
           <p>
             把音乐、影像、散步和日常物品分门别类地保存下来。
