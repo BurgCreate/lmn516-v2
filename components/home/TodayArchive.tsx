@@ -1,9 +1,11 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 
 type TodayArchiveProps = {
   featuredTitle: string;
+  featuredSlug?: string;
 };
 
 type ShanghaiTime = {
@@ -50,7 +52,10 @@ function getIsoWeek(year: number, month: string, day: string) {
   return Math.ceil(((date.getTime() - yearStart.getTime()) / 86400000 + 1) / 7);
 }
 
-export default function TodayArchive({ featuredTitle }: TodayArchiveProps) {
+export default function TodayArchive({
+  featuredTitle,
+  featuredSlug,
+}: TodayArchiveProps) {
   const [now, setNow] = useState(() => new Date());
 
   useEffect(() => {
@@ -112,7 +117,18 @@ export default function TodayArchive({ featuredTitle }: TodayArchiveProps) {
 
         <div>
           <dt>本期封面</dt>
-          <dd title={featuredTitle}>{featuredTitle}</dd>
+          <dd title={featuredTitle}>
+            {featuredSlug ? (
+              <Link className="today-featured-link" href={`/posts/${featuredSlug}`}>
+                <span>{featuredTitle}</span>
+                <span className="today-featured-arrow" aria-hidden="true">
+                  →
+                </span>
+              </Link>
+            ) : (
+              featuredTitle
+            )}
+          </dd>
         </div>
       </dl>
     </div>

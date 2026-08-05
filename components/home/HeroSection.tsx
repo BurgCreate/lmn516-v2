@@ -29,7 +29,10 @@ export default function HeroSection({
       </div>
 
       <aside className="today-card" aria-label="今日档案与持续进行">
-        <TodayArchive featuredTitle={featured?.title ?? "尚未更新"} />
+        <TodayArchive
+          featuredTitle={featured?.title ?? "尚未更新"}
+          featuredSlug={featured?.slug}
+        />
 
         <div className="today-project">
           <div className="today-project-heading">
