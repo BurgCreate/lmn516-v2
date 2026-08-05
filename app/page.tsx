@@ -16,22 +16,28 @@ import {
   getMoments,
 } from "@/lib/wordpress";
 
-export const revalidate = 300;
+export const revalidate = 60;
 
 function getTodayInfo() {
-  const now = new Date();
+  const formatter = new Intl.DateTimeFormat("zh-CN", {
+    timeZone: "Asia/Shanghai",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    weekday: "long",
+  });
+
+  const parts = formatter.formatToParts(new Date());
+
+  const year = parts.find((p) => p.type === "year")?.value ?? "";
+  const month = parts.find((p) => p.type === "month")?.value ?? "";
+  const day = parts.find((p) => p.type === "day")?.value ?? "";
+  const weekday = parts.find((p) => p.type === "weekday")?.value ?? "";
 
   return {
-    date: `${String(now.getMonth() + 1).padStart(2, "0")}.${String(
-      now.getDate()
-    ).padStart(2, "0")}`,
-    fullDate: `${now.getFullYear()}.${String(now.getMonth() + 1).padStart(
-      2,
-      "0"
-    )}.${String(now.getDate()).padStart(2, "0")}`,
-    weekday: now.toLocaleDateString("zh-CN", {
-      weekday: "long",
-    }),
+    date: `${month}.${day}`,
+    fullDate: `${year}.${month}.${day}`,
+    weekday,
   };
 }
 
@@ -69,6 +75,7 @@ export default async function HomePage() {
   const pushupProgress =
     target > 0 ? ((pushups / target) * 100).toFixed(2) : "0.00";
   const remaining = Math.max(target - pushups, 0);
+
   const today = getTodayInfo();
   const yearProgress = getYearProgress();
 
@@ -97,10 +104,12 @@ export default async function HomePage() {
       <GardenSectionFrame variant="notes" marker="01 · 新芽">
         <LatestPosts featured={featured} cards={cards} />
       </GardenSectionFrame>
+
       <GardenTrail variant="bench" label="在长椅旁，翻一翻生活收藏" />
       <GardenSectionFrame variant="archive" marker="02 · 收藏">
         <LifeArchive />
       </GardenSectionFrame>
+
       <GardenTrail variant="mailbox" label="花园尽头，也欢迎留下你的痕迹" />
       <GardenSectionFrame variant="about" marker="03 · 树下">
         <AboutSection />
