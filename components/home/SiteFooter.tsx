@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { GardenBrandSprig } from "@/components/garden";
+import { OwnerPushBinder } from "@/components/home/OwnerPushBinder";
 
 const footerGroups = [
   {
@@ -84,7 +85,7 @@ export default function SiteFooter() {
 
         <div className="footer-bottom">
           <span>© 2025–2026 LMN516</span>
-          <span>WordPress · Next.js · Vercel</span>
+          <span className="footer-stack">WordPress · Next.js · Vercel · <OwnerPushBinder /></span>
           <Link href="/changelog">当前版本 · V3.0</Link>
         </div>
       </div>

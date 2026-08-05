@@ -268,3 +268,122 @@
     transition: none;
   }
 }
+
+/* Owner Push binding entry and modal */
+.footer-stack {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.footer-owner-trigger {
+  appearance: none;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: var(--link-color);
+  font: inherit;
+  cursor: pointer;
+}
+
+.footer-owner-trigger:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}
+
+.owner-push-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: color-mix(in srgb, #132019 48%, transparent);
+  backdrop-filter: blur(8px);
+}
+
+.owner-push-modal {
+  position: relative;
+  width: min(100%, 460px);
+  padding: 30px;
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background: var(--surface, #fffdf7);
+  box-shadow: 0 24px 80px rgb(20 37 28 / 24%);
+  color: var(--color-text);
+}
+
+.owner-push-modal h2 {
+  margin: 4px 0 10px;
+  font-size: clamp(24px, 4vw, 32px);
+}
+
+.owner-push-modal-copy,
+.owner-push-status {
+  color: var(--muted);
+}
+
+.owner-push-modal-close {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  width: 36px;
+  height: 36px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.owner-push-form {
+  display: grid;
+  gap: 12px;
+  margin-top: 22px;
+}
+
+.owner-push-form input {
+  width: 100%;
+  min-height: 46px;
+  padding: 0 14px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface, #fffdf7);
+  color: var(--color-text);
+  font: inherit;
+}
+
+.owner-push-form button {
+  min-height: 46px;
+  border: 0;
+  border-radius: 12px;
+  background: var(--garden-leaf);
+  color: white;
+  font: inherit;
+  font-weight: 650;
+  cursor: pointer;
+}
+
+.owner-push-form button:disabled {
+  cursor: wait;
+  opacity: 0.6;
+}
+
+.owner-push-status {
+  margin: 16px 0 0;
+  line-height: 1.65;
+}
+
+@media (max-width: 620px) {
+  .footer-stack {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .owner-push-modal {
+    padding: 26px 20px 22px;
+    border-radius: 18px;
+  }
+}
