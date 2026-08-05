@@ -18,42 +18,6 @@ import {
 
 export const revalidate = 60;
 
-function getTodayInfo() {
-  const formatter = new Intl.DateTimeFormat("zh-CN", {
-    timeZone: "Asia/Shanghai",
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-    weekday: "long",
-  });
-
-  const parts = formatter.formatToParts(new Date());
-
-  const year = parts.find((p) => p.type === "year")?.value ?? "";
-  const month = parts.find((p) => p.type === "month")?.value ?? "";
-  const day = parts.find((p) => p.type === "day")?.value ?? "";
-  const weekday = parts.find((p) => p.type === "weekday")?.value ?? "";
-
-  return {
-    date: `${month}.${day}`,
-    fullDate: `${year}.${month}.${day}`,
-    weekday,
-  };
-}
-
-function getYearProgress() {
-  const now = new Date();
-  const start = new Date(now.getFullYear(), 0, 1);
-  const end = new Date(now.getFullYear() + 1, 0, 1);
-
-  const progress =
-    ((now.getTime() - start.getTime()) /
-      (end.getTime() - start.getTime())) *
-    100;
-
-  return progress.toFixed(1);
-}
-
 export default async function HomePage() {
   const [posts, mediaImages, moments] = await Promise.all([
     getPosts(20),
@@ -76,9 +40,6 @@ export default async function HomePage() {
     target > 0 ? ((pushups / target) * 100).toFixed(2) : "0.00";
   const remaining = Math.max(target - pushups, 0);
 
-  const today = getTodayInfo();
-  const yearProgress = getYearProgress();
-
   return (
     <main id="top">
       <div className="paper-noise" aria-hidden="true" />
@@ -90,8 +51,6 @@ export default async function HomePage() {
 
       <HeroSection
         mediaImages={mediaImages}
-        today={today}
-        yearProgress={yearProgress}
         featured={featured}
         pushupPost={pushupPost}
         pushups={pushups}
@@ -104,12 +63,10 @@ export default async function HomePage() {
       <GardenSectionFrame variant="notes" marker="01 · 新芽">
         <LatestPosts featured={featured} cards={cards} />
       </GardenSectionFrame>
-
       <GardenTrail variant="bench" label="在长椅旁，翻一翻生活收藏" />
       <GardenSectionFrame variant="archive" marker="02 · 收藏">
         <LifeArchive />
       </GardenSectionFrame>
-
       <GardenTrail variant="mailbox" label="花园尽头，也欢迎留下你的痕迹" />
       <GardenSectionFrame variant="about" marker="03 · 树下">
         <AboutSection />

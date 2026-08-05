@@ -1,17 +1,10 @@
 import Link from "next/link";
 import RandomPhotoWall from "@/components/RandomPhotoWall";
+import TodayArchive from "@/components/home/TodayArchive";
 import type { MediaImage, Post } from "@/lib/wordpress";
-
-type TodayInfo = {
-  date: string;
-  fullDate: string;
-  weekday: string;
-};
 
 type HeroSectionProps = {
   mediaImages: MediaImage[];
-  today: TodayInfo;
-  yearProgress: string;
   featured?: Post;
   pushupPost: Post | null;
   pushups: number;
@@ -22,8 +15,6 @@ type HeroSectionProps = {
 
 export default function HeroSection({
   mediaImages,
-  today,
-  yearProgress,
   featured,
   pushupPost,
   pushups,
@@ -38,26 +29,7 @@ export default function HeroSection({
       </div>
 
       <aside className="today-card" aria-label="今日档案与持续进行">
-        <div className="today-summary">
-          <p className="card-label">今日档案</p>
-
-          <div className="date-block">
-            <strong>{today.date}</strong>
-            <span>{today.weekday} · 盛夏</span>
-          </div>
-
-          <dl>
-            <div>
-              <dt>年度进度</dt>
-              <dd>{yearProgress}%</dd>
-            </div>
-
-            <div>
-              <dt>本期封面</dt>
-              <dd>{featured?.title ?? "尚未更新"}</dd>
-            </div>
-          </dl>
-        </div>
+        <TodayArchive featuredTitle={featured?.title ?? "尚未更新"} />
 
         <div className="today-project">
           <div className="today-project-heading">
