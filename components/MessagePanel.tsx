@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { FormEvent, useEffect, useRef, useState } from "react";
+import { FormEvent, useCallback, useEffect, useRef, useState } from "react";
 
 type Message = {
   id: number;
@@ -53,6 +53,42 @@ export default function MessagePanel({ open, onClose }: MessagePanelProps) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [status, setStatus] = useState<"idle" | "loading" | "sending" | "success" | "error">("idle");
   const [notice, setNotice] = useState("");
+  const pollingRef = useRef(false);
+
+  const refreshMessages = useCallback(async (showLoading = false) => {
+    const conversationId = window.localStorage.getItem(CONVERSATION_KEY);
+    if (!conversationId || pollingRef.current || document.hidden) return;
+
+    pollingRef.current = true;
+    if (showLoading) setStatus("loading");
+
+    try {
+      const response = await fetch(
+        `/api/messages/${encodeURIComponent(conversationId)}?visitorToken=${encodeURIComponent(getVisitorToken())}`,
+        { cache: "no-store" }
+      );
+      const result = await response.json();
+      if (!response.ok) throw new Error(result.error || "暂时无法读取之前的留言。");
+
+      const nextMessages = (result.messages || []) as Message[];
+      setMessages((current) => {
+        const currentLastId = current.at(-1)?.id;
+        const nextLastId = nextMessages.at(-1)?.id;
+        return current.length === nextMessages.length && currentLastId === nextLastId
+          ? current
+          : nextMessages;
+      });
+      if (showLoading) setStatus("idle");
+    } catch (error) {
+      console.error(error);
+      if (showLoading) {
+        setStatus("error");
+        setNotice(error instanceof Error ? error.message : "暂时无法读取之前的留言。");
+      }
+    } finally {
+      pollingRef.current = false;
+    }
+  }, []);
 
   useEffect(() => {
     if (!open) return;
@@ -64,33 +100,23 @@ export default function MessagePanel({ open, onClose }: MessagePanelProps) {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") onClose();
     };
+    const handleVisibilityChange = () => {
+      if (!document.hidden) void refreshMessages(false);
+    };
 
     window.addEventListener("keydown", handleKeyDown);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
 
-    const conversationId = window.localStorage.getItem(CONVERSATION_KEY);
-    if (conversationId) {
-      setStatus("loading");
-      fetch(`/api/messages/${encodeURIComponent(conversationId)}?visitorToken=${encodeURIComponent(getVisitorToken())}`, {
-        cache: "no-store",
-      })
-        .then(async (response) => {
-          const result = await response.json();
-          if (!response.ok) throw new Error(result.error || "暂时无法读取之前的留言。");
-          setMessages(result.messages || []);
-          setStatus("idle");
-        })
-        .catch((error) => {
-          console.error(error);
-          setStatus("error");
-          setNotice(error instanceof Error ? error.message : "暂时无法读取之前的留言。");
-        });
-    }
+    void refreshMessages(true);
+    const timer = window.setInterval(() => void refreshMessages(false), 2000);
 
     return () => {
       document.body.style.overflow = previousOverflow;
       window.removeEventListener("keydown", handleKeyDown);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      window.clearInterval(timer);
     };
-  }, [open, onClose]);
+  }, [open, onClose, refreshMessages]);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
