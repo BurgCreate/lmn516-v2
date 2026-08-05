@@ -54,6 +54,24 @@ export default function MessagePanel({ open, onClose }: MessagePanelProps) {
   const [status, setStatus] = useState<"idle" | "loading" | "sending" | "success" | "error">("idle");
   const [notice, setNotice] = useState("");
   const pollingRef = useRef(false);
+  const threadRef = useRef<HTMLDivElement>(null);
+  const shouldFollowRef = useRef(true);
+  const [pendingMessages, setPendingMessages] = useState(0);
+
+  const scrollToLatest = useCallback((behavior: ScrollBehavior = "smooth") => {
+    const thread = threadRef.current;
+    if (!thread) return;
+    thread.scrollTo({ top: thread.scrollHeight, behavior });
+    shouldFollowRef.current = true;
+    setPendingMessages(0);
+  }, []);
+
+  const updateFollowState = useCallback(() => {
+    const thread = threadRef.current;
+    if (!thread) return;
+    shouldFollowRef.current = thread.scrollHeight - thread.scrollTop - thread.clientHeight < 80;
+    if (shouldFollowRef.current) setPendingMessages(0);
+  }, []);
 
   const refreshMessages = useCallback(async (showLoading = false) => {
     const conversationId = window.localStorage.getItem(CONVERSATION_KEY);
@@ -74,9 +92,17 @@ export default function MessagePanel({ open, onClose }: MessagePanelProps) {
       setMessages((current) => {
         const currentLastId = current.at(-1)?.id;
         const nextLastId = nextMessages.at(-1)?.id;
-        return current.length === nextMessages.length && currentLastId === nextLastId
-          ? current
-          : nextMessages;
+        if (current.length === nextMessages.length && currentLastId === nextLastId) return current;
+
+        const added = Math.max(0, nextMessages.length - current.length);
+        if (added > 0) {
+          if (shouldFollowRef.current) {
+            window.requestAnimationFrame(() => scrollToLatest("smooth"));
+          } else {
+            setPendingMessages((count) => count + added);
+          }
+        }
+        return nextMessages;
       });
       if (showLoading) setStatus("idle");
     } catch (error) {
@@ -88,7 +114,7 @@ export default function MessagePanel({ open, onClose }: MessagePanelProps) {
     } finally {
       pollingRef.current = false;
     }
-  }, []);
+  }, [scrollToLatest]);
 
   useEffect(() => {
     if (!open) return;
@@ -107,7 +133,7 @@ export default function MessagePanel({ open, onClose }: MessagePanelProps) {
     window.addEventListener("keydown", handleKeyDown);
     document.addEventListener("visibilitychange", handleVisibilityChange);
 
-    void refreshMessages(true);
+    void refreshMessages(true).then(() => window.requestAnimationFrame(() => scrollToLatest("auto")));
     const timer = window.setInterval(() => void refreshMessages(false), 2000);
 
     return () => {
@@ -116,7 +142,7 @@ export default function MessagePanel({ open, onClose }: MessagePanelProps) {
       document.removeEventListener("visibilitychange", handleVisibilityChange);
       window.clearInterval(timer);
     };
-  }, [open, onClose, refreshMessages]);
+  }, [open, onClose, refreshMessages, scrollToLatest]);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -149,6 +175,7 @@ export default function MessagePanel({ open, onClose }: MessagePanelProps) {
 
       window.localStorage.setItem(CONVERSATION_KEY, result.conversationId);
       setMessages(result.messages || []);
+      window.requestAnimationFrame(() => scrollToLatest("smooth"));
       setContent("");
       setStatus("success");
       setNotice("已经送到啦。我看到后会从这里回复你。🫧");
@@ -182,13 +209,18 @@ export default function MessagePanel({ open, onClose }: MessagePanelProps) {
         </header>
 
         {messages.length > 0 && (
-          <div className="message-thread" aria-label="留言记录">
+          <div ref={threadRef} className="message-thread" aria-label="留言记录" onScroll={updateFollowState}>
             {messages.map((message) => (
               <article className={`message-item is-${message.sender}`} key={message.id}>
                 <p>{message.content}</p>
                 <time>{message.createdAt}</time>
               </article>
             ))}
+            {pendingMessages > 0 && (
+              <button type="button" className="message-new-button" onClick={() => scrollToLatest("smooth")}>
+                ↓ {pendingMessages > 1 ? `${pendingMessages} 条新消息` : "新消息"}
+              </button>
+            )}
           </div>
         )}
 
