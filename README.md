@@ -144,3 +144,18 @@ This release completes the site's dark-mode system in one pass.
 - Unified navigation, controls, forms, cards, floating UI, mobile navigation, focus states, scrollbars, and photo presentation.
 - Preserved all layouts, type sizes, component dimensions, application logic, WordPress data access, and existing motion behavior.
 - Added a higher-contrast preference override for users who request stronger contrast.
+
+## Owner Push（站长新留言通知）
+
+Vercel 需要配置：
+
+```env
+LMN516_OWNER_SETUP_SECRET=仅站长知道的设备绑定密码
+LMN516_PUSH_API_SECRET=与 WordPress 插件一致的内部接口密钥
+NEXT_PUBLIC_VAPID_PUBLIC_KEY=Web Push 公钥
+VAPID_PRIVATE_KEY=Web Push 私钥
+VAPID_SUBJECT=mailto:hello@lmn516.com
+LMN516_OWNER_INBOX_URL=https://cms.lmn516.com/wp-admin/admin.php?page=lmn516-garden-mailbox
+```
+
+部署后在需要收通知的手机上访问 `/admin/push`，输入 `LMN516_OWNER_SETUP_SECRET` 完成绑定。
