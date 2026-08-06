@@ -4,7 +4,6 @@ import GardenEntrance from "@/components/home/GardenEntrance";
 import HeroSection from "@/components/home/HeroSection";
 import LatestPosts from "@/components/home/LatestPosts";
 import LifeArchive from "@/components/home/LifeArchive";
-import LibraryPreview from "@/components/home/LibraryPreview";
 import AboutSection from "@/components/home/AboutSection";
 import SiteFooter from "@/components/home/SiteFooter";
 import GardenTrail from "@/components/home/GardenTrail";
@@ -162,8 +161,6 @@ export default async function HomePage() {
       >
 
         <LifeArchive />
-
-        <LibraryPreview />
 
       </GardenSectionFrame>
 
