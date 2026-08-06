@@ -6,24 +6,21 @@ const WP_API =
   "https://cms.lmn516.com/wp-json/wp/v2/posts";
 
 
-// 只输出周记
-// WordPress 分类 ID: 1
+// 只读取「周记」分类
+// WordPress 分类 ID = 1
 const CATEGORY_ID = 1;
 
 
 function escapeXml(str: string = "") {
-
   return str
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;");
-
 }
 
 
-
-// 没有标题时，用正文生成标题
+// 标题处理
 function getTitle(post: any) {
 
   if (post.title?.rendered) {
@@ -51,16 +48,13 @@ function getTitle(post: any) {
 
 export async function GET() {
 
-
   let posts = [];
-
 
 
   try {
 
-
     const res = await fetch(
-      `${WP_API}?per_page=20&categories=${CATEGORY_ID}`,
+      `${WP_API}?per_page=100&categories=${CATEGORY_ID}`,
       {
         next: {
           revalidate: 3600,
@@ -69,23 +63,17 @@ export async function GET() {
     );
 
 
-
     if (res.ok) {
-
       posts = await res.json();
-
     }
 
 
-
   } catch (error) {
-
 
     console.error(
       "RSS fetch error:",
       error
     );
-
 
   }
 
@@ -104,12 +92,12 @@ ${escapeXml(getTitle(post))}
 
 
 <link>
-${SITE_URL}/posts/${post.slug}
+${SITE_URL}/posts/${post.id}
 </link>
 
 
 <guid>
-${SITE_URL}/posts/${post.slug}
+${SITE_URL}/posts/${post.id}
 </guid>
 
 
@@ -130,7 +118,6 @@ ${new Date(post.date).toUTCString()}
 `
     )
     .join("");
-
 
 
 
@@ -163,9 +150,7 @@ zh-CN
 </language>
 
 
-
 ${items}
-
 
 
 </channel>
@@ -176,19 +161,14 @@ ${items}
 
 
 
-
-
   return new NextResponse(
     xml,
     {
       headers: {
-
         "Content-Type":
           "application/xml; charset=utf-8",
-
       },
     }
   );
-
 
 }
