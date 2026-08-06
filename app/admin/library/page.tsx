@@ -1,12 +1,15 @@
 import { prisma } from "@/lib/prisma";
+import DeleteButton from "@/components/DeleteButton";
 
 
 export default async function AdminLibraryPage(){
 
   const sites = await prisma.site.findMany({
+
     orderBy:{
       createdAt:"desc"
     }
+
   });
 
 
@@ -17,19 +20,26 @@ export default async function AdminLibraryPage(){
 
       <header className="admin-header">
 
+
         <h1>
           网站收藏管理
         </h1>
 
 
+
         <a
+
           href="/admin/library/new"
+
           className="admin-add"
+
         >
           + 添加网站
         </a>
 
+
       </header>
+
 
 
 
@@ -37,12 +47,18 @@ export default async function AdminLibraryPage(){
       <div className="admin-list">
 
 
+
         {sites.map((site)=>(
 
+
           <div
+
             key={site.id}
+
             className="admin-item"
+
           >
+
 
 
             <div className="admin-info">
@@ -51,12 +67,18 @@ export default async function AdminLibraryPage(){
               {site.domain && (
 
                 <img
+
                   src={`https://www.google.com/s2/favicons?domain=${site.domain}&sz=64`}
+
                   alt={site.name}
+
                   className="admin-icon"
+
                 />
 
               )}
+
+
 
 
 
@@ -68,17 +90,17 @@ export default async function AdminLibraryPage(){
                 </h2>
 
 
-                <p>
-                  {site.url}
-                </p>
 
+                <span className="admin-tag">
 
-                <span>
                   {site.category || "未分类"}
+
                 </span>
 
 
+
               </div>
+
 
 
             </div>
@@ -86,15 +108,24 @@ export default async function AdminLibraryPage(){
 
 
 
+
             <div className="admin-actions">
 
 
+
               <a
+
                 href={`/admin/library/edit/${site.id}`}
+
                 className="admin-edit"
+
               >
+
                 编辑
+
               </a>
+
+
 
 
 
@@ -106,17 +137,15 @@ export default async function AdminLibraryPage(){
 
               >
 
-                <button
-                  className="admin-delete"
-                >
-                  删除
-                </button>
+                <DeleteButton />
 
 
               </form>
 
 
+
             </div>
+
 
 
 
