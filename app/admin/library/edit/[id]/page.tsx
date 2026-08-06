@@ -68,16 +68,24 @@ async function updateSite(
 
 
 export default async function EditLibraryPage({
+
   params,
+
 }:{
-  params:{
-    id:string
-  }
+
+  params: Promise<{
+
+    id:string;
+
+  }>;
+
 }){
 
 
-  const id =
-    Number(params.id);
+  const { id } = await params;
+
+
+  const siteId = Number(id);
 
 
 
@@ -85,7 +93,9 @@ export default async function EditLibraryPage({
     await prisma.site.findUnique({
 
       where:{
-        id,
+
+        id:siteId,
+
       },
 
     });
@@ -95,6 +105,7 @@ export default async function EditLibraryPage({
   if(!site){
 
     return (
+
       <main className="admin-form">
 
         <h1>
@@ -102,6 +113,7 @@ export default async function EditLibraryPage({
         </h1>
 
       </main>
+
     );
 
   }
@@ -120,64 +132,94 @@ export default async function EditLibraryPage({
 
 
       <form
-        action={updateSite.bind(null,id)}
+        action={updateSite.bind(null,siteId)}
       >
 
 
         <input
+
           name="name"
+
           defaultValue={site.name}
+
           placeholder="网站名称"
+
           required
+
         />
 
 
 
         <input
+
           name="url"
+
           defaultValue={site.url}
+
           placeholder="网站地址"
+
           required
+
         />
 
 
 
         <input
+
           name="domain"
+
           defaultValue={site.domain}
+
           placeholder="域名"
+
           required
+
         />
 
 
 
         <textarea
+
           name="description"
+
           defaultValue={site.description ?? ""}
+
           placeholder="网站简介"
+
         />
 
 
 
         <input
+
           name="category"
+
           defaultValue={site.category ?? ""}
+
           placeholder="分类"
+
         />
 
 
 
         <input
+
           name="tags"
+
           defaultValue={site.tags ?? ""}
+
           placeholder="标签"
+
         />
 
 
 
         <button>
+
           保存修改
+
         </button>
+
 
 
       </form>
