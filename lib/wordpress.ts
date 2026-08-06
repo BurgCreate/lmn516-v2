@@ -64,7 +64,7 @@ const fallbackPosts: Post[] = [
   {
     id: 347,
     slug: "yi-wan-ge-fu-wo-cheng",
-    title: "一万个俯卧撑💪，已完成1833个",
+    title: "一万个俯卧撑💪，已完成0个",
     excerpt:
       "一个长期进行中的身体计划，也是关于耐心的记录。",
     content:
@@ -504,11 +504,9 @@ export async function getPostById(
 ): Promise<Post | null> {
   try {
     const response = await fetch(
-      `${WP_URL}/index.php?rest_route=/wp/v2/posts/${id}&_embed=1`,
+      `${WP_URL}/index.php?rest_route=/wp/v2/posts/${id}&_embed=1&_=${Date.now()}`,
       {
-        next: {
-          revalidate: 300,
-        },
+        cache: "no-store",
       }
     );
 
@@ -521,6 +519,7 @@ export async function getPostById(
     const item = await response.json();
 
     return formatPost(item);
+
   } catch (error) {
     console.error(
       "WordPress 按 ID 获取失败:",
