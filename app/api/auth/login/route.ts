@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 
 
-export async function POST(req:Request){
+export async function POST(req: Request) {
 
   const formData =
     await req.formData();
@@ -20,7 +20,8 @@ export async function POST(req:Request){
       new URL(
         "/login?error=1",
         req.url
-      )
+      ),
+      303
     );
 
   }
@@ -32,7 +33,8 @@ export async function POST(req:Request){
       new URL(
         "/admin/library",
         req.url
-      )
+      ),
+      303
     );
 
 
@@ -41,14 +43,14 @@ export async function POST(req:Request){
     "site_editor_auth",
     "true",
     {
-      httpOnly:true,
+      httpOnly: true,
 
       secure:
         process.env.NODE_ENV === "production",
 
-      sameSite:"lax",
+      sameSite: "lax",
 
-      path:"/",
+      path: "/",
 
       maxAge:
         60 * 60 * 24 * 7,
