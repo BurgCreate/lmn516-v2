@@ -42,7 +42,7 @@ export default function LatestPosts({ featured, cards }: LatestPostsProps) {
       <div className="section-heading">
         <div>
           <p className="eyebrow">最近更新</p>
-          <h2>本期文章</h2>
+          <h2>近期文章</h2>
         </div>
 
         <Link className="text-link" href="/posts">

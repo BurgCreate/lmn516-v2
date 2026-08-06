@@ -1007,7 +1007,7 @@
   will-change: auto;
 }
 
-/* 收藏目录以“本期文章”的信息密度为基准，不再把四个入口做成四张海报。 */
+/* 收藏目录以“近期文章”的信息密度为基准，不再把四个入口做成四张海报。 */
 .archive-intro {
   min-height: 190px;
   margin-bottom: 18px;
