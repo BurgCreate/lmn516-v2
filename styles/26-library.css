@@ -1,0 +1,280 @@
+/* =========================================================
+   LMN516 Library
+   Resource collection
+========================================================= */
+
+
+/* 页面 */
+.library-page {
+  padding: 28px;
+}
+
+
+/* 标题 */
+.library-header {
+  margin-bottom: 24px;
+}
+
+
+.library-header h1 {
+  margin: 0;
+
+  font-size: 34px;
+
+  font-weight: 600;
+
+  font-family:
+    "Microsoft YaHei",
+    "PingFang SC",
+    "Helvetica Neue",
+    Arial,
+    sans-serif;
+}
+
+
+.library-header p {
+
+  margin-top: 8px;
+
+  font-size: 14px;
+
+  opacity: .65;
+
+}
+
+
+
+/* 桌面 8列 */
+.library-grid {
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(8, minmax(110px, 1fr));
+
+  gap: 10px;
+
+}
+
+
+
+/* 小方形卡片 */
+.library-card {
+
+  height: 110px;
+
+  padding: 12px;
+
+  border-radius: 12px;
+
+  box-sizing: border-box;
+
+  background: var(--card-bg-subtle);
+
+  border: 1px solid var(--card-border);
+
+  transition:
+    transform .2s ease,
+    box-shadow .2s ease;
+
+  font-family:
+    "Microsoft YaHei",
+    "PingFang SC",
+    "Helvetica Neue",
+    Arial,
+    sans-serif;
+
+}
+
+
+.library-card:hover {
+
+  transform: translateY(-2px);
+
+  box-shadow: var(--card-shadow-hover);
+
+}
+
+
+
+/* 链接 */
+.library-card-link {
+
+  height:100%;
+
+  display:flex;
+
+  flex-direction:column;
+
+  justify-content:space-between;
+
+  color:inherit;
+
+  text-decoration:none;
+
+}
+
+
+
+/* 图标 + 标题 */
+.library-card-title {
+
+  display:flex;
+
+  align-items:center;
+
+  gap:7px;
+
+}
+
+
+
+/* 图标 */
+.library-card-icon {
+
+  width:22px;
+
+  height:22px;
+
+  object-fit:contain;
+
+  border-radius:6px;
+
+  flex-shrink:0;
+
+}
+
+
+
+/* 标题 */
+.library-card h2 {
+
+  margin:0;
+
+  font-size:14px;
+
+  line-height:1.2;
+
+  font-weight:700;
+
+  color:#1f2a22;
+
+}
+
+
+
+/* 描述 */
+.library-card p {
+
+  margin-top:8px;
+
+  margin-bottom:0;
+
+  font-size:11px;
+
+  line-height:1.5;
+
+  color:#252525;
+
+  font-weight:500;
+
+  opacity:1;
+
+
+  display:-webkit-box;
+
+  -webkit-line-clamp:2;
+
+  -webkit-box-orient:vertical;
+
+  overflow:hidden;
+
+}
+
+
+
+/* 分类 */
+.library-card-bottom {
+
+  display:flex;
+
+  justify-content:space-between;
+
+  align-items:center;
+
+  font-size:10px;
+
+  color:#444;
+
+  font-weight:500;
+
+}
+
+
+
+/* 平板 */
+@media(max-width:1200px){
+
+  .library-grid {
+
+    grid-template-columns:
+      repeat(6,minmax(110px,1fr));
+
+  }
+
+}
+
+
+
+/* 小屏 */
+@media(max-width:800px){
+
+  .library-grid {
+
+    grid-template-columns:
+      repeat(4,minmax(90px,1fr));
+
+  }
+
+}
+
+
+
+/* 手机 */
+@media(max-width:500px){
+
+  .library-page {
+
+    padding:18px;
+
+  }
+
+
+  .library-grid {
+
+    grid-template-columns:
+      repeat(2,minmax(0,1fr));
+
+    gap:10px;
+
+  }
+
+
+  .library-card {
+
+    height:100px;
+
+    padding:10px;
+
+  }
+
+
+  .library-card-icon {
+
+    width:20px;
+
+    height:20px;
+
+  }
+
+}

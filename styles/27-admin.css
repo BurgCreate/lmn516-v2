@@ -1,0 +1,441 @@
+/* =========================================================
+   LMN516 Admin
+   Backend system
+========================================================= */
+
+
+/* 页面 */
+.admin-library,
+.admin-form {
+
+  padding:28px;
+
+  font-family:
+    "Microsoft YaHei",
+    "PingFang SC",
+    "Helvetica Neue",
+    Arial,
+    sans-serif;
+
+}
+
+
+
+/* 标题 */
+.admin-library h1,
+.admin-form h1 {
+
+  margin:0 0 24px;
+
+  font-size:34px;
+
+  font-weight:700;
+
+  color:#1f2a22;
+
+}
+
+
+
+/* 顶部 */
+.admin-header {
+
+  display:flex;
+
+  justify-content:space-between;
+
+  align-items:center;
+
+  margin-bottom:24px;
+
+}
+
+
+
+/* 添加按钮 */
+.admin-add {
+
+  padding:10px 18px;
+
+  border-radius:var(--radius-md);
+
+  background:var(--color-accent);
+
+  color:white;
+
+  text-decoration:none;
+
+  font-size:14px;
+
+  transition:.2s ease;
+
+}
+
+
+.admin-add:hover {
+
+  transform:translateY(-2px);
+
+}
+
+
+
+/* =========================
+   管理卡片
+========================= */
+
+
+.admin-list {
+
+  display:grid;
+
+  grid-template-columns:
+    repeat(8,minmax(0,1fr));
+
+  gap:10px;
+
+}
+
+
+
+/* 单个网站卡片 */
+.admin-item {
+
+  min-height:120px;
+
+  padding:12px;
+
+
+  display:flex;
+
+  flex-direction:column;
+
+  justify-content:space-between;
+
+
+  border-radius:var(--radius-lg);
+
+
+  background:var(--card-bg-subtle);
+
+
+  border:1px solid var(--card-border);
+
+
+  box-shadow:var(--card-shadow);
+
+
+  transition:
+
+    transform .2s ease,
+
+    box-shadow .2s ease;
+
+}
+
+
+
+.admin-item:hover {
+
+  transform:translateY(-3px);
+
+  box-shadow:var(--card-shadow-hover);
+
+}
+
+
+
+/* 网站信息 */
+.admin-info {
+
+  display:flex;
+
+  align-items:center;
+
+  gap:8px;
+
+}
+
+
+
+.admin-icon {
+
+  width:24px;
+
+  height:24px;
+
+  border-radius:6px;
+
+  object-fit:contain;
+
+  flex-shrink:0;
+
+}
+
+
+
+/* 网站文字 */
+.admin-text h2 {
+
+  margin:0;
+
+  font-size:14px;
+
+  line-height:1.3;
+
+  font-weight:700;
+
+  color:#1f2a22;
+
+}
+
+
+
+.admin-text p {
+
+  margin-top:5px;
+
+  margin-bottom:0;
+
+
+  font-size:10px;
+
+  color:#555;
+
+
+  white-space:nowrap;
+
+  overflow:hidden;
+
+  text-overflow:ellipsis;
+
+}
+
+
+
+.admin-text span {
+
+  display:block;
+
+  margin-top:5px;
+
+
+  font-size:10px;
+
+  color:#666;
+
+}
+
+
+
+/* 操作按钮 */
+.admin-actions {
+
+  display:flex;
+
+  gap:6px;
+
+}
+
+
+
+.admin-edit,
+.admin-delete {
+
+
+  flex:1;
+
+
+  padding:5px 8px;
+
+
+  border-radius:var(--radius-md);
+
+
+  border:1px solid var(--card-border);
+
+
+  background:var(--card-bg);
+
+
+  color:inherit;
+
+
+  text-decoration:none;
+
+
+  text-align:center;
+
+
+  font-size:10px;
+
+
+  cursor:pointer;
+
+
+  transition:.2s ease;
+
+}
+
+
+
+.admin-edit:hover,
+.admin-delete:hover {
+
+  background:var(--color-accent);
+
+  color:white;
+
+}
+
+
+
+/* =========================
+   添加 / 编辑表单
+========================= */
+
+
+.admin-form form {
+
+  max-width:420px;
+
+  display:flex;
+
+  flex-direction:column;
+
+  gap:14px;
+
+}
+
+
+
+.admin-form input,
+.admin-form textarea {
+
+
+  width:100%;
+
+
+  box-sizing:border-box;
+
+
+  padding:14px;
+
+
+  border-radius:var(--radius-md);
+
+
+  border:1px solid var(--card-border);
+
+
+  background:var(--card-bg-subtle);
+
+
+  color:#222;
+
+
+  font-family:inherit;
+
+
+  font-size:15px;
+
+}
+
+
+
+.admin-form input::placeholder,
+.admin-form textarea::placeholder {
+
+  color:#777;
+
+}
+
+
+
+.admin-form textarea {
+
+  min-height:120px;
+
+}
+
+
+
+.admin-form button {
+
+  padding:14px;
+
+
+  border-radius:var(--radius-md);
+
+
+  border:none;
+
+
+  background:var(--color-accent);
+
+
+  color:white;
+
+
+  font-size:15px;
+
+
+  font-weight:600;
+
+
+  cursor:pointer;
+
+}
+
+
+
+/* 平板 */
+@media(max-width:1200px){
+
+  .admin-list {
+
+    grid-template-columns:
+      repeat(6,minmax(0,1fr));
+
+  }
+
+}
+
+
+
+/* 小屏 */
+@media(max-width:800px){
+
+  .admin-list {
+
+    grid-template-columns:
+      repeat(4,minmax(0,1fr));
+
+  }
+
+}
+
+
+
+/* 手机 */
+@media(max-width:500px){
+
+  .admin-library,
+  .admin-form {
+
+    padding:18px;
+
+  }
+
+
+  .admin-list {
+
+    grid-template-columns:
+      repeat(2,minmax(0,1fr));
+
+    gap:10px;
+
+  }
+
+
+}
