@@ -38,6 +38,19 @@ async function getCurrentPushSubscription() {
   }
 }
 
+function formatBeijingTime(date: string) {
+  const d = new Date(date);
+  if (Number.isNaN(d.getTime())) return date;
+
+  return d.toLocaleString("zh-CN", {
+    timeZone: "Asia/Shanghai",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+}
+
 function getVisitorToken() {
   const saved = window.localStorage.getItem(VISITOR_KEY);
   if (saved) return saved;
@@ -213,7 +226,7 @@ export default function MessagePanel({ open, onClose }: MessagePanelProps) {
             {messages.map((message) => (
               <article className={`message-item is-${message.sender}`} key={message.id}>
                 <p>{message.content}</p>
-                <time>{message.createdAt}</time>
+                <time>{formatBeijingTime(message.createdAt)}</time>
               </article>
             ))}
             {pendingMessages > 0 && (
