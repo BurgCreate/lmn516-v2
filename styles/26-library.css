@@ -5,23 +5,41 @@
 
 
 /* 页面 */
+
 .library-page {
-  padding: 28px;
+
+  padding:28px 0;
+
+  min-height:auto;
+
+  height:auto;
+
 }
 
 
+
 /* 标题 */
+
 .library-header {
-  margin-bottom: 24px;
+
+  margin-bottom:24px;
+
+  display:flex;
+
+  justify-content:space-between;
+
+  align-items:flex-start;
+
 }
 
 
 .library-header h1 {
-  margin: 0;
 
-  font-size: 34px;
+  margin:0;
 
-  font-weight: 600;
+  font-size:34px;
+
+  font-weight:600;
 
   font-family:
     "Microsoft YaHei",
@@ -29,49 +47,63 @@
     "Helvetica Neue",
     Arial,
     sans-serif;
+
 }
 
 
 .library-header p {
 
-  margin-top: 8px;
+  margin-top:8px;
 
-  font-size: 14px;
+  font-size:14px;
 
-  opacity: .65;
+  opacity:.65;
 
 }
 
 
 
-/* 桌面 8列 */
+/* =========================
+   卡片网格
+========================= */
+
+
 .library-grid {
 
-  display: grid;
+  display:grid;
 
   grid-template-columns:
-    repeat(8, minmax(110px, 1fr));
+    repeat(auto-fill,minmax(150px,1fr));
 
-  gap: 10px;
+  gap:14px;
+
+  max-width:900px;
+
+  height:auto;
+
+  align-content:start;
 
 }
 
 
 
-/* 小方形卡片 */
+/* 卡片 */
+
 .library-card {
 
-  height: 110px;
+  min-height:110px;
 
-  padding: 12px;
+  height:auto;
 
-  border-radius: 12px;
+  padding:12px;
 
-  box-sizing: border-box;
+  border-radius:12px;
 
-  background: var(--card-bg-subtle);
+  box-sizing:border-box;
 
-  border: 1px solid var(--card-border);
+  background:var(--card-bg-subtle);
+
+  border:1px solid var(--card-border);
 
   transition:
     transform .2s ease,
@@ -89,18 +121,22 @@
 
 .library-card:hover {
 
-  transform: translateY(-2px);
+  transform:translateY(-2px);
 
-  box-shadow: var(--card-shadow-hover);
+  box-shadow:var(--card-shadow-hover);
 
 }
 
 
 
+
 /* 链接 */
+
 .library-card-link {
 
-  height:100%;
+  height:auto;
+
+  min-height:86px;
 
   display:flex;
 
@@ -116,7 +152,10 @@
 
 
 
-/* 图标 + 标题 */
+
+
+/* 图标标题 */
+
 .library-card-title {
 
   display:flex;
@@ -129,7 +168,6 @@
 
 
 
-/* 图标 */
 .library-card-icon {
 
   width:22px;
@@ -146,7 +184,6 @@
 
 
 
-/* 标题 */
 .library-card h2 {
 
   margin:0;
@@ -163,7 +200,7 @@
 
 
 
-/* 描述 */
+
 .library-card p {
 
   margin-top:8px;
@@ -178,8 +215,6 @@
 
   font-weight:500;
 
-  opacity:1;
-
 
   display:-webkit-box;
 
@@ -193,7 +228,7 @@
 
 
 
-/* 分类 */
+
 .library-card-bottom {
 
   display:flex;
@@ -212,13 +247,16 @@
 
 
 
+
+
 /* 平板 */
+
 @media(max-width:1200px){
 
   .library-grid {
 
     grid-template-columns:
-      repeat(6,minmax(110px,1fr));
+      repeat(5,minmax(120px,1fr));
 
   }
 
@@ -226,13 +264,15 @@
 
 
 
+
 /* 小屏 */
+
 @media(max-width:800px){
 
   .library-grid {
 
     grid-template-columns:
-      repeat(4,minmax(90px,1fr));
+      repeat(3,minmax(90px,1fr));
 
   }
 
@@ -240,14 +280,29 @@
 
 
 
+
+
 /* 手机 */
+
 @media(max-width:500px){
+
 
   .library-page {
 
-    padding:18px;
+    padding:18px 0;
 
   }
+
+
+
+  .library-header {
+
+    flex-direction:column;
+
+    gap:16px;
+
+  }
+
 
 
   .library-grid {
@@ -260,13 +315,15 @@
   }
 
 
+
   .library-card {
 
-    height:100px;
+    min-height:100px;
 
     padding:10px;
 
   }
+
 
 
   .library-card-icon {
@@ -277,96 +334,124 @@
 
   }
 
+
 }
+
+
+
+
+
+/* =========================
+   编辑入口
+========================= */
+
+
 .site-editor-hover {
-  position: relative;
-  display: inline-block;
+
+  position:relative;
+
+  display:inline-block;
+
 }
+
 
 
 .site-editor-trigger {
-  background: transparent;
-  border: 0;
-  cursor: pointer;
-  font-size: 14px;
-  color: #666;
+
+  background:transparent;
+
+  border:0;
+
+  cursor:pointer;
+
+  font-size:14px;
+
+  color:#666;
+
 }
+
 
 
 .site-editor-panel {
-  position: absolute;
-  right: 0;
-  top: 40px;
 
-  width: 260px;
-  padding: 20px;
+  position:absolute;
 
-  background: rgba(255,255,255,.95);
+  right:0;
 
-  border: 1px solid rgba(0,0,0,.08);
+  top:40px;
 
-  border-radius: 16px;
+  width:260px;
 
-  box-shadow: 0 15px 40px rgba(0,0,0,.12);
+  padding:20px;
 
-  opacity: 0;
-  visibility: hidden;
+  background:rgba(255,255,255,.95);
 
-  transform: translateY(-10px);
+  border:1px solid rgba(0,0,0,.08);
 
-  transition: .25s ease;
+  border-radius:16px;
 
-  z-index: 100;
+  box-shadow:0 15px 40px rgba(0,0,0,.12);
+
+  opacity:0;
+
+  visibility:hidden;
+
+  transform:translateY(-10px);
+
+  transition:.25s ease;
+
+  z-index:100;
+
 }
+
 
 
 .site-editor-hover:hover .site-editor-panel {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
+
+  opacity:1;
+
+  visibility:visible;
+
+  transform:translateY(0);
+
 }
+
 
 
 .site-editor-panel h3 {
-  margin: 0 0 12px;
+
+  margin:0 0 12px;
+
 }
+
 
 
 .site-editor-panel input {
 
-  width: 100%;
+  width:100%;
 
-  padding: 10px;
+  padding:10px;
 
-  border-radius: 10px;
+  border-radius:10px;
 
-  border: 1px solid #ddd;
+  border:1px solid #ddd;
 
-  margin-bottom: 12px;
+  margin-bottom:12px;
 
 }
+
 
 
 .site-editor-panel button {
 
-  width: 100%;
+  width:100%;
 
-  padding: 10px;
+  padding:10px;
 
-  border-radius: 10px;
+  border-radius:10px;
 
-  border: none;
+  border:none;
 
-  cursor: pointer;
+  cursor:pointer;
 
-}
-.library-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-}
-
-
-.site-editor-hover {
-  margin-top: 20px;
 }

@@ -2374,3 +2374,356 @@ main#top {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
+/* =========================
+   LMN516 Footer Compact V3
+   ========================= */
+
+
+/* 总区域压缩 */
+
+.site-footer {
+  overflow:hidden;
+}
+
+
+.site-footer-inner {
+  padding-top:18px;
+  padding-bottom:10px;
+}
+
+
+
+/* 网站地图整体居中 */
+
+.footer-map-desktop {
+
+  width:max-content;
+
+  margin-left:auto;
+  margin-right:auto;
+
+  display:grid;
+
+  grid-template-columns:repeat(3,140px);
+
+  column-gap:55px;
+
+  align-items:start;
+
+}
+
+
+
+/* 所有栏目左对齐 */
+
+.footer-group {
+
+  text-align:left;
+
+}
+
+
+.footer-group h3 {
+
+  text-align:left;
+
+  margin-bottom:12px;
+
+  font-size:14px;
+
+}
+
+
+
+/* 链接紧凑 */
+
+.footer-links {
+
+  display:flex;
+
+  flex-direction:column;
+
+  gap:5px;
+
+}
+
+
+.footer-links a {
+
+  font-size:13px;
+
+  line-height:1.5;
+
+}
+
+
+
+
+/* 去掉之前左右分布 */
+
+.footer-group:nth-child(1),
+.footer-group:nth-child(2),
+.footer-group:nth-child(3){
+
+  text-align:left;
+
+}
+
+
+
+
+/* 底部信息压缩 */
+
+.footer-bottom {
+
+  margin-top:22px;
+
+  padding-top:10px;
+
+  gap:12px;
+
+  justify-content:center;
+
+  font-size:12px;
+
+}
+
+
+
+
+/* 草地装饰降低高度 */
+
+.site-footer-landscape {
+
+  height:45px;
+
+}
+
+
+.site-footer-sun {
+
+  transform:scale(.7);
+
+}
+
+
+
+
+/* 手机保持 */
+
+@media(max-width:768px){
+
+  .footer-map-desktop{
+    display:none;
+  }
+
+
+  .footer-map-mobile{
+
+    width:100%;
+
+  }
+
+
+  .footer-group {
+
+    padding:8px 0;
+
+  }
+
+
+  .footer-bottom {
+
+    flex-direction:column;
+
+    gap:8px;
+
+  }
+
+}
+/* =================================
+   LMN516 Footer Ultra Compact
+================================= */
+
+
+.site-footer {
+
+  padding:0 !important;
+
+}
+
+
+
+.site-footer-inner {
+
+  padding-top:10px !important;
+
+  padding-bottom:8px !important;
+
+}
+
+
+
+
+/* 花园装饰只保留氛围 */
+
+.site-footer-landscape {
+
+  height:18px !important;
+
+  opacity:.25;
+
+}
+
+
+
+
+
+.footer-map-desktop {
+
+  margin-top:0 !important;
+
+  margin-bottom:0 !important;
+
+  grid-template-columns:
+  repeat(3,100px) !important;
+
+  column-gap:55px !important;
+
+}
+
+
+
+
+
+.footer-group h3 {
+
+  margin-bottom:6px !important;
+
+  font-size:14px;
+
+}
+
+
+
+
+.footer-links {
+
+  gap:2px !important;
+
+}
+
+
+
+.footer-links a {
+
+  line-height:1.35 !important;
+
+}
+
+
+
+
+
+.footer-bottom {
+
+  margin-top:12px !important;
+
+  padding-top:8px !important;
+
+  padding-bottom:0 !important;
+
+}
+
+
+
+
+@media(min-width:900px){
+
+  .site-footer-inner {
+
+    max-width:720px !important;
+
+  }
+
+
+}
+
+
+
+
+@media(max-width:768px){
+
+  .site-footer-inner {
+
+    padding-top:8px !important;
+
+  }
+
+}
+/* =================================
+   Footer final height reduce
+================================= */
+
+
+.site-footer-inner {
+
+  padding-top:0 !important;
+
+  padding-bottom:4px !important;
+
+}
+
+
+
+.footer-map-desktop {
+
+  margin-top:0 !important;
+
+  margin-bottom:0 !important;
+
+}
+
+
+
+
+.footer-group h3 {
+
+  margin-bottom:4px !important;
+
+}
+
+
+
+.footer-links {
+
+  gap:0 !important;
+
+}
+
+
+
+.footer-links a {
+
+  line-height:1.25 !important;
+
+}
+
+
+
+
+.footer-bottom {
+
+  margin-top:8px !important;
+
+  padding-top:6px !important;
+
+}
+
+
+
+.site-footer-landscape {
+
+  height:10px !important;
+
+}

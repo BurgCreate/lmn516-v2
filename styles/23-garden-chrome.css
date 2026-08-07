@@ -506,3 +506,238 @@
   }
 
 }
+
+
+/* ==================================================
+   LMN516 Footer Compact Final Override
+   Clean merged footer tuning
+================================================== */
+
+.site-footer {
+  margin-top:20px;
+  border-top:0;
+}
+
+.site-footer-landscape {
+  position:absolute;
+  inset:0;
+  opacity:.16;
+  pointer-events:none;
+}
+
+.site-footer-sun {
+  top:-180px;
+  width:220px;
+}
+
+.site-footer-grass {
+  bottom:-70px;
+  width:220px;
+  height:100px;
+  opacity:.22;
+}
+
+.site-footer-inner {
+  padding-top:18px;
+  padding-bottom:8px;
+}
+
+.footer-map-desktop {
+  width:max-content;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+.footer-group,
+.footer-group h3,
+.footer-links {
+  text-align:left;
+}
+
+.footer-group h3 {
+  margin-bottom:6px;
+}
+
+.footer-links {
+  gap:2px;
+}
+
+.footer-links a {
+  line-height:1.3;
+}
+
+.footer-bottom {
+  margin-top:12px;
+  padding-top:6px;
+  border-top:0;
+}
+
+@media (max-width:620px) {
+  .site-footer {
+    margin-top:16px;
+  }
+
+  .site-footer-inner {
+    padding-top:14px;
+  }
+}
+/* ===============================
+   Footer layout adjustment V6
+================================ */
+
+
+.footer-map-desktop {
+
+  width: min(720px, 100%);
+
+  margin-left:auto;
+  margin-right:auto;
+
+  display:grid;
+
+  grid-template-columns:
+  repeat(3, 150px);
+
+  column-gap:80px;
+
+  justify-content:center;
+
+}
+
+
+
+.footer-group {
+
+  width:150px;
+
+  text-align:left !important;
+
+}
+
+
+
+.footer-group h3 {
+
+  text-align:left !important;
+
+  margin-bottom:10px;
+
+}
+
+
+
+.footer-links {
+
+  display:flex;
+
+  flex-direction:column;
+
+  align-items:flex-start;
+
+  gap:5px;
+
+}
+
+
+
+.footer-links a {
+
+  text-align:left !important;
+
+  white-space:nowrap;
+
+}
+
+
+
+/* 底部不要贴太近 */
+
+.footer-bottom {
+
+  margin-top:18px;
+
+}
+
+
+
+/* Footer高度微调 */
+
+.site-footer-inner {
+
+  padding-top:24px;
+
+  padding-bottom:12px;
+
+}
+
+
+
+@media(max-width:620px){
+
+  .footer-map-desktop{
+
+    width:100%;
+
+    display:none;
+
+  }
+
+}
+/* Footer columns final alignment */
+
+.footer-map-desktop {
+
+  display:flex !important;
+
+  justify-content:center;
+
+  align-items:flex-start;
+
+  gap:90px;
+
+}
+
+
+
+.footer-group {
+
+  width:150px;
+
+  flex:none;
+
+  text-align:left !important;
+
+}
+
+
+
+.footer-links {
+
+  display:flex;
+
+  flex-direction:column;
+
+  align-items:flex-start !important;
+
+  text-align:left !important;
+
+}
+
+
+
+.footer-links a {
+
+  display:block;
+
+  width:100%;
+
+  text-align:left !important;
+
+}
+
+
+.footer-group h3 {
+
+  text-align:left !important;
+
+}

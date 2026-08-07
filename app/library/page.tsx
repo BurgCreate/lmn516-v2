@@ -13,29 +13,31 @@ export default async function LibraryPage() {
     });
 
 
-
   return (
 
-    <main className="library-page">
+    <div className="library-page">
 
 
       <header className="library-header">
 
         <div>
+
           <h1>
             资源收藏
           </h1>
 
+
           <p>
             LMN516 收藏的网站、工具与资源
           </p>
+
         </div>
 
 
         <SiteEditorHover />
 
-
       </header>
+
 
 
 
@@ -53,8 +55,7 @@ export default async function LibraryPage() {
       </div>
 
 
-    </main>
+    </div>
 
   );
-
 }
