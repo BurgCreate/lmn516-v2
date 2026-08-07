@@ -108,6 +108,8 @@ export default async function HomePage() {
 
         variant="notes"
 
+        marker=""
+
       >
 
         <LatestPosts
@@ -150,6 +152,8 @@ export default async function HomePage() {
 
         variant="archive"
 
+        marker=""
+
       >
 
         <LifeArchive />
@@ -163,6 +167,8 @@ export default async function HomePage() {
       <GardenSectionFrame
 
         variant="about"
+
+        marker=""
 
       >
 
