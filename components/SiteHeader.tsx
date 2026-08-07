@@ -45,6 +45,13 @@ const navigationItems: NavigationItem[] = [
     label: "收藏夹",
     href: "/favorites",
   },
+  {
+
+  label: "导航",
+
+  href: "/sitemap",
+
+},
 ];
 
 
