@@ -102,6 +102,26 @@ export default async function HomePage() {
 
 
 
+      {/* 近期文章 */}
+
+      <GardenSectionFrame
+
+        variant="notes"
+
+      >
+
+        <LatestPosts
+
+          featured={featured}
+
+          cards={cards}
+
+        />
+
+      </GardenSectionFrame>
+
+
+
       {/* 今日档案 + 照片轮播 */}
 
       <HeroSection
@@ -121,26 +141,6 @@ export default async function HomePage() {
         remaining={remaining}
 
       />
-
-
-
-      {/* 近期文章 */}
-
-      <GardenSectionFrame
-
-        variant="notes"
-
-      >
-
-        <LatestPosts
-
-          featured={featured}
-
-          cards={cards}
-
-        />
-
-      </GardenSectionFrame>
 
 
 
