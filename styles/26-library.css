@@ -598,3 +598,35 @@
   cursor:pointer;
 
 }
+/* =========================
+   字体层级优化
+========================= */
+
+
+/* 网站名字 */
+.library-text h2 {
+
+  font-weight:800;
+
+  color:#111;
+
+}
+
+
+/* 分类 */
+.library-text span {
+
+  font-weight:600;
+
+  color:#444;
+
+}
+
+
+/* 访问 / 收藏 */
+.library-visit,
+.library-favorite {
+
+  font-weight:600;
+
+}
