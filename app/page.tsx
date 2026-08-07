@@ -1,9 +1,7 @@
-import GardenEntrance from "@/components/home/GardenEntrance";
 import HeroSection from "@/components/home/HeroSection";
 import LatestPosts from "@/components/home/LatestPosts";
 import LifeArchive from "@/components/home/LifeArchive";
 import AboutSection from "@/components/home/AboutSection";
-import GardenTrail from "@/components/home/GardenTrail";
 import GardenAtmosphere from "@/components/home/GardenAtmosphere";
 import GardenSectionFrame from "@/components/home/GardenSectionFrame";
 
@@ -20,6 +18,7 @@ export const revalidate = 60;
 
 export default async function HomePage() {
 
+
   const [
     posts,
     mediaImages,
@@ -35,14 +34,19 @@ export default async function HomePage() {
   ]);
 
 
+
   const latestMoment = moments[0];
 
+
   const featured = posts[0];
+
 
   const cards = posts.slice(1, 4);
 
 
+
   const pushupPost = await getPostById(347);
+
 
 
   const pushupMatch =
@@ -51,23 +55,33 @@ export default async function HomePage() {
     );
 
 
+
   const pushups = pushupMatch
+
     ? Number(
         pushupMatch[1].replace(/,/g, "")
       )
+
     : 0;
+
 
 
   const target = 10000;
 
 
+
   const pushupProgress =
+
     target > 0
+
       ? ((pushups / target) * 100).toFixed(2)
+
       : "0.00";
 
 
+
   const remaining =
+
     Math.max(target - pushups, 0);
 
 
@@ -83,13 +97,12 @@ export default async function HomePage() {
       />
 
 
+
       <GardenAtmosphere />
 
 
 
-      <GardenEntrance />
-
-
+      {/* 今日档案 + 照片轮播 */}
 
       <HeroSection
 
@@ -111,37 +124,32 @@ export default async function HomePage() {
 
 
 
-      <GardenTrail
-        variant="bird"
-        label="沿着小路，看看最近长出了什么"
-      />
-
-
+      {/* 近期文章 */}
 
       <GardenSectionFrame
+
         variant="notes"
-        marker="01 · 新芽"
+
       >
 
         <LatestPosts
+
           featured={featured}
+
           cards={cards}
+
         />
 
       </GardenSectionFrame>
 
 
 
-      <GardenTrail
-        variant="bench"
-        label="在长椅旁，翻一翻收藏"
-      />
-
-
+      {/* 收藏目录 */}
 
       <GardenSectionFrame
+
         variant="archive"
-        marker="02 · 收藏"
+
       >
 
         <LifeArchive />
@@ -150,16 +158,12 @@ export default async function HomePage() {
 
 
 
-      <GardenTrail
-        variant="mailbox"
-        label="花园尽头，也欢迎留下你的痕迹"
-      />
-
-
+      {/* 关于本站 */}
 
       <GardenSectionFrame
+
         variant="about"
-        marker="03 · 树下"
+
       >
 
         <AboutSection />
@@ -171,4 +175,5 @@ export default async function HomePage() {
     </main>
 
   );
+
 }
