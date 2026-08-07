@@ -1,139 +1,53 @@
-/* =========================================================
-   LMN516 Entrance Clean
-   Keep image only
-   Remove UI decoration
-========================================================= */
+"use client";
 
+export default function GardenEntrance() {
+  return (
+    <section className="garden-entrance">
 
-/* Remove decorative atmosphere */
+      <div className="garden-entrance-copy">
 
-.garden-sun,
-.garden-cloud,
-.garden-cloud-one,
-.garden-cloud-two {
+        <p className="garden-kicker">
+          LMN516 · DIGITAL GARDEN
+        </p>
 
-  display:none!important;
+        <h1>
+          欢迎来到
+          <span>我的数字花园</span>
+        </h1>
 
-}
+        <p className="garden-intro">
+          一个记录生活、想法、项目与成长轨迹的小空间。
+        </p>
 
+        <div className="garden-entrance-actions">
 
+          <a
+            href="#top"
+            className="garden-enter-button"
+          >
+            进入花园
+          </a>
 
-/* Remove botanical SVG */
+        </div>
 
-.garden-line-art {
+      </div>
 
-  display:none!important;
 
-}
+      <div className="garden-entrance-visual">
 
+        <div className="garden-illustration-frame">
 
+          <img
+            src="/garden-assets/garden-girl.webp"
+            alt="garden"
+            className="garden-entrance-girl"
+          />
 
-/* Remove motif decorations */
+        </div>
 
-.garden-entrance-butterfly,
-.garden-entrance-grass {
+      </div>
 
-  display:none!important;
 
-}
-
-
-
-/* Remove scroll guide */
-
-.garden-scroll-cue {
-
-  display:none!important;
-
-}
-
-
-
-/* Remove icon arrows inside buttons */
-
-.garden-enter-button svg {
-
-  display:none!important;
-
-}
-
-
-
-/* Button keep text only */
-
-.garden-enter-button {
-
-  display:inline-flex;
-
-  align-items:center;
-
-  justify-content:center;
-
-  gap:0;
-
-}
-
-
-
-/* Keep image */
-
-.garden-entrance-girl {
-
-  display:block;
-
-  max-width:100%;
-
-  height:auto;
-
-}
-
-
-
-/* Clean illustration area */
-
-.garden-illustration-frame {
-
-  position:relative;
-
-  background:none!important;
-
-  border:0!important;
-
-  box-shadow:none!important;
-
-}
-
-
-
-/* Remove extra visual frames */
-
-.garden-illustration-frame::before,
-.garden-illustration-frame::after {
-
-  display:none!important;
-
-}
-
-
-
-/* Sign keep simple */
-
-.garden-sign {
-
-  background:none!important;
-
-  border:0!important;
-
-  box-shadow:none!important;
-
-}
-
-
-
-/* Remove decorative flower text */
-
-.garden-visitor-flower {
-
-  display:none!important;
-
+    </section>
+  );
 }
