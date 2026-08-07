@@ -59,7 +59,7 @@
 
 
 /* =========================
-   资源卡片列表
+   卡片网格
 ========================= */
 
 
@@ -79,7 +79,7 @@
 
 
 /* =========================
-   单个资源卡片
+   卡片
 ========================= */
 
 
@@ -89,15 +89,14 @@
 
   padding:12px;
 
+  box-sizing:border-box;
+
 
   display:flex;
 
   flex-direction:column;
 
   justify-content:space-between;
-
-
-  box-sizing:border-box;
 
 
   border-radius:var(--radius-lg);
@@ -117,7 +116,6 @@
     transform .2s ease,
 
     box-shadow .2s ease;
-
 
 }
 
@@ -139,11 +137,13 @@
 
   height:100%;
 
+
   display:flex;
 
   flex-direction:column;
 
   justify-content:space-between;
+
 
   color:inherit;
 
@@ -154,7 +154,7 @@
 
 
 /* =========================
-   顶部信息
+   图标标题
 ========================= */
 
 
@@ -191,15 +191,9 @@
 
 
 
-/* 名称 */
-
 .library-card h2 {
 
   margin:0;
-
-
-  flex:1;
-
 
   min-width:0;
 
@@ -232,12 +226,9 @@
 
 .library-card p {
 
-  margin-top:8px;
+  margin-top:5px;
 
   margin-bottom:0;
-
-
-  height:42px;
 
 
   font-size:10px;
@@ -249,22 +240,20 @@
   color:#555;
 
 
+  white-space:nowrap;
+
+
   overflow:hidden;
 
 
-  display:-webkit-box;
-
-
-  -webkit-line-clamp:3;
-
-
-  -webkit-box-orient:vertical;
+  text-overflow:ellipsis;
 
 }
 
 
 
 /* 底部 */
+
 
 .library-card-bottom {
 
@@ -273,9 +262,6 @@
   justify-content:space-between;
 
   align-items:center;
-
-
-  margin-top:8px;
 
 
   font-size:10px;
@@ -294,17 +280,13 @@
 
 @media(max-width:1200px){
 
-
   .library-grid {
-
 
     grid-template-columns:
 
       repeat(6,minmax(0,1fr));
 
-
   }
-
 
 }
 
@@ -312,17 +294,13 @@
 
 @media(max-width:800px){
 
-
   .library-grid {
-
 
     grid-template-columns:
 
       repeat(4,minmax(0,1fr));
 
-
   }
-
 
 }
 
@@ -333,9 +311,7 @@
 
   .library-page {
 
-
     padding:18px 0;
-
 
   }
 
@@ -343,19 +319,15 @@
 
   .library-header {
 
-
     flex-direction:column;
 
-
     gap:16px;
-
 
   }
 
 
 
   .library-grid {
-
 
     grid-template-columns:
 
@@ -364,19 +336,15 @@
 
     gap:10px;
 
-
   }
 
 
 
   .library-card {
 
-
     min-height:100px;
 
-
     padding:10px;
-
 
   }
 
@@ -384,15 +352,11 @@
 
   .library-card-icon {
 
-
     width:20px;
-
 
     height:20px;
 
-
   }
-
 
 }
 
@@ -437,7 +401,9 @@
 
   top:40px;
 
+
   width:260px;
+
 
   padding:20px;
 
@@ -474,15 +440,11 @@
 
 .site-editor-hover:hover .site-editor-panel {
 
-
   opacity:1;
-
 
   visibility:visible;
 
-
   transform:translateY(0);
-
 
 }
 
@@ -490,9 +452,7 @@
 
 .site-editor-panel h3 {
 
-
   margin:0 0 12px;
-
 
 }
 
@@ -500,9 +460,7 @@
 
 .site-editor-panel input {
 
-
   width:100%;
-
 
   padding:10px;
 
@@ -515,13 +473,11 @@
 
   margin-bottom:12px;
 
-
 }
 
 
 
 .site-editor-panel button {
-
 
   width:100%;
 
@@ -536,6 +492,5 @@
 
 
   cursor:pointer;
-
 
 }
