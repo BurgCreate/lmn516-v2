@@ -630,3 +630,51 @@
   font-weight:600;
 
 }
+/* =========================
+   分类分组
+========================= */
+
+.library-section {
+  margin-bottom:40px;
+}
+
+
+.library-category-title {
+  margin:0 0 16px;
+  font-size:22px;
+  font-weight:700;
+  color:#1f2a22;
+}
+.library-switch{
+
+display:flex;
+
+gap:8px;
+
+margin-bottom:20px;
+
+}
+
+
+.library-switch button{
+
+padding:8px 16px;
+
+border-radius:20px;
+
+border:1px solid var(--card-border);
+
+background:var(--card-bg);
+
+cursor:pointer;
+
+}
+
+
+.library-switch button:hover{
+
+background:var(--color-accent);
+
+color:white;
+
+}

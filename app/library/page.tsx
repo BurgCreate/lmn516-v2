@@ -1,16 +1,20 @@
 import { prisma } from "@/lib/prisma";
-import SiteCard from "@/components/SiteCard";
 import SiteEditorHover from "@/components/SiteEditorHover";
+import LibraryView from "@/components/LibraryView";
 
 
 export default async function LibraryPage() {
 
+
   const sites =
     await prisma.site.findMany({
+
       orderBy: {
         createdAt: "desc",
       },
+
     });
+
 
 
   return (
@@ -19,6 +23,7 @@ export default async function LibraryPage() {
 
 
       <header className="library-header">
+
 
         <div>
 
@@ -34,28 +39,21 @@ export default async function LibraryPage() {
         </div>
 
 
+
         <SiteEditorHover />
+
 
       </header>
 
 
 
-
-      <div className="library-grid">
-
-        {sites.map((site) => (
-
-          <SiteCard
-            key={site.id}
-            site={site}
-          />
-
-        ))}
-
-      </div>
+      <LibraryView
+        sites={sites}
+      />
 
 
     </main>
 
   );
+
 }
