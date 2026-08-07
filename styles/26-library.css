@@ -74,6 +74,8 @@
 
   gap:10px;
 
+  width:100%;
+
 }
 
 
@@ -85,11 +87,11 @@
 
 .library-card {
 
+  height:120px;
+
   min-height:120px;
 
   padding:12px;
-
-  box-sizing:border-box;
 
 
   display:flex;
@@ -97,6 +99,9 @@
   flex-direction:column;
 
   justify-content:space-between;
+
+
+  box-sizing:border-box;
 
 
   border-radius:var(--radius-lg);
@@ -137,13 +142,11 @@
 
   height:100%;
 
-
   display:flex;
 
   flex-direction:column;
 
   justify-content:space-between;
-
 
   color:inherit;
 
@@ -154,7 +157,7 @@
 
 
 /* =========================
-   图标标题
+   标题区域
 ========================= */
 
 
@@ -222,19 +225,20 @@
 
 
 
-/* 描述 */
+/* =========================
+   描述
+========================= */
+
 
 .library-card p {
 
-  margin-top:5px;
-
-  margin-bottom:0;
+  margin:0;
 
 
   font-size:10px;
 
 
-  line-height:1.5;
+  line-height:1.4;
 
 
   color:#555;
@@ -252,7 +256,9 @@
 
 
 
-/* 底部 */
+/* =========================
+   底部
+========================= */
 
 
 .library-card-bottom {
@@ -342,6 +348,8 @@
 
   .library-card {
 
+    height:100px;
+
     min-height:100px;
 
     padding:10px;
@@ -401,9 +409,7 @@
 
   top:40px;
 
-
   width:260px;
-
 
   padding:20px;
 
