@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import SiteHeader from "@/components/SiteHeader";
-import SiteFooter from "@/components/home/SiteFooter";
+import SiteFooter from "@/components/SiteFooter";
 
 export const metadata: Metadata = {
   title: "网站地图 | LMN516",
