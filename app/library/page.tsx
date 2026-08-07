@@ -15,7 +15,7 @@ export default async function LibraryPage() {
 
   return (
 
-    <div className="library-page">
+    <main className="shell library-page">
 
 
       <header className="library-header">
@@ -55,7 +55,7 @@ export default async function LibraryPage() {
       </div>
 
 
-    </div>
+    </main>
 
   );
 }
