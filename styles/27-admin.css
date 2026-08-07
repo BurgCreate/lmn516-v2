@@ -10,6 +10,8 @@
 
   padding:28px;
 
+  min-height:100vh;
+
   font-family:
     "Microsoft YaHei",
     "PingFang SC",
@@ -99,6 +101,7 @@
 
 
 /* 单个网站卡片 */
+
 .admin-item {
 
   min-height:120px;
@@ -146,6 +149,7 @@
 
 
 /* 网站信息 */
+
 .admin-info {
 
   display:flex;
@@ -175,6 +179,7 @@
 
 
 /* 网站文字 */
+
 .admin-text h2 {
 
   margin:0;
@@ -229,6 +234,7 @@
 
 
 /* 操作按钮 */
+
 .admin-actions {
 
   display:flex;
@@ -390,6 +396,7 @@
 
 
 /* 平板 */
+
 @media(max-width:1200px){
 
   .admin-list {
@@ -404,6 +411,7 @@
 
 
 /* 小屏 */
+
 @media(max-width:800px){
 
   .admin-list {
@@ -418,12 +426,15 @@
 
 
 /* 手机 */
+
 @media(max-width:500px){
 
   .admin-library,
   .admin-form {
 
     padding:18px;
+
+    min-height:100vh;
 
   }
 
