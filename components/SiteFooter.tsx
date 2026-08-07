@@ -3,38 +3,96 @@ import { OwnerPushBinder } from "@/components/home/OwnerPushBinder";
 
 
 const footerGroups = [
+
   {
-    title: "浏览",
+    title: "生活",
+
     links: [
-      { label: "首页", href: "/" },
-      { label: "文章墙", href: "/wall" },
-      { label: "全部文章", href: "/posts" },
-      { label: "碎碎念", href: "/moments" },
-      { label: "照片墙", href: "/photos" },
+      {
+        label: "周记",
+        href: "/wall",
+      },
+      {
+        label: "碎碎念",
+        href: "/moments",
+      },
+      {
+        label: "相片",
+        href: "/photos",
+      },
+      {
+        label: "收藏夹",
+        href: "/favorites",
+      },
     ],
   },
 
+
   {
-    title: "花园",
+    title: "兴趣",
+
     links: [
-      { label: "音乐清单", href: "/music" },
-      { label: "城市散步", href: "/walks" },
-      { label: "房间物品", href: "/room" },
-      { label: "观影档案", href: "/movies" },
+      {
+        label: "网站搜集",
+        href: "/library",
+      },
+      {
+        label: "音乐清单",
+        href: "/music",
+      },
+      {
+        label: "观影档案",
+        href: "/movies",
+      },
+      {
+        label: "城市散步",
+        href: "/walks",
+      },
+      {
+        label: "房间物品",
+        href: "/room",
+      },
+      {
+        label: "花园游戏",
+        href: "/games/garden-match",
+      },
     ],
   },
 
+
   {
-    title: "关于",
+    title: "档案",
+
     links: [
-      { label: "关于本站", href: "/about" },
-      { label: "生长记录", href: "/changelog" },
-      { label: "网站地图", href: "/sitemap" },
-      { label: "RSS", href: "/rss.xml" },
-      { label: "写信", href: "mailto:hello@lmn516.com" },
+      {
+        label: "全部文章",
+        href: "/posts",
+      },
+      {
+        label: "关于本站",
+        href: "/about",
+      },
+      {
+        label: "生长记录",
+        href: "/changelog",
+      },
+      {
+        label: "RSS",
+        href: "/rss.xml",
+      },
+      {
+        label: "写信",
+        href: "mailto:hello@lmn516.com",
+      },
+      {
+        label: "导航",
+        href: "/sitemap",
+      },
     ],
   },
+
 ];
+
 
 
 function FooterLinks({
@@ -44,6 +102,7 @@ function FooterLinks({
 }) {
 
   return (
+
     <div className="footer-links">
 
       {links.map((link) => (
@@ -58,7 +117,9 @@ function FooterLinks({
       ))}
 
     </div>
+
   );
+
 }
 
 
@@ -159,18 +220,25 @@ export default function SiteFooter() {
 
         <div className="footer-bottom">
 
+
           <span>
             © 2025–2026 LMN516
           </span>
 
 
+
           <span className="footer-stack">
+
             WordPress · Next.js · Vercel · <OwnerPushBinder />
+
           </span>
 
 
+
           <Link href="/changelog">
+
             当前版本 · V3.0
+
           </Link>
 
 
@@ -184,4 +252,5 @@ export default function SiteFooter() {
     </footer>
 
   );
+
 }
