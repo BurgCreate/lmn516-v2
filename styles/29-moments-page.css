@@ -1,0 +1,338 @@
+/* =========================================================
+   LMN516 Moments Timeline Page
+   Page Layout Only
+========================================================= */
+
+
+/* 页面 */
+
+.garden-moments-page {
+
+  padding:32px 0;
+
+  min-height:100vh;
+
+}
+
+
+
+/* 主区域 */
+
+.garden-moments-field {
+
+  position:relative;
+
+  width:100%;
+
+}
+
+
+
+/* 时间轴容器 */
+
+.moments-list {
+
+  position:relative;
+
+  max-width:900px;
+
+  width:100%;
+
+  margin:0 auto;
+
+  padding:20px 0;
+
+}
+
+
+
+/* 时间轴 */
+
+.moments-list::before {
+
+  content:"";
+
+  position:absolute;
+
+  left:150px;
+
+  top:0;
+
+  bottom:0;
+
+  width:1px;
+
+  background:var(--line);
+
+}
+
+
+
+/* 周 */
+
+.moment-week-title {
+
+  font-size:18px;
+
+  font-weight:600;
+
+  margin:30px 0 22px;
+
+  letter-spacing:.02em;
+
+  opacity:.85;
+
+}
+
+
+
+/* 日期 */
+
+.moment-day {
+
+  position:relative;
+
+  margin-bottom:42px;
+
+}
+
+
+.moment-day-date {
+
+  position:relative;
+
+  margin-left:0;
+
+  margin-bottom:18px;
+
+  font-size:16px;
+
+  font-weight:500;
+
+  letter-spacing:.02em;
+
+  opacity:.75;
+
+}
+
+
+
+/* 日期下面列表 */
+
+.moment-day-list {
+
+  position:relative;
+
+}
+
+
+
+/* 单条记录 */
+
+.moment-item {
+
+  position:relative;
+
+  margin-left:190px;
+
+  margin-bottom:28px;
+
+}
+
+
+
+/* 时间 */
+
+.moment-time {
+
+  position:absolute;
+
+  left:-175px;
+
+  top:18px;
+
+  width:100px;
+
+  text-align:right;
+
+
+  font-size:15px;
+
+  font-weight:600;
+
+  line-height:1;
+
+
+  font-variant-numeric:
+
+  tabular-nums;
+
+
+  color:var(--text);
+
+  opacity:.85;
+
+
+  transition:.2s ease;
+
+}
+
+
+
+/* 时间节点 */
+
+.moment-item::before {
+
+  content:"";
+
+  position:absolute;
+
+
+  left:-45px;
+
+  top:16px;
+
+
+  width:8px;
+
+  height:8px;
+
+
+  border-radius:50%;
+
+
+  background:var(--text);
+
+  opacity:.45;
+
+
+  transition:.2s ease;
+
+}
+
+
+
+/* hover */
+
+.moment-item:hover .moment-time {
+
+  opacity:1;
+
+  transform:translateX(-4px);
+
+}
+
+
+
+.moment-item:hover::before {
+
+  opacity:.8;
+
+  transform:scale(1.25);
+
+}
+
+
+
+/* 空状态 */
+
+.moments-empty {
+
+  padding:40px 0;
+
+  text-align:center;
+
+  opacity:.6;
+
+}
+
+
+
+/* =========================
+   mobile
+========================= */
+
+
+@media(max-width:768px){
+
+
+  .garden-moments-page {
+
+    padding:24px 0;
+
+  }
+
+
+
+  .moments-list {
+
+    padding-left:10px;
+
+  }
+
+
+
+  .moments-list::before {
+
+    left:10px;
+
+  }
+
+
+
+  .moment-week-title {
+
+    font-size:17px;
+
+  }
+
+
+
+  .moment-day-date {
+
+    font-size:15px;
+
+    margin-left:35px;
+
+  }
+
+
+
+  .moment-item {
+
+    margin-left:45px;
+
+    margin-bottom:24px;
+
+  }
+
+
+
+  .moment-item::before {
+
+    left:-39px;
+
+    top:18px;
+
+  }
+
+
+
+  .moment-time {
+
+    position:static;
+
+    width:auto;
+
+    text-align:left;
+
+    display:block;
+
+    margin-bottom:8px;
+
+    font-size:14px;
+
+  }
+
+
+}

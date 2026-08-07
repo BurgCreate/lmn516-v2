@@ -23,9 +23,17 @@ export type Post = {
 
 export type Moment = {
   id: number;
+
   content: string;
+
+  // 给小泡泡显示
   date: string;
+
+  // 给时间轴计算
+  rawDate: string;
+
   image: string | null;
+
   format: PostFormat;
 };
 
@@ -249,18 +257,40 @@ function formatPost(item: any): Post {
  * 前台不显示标题，只使用正文、时间和图片。
  */
 function formatMoment(item: any): Moment {
+
   return {
+
     id: item.id,
+
 
     content:
       item.content?.rendered || "",
 
-    date: formatMomentDate(item.date),
 
-    image: getPostImage(item),
 
-    format: normalizePostFormat(item.format),
+    // 保留原来的小泡泡时间
+    date:
+      formatMomentDate(item.date),
+
+
+
+    // 新增原始时间
+    // 给时间轴使用
+    rawDate:
+      item.date,
+
+
+
+    image:
+      getPostImage(item),
+
+
+
+    format:
+      normalizePostFormat(item.format),
+
   };
+
 }
 
 
