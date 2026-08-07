@@ -1,0 +1,7 @@
+body{margin:0;min-height:100vh;display:flex;justify-content:center;align-items:center;background:#e7f4e3;font-family:"Microsoft YaHei"}
+.garden-game{padding:30px;border-radius:28px;background:#ffffffaa;text-align:center}
+.status{display:flex;gap:20px;justify-content:center;margin:20px}
+#board{display:grid;grid-template-columns:repeat(8,55px);gap:8px}
+.cell{height:55px;border-radius:14px;background:#fff;display:flex;align-items:center;justify-content:center;font-size:30px;cursor:pointer}
+.selected{outline:3px solid #80c98a}
+button{margin-top:20px;padding:10px 25px;border:0;border-radius:20px}

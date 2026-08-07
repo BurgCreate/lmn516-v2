@@ -1,0 +1,1 @@
+const ITEMS=["🌱","🌸","🍃","💧","🌻","⭐"];const SAVE_KEY="LMN516_GARDEN_MATCH";const LEVELS=[{need:1000},{need:5000},{need:12000}];
