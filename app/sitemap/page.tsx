@@ -3,9 +3,9 @@ import Link from "next/link";
 
 
 export const metadata: Metadata = {
-  title: "网站地图 | LMN516",
+  title: "导航 | LMN516",
   description:
-    "浏览 LMN516 的文章、照片、音乐、碎碎念与其他生活档案。",
+    "浏览 LMN516 的周记、碎碎念、相片、收藏夹与其他生活档案。",
 };
 
 
@@ -32,17 +32,89 @@ type SitemapSection = {
 const sitemapSections: SitemapSection[] = [
 
   {
-    title: "探索 LMN516",
+    title: "生活",
 
     groups: [
 
       {
-        title: "主要页面",
+        title: "",
 
         links: [
           {
-            label: "首页",
-            href: "/",
+            label: "周记",
+            href: "/wall",
+          },
+          {
+            label: "碎碎念",
+            href: "/moments",
+          },
+          {
+            label: "相片",
+            href: "/photos",
+          },
+          {
+            label: "收藏夹",
+            href: "/favorites",
+          },
+        ],
+      },
+
+    ],
+  },
+
+
+  {
+    title: "兴趣",
+
+    groups: [
+
+      {
+        title: "",
+
+        links: [
+          {
+            label: "网站搜集",
+            href: "/library",
+          },
+          {
+            label: "音乐清单",
+            href: "/music",
+          },
+          {
+            label: "观影档案",
+            href: "/movies",
+          },
+          {
+            label: "城市散步",
+            href: "/walks",
+          },
+          {
+            label: "房间物品",
+            href: "/room",
+          },
+          {
+            label: "花园游戏",
+            href: "/games/garden-match",
+          },
+        ],
+      },
+
+    ],
+  },
+
+
+  {
+    title: "档案",
+
+    groups: [
+
+      {
+        title: "",
+
+        links: [
+          {
+            label: "全部文章",
+            href: "/posts",
           },
           {
             label: "关于本站",
@@ -53,107 +125,17 @@ const sitemapSections: SitemapSection[] = [
             href: "/changelog",
           },
           {
-            label: "网站地图",
-            href: "/sitemap",
-          },
-        ],
-      },
-
-
-      {
-        title: "文字",
-
-        links: [
-          {
-            label: "全部文章",
-            href: "/posts",
-          },
-          {
-            label: "文章归档",
-            href: "/archive",
-          },
-          {
-            label: "碎碎念",
-            href: "/moments",
-          },
-        ],
-      },
-
-
-      {
-        title: "生活档案",
-
-        links: [
-          {
-            label: "照片墙",
-            href: "/photos",
-          },
-          {
-            label: "音乐清单",
-            href: "/music",
-          },
-          {
-            label: "城市散步",
-            href: "/walks",
-          },
-          {
-            label: "观影档案",
-            href: "/movies",
-          },
-          {
-            label: "房间物品",
-            href: "/room",
-          },
-        ],
-      },
-
-    ],
-  },
-
-
-
-  {
-    title: "花园入口",
-
-    groups: [
-
-      {
-        title: "首页专题",
-
-        links: [
-          {
-            label: "本期",
-            href: "/#notes",
-          },
-          {
-            label: "专题",
-            href: "/#project",
-          },
-          {
-            label: "收藏",
-            href: "/#archive",
-          },
-          {
-            label: "关于",
-            href: "/#about",
-          },
-        ],
-      },
-
-
-      {
-        title: "订阅与联系",
-
-        links: [
-          {
             label: "RSS",
-            href: "https://lmn516.com/feed/",
-            external: true,
+            href: "/rss.xml",
           },
           {
             label: "写信",
             href: "mailto:hello@lmn516.com",
             external: true,
+          },
+          {
+            label: "导航",
+            href: "/sitemap",
           },
         ],
       },
@@ -170,30 +152,6 @@ export default function SitemapPage() {
   return (
 
     <main className="sitemap-page shell">
-
-
-      <header className="sitemap-hero">
-
-
-        <p className="eyebrow">
-          LMN516 DIRECTORY
-        </p>
-
-
-        <h1>
-          网站地图
-        </h1>
-
-
-        <p>
-          这里收录了目前开放的页面。沿着目录走，可以找到这座数字花园里已经长出来的内容。
-        </p>
-
-
-      </header>
-
-
-
 
 
       <div className="sitemap-sections">
@@ -222,13 +180,15 @@ export default function SitemapPage() {
 
                 <div
                   className="sitemap-group"
-                  key={group.title}
+                  key={group.title || section.title}
                 >
 
 
-                  <h3>
-                    {group.title}
-                  </h3>
+                  {group.title && (
+                    <h3>
+                      {group.title}
+                    </h3>
+                  )}
 
 
 
@@ -239,7 +199,7 @@ export default function SitemapPage() {
 
 
                       <li
-                        key={`${group.title}-${link.href}`}
+                        key={`${section.title}-${link.href}`}
                       >
 
 
