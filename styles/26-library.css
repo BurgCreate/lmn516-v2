@@ -1,250 +1,35 @@
 /* =========================================================
    LMN516 Library
-   Resource collection
+   Resource collection - 8 columns layout
 ========================================================= */
-
-
-/* 页面 */
-
-.library-page {
-
-  padding:28px 0;
-
-  min-height:100vh;
-
-}
-
-
-
-/* 标题 */
-
-.library-header {
-
-  margin-bottom:24px;
-
-  display:flex;
-
-  justify-content:space-between;
-
-  align-items:flex-start;
-
-}
-
-
-.library-header h1 {
-
-  margin:0;
-
-  font-size:34px;
-
-  font-weight:600;
-
-  font-family:
-    "Microsoft YaHei",
-    "PingFang SC",
-    "Helvetica Neue",
-    Arial,
-    sans-serif;
-
-}
-
-
-.library-header p {
-
-  margin-top:8px;
-
-  font-size:14px;
-
-  opacity:.65;
-
-}
-
-
-
-/* =========================
-   卡片网格
-========================= */
-
 
 .library-grid {
 
   display:grid;
 
   grid-template-columns:
-    repeat(auto-fill,minmax(150px,1fr));
+    repeat(8,minmax(0,1fr));
 
   gap:14px;
 
-  max-width:900px;
+  width:100%;
 
-  height:auto;
+  max-width:none;
 
   align-content:start;
 
 }
 
 
-
-/* 卡片 */
-
 .library-card {
 
-  min-height:110px;
-
-  height:auto;
+  min-height:120px;
 
   padding:12px;
 
-  border-radius:12px;
-
-  box-sizing:border-box;
-
-  background:var(--card-bg-subtle);
-
-  border:1px solid var(--card-border);
-
-  transition:
-    transform .2s ease,
-    box-shadow .2s ease;
-
-  font-family:
-    "Microsoft YaHei",
-    "PingFang SC",
-    "Helvetica Neue",
-    Arial,
-    sans-serif;
+  border-radius:16px;
 
 }
-
-
-.library-card:hover {
-
-  transform:translateY(-2px);
-
-  box-shadow:var(--card-shadow-hover);
-
-}
-
-
-
-
-/* 链接 */
-
-.library-card-link {
-
-  height:auto;
-
-  min-height:86px;
-
-  display:flex;
-
-  flex-direction:column;
-
-  justify-content:space-between;
-
-  color:inherit;
-
-  text-decoration:none;
-
-}
-
-
-
-
-
-/* 图标标题 */
-
-.library-card-title {
-
-  display:flex;
-
-  align-items:center;
-
-  gap:7px;
-
-}
-
-
-
-.library-card-icon {
-
-  width:22px;
-
-  height:22px;
-
-  object-fit:contain;
-
-  border-radius:6px;
-
-  flex-shrink:0;
-
-}
-
-
-
-.library-card h2 {
-
-  margin:0;
-
-  font-size:14px;
-
-  line-height:1.2;
-
-  font-weight:700;
-
-  color:#1f2a22;
-
-}
-
-
-
-
-.library-card p {
-
-  margin-top:8px;
-
-  margin-bottom:0;
-
-  font-size:11px;
-
-  line-height:1.5;
-
-  color:#252525;
-
-  font-weight:500;
-
-
-  display:-webkit-box;
-
-  -webkit-line-clamp:2;
-
-  -webkit-box-orient:vertical;
-
-  overflow:hidden;
-
-}
-
-
-
-
-.library-card-bottom {
-
-  display:flex;
-
-  justify-content:space-between;
-
-  align-items:center;
-
-  font-size:10px;
-
-  color:#444;
-
-  font-weight:500;
-
-}
-
-
-
 
 
 /* 平板 */
@@ -254,13 +39,11 @@
   .library-grid {
 
     grid-template-columns:
-      repeat(5,minmax(120px,1fr));
+      repeat(6,minmax(0,1fr));
 
   }
 
 }
-
-
 
 
 /* 小屏 */
@@ -270,38 +53,16 @@
   .library-grid {
 
     grid-template-columns:
-      repeat(3,minmax(90px,1fr));
+      repeat(4,minmax(0,1fr));
 
   }
 
 }
 
 
-
-
-
 /* 手机 */
 
 @media(max-width:500px){
-
-
-  .library-page {
-
-    padding:18px 0;
-
-  }
-
-
-
-  .library-header {
-
-    flex-direction:column;
-
-    gap:16px;
-
-  }
-
-
 
   .library-grid {
 
@@ -311,145 +72,5 @@
     gap:10px;
 
   }
-
-
-
-  .library-card {
-
-    min-height:100px;
-
-    padding:10px;
-
-  }
-
-
-
-  .library-card-icon {
-
-    width:20px;
-
-    height:20px;
-
-  }
-
-
-}
-
-
-
-
-
-/* =========================
-   编辑入口
-========================= */
-
-
-.site-editor-hover {
-
-  position:relative;
-
-  display:inline-block;
-
-}
-
-
-
-.site-editor-trigger {
-
-  background:transparent;
-
-  border:0;
-
-  cursor:pointer;
-
-  font-size:14px;
-
-  color:#666;
-
-}
-
-
-
-.site-editor-panel {
-
-  position:absolute;
-
-  right:0;
-
-  top:40px;
-
-  width:260px;
-
-  padding:20px;
-
-  background:rgba(255,255,255,.95);
-
-  border:1px solid rgba(0,0,0,.08);
-
-  border-radius:16px;
-
-  box-shadow:0 15px 40px rgba(0,0,0,.12);
-
-  opacity:0;
-
-  visibility:hidden;
-
-  transform:translateY(-10px);
-
-  transition:.25s ease;
-
-  z-index:100;
-
-}
-
-
-
-.site-editor-hover:hover .site-editor-panel {
-
-  opacity:1;
-
-  visibility:visible;
-
-  transform:translateY(0);
-
-}
-
-
-
-.site-editor-panel h3 {
-
-  margin:0 0 12px;
-
-}
-
-
-
-.site-editor-panel input {
-
-  width:100%;
-
-  padding:10px;
-
-  border-radius:10px;
-
-  border:1px solid #ddd;
-
-  margin-bottom:12px;
-
-}
-
-
-
-.site-editor-panel button {
-
-  width:100%;
-
-  padding:10px;
-
-  border-radius:10px;
-
-  border:none;
-
-  cursor:pointer;
 
 }
