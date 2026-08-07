@@ -2727,3 +2727,44 @@ main#top {
   height:10px !important;
 
 }
+/* =================================
+   LMN516 Footer Mobile Fix
+   ================================= */
+
+@media (max-width:768px){
+
+  .footer-map-mobile{
+    display:flex !important;
+    flex-direction:column;
+    width:100%;
+  }
+
+  .footer-map-mobile .footer-group{
+    width:100%;
+    text-align:left !important;
+    padding:8px 0;
+  }
+
+  .footer-map-mobile .footer-links{
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start !important;
+    gap:5px;
+  }
+
+  .footer-map-mobile summary{
+    display:flex;
+    justify-content:space-between;
+    width:100%;
+  }
+
+  .footer-bottom{
+    width:100%;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    gap:8px;
+    text-align:center;
+  }
+
+}
