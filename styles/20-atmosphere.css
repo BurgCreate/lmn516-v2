@@ -1,713 +1,502 @@
-/* LMN516 V3.2 · Atmosphere layer */
+/* =========================================================
+   LMN516 Atmosphere Layer
+   Clean version
+   Keep layout, remove decoration
+========================================================= */
+
+
+/* =========================
+   Page
+========================= */
+
 
 .garden-subpage {
-  position: relative;
-  min-height: 100vh;
-  padding-top: 38px;
-  padding-bottom: 128px;
-  isolation: isolate;
+
+  position:relative;
+
+  min-height:100vh;
+
+  padding-top:38px;
+
+  padding-bottom:128px;
+
 }
 
-.garden-subpage::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: -3;
-  pointer-events: none;
-  background:
-    radial-gradient(circle at 12% 8%, rgba(255, 239, 175, .18), transparent 27%),
-    radial-gradient(circle at 88% 34%, rgba(123, 142, 91, .08), transparent 31%);
-}
 
+
+/* 删除全局氛围 */
+
+.garden-subpage::before,
 .garden-subpage::after {
-  content: "";
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: -12px;
-  z-index: -1;
-  height: 130px;
-  background: url("/garden-assets/botanical/grass-bank.svg") bottom center / 1100px auto repeat-x;
-  opacity: .22;
-  pointer-events: none;
+
+
+  display:none!important;
+
+
 }
+
+
+
+/* =========================
+   Hero
+   保留结构
+========================= */
+
 
 .garden-page-hero {
-  position: relative;
-  display: grid;
-  grid-template-columns: minmax(0, 1.08fr) minmax(310px, .92fr);
-  align-items: center;
-  gap: clamp(34px, 6vw, 88px);
-  min-height: 460px;
-  margin: 24px 0 72px;
-  padding: clamp(34px, 5vw, 68px);
-  overflow: hidden;
-  border: 1px solid color-mix(in srgb, var(--accent) 16%, var(--line));
-  border-radius: 36px 18px 42px 22px / 22px 40px 20px 36px;
+
+
+  position:relative;
+
+  display:grid;
+
+
+  grid-template-columns:
+  minmax(0,1.08fr)
+  minmax(310px,.92fr);
+
+
+  align-items:center;
+
+
+  gap:clamp(34px,6vw,88px);
+
+
+  min-height:460px;
+
+
+  margin:24px 0 72px;
+
+
+  padding:
+  clamp(34px,5vw,68px);
+
+
+
+  overflow:hidden;
+
+
+  border:
+
+  1px solid color-mix(
+    in srgb,
+    var(--accent) 16%,
+    var(--line)
+  );
+
+
   background:
-    linear-gradient(125deg, rgba(255,255,255,.5), rgba(255,255,255,.13)),
-    color-mix(in srgb, var(--paper) 91%, #ecdfb9);
-  box-shadow: 0 28px 70px rgba(48, 53, 38, .09);
+
+  color-mix(
+    in srgb,
+    var(--paper) 91%,
+    transparent
+  );
+
+
+  box-shadow:
+
+  0 28px 70px rgba(48,53,38,.09);
+
+
 }
 
-.garden-page-hero::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: url("/garden-assets/atmosphere/paper-texture.webp") center / cover;
-  opacity: .11;
-  mix-blend-mode: multiply;
-  pointer-events: none;
-}
 
+
+/* 删除 Hero 装饰 */
+
+.garden-page-hero::before,
 .garden-page-hero::after {
-  content: "";
-  position: absolute;
-  top: -26px;
-  left: 4%;
-  right: 4%;
-  height: 170px;
-  background: url("/garden-assets/botanical/vine-arch.svg") top center / contain no-repeat;
-  opacity: .18;
-  pointer-events: none;
+
+
+ display:none!important;
+
+
 }
+
+
+
+/* Hero 内容 */
 
 .garden-page-hero-copy,
-.garden-page-hero-scene { position: relative; z-index: 2; }
+.garden-page-hero-scene {
+
+
+ position:relative;
+
+ z-index:2;
+
+
+}
+
+
+
+/* =========================
+   Label
+========================= */
+
 
 .garden-place-label {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  margin: 0 0 22px;
-  padding: 8px 12px;
-  border: 1px solid color-mix(in srgb, var(--accent) 17%, transparent);
-  border-radius: 999px;
-  background: rgba(255,255,255,.32);
-  color: var(--accent);
-  font-family: var(--font-sans);
-  font-size: 11px;
-  font-weight: 750;
-  letter-spacing: .11em;
+
+
+ display:inline-flex;
+
+ align-items:center;
+
+ gap:8px;
+
+
+ margin-bottom:22px;
+
+
+ padding:8px 12px;
+
+
+ border:
+
+ 1px solid color-mix(
+ in srgb,
+ var(--accent) 17%,
+ transparent
+ );
+
+
+ border-radius:999px;
+
+
+ background:transparent;
+
+
+ color:var(--accent);
+
+
+ font-size:11px;
+
+ font-weight:750;
+
+ letter-spacing:.11em;
+
+
 }
+
+
+
+/* =========================
+   Typography
+========================= */
+
 
 .garden-page-hero h1 {
-  max-width: 680px;
-  margin: 12px 0 22px;
-  font-size: clamp(42px, 6vw, 78px);
-  line-height: 1.04;
-  letter-spacing: -.055em;
+
+
+ max-width:680px;
+
+
+ margin:12px 0 22px;
+
+
+ font-size:clamp(42px,6vw,78px);
+
+
+ line-height:1.04;
+
+
+ letter-spacing:-.055em;
+
+
 }
+
+
 
 .garden-page-intro {
-  max-width: 620px;
-  margin: 0;
-  color: color-mix(in srgb, var(--text) 74%, var(--muted));
-  font-size: clamp(16px, 1.45vw, 19px);
-  line-height: 1.95;
+
+
+ max-width:620px;
+
+
+ color:
+
+ color-mix(
+ srgb,
+ var(--text) 74%,
+ var(--muted)
+ );
+
+
+ font-size:clamp(16px,1.45vw,19px);
+
+
+ line-height:1.95;
+
+
 }
+
+
+
+/* =========================
+   Image
+========================= */
+
 
 .garden-page-hero-scene {
-  min-height: 340px;
-  display: grid;
-  place-items: center;
+
+
+ min-height:340px;
+
+
+ display:grid;
+
+
+ place-items:center;
+
+
 }
+
+
 
 .garden-page-girl {
-  width: min(100%, 390px);
-  filter: saturate(.92) contrast(.98);
-  transform: rotate(1deg);
+
+
+ width:min(100%,390px);
+
+
+ filter:none;
+
+
+ transform:none;
+
+
 }
+
+
 
 .garden-page-girl .garden-girl-media {
-  object-fit: contain;
-  mix-blend-mode: multiply;
+
+
+ object-fit:contain;
+
+
+ mix-blend-mode:normal;
+
+
 }
 
-.garden-page-sunlight {
-  position: absolute;
-  top: -25%;
-  right: -18%;
-  width: 520px;
-  aspect-ratio: 1;
-  background: url("/garden-assets/botanical/sun-rays.svg") center / contain no-repeat;
-  opacity: .58;
-}
 
-.garden-page-flower {
-  position: absolute;
-  right: -7%;
-  bottom: -10%;
-  width: clamp(150px, 18vw, 250px);
-  opacity: .72;
-  mix-blend-mode: multiply;
-}
 
+/* 删除人物周围装饰 */
+
+.garden-page-sunlight,
+.garden-page-flower,
 .garden-page-butterfly {
-  position: absolute;
-  top: 8%;
-  left: 2%;
-  width: 74px;
-  opacity: .62;
-  transform: rotate(-12deg);
+
+
+ display:none!important;
+
+
 }
 
-.garden-story-card,
-.garden-archive-sheet,
-.garden-moments-field,
-.garden-music-section {
-  position: relative;
-}
+
+
+/* =========================
+   Story
+========================= */
+
 
 .garden-story-card {
-  max-width: 920px;
-  margin-inline: auto;
-  padding: clamp(34px, 6vw, 72px);
-  overflow: hidden;
-  border: 1px solid color-mix(in srgb, var(--accent) 13%, var(--line));
-  border-radius: 18px 36px 20px 42px / 34px 18px 40px 20px;
-  background: rgba(255,255,255,.3);
-  box-shadow: 0 20px 50px rgba(55, 57, 43, .06);
+
+
+ max-width:920px;
+
+
+ margin-inline:auto;
+
+
+ padding:
+
+ clamp(34px,6vw,72px);
+
+
+ border:
+
+ 1px solid color-mix(
+ in srgb,
+ var(--accent) 13%,
+ var(--line)
+ );
+
+
+ border-radius:20px;
+
+
+ background:
+
+ color-mix(
+ in srgb,
+ var(--paper) 92%,
+ transparent
+ );
+
+
+ box-shadow:
+
+ 0 20px 50px rgba(55,57,43,.06);
+
+
 }
 
-.garden-story-card p { font-size: 18px; line-height: 2; }
 
-.garden-corner {
-  position: absolute;
-  z-index: 0;
-  width: clamp(150px, 22vw, 310px);
-  pointer-events: none;
-  opacity: .28;
-  mix-blend-mode: multiply;
+.garden-story-card p {
+
+
+ font-size:18px;
+
+ line-height:2;
+
+
 }
-.garden-corner-right { right: -46px; bottom: -34px; }
-.garden-corner-left { left: -68px; bottom: -36px; transform: scaleX(-1); }
-.garden-corner-leaves { width: clamp(180px, 28vw, 370px); }
+
+
+
+/* =========================
+   Archive
+========================= */
+
 
 .garden-archive-sheet {
-  padding: clamp(24px, 4vw, 54px);
-  overflow: hidden;
-  border: 1px solid color-mix(in srgb, var(--accent) 14%, var(--line));
-  border-radius: 24px 44px 20px 36px;
-  background: rgba(255,255,255,.28);
+
+
+ padding:
+
+ clamp(24px,4vw,54px);
+
+
+ border:
+
+ 1px solid color-mix(
+ in srgb,
+ var(--accent) 14%,
+ var(--line)
+ );
+
+
+ border-radius:20px;
+
+
+ background:
+
+ color-mix(
+ in srgb,
+ var(--paper) 92%,
+ transparent
+ );
+
+
+ overflow:hidden;
+
+
 }
 
-.garden-archive-sheet .archive-list { position: relative; z-index: 1; }
+
 .garden-archive-sheet .archive-list article {
-  display: grid;
-  grid-template-columns: 130px minmax(0, 1fr) auto;
-  align-items: center;
-  gap: 24px;
-  padding: 28px 4px;
-  border-bottom: 1px dashed color-mix(in srgb, var(--accent) 17%, var(--line));
-}
-.garden-archive-sheet .archive-list article:last-child { border-bottom: 0; }
-.garden-archive-sheet .archive-list time,
-.garden-archive-sheet .archive-list article > span {
-  color: var(--muted);
-  font-family: var(--font-sans);
-  font-size: 12px;
-  letter-spacing: .06em;
-}
-.garden-archive-sheet .archive-list h2 { margin: 0; font-size: clamp(20px, 2.4vw, 30px); }
 
-.garden-moments-field {
-  padding: clamp(18px, 3vw, 42px);
-  overflow: hidden;
-  border-radius: 26px;
-  background: linear-gradient(180deg, rgba(255,255,255,.16), transparent);
-}
-.garden-moments-field .moments-list { position: relative; z-index: 1; }
 
-.music-garden-action { margin: -46px 0 52px; }
-.garden-music-section { overflow: hidden; }
-.garden-music-section > *:not(.garden-corner) { position: relative; z-index: 1; }
+ border-bottom:
 
-.archive-girl { position: relative; overflow: visible !important; }
-.archive-girl .garden-girl { width: 100%; }
-.archive-girl .garden-girl-media { object-fit: contain; mix-blend-mode: multiply; }
-.archive-girl-flowers {
-  position: absolute;
-  right: -22%;
-  bottom: -20%;
-  width: 58%;
-  opacity: .58;
-  mix-blend-mode: multiply;
+ 1px solid color-mix(
+ in srgb,
+ var(--line) 70%,
+ transparent
+ );
+
+
 }
 
+
+
+/* =========================
+   Remove all ornaments
+========================= */
+
+
+.garden-corner,
+.archive-girl-flowers,
 .garden-atmosphere-flower,
-.garden-atmosphere-butterfly {
-  position: fixed;
-  z-index: 0;
-  pointer-events: none;
-  mix-blend-mode: multiply;
-}
-.garden-atmosphere-flower-left {
-  left: -56px;
-  bottom: -34px;
-  width: clamp(180px, 22vw, 330px);
-  opacity: .16;
-}
-.garden-atmosphere-flower-right {
-  right: -52px;
-  top: 38vh;
-  width: clamp(140px, 17vw, 250px);
-  opacity: .12;
-  transform: rotate(-10deg);
-}
-.garden-atmosphere-butterfly {
-  right: 7vw;
-  top: 19vh;
-  width: 68px;
-  opacity: .14;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .garden-page-butterfly,
-  .garden-atmosphere-butterfly { animation: garden-butterfly-drift 7s ease-in-out infinite; }
-  .garden-page-flower { animation: garden-flower-breathe 6s ease-in-out infinite; transform-origin: 50% 100%; }
-}
-
-@keyframes garden-butterfly-drift {
-  0%,100% { transform: translate3d(0,0,0) rotate(-12deg); }
-  50% { transform: translate3d(12px,-10px,0) rotate(-4deg); }
-}
-@keyframes garden-flower-breathe {
-  0%,100% { transform: rotate(-1deg); }
-  50% { transform: rotate(2deg); }
-}
-
-@media (max-width: 760px) {
-  .garden-subpage { padding-top: 24px; padding-bottom: 96px; }
-  .garden-page-hero {
-    grid-template-columns: 1fr;
-    gap: 18px;
-    min-height: 0;
-    margin: 18px 0 46px;
-    padding: 30px 22px 20px;
-    border-radius: 26px 14px 30px 18px;
-  }
-  .garden-page-hero::after { top: -4px; height: 100px; opacity: .12; }
-  .garden-page-hero h1 { font-size: clamp(38px, 12vw, 56px); }
-  .garden-page-hero-scene { min-height: 260px; }
-  .garden-page-girl { width: min(100%, 310px); }
-  .garden-page-flower { width: 150px; right: -18%; bottom: -8%; }
-  .garden-page-butterfly { width: 52px; }
-  .garden-story-card { padding: 30px 22px 54px; }
-  .garden-archive-sheet { padding: 16px 18px 54px; }
-  .garden-archive-sheet .archive-list article {
-    grid-template-columns: 1fr auto;
-    gap: 8px 18px;
-    padding: 22px 0;
-  }
-  .garden-archive-sheet .archive-list time { grid-column: 1 / -1; }
-  .garden-archive-sheet .archive-list article > span { align-self: end; }
-  .music-garden-action { margin: -24px 0 38px; }
-  .garden-atmosphere-flower-right,
-  .garden-atmosphere-butterfly { display: none; }
-}
-
-@media (prefers-color-scheme: dark) {
-  .garden-page-girl .garden-girl-media,
-  .garden-corner,
-  .garden-atmosphere-flower,
-  .archive-girl .garden-girl-media,
-  .archive-girl-flowers { mix-blend-mode: normal; opacity: .72; }
-  .garden-page-hero { background: rgba(34, 39, 32, .86); }
-  .garden-story-card,
-  .garden-archive-sheet { background: rgba(31, 36, 29, .74); }
-}
-
-.garden-lost-actions {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 18px;
-  flex-wrap: wrap;
-  margin-top: -28px;
-}
-
-@media (max-width: 760px) {
-  .garden-lost-actions {
-    margin-top: -14px;
-  }
-}
-
-/* V3.3 · Delicate botanical ornament system */
-.garden-ornament {
-  display: block;
-  overflow: visible;
-  pointer-events: none;
-  color: var(--accent);
-}
-
-.garden-ornament-stem {
-  fill: none;
-  stroke: color-mix(in srgb, var(--accent) 72%, #657952);
-  stroke-width: 1.35;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  vector-effect: non-scaling-stroke;
-}
-
-.garden-ornament-stem-soft {
-  stroke: color-mix(in srgb, var(--accent) 46%, #92a47d);
-  stroke-width: 1;
-}
-
-.garden-ornament-leaf {
-  fill: rgba(139, 164, 112, .17);
-  stroke: color-mix(in srgb, var(--accent) 56%, #81956e);
-  stroke-width: 1;
-  stroke-linejoin: round;
-  vector-effect: non-scaling-stroke;
-}
-
-.garden-ornament-leaf-alt {
-  fill: rgba(178, 194, 146, .13);
-}
-
-.garden-ornament-flower,
-.garden-ornament-blossom circle {
-  stroke-width: .9;
-  vector-effect: non-scaling-stroke;
-}
-
-.garden-ornament-flower-blue,
-.garden-ornament-blossom-blue circle {
-  fill: rgba(142, 169, 205, .22);
-  stroke: rgba(93, 126, 166, .66);
-}
-
-.garden-ornament-flower-pink,
-.garden-ornament-blossom-pink circle {
-  fill: rgba(220, 157, 174, .2);
-  stroke: rgba(178, 108, 129, .64);
-}
-
-.garden-ornament-flower-gold,
-.garden-ornament-blossom-gold circle {
-  fill: rgba(232, 192, 104, .2);
-  stroke: rgba(184, 137, 54, .66);
-}
-
-.garden-ornament-center {
-  fill: rgba(110, 92, 52, .7) !important;
-  stroke: none !important;
-}
-
-.garden-ornament-dot,
-.garden-ornament-berry {
-  fill: rgba(103, 128, 79, .76);
-}
-
-.garden-ornament-dot-pink,
-.garden-ornament-berry-pink { fill: rgba(190, 115, 139, .7); }
-.garden-ornament-dot-gold,
-.garden-ornament-berry-gold { fill: rgba(190, 145, 64, .74); }
-.garden-ornament-berry-blue { fill: rgba(98, 135, 174, .72); }
-
-.garden-page-ornament {
-  position: absolute;
-  z-index: 1;
-  opacity: .68;
-  filter: saturate(.9);
-}
-
-.garden-page-ornament-main {
-  right: -4%;
-  bottom: -14%;
-  width: clamp(170px, 21vw, 275px);
-}
-
-.garden-page-ornament-curl {
-  left: -8%;
-  top: 4%;
-  width: clamp(180px, 24vw, 300px);
-  opacity: .34;
-  transform: rotate(-8deg);
-}
-
-.garden-section-ornament {
-  position: absolute;
-  z-index: 0;
-  width: clamp(150px, 19vw, 260px);
-  opacity: .42;
-}
-
-.garden-section-ornament-left {
-  left: -44px;
-  bottom: -42px;
-  transform: rotate(-7deg);
-}
-
-.garden-section-ornament-right {
-  right: -42px;
-  top: -34px;
-  transform: scaleX(-1) rotate(-5deg);
-}
-
-.garden-section-frame > *:not(.garden-section-ornament) {
-  position: relative;
-  z-index: 1;
-}
-
-.moment-bubble {
-  overflow: visible;
-}
-
+.garden-atmosphere-butterfly,
+.garden-ornament,
+.garden-page-ornament,
+.garden-section-ornament,
+.garden-content-flora,
+.garden-card-ornament,
+.garden-about-vine,
 .moment-bubble-ornament {
-  position: absolute;
-  z-index: -1;
-  opacity: .78;
-  transition: transform .35s ease, opacity .35s ease;
+
+
+ display:none!important;
+
+
 }
 
-.moment-bubble-ornament-top {
-  width: 118px;
-  right: -48px;
-  top: -50px;
-  transform: rotate(16deg);
+
+
+/* =========================
+   Remove animations
+========================= */
+
+
+.garden-page-butterfly,
+.garden-atmosphere-butterfly,
+.garden-page-flower {
+
+
+ animation:none!important;
+
+
 }
 
-.moment-bubble-ornament-bottom {
-  width: 94px;
-  left: -38px;
-  bottom: -54px;
-  transform: rotate(-18deg);
+
+
+/* =========================
+   Mobile
+========================= */
+
+
+@media(max-width:760px){
+
+
+.garden-subpage{
+
+ padding-top:24px;
+
+ padding-bottom:96px;
+
 }
 
-.moment-bubble:hover .moment-bubble-ornament-top {
-  transform: translateY(-3px) rotate(19deg);
+
+.garden-page-hero{
+
+
+ grid-template-columns:1fr;
+
+
+ min-height:0;
+
+
+ margin:18px 0 46px;
+
+
+ padding:30px 22px 20px;
+
+
 }
 
-.moment-bubble:hover .moment-bubble-ornament-bottom {
-  transform: translateY(3px) rotate(-21deg);
+
+.garden-page-girl{
+
+
+ width:min(100%,310px);
+
+
 }
 
-@media (max-width: 760px) {
-  .garden-page-ornament-main {
-    right: -14%;
-    bottom: -10%;
-    width: 165px;
-  }
 
-  .garden-page-ornament-curl {
-    left: -18%;
-    top: 0;
-    width: 190px;
-    opacity: .24;
-  }
-
-  .garden-section-ornament {
-    width: 150px;
-    opacity: .34;
-  }
-
-  .garden-section-ornament-left { left: -58px; bottom: -46px; }
-  .garden-section-ornament-right { right: -58px; top: -38px; }
-
-  .moment-bubble-ornament-top { width: 88px; right: -34px; top: -38px; }
-  .moment-bubble-ornament-bottom { width: 72px; left: -27px; bottom: -42px; }
-}
-
-@media (prefers-color-scheme: dark) {
-  .garden-ornament-stem,
-  .garden-ornament-leaf,
-  .garden-ornament-flower,
-  .garden-ornament-blossom circle {
-    opacity: .86;
-  }
-}
-
-/* V3.4 · Botanical layout integration */
-.garden-content-section {
-  position: relative;
-  isolation: isolate;
-}
-
-.garden-content-flora {
-  position: absolute;
-  z-index: 0;
-  left: 50%;
-  width: min(1120px, 108vw);
-  height: clamp(88px, 11vw, 148px);
-  transform: translateX(-50%);
-  pointer-events: none;
-  overflow: visible;
-  opacity: .76;
-}
-
-.garden-content-flora-top { top: -58px; }
-.garden-content-flora-bottom {
-  bottom: -68px;
-  transform: translateX(-50%) scaleY(-1);
-  opacity: .42;
-}
-
-.garden-content-section > *:not(.garden-content-flora) {
-  position: relative;
-  z-index: 1;
-}
-
-.garden-flora-ribbon .flora-line,
-.garden-flora-ribbon .flora-stem {
-  fill: none;
-  stroke: color-mix(in srgb, var(--accent) 54%, #64744d);
-  stroke-width: 1.55;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-.garden-flora-ribbon .flora-line-soft,
-.garden-flora-ribbon .flora-stem-soft {
-  stroke-width: 1.05;
-  opacity: .55;
-}
-
-.garden-flora-ribbon .flora-leaf {
-  fill: rgba(119, 139, 92, .14);
-  stroke: rgba(83, 107, 68, .48);
-  stroke-width: 1.15;
-}
-
-.garden-flora-ribbon .flora-leaf-alt {
-  fill: rgba(163, 178, 116, .13);
-  stroke: rgba(107, 124, 74, .43);
-}
-
-.garden-flora-ribbon .flora-bloom circle,
-.garden-flora-ribbon .flora-bell {
-  stroke-width: .9;
-}
-
-.garden-flora-ribbon .flora-bloom-pink circle {
-  fill: rgba(226, 173, 181, .24);
-  stroke: rgba(170, 111, 123, .52);
-}
-.garden-flora-ribbon .flora-bloom-blue circle,
-.garden-flora-ribbon .flora-bell-blue {
-  fill: rgba(151, 185, 205, .23);
-  stroke: rgba(92, 132, 157, .5);
-}
-.garden-flora-ribbon .flora-bloom-gold circle,
-.garden-flora-ribbon .flora-bell-gold {
-  fill: rgba(228, 197, 112, .24);
-  stroke: rgba(170, 139, 62, .5);
-}
-.garden-flora-ribbon .flora-bloom-white circle {
-  fill: rgba(255, 252, 232, .42);
-  stroke: rgba(151, 137, 97, .45);
-}
-.garden-flora-ribbon .flora-center {
-  fill: rgba(111, 92, 44, .46) !important;
-  stroke: none !important;
-}
-.garden-flora-ribbon .flora-berry { stroke: rgba(78, 91, 66, .26); stroke-width: .8; }
-.garden-flora-ribbon .flora-berry-pink { fill: rgba(221, 154, 168, .46); }
-.garden-flora-ribbon .flora-berry-blue { fill: rgba(130, 170, 194, .46); }
-.garden-flora-ribbon .flora-berry-gold { fill: rgba(218, 178, 79, .48); }
-
-.garden-post-card,
-.garden-archive-card,
-.garden-about-card {
-  position: relative;
-  isolation: isolate;
-}
-
-.garden-card-ornament {
-  position: absolute;
-  z-index: 2;
-  top: -22px;
-  right: -20px;
-  width: 112px;
-  opacity: .28;
-  pointer-events: none;
-  transform: rotate(7deg);
-}
-
-.garden-post-card-2 .garden-card-ornament {
-  top: auto;
-  right: -24px;
-  bottom: -28px;
-  transform: rotate(-9deg);
-}
-
-.garden-post-card-3 .garden-card-ornament {
-  top: -28px;
-  right: auto;
-  left: -24px;
-  transform: rotate(-8deg) scaleX(-1);
-}
-
-.garden-archive-card {
-  overflow: hidden;
-}
-
-.garden-archive-card-ornament {
-  top: auto;
-  right: -30px;
-  bottom: -34px;
-  width: 126px;
-  opacity: .2;
-}
-
-.garden-archive-card:nth-child(even) .garden-archive-card-ornament {
-  right: auto;
-  left: -34px;
-  transform: rotate(-8deg) scaleX(-1);
-}
-
-.garden-about-card {
-  overflow: hidden;
-  border-radius: 28px 46px 30px 52px / 42px 28px 48px 30px;
-}
-
-.garden-about-vine {
-  position: absolute;
-  z-index: 0;
-  width: 210px;
-  opacity: .2;
-  pointer-events: none;
-}
-.garden-about-vine-left {
-  left: -64px;
-  bottom: -54px;
-  transform: rotate(-6deg);
-}
-.garden-about-vine-right {
-  top: -52px;
-  right: -42px;
-  transform: rotate(11deg);
-}
-.garden-about-card > *:not(.garden-about-vine) { position: relative; z-index: 1; }
-
-@media (prefers-reduced-motion: no-preference) {
-  .garden-content-flora .flora-sprig { animation: garden-ribbon-sway 8s ease-in-out infinite; transform-box: fill-box; transform-origin: 50% 100%; }
-  .garden-content-flora .flora-sprig-mid { animation-delay: -2.7s; }
-  .garden-content-flora .flora-sprig-right { animation-delay: -5.2s; }
-}
-
-@keyframes garden-ribbon-sway {
-  0%, 100% { rotate: -1deg; }
-  50% { rotate: 1.4deg; }
-}
-
-@media (max-width: 760px) {
-  .garden-content-flora {
-    width: 150vw;
-    height: 92px;
-    opacity: .58;
-  }
-  .garden-content-flora-top { top: -40px; }
-  .garden-content-flora-bottom { bottom: -46px; opacity: .3; }
-  .garden-card-ornament { width: 88px; opacity: .2; }
-  .garden-about-vine { width: 150px; opacity: .14; }
-}
-
-@media (prefers-color-scheme: dark) {
-  .garden-content-flora { opacity: .48; }
-  .garden-flora-ribbon .flora-line,
-  .garden-flora-ribbon .flora-stem { stroke: rgba(165, 184, 139, .5); }
-  .garden-flora-ribbon .flora-leaf { fill: rgba(129, 153, 102, .11); }
 }

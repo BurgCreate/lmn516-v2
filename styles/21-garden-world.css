@@ -1,131 +1,69 @@
 /* =========================================================
    LMN516 Garden World Layer
-   The master illustration becomes the visual source of the whole site.
-   One global layer replaces scattered decorative thinking.
+   Clean Version
+   Keep colors, remove visual noise
 ========================================================= */
+
+
+/* 保留原颜色 */
 
 body {
   background:
-    radial-gradient(circle at 12% 8%, rgba(241, 201, 113, .16), transparent 30%),
-    radial-gradient(circle at 88% 28%, rgba(248, 217, 199, .18), transparent 34%),
-    radial-gradient(circle at 18% 76%, rgba(104, 122, 90, .09), transparent 38%),
-    linear-gradient(180deg, #f5eedf 0%, #efe5d3 48%, #f4ecde 100%);
+    linear-gradient(
+      180deg,
+      #f5eedf 0%,
+      #efe5d3 48%,
+      #f4ecde 100%
+    );
 }
 
-.garden-world {
-  position: fixed;
-  z-index: 0;
-  inset: 0;
-  overflow: hidden;
-  pointer-events: none;
-  isolation: isolate;
+
+
+/* =========================
+   Remove world layers
+========================= */
+
+
+.garden-world,
+.garden-world-drawing,
+.garden-world-paper,
+.garden-world-sun,
+.garden-world-wash,
+.garden-world-veil {
+
+
+  display:none!important;
+
+
 }
 
-.garden-world-drawing {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  min-height: 100vh;
-  color: var(--garden-leaf);
-  opacity: .27;
-}
 
-.garden-world-ink,
-.garden-world-grass,
-.garden-world-daisy,
-.garden-world-bells,
-.garden-world-butterfly {
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1.25;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  vector-effect: non-scaling-stroke;
-}
 
-.garden-world-daisy ellipse {
-  fill: rgba(255, 252, 238, .58);
-}
-
-.garden-world-gold {
-  fill: color-mix(in srgb, var(--garden-sun) 72%, transparent);
-  stroke: color-mix(in srgb, var(--garden-ink) 42%, transparent);
-}
-
-.garden-world-bells path:not(:first-child):not(:nth-child(2)):not(:nth-child(3)) {
-  fill: color-mix(in srgb, var(--garden-blush) 58%, transparent);
-}
-
-.garden-world-butterfly {
-  color: color-mix(in srgb, var(--garden-ink) 74%, var(--garden-leaf));
-  opacity: .62;
-}
-
-.garden-world-butterfly-small {
-  transform-box: fill-box;
-  transform-origin: center;
-  opacity: .42;
-}
-
-.garden-world-sun {
-  position: absolute;
-  z-index: -2;
-  top: -9rem;
-  left: -7rem;
-  width: min(48rem, 70vw);
-  aspect-ratio: 1;
-  border-radius: 50%;
-  opacity: .34;
-  filter: blur(2px);
-  background:
-    repeating-conic-gradient(from 204deg at 50% 50%, rgba(241, 201, 113, .22) 0 5deg, transparent 5deg 12deg),
-    radial-gradient(circle, rgba(241, 201, 113, .32), rgba(241, 201, 113, .08) 36%, transparent 68%);
-  mask-image: radial-gradient(circle, #000 0 42%, transparent 72%);
-}
-
-.garden-world-paper {
-  position: absolute;
-  inset: 0;
-  opacity: .22;
-  mix-blend-mode: multiply;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.18'/%3E%3C/svg%3E");
-}
-
-.garden-world-wash {
-  position: absolute;
-  z-index: -1;
-  border-radius: 50%;
-  filter: blur(82px);
-  opacity: .3;
-}
-
-.garden-world-wash-a {
-  top: 24%;
-  right: -16rem;
-  width: 38rem;
-  height: 42rem;
-  background: var(--garden-blush);
-}
-
-.garden-world-wash-b {
-  bottom: 8%;
-  left: -18rem;
-  width: 42rem;
-  height: 34rem;
-  background: var(--garden-sun);
-}
+/* 内容层级 */
 
 .site-header,
 main,
 .site-footer,
 .moment-bubble-wrap,
 .moment-bubble-shell {
-  position: relative;
-  z-index: 1;
+
+
+  position:relative;
+
+  z-index:1;
+
+
 }
 
-/* Cards are translucent paper placed inside the same illustrated world. */
+
+
+/* =========================
+   Cards
+   Keep garden colors
+   Remove glass
+========================= */
+
+
 .card,
 .note-card,
 .archive-card,
@@ -135,159 +73,132 @@ main,
 .photo-card,
 .garden-page-hero,
 .garden-section-frame {
-  background: color-mix(in srgb, var(--garden-paper) 82%, transparent);
-  border-color: color-mix(in srgb, var(--garden-ink) 13%, transparent);
+
+
+  background:
+  color-mix(
+    in srgb,
+    var(--garden-paper) 92%,
+    transparent
+  );
+
+
+  border-color:
+  color-mix(
+    in srgb,
+    var(--garden-ink) 13%,
+    transparent
+  );
+
+
   box-shadow:
-    0 18px 46px rgba(47, 61, 46, .055),
-    inset 0 1px 0 rgba(255, 255, 255, .52);
-  backdrop-filter: blur(10px) saturate(.92);
+
+  0 18px 46px rgba(47,61,46,.055);
+
+
+  backdrop-filter:none!important;
+
+
 }
 
-/* Existing local flora becomes punctuation, not the whole sentence. */
+
+
+/* =========================
+   Remove decoration
+========================= */
+
+
 .garden-card-ornament,
 .garden-about-vine,
 .garden-content-flora,
 .garden-page-ornament,
-.garden-section-ornament {
-  opacity: .14 !important;
+.garden-section-ornament,
+.garden-corner {
+  display:none!important;
 }
+
+
+
+/* =========================
+   Moment bubble
+   Keep color
+========================= */
+
 
 .moment-bubble {
+
+
   background:
-    radial-gradient(circle at 28% 18%, rgba(255, 255, 255, .72), transparent 32%),
-    color-mix(in srgb, var(--garden-paper) 88%, var(--garden-blush));
-  border-color: color-mix(in srgb, var(--garden-leaf) 24%, transparent);
+
+  color-mix(
+    in srgb,
+    var(--garden-paper) 92%,
+    var(--garden-blush)
+  );
+
+
+  border-color:
+
+  color-mix(
+    in srgb,
+    var(--garden-leaf) 24%,
+    transparent
+  );
+
+
   box-shadow:
-    0 18px 42px rgba(47, 61, 46, .12),
-    inset 0 1px 0 rgba(255, 255, 255, .68);
-}
 
-@media (prefers-reduced-motion: no-preference) {
-  .garden-world-butterfly {
-    animation: garden-world-float 10s ease-in-out infinite;
-    transform-box: fill-box;
-    transform-origin: center;
-  }
+  0 18px 42px rgba(47,61,46,.12);
 
-  .garden-world-butterfly-small {
-    animation-delay: -4s;
-    animation-duration: 13s;
-  }
-}
 
-@keyframes garden-world-float {
-  0%, 100% { translate: 0 0; rotate: -1deg; }
-  50% { translate: 7px -10px; rotate: 2deg; }
-}
-
-@media (max-width: 760px) {
-  .garden-world-drawing {
-    width: 148%;
-    margin-left: -24%;
-    opacity: .25;
-  }
-
-  .garden-world-sun {
-    top: -5rem;
-    left: -10rem;
-    width: 32rem;
-    opacity: .26;
-  }
-
-  .garden-world-wash {
-    opacity: .14;
-  }
-}
-
-html[data-theme="dark"] .garden-world,
-body.dark .garden-world {
-  opacity: .72;
-}
-
-html[data-theme="dark"] .garden-world-drawing,
-body.dark .garden-world-drawing {
-  color: #9aac87;
-  opacity: .2;
-}
-
-html[data-theme="dark"] .garden-world-paper,
-body.dark .garden-world-paper {
-  opacity: .06;
-  mix-blend-mode: screen;
 }
 
 
-/* Full-page translucent illustration atmosphere. The girl illustration is not copied literally;
-   its light, paper, grass and warm botanical rhythm are spread through the whole canvas. */
+
+/* =========================
+   Remove extra atmosphere
+========================= */
+
+
 .garden-world::before,
 .garden-world::after {
-  content: "";
-  position: absolute;
-  inset-inline: -8vw;
-  pointer-events: none;
+
+
+  display:none!important;
+
+
 }
 
-.garden-world::before {
-  top: 13vh;
-  height: 62vh;
-  opacity: .72;
-  background:
-    linear-gradient(106deg, transparent 0 10%, rgba(241, 201, 113, .09) 28%, transparent 49%),
-    radial-gradient(ellipse at 22% 32%, rgba(248, 217, 199, .17), transparent 42%),
-    radial-gradient(ellipse at 78% 70%, rgba(104, 122, 90, .08), transparent 38%);
-  filter: blur(12px);
+
+
+/* =========================
+   Remove extra animation
+========================= */
+
+
+.garden-world-butterfly {
+
+
+  animation:none!important;
+
+
 }
 
-.garden-world::after {
-  bottom: -4vh;
-  height: 42vh;
-  opacity: .58;
-  background:
-    linear-gradient(180deg, transparent, rgba(104, 122, 90, .05) 48%, rgba(104, 122, 90, .11)),
-    radial-gradient(ellipse at 34% 100%, rgba(241, 201, 113, .14), transparent 48%),
-    radial-gradient(ellipse at 78% 100%, rgba(248, 217, 199, .12), transparent 44%);
-  mask-image: linear-gradient(to bottom, transparent, #000 28%);
+
+
+/* =========================
+   Mobile
+========================= */
+
+
+@media(max-width:760px){
+
+
+.garden-world-drawing {
+
+  display:none!important;
+
 }
 
-.garden-world-veil {
-  position: absolute;
-  z-index: -1;
-  border-radius: 999px;
-  pointer-events: none;
-  filter: blur(34px);
-  mix-blend-mode: multiply;
-}
 
-.garden-world-veil-a {
-  top: 36%;
-  left: -8%;
-  width: 62%;
-  height: 18rem;
-  rotate: -7deg;
-  background: linear-gradient(90deg, rgba(241, 201, 113, .09), rgba(248, 217, 199, .13), transparent 82%);
-}
-
-.garden-world-veil-b {
-  top: 68%;
-  right: -12%;
-  width: 66%;
-  height: 20rem;
-  rotate: 8deg;
-  background: linear-gradient(90deg, transparent, rgba(104, 122, 90, .09), rgba(241, 201, 113, .1));
-}
-
-/* The old local decorations remain visible, but act like translucent echoes of one illustration. */
-.garden-card-ornament,
-.garden-about-vine,
-.garden-content-flora,
-.garden-page-ornament,
-.garden-section-ornament {
-  opacity: .18 !important;
-  filter: saturate(.78);
-}
-
-@media (max-width: 760px) {
-  .garden-world::before { opacity: .55; }
-  .garden-world::after { opacity: .45; }
-  .garden-world-veil { filter: blur(46px); opacity: .72; }
 }

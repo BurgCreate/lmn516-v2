@@ -1,79 +1,139 @@
-import Link from "next/link";
-import { GardenGirl, GardenMotif } from "@/components/garden";
-import GardenCompanion from "@/components/garden/GardenCompanion";
+/* =========================================================
+   LMN516 Entrance Clean
+   Keep image only
+   Remove UI decoration
+========================================================= */
 
-export default function GardenEntrance() {
-  return (
-    <section className="garden-entrance shell" aria-labelledby="garden-title">
-      <div className="garden-entrance-copy">
-        <p className="garden-kicker">
-          <span aria-hidden="true">✦</span>
-          LMN516 · A LIVING DIGITAL GARDEN
-        </p>
 
-        <h1 id="garden-title">
-          欢迎来到
-          <span>一座正在生长的花园</span>
-        </h1>
+/* Remove decorative atmosphere */
 
-        <p className="garden-intro">
-          这里收藏文字、照片、音乐和一些缓慢发生的生活。
-          <br />
-          没有算法催促你，只需要沿着小路慢慢往前走。
-        </p>
+.garden-sun,
+.garden-cloud,
+.garden-cloud-one,
+.garden-cloud-two {
 
-        <div className="garden-entrance-actions">
-          <a className="garden-enter-button" href="#garden-today">
-            <span>进入花园</span>
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M5 12h13M14 7l5 5-5 5" />
-            </svg>
-          </a>
+  display:none!important;
 
-          <Link className="garden-note-link" href="/about">
-            认识花园主人
-          </Link>
-        </div>
+}
 
-        <GardenCompanion />
 
-        <div className="garden-visitor-note" aria-label="花园共建说明">
-          <span className="garden-visitor-flower" aria-hidden="true">✿</span>
-          <p>
-            这座花园由我记录，也由每一位来访者共同留下痕迹。
-          </p>
-        </div>
-      </div>
 
-      <div className="garden-entrance-visual" aria-label="花园管理员插画">
-        <span className="garden-sun" aria-hidden="true" />
-        <span className="garden-cloud garden-cloud-one" aria-hidden="true" />
-        <span className="garden-cloud garden-cloud-two" aria-hidden="true" />
+/* Remove botanical SVG */
 
-        <div className="garden-illustration-frame">
-          <GardenGirl scene="welcome" priority className="garden-entrance-girl" />
-          <GardenMotif name="butterfly" className="garden-entrance-butterfly" />
-          <GardenMotif name="grass" className="garden-entrance-grass" />
-        </div>
+.garden-line-art {
 
-        <div className="garden-sign" aria-hidden="true">
-          <span>LMN516</span>
-          <small>慢慢生长中</small>
-        </div>
+  display:none!important;
 
-        <svg className="garden-line-art" viewBox="0 0 620 190" aria-hidden="true">
-          <path d="M8 154c66-18 111-12 168 2 57 14 104 19 166 3 69-18 142-29 269-4" />
-          <path d="M48 158c2-18 7-34 17-48M60 157c10-18 21-31 37-43M530 158c-1-23-8-42-20-57M545 158c9-21 20-36 36-49" />
-          <path d="M157 160c0-15 4-29 11-40M173 161c8-16 17-28 29-36M430 160c2-18 8-32 18-45M447 160c10-14 22-25 36-31" />
-        </svg>
-      </div>
+}
 
-      <a className="garden-scroll-cue" href="#garden-today" aria-label="继续向下浏览">
-        <span>继续散步</span>
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M12 4v15M7 14l5 5 5-5" />
-        </svg>
-      </a>
-    </section>
-  );
+
+
+/* Remove motif decorations */
+
+.garden-entrance-butterfly,
+.garden-entrance-grass {
+
+  display:none!important;
+
+}
+
+
+
+/* Remove scroll guide */
+
+.garden-scroll-cue {
+
+  display:none!important;
+
+}
+
+
+
+/* Remove icon arrows inside buttons */
+
+.garden-enter-button svg {
+
+  display:none!important;
+
+}
+
+
+
+/* Button keep text only */
+
+.garden-enter-button {
+
+  display:inline-flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  gap:0;
+
+}
+
+
+
+/* Keep image */
+
+.garden-entrance-girl {
+
+  display:block;
+
+  max-width:100%;
+
+  height:auto;
+
+}
+
+
+
+/* Clean illustration area */
+
+.garden-illustration-frame {
+
+  position:relative;
+
+  background:none!important;
+
+  border:0!important;
+
+  box-shadow:none!important;
+
+}
+
+
+
+/* Remove extra visual frames */
+
+.garden-illustration-frame::before,
+.garden-illustration-frame::after {
+
+  display:none!important;
+
+}
+
+
+
+/* Sign keep simple */
+
+.garden-sign {
+
+  background:none!important;
+
+  border:0!important;
+
+  box-shadow:none!important;
+
+}
+
+
+
+/* Remove decorative flower text */
+
+.garden-visitor-flower {
+
+  display:none!important;
+
 }

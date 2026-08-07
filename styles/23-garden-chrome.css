@@ -741,3 +741,45 @@
   text-align:left !important;
 
 }
+/* =========================================================
+   Dark Footer Cleanup
+========================================================= */
+
+html[data-theme="dark"] .site-footer,
+body.dark .site-footer {
+
+  background:#0b0d12!important;
+
+  border-top:1px solid rgba(255,255,255,.08)!important;
+
+}
+
+
+html[data-theme="dark"] .site-footer-landscape,
+body.dark .site-footer-landscape,
+html[data-theme="dark"] .site-footer-sun,
+body.dark .site-footer-sun,
+html[data-theme="dark"] .site-footer-grass,
+body.dark .site-footer-grass {
+
+  display:none!important;
+
+}
+
+
+html[data-theme="dark"] .footer-brand,
+body.dark .footer-brand,
+html[data-theme="dark"] .footer-group h3,
+body.dark .footer-group h3 {
+
+  color:#fff!important;
+
+}
+
+
+html[data-theme="dark"] .footer-links a,
+body.dark .footer-links a {
+
+  color:rgba(255,255,255,.65)!important;
+
+}

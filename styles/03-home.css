@@ -1168,15 +1168,7 @@
 }
 
 .garden-entrance::before {
-  content: "";
-  position: absolute;
-  width: 540px;
-  height: 540px;
-  right: -150px;
-  top: -190px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(231, 194, 92, 0.16), transparent 68%);
-  pointer-events: none;
+  display:none!important;
 }
 
 .garden-entrance-copy {
@@ -1682,32 +1674,9 @@
 .notes::before,
 .archive::before,
 .about::before {
-  content: "";
-  position: absolute;
-  z-index: -1;
-  width: 280px;
-  height: 280px;
-  border-radius: 50%;
-  background: radial-gradient(circle, color-mix(in srgb, var(--accent-soft) 54%, transparent), transparent 68%);
-  filter: blur(2px);
-  opacity: 0.58;
-  pointer-events: none;
+  display: none!important;
 }
 
-.notes::before {
-  top: 18%;
-  right: -110px;
-}
-
-.archive::before {
-  top: 8%;
-  left: -130px;
-}
-
-.about::before {
-  right: 8%;
-  bottom: -90px;
-}
 
 .section-heading .eyebrow,
 .archive-intro-copy .eyebrow,
@@ -1839,9 +1808,7 @@ main#top {
   border-top: 1px solid color-mix(in srgb, var(--line) 64%, transparent);
   border-bottom: 1px solid color-mix(in srgb, var(--line) 42%, transparent);
   border-radius: 44px 22px 50px 26px / 28px 48px 26px 46px;
-  background:
-    linear-gradient(180deg, color-mix(in srgb, var(--paper) 42%, transparent), transparent 22%),
-    color-mix(in srgb, var(--bg) 72%, transparent);
+  background: transparent;
 }
 
 .garden-section-frame-notes {
@@ -1978,9 +1945,25 @@ main#top {
 
 .garden-section-frame .about-card {
   border-radius: 42px 20px 38px 26px / 24px 46px 22px 40px;
+
   background:
-    radial-gradient(circle at 86% 22%, color-mix(in srgb, var(--accent-soft) 58%, transparent), transparent 22%),
-    var(--paper);
+  color-mix(
+    in srgb,
+    var(--garden-paper) 92%,
+    transparent
+  );
+
+  border-color:
+  color-mix(
+    in srgb,
+    var(--garden-ink) 13%,
+    transparent
+  );
+
+  box-shadow:
+  0 18px 46px rgba(47,61,46,.055);
+
+  backdrop-filter:none!important;
 }
 
 @media (max-width: 720px) {

@@ -1,222 +1,293 @@
 /* =========================================================
    LMN516 Garden Surface System
-   A single visual grammar derived from the master garden artwork.
-   The world layer supplies atmosphere; surfaces provide readable pauses.
+   Clean Surface Layer
+   Keep color, remove complexity
 ========================================================= */
 
+
 :root {
-  --garden-surface-base: rgba(244, 235, 217, 0.66);
-  --garden-surface-soft: rgba(238, 227, 207, 0.5);
-  --garden-surface-raised: rgba(248, 241, 226, 0.82);
-  --garden-line: color-mix(in srgb, var(--garden-ink) 13%, transparent);
-  --garden-line-hover: color-mix(in srgb, var(--garden-leaf) 30%, transparent);
-  --garden-shadow: 0 18px 48px rgba(47, 61, 46, 0.065);
-  --garden-shadow-hover: 0 24px 62px rgba(47, 61, 46, 0.095);
-  --garden-glass-blur: 11px;
+
+  --garden-surface-base:
+  rgba(244,235,217,.66);
+
+  --garden-surface-soft:
+  rgba(238,227,207,.5);
+
+  --garden-surface-raised:
+  rgba(248,241,226,.82);
+
+
+  --garden-line:
+  color-mix(
+    in srgb,
+    var(--garden-ink) 13%,
+    transparent
+  );
+
+
+  --garden-line-hover:
+  color-mix(
+    in srgb,
+    var(--garden-leaf) 30%,
+    transparent
+  );
+
+
+  --garden-shadow:
+  0 18px 48px rgba(47,61,46,.065);
+
+
+  --garden-shadow-hover:
+  0 24px 62px rgba(47,61,46,.095);
+
 }
 
-/* One shared material. Cards no longer invent their own paper, border and shadow. */
+
+
+/* =========================
+   Card material
+   keep color
+   remove glass
+========================= */
+
+
 .today-card,
 .progress-panel,
 .post-card,
 .archive-card,
 .about-card,
 .garden-page-hero,
-.garden-section-frame,
-.moments-empty,
 .music-card,
 .photo-card,
 .note-card,
 .card {
-  border-color: var(--garden-line);
+
+
+  border-color:
+  var(--garden-line);
+
+
   background:
-    linear-gradient(145deg, rgba(255, 248, 235, 0.3), transparent 42%),
-    var(--garden-surface-base);
+  var(--garden-surface-base);
+
+
   box-shadow:
-    var(--garden-shadow),
-    inset 0 1px 0 rgba(255, 250, 239, 0.5);
-  -webkit-backdrop-filter: blur(var(--garden-glass-blur)) saturate(0.92);
-  backdrop-filter: blur(var(--garden-glass-blur)) saturate(0.92);
+  var(--garden-shadow);
+
+
+  backdrop-filter:none!important;
+
+  -webkit-backdrop-filter:none!important;
+
+
 }
 
-/* Section frames are landscape, not another card around the cards. */
+
+
+/* =========================
+   Remove section lines
+========================= */
+
+
 .garden-section-frame {
-  border: 0;
-  border-radius: 0;
-  background: transparent;
-  box-shadow: none;
-  -webkit-backdrop-filter: none;
-  backdrop-filter: none;
-  transform: none;
+
+
+  border:0!important;
+
+  background:transparent!important;
+
+  box-shadow:none!important;
+
+
 }
 
-.garden-section-frame::before {
-  content: "";
-  position: absolute;
-  z-index: 0;
-  inset: clamp(14px, 2vw, 28px) 0;
-  border-top: 1px solid color-mix(in srgb, var(--garden-leaf) 12%, transparent);
-  border-bottom: 1px solid color-mix(in srgb, var(--garden-leaf) 9%, transparent);
+
+
+.garden-section-frame::before,
+.garden-section-frame::after {
+
+
+  display:none!important;
+
+
+}
+
+
+
+/* =========================
+   Remove color variations
+========================= */
+
+
+.garden-content-section-notes .post-card,
+.garden-content-section-archive .archive-card,
+.garden-content-section-about .about-card,
+.today-card {
+
+
   background:
-    radial-gradient(circle at 8% 20%, color-mix(in srgb, var(--garden-sun) 13%, transparent), transparent 24%),
-    radial-gradient(circle at 92% 72%, color-mix(in srgb, var(--garden-blush) 16%, transparent), transparent 27%);
-  pointer-events: none;
+  var(--garden-surface-base);
+
+
 }
 
-.garden-section-frame-notes::before {
-  background:
-    radial-gradient(circle at 12% 18%, color-mix(in srgb, var(--garden-sun) 14%, transparent), transparent 25%),
-    linear-gradient(180deg, transparent, color-mix(in srgb, var(--garden-paper) 14%, transparent), transparent);
-}
 
-.garden-section-frame-archive::before {
-  background:
-    radial-gradient(circle at 88% 26%, color-mix(in srgb, var(--garden-blush) 18%, transparent), transparent 26%),
-    linear-gradient(180deg, transparent, color-mix(in srgb, var(--garden-leaf) 5%, transparent), transparent);
-}
 
-.garden-section-frame-about::before {
-  background:
-    radial-gradient(circle at 20% 74%, color-mix(in srgb, var(--garden-sun) 11%, transparent), transparent 28%),
-    radial-gradient(circle at 84% 18%, color-mix(in srgb, var(--garden-blush) 15%, transparent), transparent 24%);
-}
+/* =========================
+   Today card
+========================= */
 
-/* Remove decorative wobble that made the system feel assembled rather than related. */
-.archive-card:nth-child(1),
-.archive-card:nth-child(2),
-.archive-card:nth-child(3),
-.archive-card:nth-child(4),
-.garden-section-frame-notes,
-.garden-section-frame-archive,
-.garden-section-frame-about {
-  transform: none;
-}
-
-/* Controlled variation comes from tint, not unrelated geometry. */
-.garden-content-section-notes .post-card {
-  --garden-surface-base: color-mix(in srgb, rgba(244, 235, 217, 0.72) 92%, var(--garden-sun));
-}
-
-.garden-content-section-archive .archive-card {
-  --garden-surface-base: color-mix(in srgb, rgba(242, 232, 213, 0.7) 94%, var(--garden-blush));
-}
-
-.garden-content-section-about .about-card {
-  --garden-surface-base: color-mix(in srgb, rgba(246, 238, 222, 0.76) 94%, var(--garden-leaf));
-}
 
 .today-card {
-  --garden-surface-base: color-mix(in srgb, rgba(244, 235, 217, 0.74) 95%, var(--garden-sun));
-  position: relative;
-  overflow: hidden;
+
+
+  position:relative;
+
+  overflow:hidden;
+
+
 }
 
-.today-card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background:
-    radial-gradient(circle at 100% 0%, color-mix(in srgb, var(--garden-sun) 18%, transparent), transparent 34%),
-    linear-gradient(105deg, transparent 60%, color-mix(in srgb, var(--garden-blush) 9%, transparent));
+
+.today-card::before,
+.today-card::after {
+
+
+  display:none!important;
+
+
 }
+
+
 
 .today-card > * {
-  position: relative;
-  z-index: 1;
+
+
+  position:relative;
+
+  z-index:1;
+
+
 }
+
+
+
+/* =========================
+   Hover
+========================= */
+
 
 .post-card,
 .archive-card,
 .about-card,
 .today-card {
-  transition:
-    transform var(--motion-base) var(--ease-emphasized),
-    border-color var(--motion-base) var(--ease-standard),
-    background var(--motion-base) var(--ease-standard),
-    box-shadow var(--motion-base) var(--ease-standard);
+
+
+transition:
+transform .25s ease,
+box-shadow .25s ease;
+
+
 }
+
+
 
 .post-card:hover,
 .archive-card:hover,
 .about-card:hover,
 .today-card:hover {
-  transform: translateY(-2px);
-  border-color: var(--garden-line-hover);
-  box-shadow:
-    var(--garden-shadow-hover),
-    inset 0 1px 0 rgba(255, 255, 255, 0.64);
+
+
+transform:translateY(-2px);
+
+
+box-shadow:
+var(--garden-shadow-hover);
+
+
 }
 
-/* The same quiet label language appears throughout the garden. */
+
+
+/* =========================
+   Labels
+========================= */
+
+
 .card-label,
 .eyebrow,
 .garden-section-marker {
-  color: var(--garden-leaf);
+
+
+color:var(--garden-leaf);
+
+
 }
 
+
+
+/* =========================
+   Section marker
+========================= */
+
+
 .garden-section-marker {
-  border-color: color-mix(in srgb, var(--garden-leaf) 22%, transparent);
-  background: color-mix(in srgb, var(--garden-cream) 88%, transparent);
-  box-shadow: 0 5px 18px rgba(47, 61, 46, 0.035);
-  transform: none;
+
+
+border-color:
+color-mix(
+in srgb,
+var(--garden-leaf) 22%,
+transparent
+);
+
+
+background:
+transparent;
+
+
+box-shadow:none;
+
+
 }
+
+
 
 .garden-section-marker::before,
 .garden-section-marker::after {
-  display: none;
+
+
+display:none;
+
+
 }
 
-/* Local ornamentation becomes sparse foreground notation. */
+
+
+/* =========================
+   Decoration lower
+========================= */
+
+
 .garden-card-ornament,
 .garden-about-vine,
 .garden-content-flora,
 .garden-page-ornament,
 .garden-section-ornament,
 .garden-corner {
-  opacity: 0.1 !important;
+
+
+opacity:.08!important;
+
+
 }
 
-.garden-content-flora-top {
-  opacity: 0.08 !important;
-}
 
-.garden-content-flora-bottom {
-  opacity: 0.12 !important;
-}
 
-@media (max-width: 720px) {
-  :root {
-    --garden-glass-blur: 8px;
-    --garden-shadow: 0 12px 34px rgba(47, 61, 46, 0.055);
-  }
+/* =========================
+   Dark mode
+========================= */
 
-  .garden-section-frame::before {
-    inset-inline: 8px;
-  }
-
-  .garden-card-ornament,
-  .garden-about-vine,
-  .garden-corner {
-    opacity: 0.07 !important;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .post-card,
-  .archive-card,
-  .about-card,
-  .today-card {
-    transition: none;
-  }
-
-  .post-card:hover,
-  .archive-card:hover,
-  .about-card:hover,
-  .today-card:hover {
-    transform: none;
-  }
-}
 
 html[data-theme="dark"] .today-card,
 body.dark .today-card,
@@ -226,52 +297,260 @@ html[data-theme="dark"] .archive-card,
 body.dark .archive-card,
 html[data-theme="dark"] .about-card,
 body.dark .about-card {
-  --garden-surface-base: rgba(27, 34, 27, 0.7);
-  --garden-line: rgba(170, 190, 153, 0.14);
-  --garden-line-hover: rgba(170, 190, 153, 0.28);
+
+
+--garden-surface-base:
+rgba(27,34,27,.7);
+
+
+}
+/* =========================================================
+   Moment Bubble
+   Keep original SVG interaction
+========================================================= */
+
+.moment-bubble {
+
+  overflow:visible;
+
+
+  background:
+    radial-gradient(
+      circle at 28% 18%,
+      rgba(255,255,255,.72),
+      transparent 32%
+    ),
+    color-mix(
+      in srgb,
+      var(--garden-paper) 88%,
+      var(--garden-blush)
+    ) !important;
+
+
+  border-color:
+    color-mix(
+      in srgb,
+      var(--garden-leaf) 24%,
+      transparent
+    ) !important;
+
+
+  box-shadow:
+
+    0 18px 42px rgba(47,57,43,.12),
+    inset 0 1px 0 rgba(255,255,255,.68) !important;
+
 }
 
 
-/* Transparent watercolor layers replace flat white card faces. */
-.today-card,
-.progress-panel,
-.post-card,
-.archive-card,
+
+.moment-bubble-ornament {
+
+  display:block!important;
+
+  position:absolute;
+
+  z-index:0;
+
+  pointer-events:none;
+
+  opacity:.78;
+
+  transition:
+    transform .35s ease,
+    opacity .35s ease;
+
+}
+
+
+
+.moment-bubble-ornament-top {
+
+  width:118px;
+
+  right:-48px;
+
+  top:-50px;
+
+  transform:rotate(16deg);
+
+}
+
+
+
+.moment-bubble-ornament-bottom {
+
+  width:94px;
+
+  left:-38px;
+
+  bottom:-54px;
+
+  transform:rotate(-18deg);
+
+}
+
+
+
+.moment-bubble:hover .moment-bubble-ornament-top {
+
+  transform:
+    translateY(-3px)
+    rotate(19deg);
+
+}
+
+
+
+.moment-bubble:hover .moment-bubble-ornament-bottom {
+
+  transform:
+    translateY(3px)
+    rotate(-21deg);
+
+}
+/* =========================================================
+   GardenOrnament SVG
+   Only for MomentBubble
+========================================================= */
+
+
+.moment-bubble-ornament .garden-ornament-stem {
+
+  fill:none;
+
+  stroke:
+  color-mix(
+    in srgb,
+    var(--garden-leaf) 72%,
+    #657952
+  );
+
+  stroke-width:1.35;
+
+  stroke-linecap:round;
+
+  stroke-linejoin:round;
+
+}
+
+
+
+.moment-bubble-ornament .garden-ornament-stem-soft {
+
+  stroke:
+  color-mix(
+    in srgb,
+    var(--garden-leaf) 46%,
+    #92a47d
+  );
+
+  stroke-width:1;
+
+}
+
+
+
+.moment-bubble-ornament .garden-ornament-leaf {
+
+  fill:
+  rgba(139,164,112,.17);
+
+  stroke:
+  color-mix(
+    in srgb,
+    var(--garden-leaf) 56%,
+    #81956e
+  );
+
+  stroke-width:1;
+
+}
+
+
+
+.moment-bubble-ornament .garden-ornament-leaf-alt {
+
+  fill:
+  rgba(178,194,146,.13);
+
+}
+
+
+
+.moment-bubble-ornament .garden-ornament-flower-blue {
+
+  fill:
+  rgba(142,169,205,.22);
+
+  stroke:
+  rgba(93,126,166,.66);
+
+}
+
+
+
+.moment-bubble-ornament .garden-ornament-flower-pink {
+
+  fill:
+  rgba(220,157,174,.2);
+
+  stroke:
+  rgba(178,108,129,.64);
+
+}
+
+
+
+.moment-bubble-ornament .garden-ornament-flower-gold {
+
+  fill:
+  rgba(232,192,104,.2);
+
+  stroke:
+  rgba(184,137,54,.66);
+
+}
+
+
+
+.moment-bubble-ornament .garden-ornament-dot {
+
+  fill:
+  rgba(103,128,79,.76);
+
+}
+
+
+
+.moment-bubble-ornament .garden-ornament-dot-pink {
+
+  fill:
+  rgba(190,115,139,.7);
+
+}
+
+
+
+.moment-bubble-ornament .garden-ornament-dot-gold {
+
+  fill:
+  rgba(190,145,64,.74);
+
+}
+/* About card final override */
 .about-card,
-.music-card,
-.photo-card,
-.note-card,
-.card,
-.garden-page-hero {
-  overflow: hidden;
-  background:
-    radial-gradient(circle at 14% 6%, rgba(241, 201, 113, .1), transparent 31%),
-    radial-gradient(circle at 88% 92%, rgba(248, 217, 199, .11), transparent 34%),
-    linear-gradient(145deg, rgba(249, 244, 233, .36), rgba(232, 220, 198, .2)),
-    var(--garden-surface-base);
+.garden-content-section-about .about-card {
+  background: var(--garden-paper) !important;
+  border-color: rgba(47,61,46,.13) !important;
+  box-shadow: 0 18px 46px rgba(47,61,46,.055) !important;
+  backdrop-filter:none!important;
 }
+/* About card same as archive cards */
 
-.today-card::after,
-.post-card::after,
-.archive-card::after,
-.about-card::after,
-.garden-page-hero::after {
-  content: "";
-  position: absolute;
-  z-index: 0;
-  inset: 0;
-  pointer-events: none;
-  opacity: .42;
-  background:
-    linear-gradient(112deg, transparent 10%, rgba(255, 248, 235, .22) 38%, transparent 64%),
-    radial-gradient(ellipse at 76% 18%, rgba(104, 122, 90, .055), transparent 34%);
-}
-
-.today-card > *,
-.post-card > *,
-.archive-card > *,
-.about-card > *,
-.garden-page-hero > * {
-  position: relative;
-  z-index: 1;
+.garden-section-frame .about-card {
+  background: var(--paper) !important;
+  border-color: var(--line) !important;
+  box-shadow: var(--shadow) !important;
+  backdrop-filter: none !important;
 }

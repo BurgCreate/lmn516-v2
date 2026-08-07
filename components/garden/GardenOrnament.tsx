@@ -13,6 +13,7 @@ export default function GardenOrnament({
   variant = "vine",
   className = "",
 }: GardenOrnamentProps) {
+
   if (variant === "bellflower") {
     return (
       <svg
@@ -31,6 +32,7 @@ export default function GardenOrnament({
     );
   }
 
+
   if (variant === "curlflower") {
     return (
       <svg
@@ -48,48 +50,9 @@ export default function GardenOrnament({
     );
   }
 
-  if (variant === "wildflower") {
-    return (
-      <svg
-        className={`garden-ornament garden-ornament-wildflower ${className}`.trim()}
-        viewBox="0 0 220 220"
-        aria-hidden="true"
-      >
-        <path className="garden-ornament-stem" d="M110 216C108 172 106 126 104 75" />
-        <path className="garden-ornament-stem garden-ornament-stem-soft" d="M109 173C84 148 64 126 42 94" />
-        <path className="garden-ornament-stem garden-ornament-stem-soft" d="M108 143C135 119 157 96 176 68" />
-        <path className="garden-ornament-leaf" d="M105 160C76 151 61 133 59 110C83 116 99 133 105 160Z" />
-        <path className="garden-ornament-leaf garden-ornament-leaf-alt" d="M111 126C136 122 155 108 166 86C142 85 122 99 111 126Z" />
-        <g className="garden-ornament-blossom garden-ornament-blossom-pink" transform="translate(39 84)">
-          <circle cx="0" cy="-10" r="9" /><circle cx="9" cy="-2" r="9" /><circle cx="5" cy="9" r="9" /><circle cx="-7" cy="8" r="9" /><circle cx="-10" cy="-3" r="9" /><circle className="garden-ornament-center" cx="0" cy="0" r="5" />
-        </g>
-        <g className="garden-ornament-blossom garden-ornament-blossom-blue" transform="translate(178 58)">
-          <circle cx="0" cy="-10" r="9" /><circle cx="9" cy="-2" r="9" /><circle cx="5" cy="9" r="9" /><circle cx="-7" cy="8" r="9" /><circle cx="-10" cy="-3" r="9" /><circle className="garden-ornament-center" cx="0" cy="0" r="5" />
-        </g>
-        <g className="garden-ornament-blossom garden-ornament-blossom-gold" transform="translate(105 58)">
-          <circle cx="0" cy="-11" r="10" /><circle cx="10" cy="-3" r="10" /><circle cx="6" cy="10" r="10" /><circle cx="-7" cy="9" r="10" /><circle cx="-10" cy="-4" r="10" /><circle className="garden-ornament-center" cx="0" cy="0" r="5.5" />
-        </g>
-      </svg>
-    );
-  }
 
-  return (
-    <svg
-      className={`garden-ornament garden-ornament-vine ${className}`.trim()}
-      viewBox="0 0 320 120"
-      aria-hidden="true"
-    >
-      <path className="garden-ornament-stem" d="M4 101C54 104 84 88 101 63C121 34 146 22 182 28C221 35 251 25 282 4" />
-      <path className="garden-ornament-stem garden-ornament-stem-soft" d="M101 63C91 43 73 29 47 24" />
-      <path className="garden-ornament-stem garden-ornament-stem-soft" d="M181 28C197 48 216 61 242 65" />
-      <path className="garden-ornament-leaf" d="M80 78C55 77 36 67 23 48C46 44 67 54 80 78Z" />
-      <path className="garden-ornament-leaf garden-ornament-leaf-alt" d="M140 38C127 16 108 5 86 6C96 28 113 39 140 38Z" />
-      <path className="garden-ornament-leaf" d="M217 50C235 33 257 28 279 36C262 54 242 60 217 50Z" />
-      <circle className="garden-ornament-berry garden-ornament-berry-pink" cx="46" cy="24" r="6" />
-      <circle className="garden-ornament-berry garden-ornament-berry-blue" cx="248" cy="65" r="5" />
-      <circle className="garden-ornament-berry garden-ornament-berry-gold" cx="287" cy="4" r="4.5" />
-    </svg>
-  );
+  return null;
 }
+
 
 export type { GardenOrnamentVariant };
