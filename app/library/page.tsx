@@ -15,7 +15,7 @@ export default async function LibraryPage() {
 
   return (
 
-    <main className="shell library-page">
+    <main className="library-page">
 
 
       <header className="library-header">
