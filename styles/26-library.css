@@ -8,7 +8,7 @@
 
 .library-page {
 
-  padding:28px 0;
+  padding:28px;
 
   min-height:100vh;
 
@@ -87,8 +87,6 @@
 
 .library-card {
 
-  height:120px;
-
   min-height:120px;
 
   padding:12px;
@@ -136,32 +134,12 @@
 
 
 
-/* 链接 */
-
-.library-card-link {
-
-  height:100%;
-
-  display:flex;
-
-  flex-direction:column;
-
-  justify-content:space-between;
-
-  color:inherit;
-
-  text-decoration:none;
-
-}
-
-
-
 /* =========================
-   标题区域
+   网站信息
 ========================= */
 
 
-.library-card-title {
+.library-info {
 
   display:flex;
 
@@ -169,13 +147,11 @@
 
   gap:8px;
 
-  min-width:0;
-
 }
 
 
 
-.library-card-icon {
+.library-icon {
 
   width:24px;
 
@@ -194,7 +170,20 @@
 
 
 
-.library-card h2 {
+/* =========================
+   文字
+========================= */
+
+
+.library-text {
+
+  min-width:0;
+
+}
+
+
+
+.library-text h2 {
 
   margin:0;
 
@@ -225,55 +214,166 @@
 
 
 
-/* =========================
-   描述
-========================= */
+.library-text span {
 
+  display:block;
 
-.library-card p {
-
-  margin:0;
-
-
-  font-size:10px;
-
-
-  line-height:1.4;
-
-
-  color:#555;
-
-
-  white-space:nowrap;
-
-
-  overflow:hidden;
-
-
-  text-overflow:ellipsis;
-
-}
-
-
-
-/* =========================
-   底部
-========================= */
-
-
-.library-card-bottom {
-
-  display:flex;
-
-  justify-content:space-between;
-
-  align-items:center;
+  margin-top:5px;
 
 
   font-size:10px;
 
 
   color:#666;
+
+}
+
+
+
+/* =========================
+   操作按钮
+========================= */
+
+
+.library-actions {
+
+  display:flex;
+
+  gap:6px;
+
+}
+
+
+
+.library-visit,
+.library-favorite {
+
+  flex:1;
+
+
+  padding:5px 8px;
+
+
+  border-radius:var(--radius-md);
+
+
+  border:1px solid var(--card-border);
+
+
+  background:var(--card-bg);
+
+
+  color:inherit;
+
+
+  text-decoration:none;
+
+
+  text-align:center;
+
+
+  font-size:10px;
+
+
+  font-family:inherit;
+
+
+  cursor:pointer;
+
+
+  transition:.2s ease;
+
+}
+
+
+
+.library-visit:hover,
+.library-favorite:hover {
+
+  background:var(--color-accent);
+
+  color:white;
+
+}
+
+
+
+/* 收藏按钮容器（承载提示气泡的定位） */
+
+.library-favorite-wrap {
+
+  position:relative;
+
+  flex:1;
+
+  display:flex;
+
+}
+
+
+
+.library-favorite-wrap .library-favorite {
+
+  width:100%;
+
+}
+
+
+
+/* 收藏快捷键提示气泡 */
+
+.library-favorite-tip {
+
+  position:absolute;
+
+  bottom:calc(100% + 8px);
+
+  left:50%;
+
+  transform:translateX(-50%);
+
+
+  padding:6px 10px;
+
+
+  border-radius:8px;
+
+
+  background:#1f2a22;
+
+  color:#fff;
+
+
+  font-size:10px;
+
+  white-space:nowrap;
+
+
+  box-shadow:0 6px 16px rgba(0,0,0,.18);
+
+
+  z-index:20;
+
+}
+
+
+
+.library-favorite-tip::after {
+
+  content:"";
+
+  position:absolute;
+
+  top:100%;
+
+  left:50%;
+
+  transform:translateX(-50%);
+
+
+  border:5px solid transparent;
+
+  border-top-color:#1f2a22;
 
 }
 
@@ -317,7 +417,7 @@
 
   .library-page {
 
-    padding:18px 0;
+    padding:18px;
 
   }
 
@@ -348,8 +448,6 @@
 
   .library-card {
 
-    height:100px;
-
     min-height:100px;
 
     padding:10px;
@@ -358,7 +456,7 @@
 
 
 
-  .library-card-icon {
+  .library-icon {
 
     width:20px;
 
@@ -371,7 +469,7 @@
 
 
 /* =========================
-   编辑入口
+   编辑入口（页面右上角，与卡片无关）
 ========================= */
 
 
