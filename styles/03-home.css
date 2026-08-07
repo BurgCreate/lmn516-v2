@@ -1579,7 +1579,21 @@
 }
 
 .garden-trail-label {
-  display:none!important;
+  position: absolute;
+  z-index: 2;
+  top: 26px;
+  left: clamp(24px, 7vw, 92px);
+  max-width: 330px;
+  padding: 7px 13px;
+  border: 1px solid color-mix(in srgb, var(--line) 80%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  color: var(--muted);
+  font-family: var(--font-sans);
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  transform: rotate(-1.2deg);
+  backdrop-filter: blur(8px);
 }
 
 .garden-trail-path,
@@ -1622,7 +1636,16 @@
 
 .garden-trail::before,
 .garden-trail::after {
-  display: none!important;
+  content: "";
+  position: absolute;
+  z-index: 1;
+  bottom: 34px;
+  width: 9px;
+  height: 9px;
+  border: 1.5px solid currentColor;
+  border-radius: 60% 40% 65% 35%;
+  opacity: 0.5;
+  transform: rotate(32deg);
 }
 
 .garden-trail::before {
