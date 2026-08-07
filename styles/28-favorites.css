@@ -1,0 +1,270 @@
+/* =================================
+   LMN516 Favorites
+   Miniature Object Style
+================================= */
+
+
+.favorites-page{
+  padding-top:28px;
+  padding-bottom:60px;
+}
+
+
+/* 顶部 */
+
+.favorites-header{
+
+  padding:28px 32px;
+
+  margin-bottom:18px;
+
+  border-radius:16px;
+
+  background:
+  linear-gradient(
+    135deg,
+    #f8f1df,
+    #eee1c5
+  );
+
+  border:1px solid #d9c7a0;
+
+  box-shadow:
+  inset 0 1px 3px rgba(255,255,255,.9),
+  0 8px 20px rgba(70,55,30,.12);
+
+}
+
+
+.favorites-header h1{
+
+  margin:0;
+
+  font-size:34px;
+
+}
+
+
+
+/* 网格 */
+
+.favorites-grid{
+
+  display:grid;
+
+  grid-template-columns:
+  repeat(2, minmax(220px,1fr));
+
+  gap:14px;
+
+}
+
+
+
+/* 小收藏卡 */
+
+.favorites-card{
+
+  position:relative;
+
+  height:150px;
+
+  padding:22px;
+
+  overflow:hidden;
+
+  display:flex;
+
+  flex-direction:column;
+
+
+  border-radius:14px;
+
+  border:1px solid #d5c29a;
+
+
+  background:
+
+  linear-gradient(
+    145deg,
+    #fffaf0,
+    #eadcbb
+  );
+
+
+  color:#3d4735;
+
+  text-decoration:none;
+
+
+  box-shadow:
+
+  inset 0 2px 5px rgba(255,255,255,.85),
+
+  inset 0 -5px 12px rgba(100,70,30,.12),
+
+  0 8px 18px rgba(60,45,25,.16);
+
+
+  transition:.25s;
+
+}
+
+
+
+.favorites-card:hover{
+
+  transform:
+  translateY(-3px);
+
+  box-shadow:
+
+  inset 0 2px 5px white,
+
+  0 14px 26px rgba(60,45,25,.2);
+
+}
+
+
+
+/* 胶带 */
+
+.favorites-card::before{
+
+  content:"";
+
+  position:absolute;
+
+  width:42px;
+
+  height:14px;
+
+  top:-2px;
+
+  left:50%;
+
+  transform:translateX(-50%) rotate(-3deg);
+
+  background:#e7d49b;
+
+  opacity:.8;
+
+}
+
+
+
+/* 图标 */
+
+.favorites-icon{
+
+  width:34px;
+
+  height:34px;
+
+  display:grid;
+
+  place-items:center;
+
+  border-radius:50%;
+
+
+  background:#e5d7b5;
+
+  border:1px solid #cdb98c;
+
+
+  color:#61704c;
+
+  font-size:18px;
+
+
+  box-shadow:
+
+  inset 0 2px 3px white;
+
+}
+
+
+
+/* 标题 */
+
+.favorites-card h2{
+
+  margin:14px 0 5px;
+
+  font-size:20px;
+
+  font-weight:600;
+
+}
+
+
+
+/* 描述 */
+
+.favorites-card p{
+
+  margin:0;
+
+  font-size:13px;
+
+  color:#766a52;
+
+  line-height:1.5;
+
+}
+
+
+
+/* 底部 */
+
+.favorites-card small{
+
+  display:none;
+
+}
+
+
+.favorites-card b{
+
+  position:absolute;
+
+  right:18px;
+
+  bottom:16px;
+
+  font-size:18px;
+
+  color:#687650;
+
+}
+
+
+
+/* 手工错位 */
+
+.favorites-card:nth-child(1){
+  transform:rotate(-0.5deg);
+}
+
+.favorites-card:nth-child(2){
+  transform:rotate(.4deg);
+}
+
+.favorites-card:nth-child(3){
+  transform:rotate(.3deg);
+}
+
+.favorites-card:nth-child(4){
+  transform:rotate(-.4deg);
+}
+
+
+
+@media(max-width:700px){
+
+.favorites-grid{
+ grid-template-columns:1fr;
+}
+
+}
