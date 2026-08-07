@@ -16,8 +16,8 @@ export default function NotFound() {
         <Link href="/" className="button-link">
           返回花园入口
         </Link>
-        <Link href="/archive" className="text-link">
-          去阅读树下看看 →
+        <Link href="/wall" className="text-link">
+          去文章墙看看 →
         </Link>
       </div>
     </main>
