@@ -656,15 +656,87 @@
 ========================== */
 
 .site-footer {
-  min-height: 130px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  min-height: 0;
+  display: block;
   border-top: 1px solid var(--line);
-  color: var(--muted);
-  font-size: 13px;
+  background: color-mix(in srgb, var(--paper) 62%, transparent);
 }
 
+.site-footer-inner {
+  padding: 24px 0 8px;
+}
+
+.footer-brand {
+  display: none;
+}
+
+.footer-map {
+  padding: 0 0 16px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  align-items: start;
+  gap: 0;
+  border-top: 0;
+}
+
+.footer-group:nth-child(1) {
+  text-align: left;
+}
+
+.footer-group:nth-child(2) {
+  text-align: center;
+}
+
+.footer-group:nth-child(3) {
+  text-align: right;
+}
+
+.footer-group h3,
+.footer-group summary {
+  margin: 0 0 12px;
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 650;
+  list-style: none;
+}
+
+.footer-links {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.footer-group:nth-child(2) .footer-links {
+  align-items: center;
+}
+
+.footer-group:nth-child(3) .footer-links {
+  align-items: flex-end;
+}
+
+.footer-links a {
+  color: var(--muted);
+  font-size: 13px;
+  transition: color 0.2s ease;
+}
+
+.footer-links a:hover {
+  color: var(--accent);
+}
+
+.footer-bottom {
+  padding-top: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 32px;
+  border-top: 0;
+  color: var(--muted);
+  font-size: 12px;
+  text-align: center;
+}
 
 /* ==========================
    11. V3.0 首页密度重构

@@ -1,11 +1,8 @@
-import SiteHeader from "@/components/SiteHeader";
-import MomentBubble from "@/components/MomentBubble";
 import GardenEntrance from "@/components/home/GardenEntrance";
 import HeroSection from "@/components/home/HeroSection";
 import LatestPosts from "@/components/home/LatestPosts";
 import LifeArchive from "@/components/home/LifeArchive";
 import AboutSection from "@/components/home/AboutSection";
-import SiteFooter from "@/components/home/SiteFooter";
 import GardenTrail from "@/components/home/GardenTrail";
 import GardenAtmosphere from "@/components/home/GardenAtmosphere";
 import GardenSectionFrame from "@/components/home/GardenSectionFrame";
@@ -38,7 +35,6 @@ export default async function HomePage() {
   ]);
 
 
-
   const latestMoment = moments[0];
 
   const featured = posts[0];
@@ -46,9 +42,7 @@ export default async function HomePage() {
   const cards = posts.slice(1, 4);
 
 
-
   const pushupPost = await getPostById(347);
-
 
 
   const pushupMatch =
@@ -57,26 +51,20 @@ export default async function HomePage() {
     );
 
 
-
   const pushups = pushupMatch
-
     ? Number(
         pushupMatch[1].replace(/,/g, "")
       )
-
     : 0;
 
 
-
   const target = 10000;
-
 
 
   const pushupProgress =
     target > 0
       ? ((pushups / target) * 100).toFixed(2)
       : "0.00";
-
 
 
   const remaining =
@@ -96,10 +84,6 @@ export default async function HomePage() {
 
 
       <GardenAtmosphere />
-
-
-
-      <SiteHeader />
 
 
 
@@ -184,26 +168,7 @@ export default async function HomePage() {
 
 
 
-
-      {latestMoment && (
-
-        <MomentBubble
-
-          content={latestMoment.content}
-
-          date={latestMoment.date}
-
-        />
-
-      )}
-
-
-
-      <SiteFooter />
-
-
     </main>
 
   );
-
 }

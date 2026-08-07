@@ -21,6 +21,7 @@ h2 {
   margin-bottom: var(--space-5);
 }
 
+
 /* Header and hero */
 .site-header {
   min-height: var(--space-10);
@@ -43,6 +44,7 @@ h2 {
   gap: var(--space-3);
   margin-top: var(--space-6);
 }
+
 
 /* Homepage sections and cards */
 .section-heading {
@@ -83,6 +85,7 @@ h2 {
   gap: var(--space-5);
 }
 
+
 /* Archive/list pages */
 .posts-page {
   padding-block: var(--page-space-top) var(--page-space-bottom);
@@ -110,10 +113,11 @@ h2 {
   margin-top: var(--space-3);
 }
 
+
 /* Article and subpages */
 .page,
 .subpage {
-  padding-bottom: var(--page-space-bottom);
+  padding-bottom: var(--space-6);
 }
 
 .page {
@@ -167,13 +171,16 @@ h2 {
   margin-block: var(--space-8);
 }
 
+
 /* Footer */
 .site-footer {
-  min-height: calc(var(--space-8) * 2);
+  padding-block: var(--space-8);
 }
+
 
 /* Responsive spacing roles */
 @media (max-width: 720px) {
+
   :root {
     --page-gutter: 18px;
     --page-space-top: var(--space-6);
@@ -185,66 +192,81 @@ h2 {
     --grid-gap: var(--space-4);
   }
 
+
   .site-header {
     min-height: 72px;
   }
+
 
   .hero {
     padding-block: var(--space-6) var(--space-7);
     gap: var(--space-5);
   }
 
+
   .hero h1 {
     margin-bottom: var(--space-5);
   }
+
 
   .section-heading {
     margin-bottom: var(--space-5);
   }
 
+
   .post-grid {
     margin-top: var(--space-4);
   }
 
+
   .about-grid {
     gap: var(--space-6);
   }
+
 
   .posts-header,
   .posts-list {
     padding-inline: 0;
   }
 
+
   .posts-header {
     padding-bottom: var(--space-7);
   }
+
 
   .post-row {
     padding-block: var(--space-5);
     gap: var(--space-4);
   }
 
+
   .page,
   .subpage {
-    padding-bottom: var(--space-9);
+    padding-bottom: var(--space-6);
   }
+
 
   .page,
   .subpage {
     padding-top: var(--space-6);
   }
 
+
   .back {
     margin-bottom: var(--space-6);
   }
+
 
   .article h1 {
     margin-bottom: var(--space-6);
   }
 
+
   .article-body h2 {
     margin-top: var(--space-6);
   }
+
 
   .article-body figure,
   .article-body .wp-block-image,
@@ -252,9 +274,17 @@ h2 {
   .article-body blockquote {
     margin-block: var(--space-6);
   }
+
+
+  .site-footer {
+    padding-block: var(--space-7);
+  }
+
 }
 
+
 @media (max-width: 520px) {
+
   :root {
     --page-gutter: 16px;
     --page-space-bottom: var(--space-8);
@@ -264,26 +294,29 @@ h2 {
     --grid-gap: var(--space-3);
   }
 
+
   .hero {
     padding-block: var(--space-5) var(--space-6);
   }
+
 
   .section-heading {
     margin-bottom: var(--space-5);
   }
 
+
   .archive-card {
     padding: var(--space-4);
   }
+
 
   .post-row {
     padding-block: var(--space-5);
   }
 
+
   .site-footer {
-    min-height: var(--space-10);
+    padding-block: var(--space-6);
   }
+
 }
-
-
-

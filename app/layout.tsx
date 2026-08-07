@@ -1,8 +1,15 @@
 import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/next";
+
 import "./globals.css";
+
 import PageTransitionReset from "@/components/PageTransitionReset";
 import { GardenWorldLayer } from "@/components/garden";
+
+import SiteHeader from "@/components/SiteHeader";
+import SiteFooter from "@/components/SiteFooter";
+import MomentBubble from "@/components/MomentBubble";
+
 
 export const metadata: Metadata = {
   title: {
@@ -23,16 +30,36 @@ export const metadata: Metadata = {
   }
 };
 
+
 export default function RootLayout({
   children
-}: Readonly<{ children: React.ReactNode }>) {
+}: {
+  children: React.ReactNode;
+}) {
+
   return (
     <html lang="zh-CN">
       <body>
+
         <PageTransitionReset />
+
         <GardenWorldLayer />
-        {children}
+
+        <SiteHeader />
+
+        <main>
+          {children}
+        </main>
+
+        <SiteFooter />
+
+        <MomentBubble
+          content="留下你的花园记忆"
+          date="LMN516"
+        />
+
         <Analytics />
+
       </body>
     </html>
   );
