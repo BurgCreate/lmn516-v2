@@ -7,25 +7,24 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 model Site {
+  id          Int      @id @default(autoincrement())
 
-  id Int @id @default(autoincrement())
+  name        String
 
-  name String
+  url         String   @unique
 
-  url String @unique
+  domain      String
 
-  domain String
-
-  icon String?
+  icon        String?
 
   description String?
 
-  category String?
+  category    String?
 
-  tags String?
+  tags        String?
 
-  createdAt DateTime @default(now())
+  createdAt   DateTime @default(now())
 
+  @@map("site")
 }
