@@ -3,9 +3,9 @@ import { prisma } from "@/lib/prisma";
 
 
 async function updateSite(
-  id:number,
-  formData:FormData
-){
+  id: number,
+  formData: FormData
+) {
 
   "use server";
 
@@ -31,18 +31,21 @@ async function updateSite(
 
 
   const tags =
-    formData.get("tags") as string;
+    (formData.get("tags") as string)
+      .split(",")
+      .map(tag => tag.trim())
+      .filter(Boolean);
 
 
 
   await prisma.site.update({
 
-    where:{
+    where: {
       id,
     },
 
 
-    data:{
+    data: {
 
       name,
 
@@ -71,15 +74,15 @@ export default async function EditLibraryPage({
 
   params,
 
-}:{
+}: {
 
   params: Promise<{
 
-    id:string;
+    id: string;
 
   }>;
 
-}){
+}) {
 
 
   const { id } = await params;
@@ -92,9 +95,9 @@ export default async function EditLibraryPage({
   const site =
     await prisma.site.findUnique({
 
-      where:{
+      where: {
 
-        id:siteId,
+        id: siteId,
 
       },
 
@@ -102,7 +105,7 @@ export default async function EditLibraryPage({
 
 
 
-  if(!site){
+  if (!site) {
 
     return (
 
@@ -132,7 +135,7 @@ export default async function EditLibraryPage({
 
 
       <form
-        action={updateSite.bind(null,siteId)}
+        action={updateSite.bind(null, siteId)}
       >
 
 
@@ -206,7 +209,7 @@ export default async function EditLibraryPage({
 
           name="tags"
 
-          defaultValue={site.tags ?? ""}
+          defaultValue={site.tags.join(",")}
 
           placeholder="标签"
 
@@ -219,7 +222,6 @@ export default async function EditLibraryPage({
           保存修改
 
         </button>
-
 
 
       </form>

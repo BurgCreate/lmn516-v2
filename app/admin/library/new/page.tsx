@@ -28,7 +28,10 @@ async function createSite(formData: FormData) {
 
 
   const tags =
-    formData.get("tags") as string;
+    (formData.get("tags") as string)
+      .split(",")
+      .map(tag => tag.trim())
+      .filter(Boolean);
 
 
 
