@@ -28,6 +28,13 @@ export default function FavoritesPage() {
       href: "/movies",
       icon: "◌",
     },
+    {
+      title: "英语学习",
+      desc: "记录单词、词汇与英语学习进度。",
+      tip: "English Garden",
+      href: "/learn/english",
+      icon: "🇬🇧",
+    },
   ];
 
 
