@@ -94,30 +94,79 @@ if(!element) return;
 
 
 
-html2pdf()
+const clone =
+element.cloneNode(true) as HTMLElement;
 
-.from(element)
+
+
+// 添加来源
+
+const source =
+document.createElement("div");
+
+
+source.className =
+"pdf-source";
+
+
+source.innerHTML =
+`
+来源：
+${window.location.href}
+`;
+
+
+
+clone.appendChild(source);
+
+
+
+// 临时渲染区域
+
+clone.style.position =
+"fixed";
+
+clone.style.left =
+"0";
+
+clone.style.top =
+"0";
+
+clone.style.width =
+`${element.scrollWidth}px`;
+
+clone.style.background =
+"#fff";
+
+clone.style.zIndex =
+"-1";
+
+
+
+document.body.appendChild(clone);
+
+
+
+await html2pdf()
+
+.from(clone)
 
 .set({
 
 margin:10,
 
-filename:`${title}.pdf`,
+filename:
+`${title}.pdf`,
 
 
-pagebreak:{
+image:{
 
-mode:[
+type:"jpeg",
 
-"avoid-all",
-
-"css",
-
-"legacy"
-
-]
+quality:0.98
 
 },
+
 
 
 html2canvas:{
@@ -126,13 +175,18 @@ scale:2,
 
 useCORS:true,
 
+scrollY:0,
+
+removeContainer:false,
+
 windowWidth:
-document.documentElement.scrollWidth,
+clone.scrollWidth,
 
 windowHeight:
-document.documentElement.scrollHeight
+clone.scrollHeight
 
 },
+
 
 
 jsPDF:{
@@ -143,9 +197,15 @@ orientation:"portrait"
 
 }
 
+
 })
 
 .save();
+
+
+
+clone.remove();
+
 
 }
 
@@ -233,7 +293,6 @@ PDF
 </span>
 
 </button>
-
 
 
 </div>
