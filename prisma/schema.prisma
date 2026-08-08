@@ -22,7 +22,7 @@ model Site {
 
   category    String?
 
-  tags        String?
+  tags        String[]
 
   createdAt   DateTime @default(now())
 
