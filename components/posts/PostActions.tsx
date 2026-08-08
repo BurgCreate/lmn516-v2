@@ -94,6 +94,8 @@ if(!element) return;
 
 
 
+// 创建 PDF 副本
+
 const clone =
 element.cloneNode(true) as HTMLElement;
 
@@ -121,13 +123,14 @@ clone.appendChild(source);
 
 
 
-// 临时渲染区域
+// 隐藏 PDF 临时节点
+// 防止页面闪白
 
 clone.style.position =
-"fixed";
+"absolute";
 
 clone.style.left =
-"0";
+"-99999px";
 
 clone.style.top =
 "0";
@@ -138,8 +141,11 @@ clone.style.width =
 clone.style.background =
 "#fff";
 
-clone.style.zIndex =
-"-1";
+clone.style.pointerEvents =
+"none";
+
+clone.style.visibility =
+"visible";
 
 
 
@@ -157,6 +163,7 @@ margin:10,
 
 filename:
 `${title}.pdf`,
+
 
 
 image:{
@@ -293,6 +300,7 @@ PDF
 </span>
 
 </button>
+
 
 
 </div>
