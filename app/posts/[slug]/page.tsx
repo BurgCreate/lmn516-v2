@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import { getPostBySlug } from "@/lib/wordpress";
+import PostActions from "@/components/posts/PostActions";
 
 export const revalidate = 300;
 
@@ -8,25 +9,52 @@ export default async function PostPage({
 }: {
   params: Promise<{ slug: string }>
 }) {
+
   const { slug } = await params;
+
   const post = await getPostBySlug(slug);
+
 
   if (!post) notFound();
 
+
   return (
+
     <main className="shell narrow page">
+
       <article
         className={`article post-format-${post.format}`}
         data-post-format={post.format}
       >
-        <p className="eyebrow">{post.date}</p>
-        <h1>{post.title}</h1>
+
+
+        <p className="eyebrow">
+          {post.date}
+        </p>
+
+
+        <h1>
+          {post.title}
+        </h1>
+
+
+        <PostActions
+          title={post.title}
+        />
+
 
         <div
           className="article-body"
-          dangerouslySetInnerHTML={{ __html: post.content }}
+          dangerouslySetInnerHTML={{
+            __html: post.content
+          }}
         />
+
+
       </article>
+
     </main>
+
   );
+
 }

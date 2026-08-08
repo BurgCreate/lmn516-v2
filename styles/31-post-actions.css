@@ -1,0 +1,191 @@
+/* =========================================================
+   LMN516 Post Actions
+   Article toolbar
+========================================================= */
+
+
+/* container */
+
+.post-actions{
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+flex-wrap:wrap;
+
+gap:10px;
+
+margin:
+
+32px 0 48px;
+
+padding:
+
+12px 0;
+
+}
+
+
+
+/* button */
+
+.post-actions button{
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+gap:7px;
+
+height:34px;
+
+padding:
+
+0 16px;
+
+border:
+
+1px solid rgba(120,100,80,.18);
+
+border-radius:999px;
+
+background:
+
+rgba(255,255,255,.35);
+
+backdrop-filter:
+
+blur(8px);
+
+font-family:inherit;
+
+font-size:13px;
+
+letter-spacing:.04em;
+
+color:
+
+rgba(60,50,40,.78);
+
+cursor:pointer;
+
+transition:
+
+all .25s ease;
+
+}
+
+
+
+/* icon */
+
+.post-actions svg{
+
+width:14px;
+
+height:14px;
+
+stroke-width:1.8;
+
+}
+
+
+
+/* hover */
+
+.post-actions button:hover{
+
+background:
+
+rgba(120,100,80,.08);
+
+border-color:
+
+rgba(120,100,80,.35);
+
+color:
+
+#3b3028;
+
+transform:
+
+translateY(-1px);
+
+}
+
+
+
+/* active */
+
+.post-actions button:active{
+
+transform:
+
+scale(.96);
+
+}
+
+
+
+/* print */
+
+@media print{
+
+
+.post-actions{
+
+display:none;
+
+}
+
+
+}
+
+
+
+/* mobile */
+
+@media(max-width:768px){
+
+
+.post-actions{
+
+gap:8px;
+
+margin:
+
+24px 0 36px;
+
+}
+
+
+
+.post-actions button{
+
+height:32px;
+
+padding:
+
+0 14px;
+
+font-size:12px;
+
+}
+
+
+
+.post-actions svg{
+
+width:13px;
+
+height:13px;
+
+}
+
+
+}
