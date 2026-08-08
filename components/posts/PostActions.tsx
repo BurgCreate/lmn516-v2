@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+
 import {
   Link,
   Bookmark,
@@ -76,6 +77,77 @@ window.print();
 
 
 
+async function downloadPDF(){
+
+const html2pdf =
+(await import("html2pdf.js")).default;
+
+
+const element =
+document.querySelector(".article-body");
+
+
+if(!element) return;
+
+
+
+html2pdf()
+
+.from(element)
+
+.set({
+
+margin:10,
+
+filename:`${title}.pdf`,
+
+
+pagebreak:{
+
+mode:[
+
+"avoid-all",
+
+"css",
+
+"legacy"
+
+]
+
+},
+
+
+html2canvas:{
+
+scale:2,
+
+useCORS:true,
+
+windowWidth:
+document.documentElement.scrollWidth,
+
+windowHeight:
+document.documentElement.scrollHeight
+
+},
+
+
+jsPDF:{
+
+format:"a4",
+
+orientation:"portrait"
+
+}
+
+})
+
+.save();
+
+}
+
+
+
 return (
 
 <div className="post-actions">
@@ -92,18 +164,37 @@ return (
 </button>
 
 
+
 <button onClick={bookmark}>
 
 <Bookmark
+
 size={14}
-fill={marked?"currentColor":"none"}
+
+fill={
+marked
+?
+"currentColor"
+:
+"none"
+}
+
 />
 
 <span>
-{marked?"已标记":"标记"}
+
+{
+marked
+?
+"已标记"
+:
+"标记"
+}
+
 </span>
 
 </button>
+
 
 
 <button onClick={share}>
@@ -117,6 +208,7 @@ fill={marked?"currentColor":"none"}
 </button>
 
 
+
 <button onClick={printPage}>
 
 <Printer size={14}/>
@@ -128,7 +220,8 @@ fill={marked?"currentColor":"none"}
 </button>
 
 
-<button>
+
+<button onClick={downloadPDF}>
 
 <FileDown size={14}/>
 
@@ -137,6 +230,7 @@ PDF
 </span>
 
 </button>
+
 
 
 </div>
