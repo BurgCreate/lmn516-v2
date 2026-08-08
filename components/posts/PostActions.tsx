@@ -79,12 +79,15 @@ window.print();
 
 async function downloadPDF(){
 
+
 const html2pdf =
 (await import("html2pdf.js")).default;
 
 
+
 const element =
-document.querySelector(".article-body");
+document.querySelector(".article-body") as HTMLElement | null;
+
 
 
 if(!element) return;
