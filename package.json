@@ -10,13 +10,14 @@
   },
   "dependencies": {
     "@prisma/client": "^6.19.0",
+    "@types/web-push": "^3.6.4",
     "@vercel/analytics": "^1.5.0",
+    "lucide-react": "^1.30.0",
     "next": "15.2.7",
     "prisma": "^6.19.0",
     "react": "19.0.0",
     "react-dom": "19.0.0",
-    "web-push": "^3.6.7",
-    "@types/web-push": "^3.6.4"
+    "web-push": "^3.6.7"
   },
   "devDependencies": {
     "@types/node": "^22",

@@ -2,29 +2,100 @@ generator client {
   provider = "prisma-client-js"
 }
 
+
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
+
+
+
+
 model Site {
-  id          Int      @id @default(autoincrement())
 
-  name        String
+  id Int @id(map: "Site_pkey") @default(autoincrement())
 
-  url         String   @unique
 
-  domain      String
+  name String
 
-  icon        String?
+
+  url String @unique(map: "Site_url_key")
+
+
+  domain String
+
+
+  icon String?
+
 
   description String?
 
-  category    String?
 
-  tags        String[]
+  category String?
 
-  createdAt   DateTime @default(now())
+
+  tags String[]
+
+
+  createdAt DateTime @default(now())
+
 
   @@map("site")
+
+}
+
+
+
+
+
+
+
+model EnglishWord {
+
+
+  id Int @id @default(autoincrement())
+
+
+  // Emoji，例如 🌱 🚀 🔥
+
+  emoji String
+
+
+
+  // 英语单词
+
+  word String
+
+
+
+  // 音标
+
+  pronunciation String?
+
+
+
+  // 英文例句
+
+  example String
+
+
+
+  // 中文翻译
+
+  translation String
+
+
+
+  // 是否掌握
+
+  mastered Boolean @default(false)
+
+
+
+  createdAt DateTime @default(now())
+
+
+  @@map("english_word")
+
 }
